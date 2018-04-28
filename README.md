@@ -1,2 +1,2 @@
-# OOP18 - Alesiani Matteo, Doglioni Edoardo, Rossolini Andrea - CeseNopoly
+# OOP18 - Alesiani Matteo, Doglioni Edoardo, Rossolini Andrea - Ubinopoly
 
