@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author Matteo Alesiani
  *
  * Implementation of the interface CircularList<E>.
  */
@@ -35,6 +34,7 @@ public class CircularList<E> extends ArrayList<E> implements CircularListInterfa
         if (index < super.size()) {
             return super.get(index);
         }
+        
         return null;
     }
 

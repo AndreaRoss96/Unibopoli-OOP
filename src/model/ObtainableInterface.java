@@ -1,5 +1,9 @@
 package model;
 
+/**
+ * @author Matteo Alesiani 
+ */
+
 import java.util.Optional;
 
 public interface ObtainableInterface extends TileInterface{

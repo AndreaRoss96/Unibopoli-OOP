@@ -1,9 +1,5 @@
 package utilities;
 
-/**
- * @author Matteo Alesiani
- */
-
 import java.io.Serializable;
 
 public interface CircularListInterface<E> extends Serializable, Iterable<E> {
