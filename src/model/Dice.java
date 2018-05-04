@@ -18,7 +18,6 @@ public class Dice {
 	}
 	
 	private Dice(){
-		
 	}
 	
 	public Dice getIstance() {

@@ -1,4 +1,4 @@
-package utils.enumerations;
+package utilities.enumerations;
 
 import javafx.scene.paint.Paint;
 
