@@ -10,21 +10,6 @@ package model;
 
 public interface Player extends PlayerInfo {
 
-	public enum Status { // metterei un package all'interno delle utilities che comprende tutte le
-							// enumerazioni che facciamo
-		FREE(true), JAIL(false);
-
-		private boolean value;
-
-		private Status(boolean value) {
-			this.value = value;
-		}
-
-		public boolean getValue() {
-			return this.value;
-		}
-	}
-
 	/**
 	 * this method allows the player to pay a certain sum of money, caused by a
 	 * purchase, payment of a rent or any other type of tax.
@@ -50,8 +35,7 @@ public interface Player extends PlayerInfo {
 	 * @param String
 	 *            name of property.
 	 */
-	void buyProperty(Integer propertyPrice, String propertyName);
-	// void buyProperty(Property property);
+	void buyProperty(Obtainable property);
 
 	/**
 	 * this method is for the movement of the player.
@@ -63,7 +47,7 @@ public interface Player extends PlayerInfo {
 	// basterà controllare dove si trova il tile
 
 	/**
-	 * A method to mortgage the properties
+	 * Use this method if the player is forced to pay a rent too big
 	 * 
 	 * @param Integer
 	 *            minimum amount of money to gain to meet any mandatory requests
@@ -74,5 +58,10 @@ public interface Player extends PlayerInfo {
 	 * the player must go to jail
 	 */
 	void goToJail();
+	
+	/**
+	 * the player must exit from jail
+	 */
+	 void exitFromJail();
 
 }

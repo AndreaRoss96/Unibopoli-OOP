@@ -1,6 +1,9 @@
 package model;
 
 import java.io.Serializable;
+import java.util.List;
+
+import utilities.enumerations.Status.Prison;
 
 /**
  * This interface contains all getters and some minimum method for a limited
@@ -30,7 +33,22 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return the properties of the player
 	 */
-	// set<Properties> getProperties();
+	List<Obtainable> getProperties();
+	
+	/**
+	 * Returns a set of all player's mortgaged properties.
+	 * 
+	 * @return the mortgaged properties of the player
+	 */
+	List<Obtainable> getMortgagedProperties();
+	
+	/**
+	 * Calculate the total of the player's assets
+	 * (all the properties's mortgages plsu his money)
+	 * 
+	 * @return player's total assets
+	 */
+	Integer totalAssets();
 
 	/**
 	 * Returns the number of all houses of the player.
@@ -66,5 +84,5 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return true if player is in jail, false instead
 	 */
-	boolean isInJail();
+	Prison isInJail();
 }
