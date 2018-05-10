@@ -6,6 +6,8 @@ package model;
 
 import java.util.Optional;
 
+import utilities.enumerations.Color;
+
 public abstract class Obtainable implements ObtainableInterface{
 	
 	private int positionTile;
@@ -13,6 +15,7 @@ public abstract class Obtainable implements ObtainableInterface{
 	private int mortgage;
 	private Optional<String> owner;
 	private int price;
+	private Color colorTile;
 	
 	public Obtainable() {
 	
@@ -43,4 +46,8 @@ public abstract class Obtainable implements ObtainableInterface{
 		return this.price;
 	}
 	
+	@Override
+	public Color getColorOf() {
+		return this.colorTile;
+	}
 }

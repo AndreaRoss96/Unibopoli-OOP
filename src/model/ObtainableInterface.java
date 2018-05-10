@@ -5,6 +5,7 @@ package model;
  */
 
 import java.util.Optional;
+import utilities.enumerations.Color;
 
 public interface ObtainableInterface extends TileInterface{
 	
@@ -15,5 +16,7 @@ public interface ObtainableInterface extends TileInterface{
 	int getMortgage();
 	
 	Optional<String> getOwner();
+	
+	Color getColorOf();
 	
 }

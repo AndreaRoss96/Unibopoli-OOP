@@ -1,55 +1,77 @@
 package utilities.enumerations;
 
+import java.util.Optional;
 import javafx.scene.paint.Paint;
 
 /**
- * 
- * Enumeration that contains the possible colors of the players.
- *
+ * Enumeration that contains the possible colors of the tiles.
  */
 public enum Color {
-    /**
-     * Yellow color.
+    
+	/**
+     * Brown color.
      */
-    YELLOW(Paint.valueOf("#FDD835"), "Yellow"),
+	BROWN(Optional.of(Paint.valueOf("#800000")), "Brown", 2),
+	
+	/**
+     * Light Blue color.
+     */
+	LIGHT_BLUE(Optional.of(Paint.valueOf("#b0e0e6")), "Light Blue", 3),
 
+	/**
+     * Purple color.
+     */
+    PURPLE(Optional.of(Paint.valueOf("#B01653")), "Purple", 3),
+
+    /**
+     * Orange color.
+     */
+    ORANGE(Optional.of(Paint.valueOf("#F04100")), "Orange", 3),
+    
     /**
      * Red color.
      */
-    RED(Paint.valueOf("#D32F2F"), "Red"),
+    RED(Optional.of(Paint.valueOf("#D90000")), "Red", 3),
+    
+	/**
+     * Yellow color.
+     */
+    YELLOW(Optional.of(Paint.valueOf("#FFF710")), "Yellow", 3),
 
     /**
      * Green color.
      */
-    GREEN(Paint.valueOf("#388E3C"), "Green"),
+    GREEN(Optional.of(Paint.valueOf("#075E10")), "Green", 3),
 
     /**
      * Blue color.
      */
-    BLUE(Paint.valueOf("#303F9F"), "Blue"),
-
+    BLUE(Optional.of(Paint.valueOf("#00008A")), "Blue", 2),
+    
     /**
-     * Purple color.
+     * Station color.
      */
-    PURPLE(Paint.valueOf("#C2185B"), "Purple"),
-
+    STATIONS(Optional.empty(), "Station", 4),
+    
     /**
-     * Black color.
+     * Society color.
      */
-    BLACK(Paint.valueOf("#000000"), "Black");
-
-    private final Paint value;
+    SOCIETY(Optional.empty(), "Society", 2);
+    
+    private final Optional<Paint> value;
     private final String name;
+    private final int numTileFamily;
 
-    Color(final Paint value, final String name) {
+    Color(final Optional<Paint> value, final String name, final int numTileFamily) {
         this.value = value;
         this.name = name;
+        this.numTileFamily = numTileFamily;
     }
 
     /**
      * @return Paint value of a determined Color.
      */
-    public Paint getPaint() {
+    public Optional<Paint> getPaint() {
         return this.value;
     }
 
@@ -60,9 +82,15 @@ public enum Color {
         return name;
     }
 
+    /**
+     * @return a integer represents the numbers of tiles in the family color.
+     */
+    public int getNumTiles() {
+        return this.numTileFamily;
+    }
+    
     @Override
     public String toString() {
         return this.name();
-
     }
 }
