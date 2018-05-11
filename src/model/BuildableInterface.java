@@ -10,4 +10,5 @@ public interface BuildableInterface extends ObtainableInterface{
 	
 	int getPriceForBuilding();
 	
+	void incBuildings();
 }

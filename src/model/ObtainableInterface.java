@@ -17,6 +17,8 @@ public interface ObtainableInterface extends TileInterface{
 	
 	Optional<String> getOwner();
 	
+	void setOwner(final Optional<String> owner);
+	
 	Color getColorOf();
 	
 }
