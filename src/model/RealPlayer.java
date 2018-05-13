@@ -135,6 +135,7 @@ public class RealPlayer implements Player {
 	}
 	
 	/*AGGIUINGI GET_PROPERTIES_BY_COLOR QUANDO POSSIBILE che mi ritorna la mappa***********************************/
+	/*anche una classe che calcoli i soldi totali con ipoteche ecc*/
 
 	@Override
 	public List<Obtainable> getMortgagedProperties() {

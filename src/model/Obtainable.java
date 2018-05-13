@@ -15,7 +15,7 @@ public abstract class Obtainable implements ObtainableInterface{
 	private int price;
 	
 	public Obtainable() {
-	
+		
 	}
 	
 	@Override
