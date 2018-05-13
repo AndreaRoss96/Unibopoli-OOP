@@ -1,5 +1,7 @@
 package model;
 
+import utilities.enumerations.Color;
+
 /**
  * @author Matteo Alesiani 
  */
@@ -11,8 +13,10 @@ public class NotBuildable extends Obtainable implements NotBuildableInterface{
 	private NotBiuldableType typeOf;
 	private int rent;
 	
-	public NotBuildable() {
-		// TODO Auto-generated constructor stub
+	public NotBuildable(final int positionTile, final int price, 
+			  final int mortgage, final Color colorTile) {
+		super(positionTile, price, mortgage, colorTile);
+		
 	}
 	
 	@Override

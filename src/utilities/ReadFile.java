@@ -5,6 +5,10 @@ import java.nio.file.FileSystems;
 import java.nio.file.Files;
 import java.util.stream.Stream;
 
+/**
+ * @author Matteo Alesiani 
+ */
+
 public class ReadFile {
 
 	public static Stream<String> readFile(String pathfile) throws IOException {

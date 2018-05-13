@@ -6,16 +6,24 @@ package model;
 
 import java.util.Optional;
 
+import utilities.enumerations.Color;
+
 public abstract class Obtainable implements ObtainableInterface{
 	
 	private int positionTile;
 	private String nameTile;
+	private int price;	
 	private int mortgage;
 	private Optional<String> owner;
-	private int price;
+	private Color colorTile;
 	
-	public Obtainable() {
-		
+	public Obtainable(final int positionTile, final int price, 
+					  final int mortgage, final Color colorTile){
+		this.positionTile = positionTile;
+		this.price = price;
+		this.mortgage = mortgage;
+		this.owner = Optional.empty();
+		this.colorTile = colorTile;
 	}
 	
 	@Override
@@ -39,8 +47,17 @@ public abstract class Obtainable implements ObtainableInterface{
 	}
 	
 	@Override
+	public void setOwner(Optional<String> owner) {
+		this.owner = owner;
+	}
+	
+	@Override
 	public int getPrice() {
 		return this.price;
 	}
 	
+	@Override
+	public Color getColorOf() {
+		return this.colorTile;
+	}
 }
