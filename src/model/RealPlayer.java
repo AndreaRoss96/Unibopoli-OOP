@@ -1,7 +1,16 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
+import utilities.enumerations.Color;
+
 import utilities.enumerations.Status.Prison;
 
 public class RealPlayer implements Player {
@@ -12,22 +21,25 @@ public class RealPlayer implements Player {
 	private static final long serialVersionUID = 7360356929546552980L;
 
 	private final String name;
-	// private Tile position;
+	private TileInterface position;
 	// private final Icon sprite;
-	// Map<Color, List<Obtainable>> playersProperties
-	private List<Obtainable> propertiesList;
+	Map<Color, List<Obtainable>> playersProperties;
 	private List<Obtainable> mortgagedProperties;
 	private Integer money;
 	private Integer housesNumber;
 	private Integer hotelsNumber;
 	private Prison status = utilities.enumerations.Status.Prison.NOT_PRISON;
 
-	public RealPlayer(final String name, /* ... , */ final Integer totMoney) {
+	public RealPlayer(final String name, final TileInterface position,
+			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
+			final List<Obtainable> mortgagedProperties /*...*/) {
 		this.name = name;
 		this.money = totMoney;
+		this.position = position;
 		this.housesNumber = 0;
 		this.hotelsNumber = 0;
-		this.propertiesList = new ArrayList<>();
+		this.playersProperties = new HashMap<>();
+		this.playersProperties.putAll(playersProperties);
 		this.mortgagedProperties = new ArrayList<>();
 	}
 
@@ -43,7 +55,8 @@ public class RealPlayer implements Player {
 
 	@Override
 	public Integer getHouseNumber() {
-		//con una stream in futuro calcolerò la quantità di case presente in ogni proprietà del giocatore
+		// con una stream in futuro calcolerò la quantità di case presente in ogni
+		// proprietà del giocatore
 		return this.housesNumber;
 	}
 
@@ -51,11 +64,15 @@ public class RealPlayer implements Player {
 	public Integer getHotelNumber() {
 		return this.hotelsNumber;
 	}
+	
+	@Override
+	public void setPosition(TileInterface newPosition) {
+		this.position = newPosition;
+	}
 
 	@Override
-	public Integer getPosition() {
-		// TODO Auto-generated method stub
-		return null;
+	public TileInterface getPosition() {
+		return this.position;
 	}
 
 	@Override
@@ -65,10 +82,10 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void payments(Integer moneyAmount) {
-		if (moneyAmount > this.money) {
+		if (!this.canPay(moneyAmount)) {
 			if (moneyAmount > totalAssets()) { // in questo caso il giocatore non è in alcun modo in grado di pagare
 												// l'affitto
-				//BANKAROTTA!
+				// BANKAROTTA!
 
 			}
 			toMortgage(moneyAmount - this.money);
@@ -80,11 +97,12 @@ public class RealPlayer implements Player {
 	}
 
 	public Integer totalAssets() {
-		return propertiesList.stream().mapToInt(Obtainable::getMortgage).sum() + this.money;
+		//mi servirebbe anche il valore di case/alberghi
+		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {
-
+//rimuovere il giocatore dalla lista tutti i suoi possedimenti all'asta
 	}
 
 	@Override
@@ -96,12 +114,32 @@ public class RealPlayer implements Player {
 	public void buyProperty(Obtainable property) {
 		if (canPay(property.getMortgage())) {
 			payments(property.getMortgage());
-			this.propertiesList.add(property);
+			this.addProperty(property);
+			property.setOwner(Optional.of(this.getName()));
 		} else {
 			// dovrebbe aprirsi un'asta
 			throw new NotEnoughMoneyException(property.getMortgage());
 		}
 
+	}
+	
+	private void addProperty(Obtainable property) {
+		List<Obtainable> tmpList = new ArrayList<>();
+		tmpList.add(property);
+		this.playersProperties.merge(property.getColorOf(), tmpList, (list1, list2) ->  
+		  Stream.of(list1, list2)
+		    .flatMap(Collection::stream)
+		    .collect(Collectors.toList()));
+	}
+	
+	@Override
+	public void mortgageProperties(List<Obtainable> mortgaged) {
+		int total = 0;
+		for (Obtainable t : mortgaged) {
+			total += t.getMortgage();
+		}
+		gainMoney(total);
+		this.mortgagedProperties.addAll(mortgaged);
 	}
 
 	private boolean canPay(Integer moneyAmount) {
@@ -129,13 +167,13 @@ public class RealPlayer implements Player {
 
 	@Override
 	public List<Obtainable> getProperties() {
-		//List tmpList = new ArrayList<>();
-		//(List) playersProperties.values()
-		return this.propertiesList;
+		return this.playersProperties.values().stream().flatMap(List::stream).collect(Collectors.toList());
 	}
-	
-	/*AGGIUINGI GET_PROPERTIES_BY_COLOR QUANDO POSSIBILE che mi ritorna la mappa***********************************/
-	/*anche una classe che calcoli i soldi totali con ipoteche ecc*/
+
+	@Override
+	public Map<Color, List<Obtainable>> getPopertiesByColor() {
+		return this.playersProperties;
+	}
 
 	@Override
 	public List<Obtainable> getMortgagedProperties() {

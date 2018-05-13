@@ -2,7 +2,9 @@ package model;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Map;
 
+import utilities.enumerations.Color;
 import utilities.enumerations.Status.Prison;
 
 /**
@@ -69,7 +71,7 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return Position
 	 */
-	Integer getPosition();
+	TileInterface getPosition();
 	//se esistesse una classe tile (o simile) sarebbe: Tile getPosition();
 
 	/**
@@ -85,4 +87,6 @@ public interface PlayerInfo extends Serializable {
 	 * @return true if player is in jail, false instead
 	 */
 	Prison isInJail();
+
+	Map<Color, List<Obtainable>> getPopertiesByColor();
 }

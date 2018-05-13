@@ -1,5 +1,7 @@
 package model;
 
+import java.util.List;
+
 /**
  * This interface contains the logical implementations of the player. It will
  * communicate only with the model party
@@ -63,5 +65,9 @@ public interface Player extends PlayerInfo {
 	 * the player must exit from jail
 	 */
 	 void exitFromJail();
+
+	void setPosition(TileInterface newPosition);
+
+	void mortgageProperties(List<Obtainable> mortgaged);
 
 }
