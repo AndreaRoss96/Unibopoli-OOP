@@ -72,7 +72,6 @@ public interface PlayerInfo extends Serializable {
 	 * @return Position
 	 */
 	TileInterface getPosition();
-	//se esistesse una classe tile (o simile) sarebbe: Tile getPosition();
 
 	/**
 	 * Returns the avatar of the player.

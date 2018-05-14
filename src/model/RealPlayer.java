@@ -23,7 +23,7 @@ public class RealPlayer implements Player {
 	private final String name;
 	private TileInterface position;
 	// private final Icon sprite;
-	Map<Color, List<Obtainable>> playersProperties;
+	private Map<Color, List<Obtainable>> playersProperties;
 	private List<Obtainable> mortgagedProperties;
 	private Integer money;
 	private Integer housesNumber;
@@ -32,7 +32,7 @@ public class RealPlayer implements Player {
 
 	public RealPlayer(final String name, final TileInterface position,
 			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
-			final List<Obtainable> mortgagedProperties /*...*/) {
+			final List<Obtainable> mortgagedProperties /* ... */) {
 		this.name = name;
 		this.money = totMoney;
 		this.position = position;
@@ -64,7 +64,7 @@ public class RealPlayer implements Player {
 	public Integer getHotelNumber() {
 		return this.hotelsNumber;
 	}
-	
+
 	@Override
 	public void setPosition(TileInterface newPosition) {
 		this.position = newPosition;
@@ -97,12 +97,12 @@ public class RealPlayer implements Player {
 	}
 
 	public Integer totalAssets() {
-		//mi servirebbe anche il valore di case/alberghi
+		// mi servirebbe anche il valore di case/alberghi
 		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {
-//rimuovere il giocatore dalla lista tutti i suoi possedimenti all'asta
+		// rimuovere il giocatore dalla lista tutti i suoi possedimenti all'asta
 	}
 
 	@Override
@@ -122,16 +122,14 @@ public class RealPlayer implements Player {
 		}
 
 	}
-	
+
 	private void addProperty(Obtainable property) {
 		List<Obtainable> tmpList = new ArrayList<>();
 		tmpList.add(property);
-		this.playersProperties.merge(property.getColorOf(), tmpList, (list1, list2) ->  
-		  Stream.of(list1, list2)
-		    .flatMap(Collection::stream)
-		    .collect(Collectors.toList()));
+		this.playersProperties.merge(property.getColorOf(), tmpList,
+				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
 	}
-	
+
 	@Override
 	public void mortgageProperties(List<Obtainable> mortgaged) {
 		int total = 0;
@@ -179,5 +177,4 @@ public class RealPlayer implements Player {
 	public List<Obtainable> getMortgagedProperties() {
 		return this.mortgagedProperties;
 	}
-
 }
