@@ -37,7 +37,7 @@ public interface Player extends PlayerInfo {
 	 * @param String
 	 *            name of property.
 	 */
-	void buyProperty(Obtainable property);
+	void buyProperty(ObtainableImpl property);
 
 	/**
 	 * this method is for the movement of the player.
@@ -66,8 +66,8 @@ public interface Player extends PlayerInfo {
 	 */
 	 void exitFromJail();
 
-	void setPosition(TileInterface newPosition);
+	void setPosition(Tile newPosition);
 
-	void mortgageProperties(List<Obtainable> mortgaged);
+	void mortgageProperties(List<ObtainableImpl> mortgaged);
 
 }

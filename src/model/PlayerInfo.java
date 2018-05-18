@@ -35,14 +35,14 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return the properties of the player
 	 */
-	List<Obtainable> getProperties();
+	List<ObtainableImpl> getProperties();
 	
 	/**
 	 * Returns a set of all player's mortgaged properties.
 	 * 
 	 * @return the mortgaged properties of the player
 	 */
-	List<Obtainable> getMortgagedProperties();
+	List<ObtainableImpl> getMortgagedProperties();
 	
 	/**
 	 * Calculate the total of the player's assets
@@ -71,7 +71,7 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return Position
 	 */
-	TileInterface getPosition();
+	Tile getPosition();
 
 	/**
 	 * Returns the avatar of the player.
@@ -87,5 +87,5 @@ public interface PlayerInfo extends Serializable {
 	 */
 	Prison isInJail();
 
-	Map<Color, List<Obtainable>> getPopertiesByColor();
+	Map<Color, List<ObtainableImpl>> getPopertiesByColor();
 }

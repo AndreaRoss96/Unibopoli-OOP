@@ -4,7 +4,7 @@ package model;
  * @author Matteo Alesiani 
  */
 
-public interface NotObtainable extends TileInterface{
+public interface NotObtainable extends Tile{
 	
 	void optionalEffect();
 	

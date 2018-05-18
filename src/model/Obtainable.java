@@ -5,59 +5,20 @@ package model;
  */
 
 import java.util.Optional;
-
 import utilities.enumerations.Color;
 
-public abstract class Obtainable implements ObtainableInterface{
+public interface Obtainable extends Tile{
 	
-	private int positionTile;
-	private String nameTile;
-	private int price;	
-	private int mortgage;
-	private Optional<String> owner;
-	private Color colorTile;
+	int getRent();
 	
-	public Obtainable(final int positionTile, final int price, 
-					  final int mortgage, final Color colorTile){
-		this.positionTile = positionTile;
-		this.price = price;
-		this.mortgage = mortgage;
-		this.owner = Optional.empty();
-		this.colorTile = colorTile;
-	}
+	int getPrice();
 	
-	@Override
-	public int getPosition() {
-		return this.positionTile;
-	}
+	int getMortgage();
 	
-	@Override
-	public String getNameOf() {
-		return this.nameTile;
-	}
+	Optional<String> getOwner();
 	
-	@Override
-	public int getMortgage() {
-		return this.mortgage;
-	}
+	void setOwner(final Optional<String> owner);
 	
-	@Override
-	public Optional<String> getOwner() {
-		return this.owner;
-	}
+	Color getColorOf();
 	
-	@Override
-	public void setOwner(Optional<String> owner) {
-		this.owner = owner;
-	}
-	
-	@Override
-	public int getPrice() {
-		return this.price;
-	}
-	
-	@Override
-	public Color getColorOf() {
-		return this.colorTile;
-	}
 }
