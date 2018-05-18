@@ -1,7 +1,6 @@
 package model;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,6 +8,12 @@ import java.util.stream.Collectors;
 import utilities.Parse;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
+
+/**
+ * This class manage the game board. 
+ * 
+ * @author Matteo Alesiani
+ */
 
 public class Board {
 	
@@ -23,6 +28,11 @@ public class Board {
 		this.initializationSetTile();
 	}
 	
+	/**
+	 * Return the Set of all Obtainable Tile.
+	 * 
+	 * @return <tt>Set<Obtainable></tt> of all Obtainable.
+	 */
 	public Set<Obtainable> getObtainable(){
 		return this.gameBoard.stream()
 				   .filter(t -> t instanceof Obtainable)
@@ -30,6 +40,11 @@ public class Board {
 				   .collect(Collectors.toSet());
 	} 
 	
+	/**
+	 * Return the Set of all NotBuildable Tile.
+	 * 
+	 * @return <tt>Set<NotBuildable></tt> of all NotBuildable.
+	 */
 	public Set<NotBuildable> getNotBuildable(){
 		return this.gameBoard.stream()
 				   .filter(t -> t instanceof NotBuildable)
@@ -37,6 +52,13 @@ public class Board {
 				   .collect(Collectors.toSet());
 	}
 	
+	/**
+	 * Return the Tile of the specific position.
+	 * 
+	 * @param  index  index of the position.
+     * @throws IllegalArgumentException if the specified index is over the limit.
+	 * @return <tt>Tile</tt> of the specific position.
+	 */
 	public Tile getTileOf(final int index) {
 		if(index >= MAXINDEXBOARD) {
 			throw new IllegalArgumentException();
@@ -47,10 +69,20 @@ public class Board {
 				   .findFirst().get();
 	}
 	
+	/**
+	 * Return the Set of all Tile.
+	 * 
+	 * @return <tt>Set<Tile></tt> of all Tile.
+	 */
 	public Set<Tile> getTileBoard(){
 		return this.gameBoard;
 	}
 	
+	/**
+	 * Return the String corresponding to the mode of game.
+	 * 
+	 * @return <tt>mode</tt> of game.
+	 */
 	public String getModeGame() {
 		return this.mode;
 	}

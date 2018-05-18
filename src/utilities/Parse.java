@@ -10,6 +10,8 @@ import model.Rents;
 import utilities.enumerations.Color;
 
 /**
+ * This utility class provide same Function to parse the record read from file.
+ * 
  * @author Matteo Alesiani 
  */
 
