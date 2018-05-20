@@ -33,8 +33,8 @@ public class TreeViewHelper {
 //		});
 //		return product;
 		
-		List<TreeItem<String>> product =
-			    this.playersProperties.entrySet().stream().map(
+		//List<TreeItem<String>> product =
+		return this.playersProperties.entrySet().stream().map(
 			    t -> {
 			          TreeItem<String>father = new TreeItem<>(t.getKey().getName());
 			          List<TreeItem<String>> children = t.getValue()
@@ -46,7 +46,7 @@ public class TreeViewHelper {
 			         return father;
 			     }
 			    ).collect(Collectors.toList());
-		return product;
+		//return product;
 	}
 
 }

@@ -20,7 +20,7 @@ public class RealPlayer implements Player {
 	 */
 	private static final long serialVersionUID = 7360356929546552980L;
 
-	private final String name;
+	private static String name; //riguardati gli static
 	private TileInterface position;
 	// private final Icon sprite;
 	private Map<Color, List<Obtainable>> playersProperties;
@@ -33,7 +33,7 @@ public class RealPlayer implements Player {
 	public RealPlayer(final String name, final TileInterface position,
 			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
 			final List<Obtainable> mortgagedProperties /* ... */) {
-		this.name = name;
+		RealPlayer.name = name;
 		this.money = totMoney;
 		this.position = position;
 		this.housesNumber = 0;
@@ -81,11 +81,11 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void payments(Integer moneyAmount) {
+	public void payments(Integer moneyAmount) {//per evitare di fare dei thread sposterei il richiamp del toMortgage nel metodo can pay, in modo che, una volta guadagnati i soldi possa comunquecontinuare con il pagamento
 		if (!this.canPay(moneyAmount)) {
 			if (moneyAmount > totalAssets()) { // in questo caso il giocatore non è in alcun modo in grado di pagare
 												// l'affitto
-				// BANKAROTTA!
+				// BANKAROTTA! - da gestire
 
 			}
 			toMortgage(moneyAmount - this.money);
@@ -132,13 +132,10 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void mortgageProperties(List<Obtainable> mortgaged) {
-		int total = 0;
-		for (Obtainable t : mortgaged) {
-			total += t.getMortgage();
-		}
-		gainMoney(total);
+		gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum());
 		this.mortgagedProperties.addAll(mortgaged);
 	}
+	//è il caso di fare un "List Calculator" o troppo eccessivo?
 
 	private boolean canPay(Integer moneyAmount) {
 		return this.money >= moneyAmount;
