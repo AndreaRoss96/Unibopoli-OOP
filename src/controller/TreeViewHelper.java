@@ -16,9 +16,9 @@ import utilities.enumerations.Color;
  *
  */
 public class TreeViewHelper {
-	private final Map<Color, List<Obtainable>> playersProperties;
+	private final Map<Color, List<ObtainableImpl>> playersProperties;
 
-	public TreeViewHelper(final Map<Color, List<Obtainable>> playersProperties) {
+	public TreeViewHelper(final Map<Color, List<ObtainableImpl>> playersProperties) {
 		this.playersProperties = new HashMap<>();
 		this.playersProperties.putAll(playersProperties);
 	}

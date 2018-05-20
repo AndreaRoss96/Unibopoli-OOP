@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * Implementation of the interface CircularList<E>.
  */
 

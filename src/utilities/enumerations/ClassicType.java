@@ -11,7 +11,7 @@ public enum ClassicType {
     private final String staticValuesInitFile;
     private final String classicModeInitFile;
 
-    ClassicType(final String staticValuesInitFile, final String classicModeInitFile) {
+    private ClassicType(final String staticValuesInitFile, final String classicModeInitFile) {
         this.staticValuesInitFile = staticValuesInitFile;
         this.classicModeInitFile = classicModeInitFile;
     }

@@ -1,63 +1,59 @@
 package model;
 
+import java.util.Optional;
+import utilities.enumerations.Color;
+
 /**
+ * This interface extends Tile and shape the Obtainable Tile in the board.  
+ * 
  * @author Matteo Alesiani 
  */
 
-import java.util.Optional;
-
-import utilities.enumerations.Color;
-
-public abstract class Obtainable implements ObtainableInterface{
+public interface Obtainable extends Tile{
 	
-	private int positionTile;
-	private String nameTile;
-	private int price;	
-	private int mortgage;
-	private Optional<String> owner;
-	private Color colorTile;
+	/**
+	 * Return the total rent of the Tile.
+	 * If the Tile is a Buildable the method return the related rent in based on how many 
+	 * houses and hotel it owns.
+	 * If the Tile is a NotBuildable the method return a value proportional to the number
+	 * exited from the Dice. 
+	 * 
+	 * @return <tt>int</tt> rent of the Tile.
+	 */
+	int getRent();
 	
-	public Obtainable(final int positionTile, final int price, 
-					  final int mortgage, final Color colorTile){
-		this.positionTile = positionTile;
-		this.price = price;
-		this.mortgage = mortgage;
-		this.owner = Optional.empty();
-		this.colorTile = colorTile;
-	}
+	/**
+	 * Return the Price to buy a Tile.
+	 * 
+	 * @return <tt>int</tt> price of Tile.
+	 */
+	int getPrice();
 	
-	@Override
-	public int getPosition() {
-		return this.positionTile;
-	}
+	/**
+	 * Return the mortgage of the Tile, so far as the Player that have it need money to the Back.
+	 * 
+	 * @return <tt>int</tt> mortgage of tile.
+	 */
+	int getMortgage();
 	
-	@Override
-	public String getNameOf() {
-		return this.nameTile;
-	}
+	/**
+	 * Return the Optional<X> of String corresponding to the name of the owner. 
+	 * 
+	 * @return Optional<String> the Tile owner's name.
+	 */
+	Optional<String> getOwner();
 	
-	@Override
-	public int getMortgage() {
-		return this.mortgage;
-	}
+	/**
+	 * The method set the owner's name.
+	 * 
+	 * @param The Optional<String> <tt>owner</tt>.
+	 */
+	void setOwner(final Optional<String> owner);
 	
-	@Override
-	public Optional<String> getOwner() {
-		return this.owner;
-	}
-	
-	@Override
-	public void setOwner(Optional<String> owner) {
-		this.owner = owner;
-	}
-	
-	@Override
-	public int getPrice() {
-		return this.price;
-	}
-	
-	@Override
-	public Color getColorOf() {
-		return this.colorTile;
-	}
+	/**
+	 * Returns the type of the Color enum, that specific the family of belonging inside the board. 
+	 * 
+	 * @return <tt>Color</tt> of the family Tile.
+	 */
+	Color getColorOf();
 }

@@ -20,20 +20,22 @@ public class RealPlayer implements Player {
 	 */
 	private static final long serialVersionUID = 7360356929546552980L;
 
-	private static String name; //riguardati gli static
+
 	private TileInterface position;
+	private final String name;
 	// private final Icon sprite;
-	private Map<Color, List<Obtainable>> playersProperties;
-	private List<Obtainable> mortgagedProperties;
+	private Map<Color, List<ObtainableImpl>> playersProperties;
+	private List<ObtainableImpl> mortgagedProperties;
 	private Integer money;
 	private Integer housesNumber;
 	private Integer hotelsNumber;
 	private Prison status = utilities.enumerations.Status.Prison.NOT_PRISON;
 
-	public RealPlayer(final String name, final TileInterface position,
-			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
-			final List<Obtainable> mortgagedProperties /* ... */) {
-		RealPlayer.name = name;
+
+	public RealPlayer(final String name, final Tile position,
+			final Map<Color, List<ObtainableImpl>> playersProperties, final Integer totMoney,
+			final List<ObtainableImpl> mortgagedProperties /* ... */) {
+		this.name = name;
 		this.money = totMoney;
 		this.position = position;
 		this.housesNumber = 0;
@@ -66,12 +68,12 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void setPosition(TileInterface newPosition) {
+	public void setPosition(Tile newPosition) {
 		this.position = newPosition;
 	}
 
 	@Override
-	public TileInterface getPosition() {
+	public Tile getPosition() {
 		return this.position;
 	}
 
@@ -98,7 +100,7 @@ public class RealPlayer implements Player {
 
 	public Integer totalAssets() {
 		// mi servirebbe anche il valore di case/alberghi
-		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + this.money;
+		return getProperties().stream().mapToInt(ObtainableImpl::getMortgage).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {
@@ -111,7 +113,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void buyProperty(Obtainable property) {
+	public void buyProperty(ObtainableImpl property) {
 		if (canPay(property.getMortgage())) {
 			payments(property.getMortgage());
 			this.addProperty(property);
@@ -123,8 +125,8 @@ public class RealPlayer implements Player {
 
 	}
 
-	private void addProperty(Obtainable property) {
-		List<Obtainable> tmpList = new ArrayList<>();
+	private void addProperty(ObtainableImpl property) {
+		List<ObtainableImpl> tmpList = new ArrayList<>();
 		tmpList.add(property);
 		this.playersProperties.merge(property.getColorOf(), tmpList,
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
@@ -161,17 +163,17 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public List<Obtainable> getProperties() {
+	public List<ObtainableImpl> getProperties() {
 		return this.playersProperties.values().stream().flatMap(List::stream).collect(Collectors.toList());
 	}
 
 	@Override
-	public Map<Color, List<Obtainable>> getPopertiesByColor() {
+	public Map<Color, List<ObtainableImpl>> getPopertiesByColor() {
 		return this.playersProperties;
 	}
 
 	@Override
-	public List<Obtainable> getMortgagedProperties() {
+	public List<ObtainableImpl> getMortgagedProperties() {
 		return this.mortgagedProperties;
 	}
 }

@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import model.Buildable;
+import model.BuildableImpl;
 import model.Rents;
 import utilities.enumerations.Color;
 
 /**
+ * This utility class provide same Function to parse the record read from file.
+ * 
  * @author Matteo Alesiani 
  */
 
@@ -20,7 +22,7 @@ public class Parse {
 							return new Rents(t);
 						};
 						
-	public static final Function<String, Buildable> PARSING_INIT_TILE_BOARD = t -> {
+	public static final Function<String, BuildableImpl> PARSING_INIT_TILE_BOARD = t -> {
 						List<String> record = Arrays.stream(t.split(CHAR))
 													.collect(Collectors.toList());
 						
@@ -31,7 +33,7 @@ public class Parse {
 																.map(Integer::new).collect(Collectors.toList()));
 						Integer priceBuilding = new Integer(record.get(9));
 						
-						return new Buildable(positionTile.intValue(), price.intValue(), mortgage.intValue(), rents, 
+						return new BuildableImpl(positionTile.intValue(), price.intValue(), mortgage.intValue(), rents, 
 											 Color.valueOf(Color.class, record.get(10)), priceBuilding.intValue());
 					};
 }

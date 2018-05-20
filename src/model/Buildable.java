@@ -1,42 +1,30 @@
 package model;
 
-import utilities.enumerations.Color;
-
 /**
+ * This interface shape a sub-set of Tile, those allow the buil of house and 
+ * hotel above the property.
+ * 
  * @author Matteo Alesiani 
  */
 
-public class Buildable extends Obtainable implements BuildableInterface{
+public interface Buildable extends Obtainable{
 	
-	private Rents rents;
-	private int buildingNum;
-	private int priceBuilding;
+	/**
+	 * Return the number of buildings build above the property.
+	 * 
+	 * @return <tt>int</tt> number of buildings.
+	 */
+	int getBuildingNumber();
 	
-	public Buildable(final int positionTile, final int price, final int mortgage, 
-			final Rents rents, final Color colorTile, final int priceBuilding) {
-		super(positionTile, price, mortgage, colorTile);
-		this.rents = rents;
-		this.buildingNum = 0;
-		this.priceBuilding = priceBuilding;
-	}
+	/**
+	 * Return the price to pay for build a new building.
+	 * 
+	 * @return <tt>int</tt> mortgage of tile.
+	 */
+	int getPriceForBuilding();
 	
-	@Override
-	public int getRent() {
-		return this.rents.getRent(this.buildingNum);
-	}
-
-	@Override
-	public int getBuildingNumber() {
-		return this.buildingNum;
-	}
-	
-	@Override
-	public void incBuildings() {
-		this.buildingNum++;
-	}
-	
-	@Override
-	public int getPriceForBuilding() {
-		return this.priceBuilding;
-	}
+	/**
+	 * The method increment the number of buildings.
+	 */
+	void incBuildings();
 }
