@@ -1,4 +1,4 @@
-package model;
+package model.tiles;
 
 import java.util.Optional;
 import utilities.enumerations.Color;

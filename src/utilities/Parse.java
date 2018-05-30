@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import model.BuildableImpl;
-import model.Rents;
+import model.tiles.*;
 import utilities.enumerations.Color;
 
 /**

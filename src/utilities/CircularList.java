@@ -1,70 +1,21 @@
 package utilities;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.io.Serializable;
 
-/**
- * Implementation of the interface CircularList<E>.
- */
+public interface CircularList<E> extends Serializable, Iterable<E> {
 
-public class CircularList<E> extends ArrayList<E> implements CircularListInterface<E> {
+    void shift();
+
+    void setHead(int pos);
+
+    E getHead();
+
+    int size();
     
-	private static final long serialVersionUID = 8742821974151260090L;
-	
-	private int head;
+    boolean isEmpty();
 
-    public CircularList(final List<E> list) {
-        super(list);
-        this.head = -1;
-    }
+    boolean contains(Object elem);
 
-    @Override
-    public void shift() {
-    	this.head = ++this.head % super.size();
-    }
+    boolean remove(Object elem);
 
-    @Override
-    public E getHead() {
-        return super.get(head);
-    }
-
-    @Override
-    public E get(final int index) {
-        if (index < super.size()) {
-            return super.get(index);
-        }
-        
-        return null;
-    }
-
-    @Override
-    public void setHead(final int pos) {
-        if (pos < super.size()) {
-            this.head = pos;
-        }
-    }
-
-    @Override
-    public boolean remove(final Object elem) {
-        if (super.contains(elem)) {
-            if (indexOf(elem) <= this.head && this.head != 0) {
-                this.head--;
-            }
-            super.remove(elem);
-        }
-        return false;
-    }
-
-    @Override
-    public String toString() {
-        String temp = "";
-        for (int i = 0; i < super.size(); i++) {
-            if (i == this.head) {
-                temp += "->";
-            } 
-            temp += super.get(i).toString();
-            temp += ", ";
-        }
-        return temp;
-    }
 }

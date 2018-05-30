@@ -1,5 +1,7 @@
 package model;
 
+import model.tiles.*;
+
 import java.util.List;
 
 /**

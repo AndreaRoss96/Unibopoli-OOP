@@ -1,4 +1,4 @@
-package model;
+package model.tiles;
 
 /**
  * This interface is the root of the Tile hierarchy. 

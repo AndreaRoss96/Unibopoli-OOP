@@ -1,6 +1,6 @@
 package model;
 
-import utilities.CircularList;
+import utilities.CircularListImpl;
 
 /**
  * @author Edoardo Doglioni
@@ -8,7 +8,7 @@ import utilities.CircularList;
  */
 public class TurnImpl implements Turn {
 
-	public CircularList<Player> turnList;
+	public CircularListImpl<Player> turnList;
 	
 	public Player getCurrentPlayer() {
 		// TODO Auto-generated method stub
