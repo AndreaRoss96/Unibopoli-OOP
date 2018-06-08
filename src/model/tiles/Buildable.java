@@ -1,4 +1,4 @@
-package model;
+package model.tiles;
 
 /**
  * This interface shape a sub-set of Tile, those allow the buil of house and 

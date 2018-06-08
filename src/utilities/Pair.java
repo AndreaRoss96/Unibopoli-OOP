@@ -53,6 +53,6 @@ public class Pair<X,Y> {
 
 	@Override
 	public String toString() {
-		return "Pair [x=" + x + ", y=" + y + "]";
+		return "[x=" + x + ", y=" + y + "]";
 	}
 }

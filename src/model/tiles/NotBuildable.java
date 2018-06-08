@@ -1,4 +1,4 @@
-package model;
+package model.tiles;
 
 import utilities.enumerations.Status.NotBiuldableType;
 

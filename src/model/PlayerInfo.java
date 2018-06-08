@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import model.tiles.*;
 import utilities.enumerations.Color;
 import utilities.enumerations.Status.Prison;
 

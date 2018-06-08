@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import javafx.scene.control.TreeItem;
-import model.*;
+import model.tiles.ObtainableImpl;
 import utilities.enumerations.Color;
 
 /**

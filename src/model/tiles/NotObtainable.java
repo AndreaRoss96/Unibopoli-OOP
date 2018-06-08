@@ -1,4 +1,4 @@
-package model;
+package model.tiles;
 
 /**
  * @author Matteo Alesiani 

@@ -9,8 +9,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.tiles.*;
 import utilities.enumerations.Color;
-
 import utilities.enumerations.Status.Prison;
 
 public class RealPlayer implements Player {
@@ -21,7 +21,7 @@ public class RealPlayer implements Player {
 	private static final long serialVersionUID = 7360356929546552980L;
 
 
-	private TileInterface position;
+	private Tile position;
 	private final String name;
 	// private final Icon sprite;
 	private Map<Color, List<ObtainableImpl>> playersProperties;
@@ -133,7 +133,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void mortgageProperties(List<Obtainable> mortgaged) {
+	public void mortgageProperties(List<ObtainableImpl> mortgaged) {
 		gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum());
 		this.mortgagedProperties.addAll(mortgaged);
 	}
