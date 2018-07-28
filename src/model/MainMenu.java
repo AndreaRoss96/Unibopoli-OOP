@@ -1,7 +1,5 @@
 package model;
 
-import utilities.Avatar;
-
 public interface MainMenu {
 	
 	/**
@@ -20,5 +18,5 @@ public interface MainMenu {
 	 * 
 	 * @return
 	 */
-	Avatar playerAvatar();
+	Icon playerAvatar();
 }

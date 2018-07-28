@@ -1,7 +1,5 @@
 package model;
 
-import utilities.Avatar;
-
 public class MainMenuImpl implements MainMenu {
 
 	@Override
@@ -17,7 +15,7 @@ public class MainMenuImpl implements MainMenu {
 	}
 
 	@Override
-	public Avatar playerAvatar() {
+	public Icon playerAvatar() {
 		// TODO Auto-generated method stub
 		return null;
 	}

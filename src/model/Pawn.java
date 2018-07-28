@@ -1,16 +1,20 @@
 package model;
 
-import utilities.Avatar;
 import utilities.Point;
 import utilities.Vector;
 import utilities.enumerations.Direction;
 
 public class Pawn  {
 
+	
+	/**
+	 * TODO: Potrebbe essere interessante inserire la classe Icon qua.
+	 * 
+	 * */
 	private Point position;
 	private Vector velocity;
 	//private BoundingBox bbox;
-	private Avatar avatar;
+	private Icon avatar;
 	private Direction direction;
 	
 	public Pawn(Point position) {
@@ -19,7 +23,7 @@ public class Pawn  {
 		//this.avatar = null;
 	}
 	
-	protected Pawn(Point position, Vector velocity, Avatar avatar, Direction direction){
+	protected Pawn(Point position, Vector velocity, Icon avatar, Direction direction){
 		this.position = position;
 		this.velocity = velocity;
 		this.avatar = avatar;
@@ -76,7 +80,7 @@ public class Pawn  {
 		return this.velocity;
 	}
 	
-	public Avatar getAvatar() {
+	public Icon getAvatar() {
 		return this.avatar;
 	}
 }
