@@ -13,7 +13,12 @@ public abstract class ObtainableImpl implements Obtainable{
 	private int positionTile;
 	private String nameTile;
 	private int price;	
+	// mortgage è sempre la metà ?? in tal caso potremmo inserire un bool 
 	private int mortgage;
+	/**
+	 * TODO: aggiunto ora. Check con Rosso. finire di gestire l'attributo.
+	 * */
+	private boolean isMortgage;
 	private Optional<String> owner;
 	private Color colorTile;
 	
@@ -64,5 +69,15 @@ public abstract class ObtainableImpl implements Obtainable{
 	@Override
 	public Color getColorOf() {
 		return this.colorTile;
+	}
+	
+	
+	/**
+	 * 
+	 * TODO: ritornare alla funzionalità iniziale.
+	 * */
+	@Override
+	public String toString() {
+		return this.getNameOf();
 	}
 }
