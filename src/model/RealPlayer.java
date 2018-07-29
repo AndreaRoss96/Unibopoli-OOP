@@ -99,7 +99,7 @@ public class RealPlayer implements Player {
 	}
 
 	public Integer totalAssets() {
-		// mi servirebbe anche il valore di case/alberghi
+		// mi servirebbe anche il valore di case/alberghi -- ora è nel controller
 		return getProperties().stream().mapToInt(ObtainableImpl::getMortgage).sum() + this.money;
 	}
 
@@ -119,7 +119,7 @@ public class RealPlayer implements Player {
 			this.addProperty(property);
 			property.setOwner(Optional.of(this.getName()));
 		} else {
-			// dovrebbe aprirsi un'asta
+			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
 			throw new NotEnoughMoneyException(property.getMortgage());
 		}
 
@@ -134,7 +134,7 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void mortgageProperties(List<ObtainableImpl> mortgaged) {
-		gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum());
+		gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum()); //DialogController.getController().getTotalSpend(mortgaged)
 		this.mortgagedProperties.addAll(mortgaged);
 	}
 	//è il caso di fare un "List Calculator" o troppo eccessivo?
