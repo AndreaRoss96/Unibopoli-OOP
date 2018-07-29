@@ -9,6 +9,8 @@ import utilities.Parse;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
 
+import model.tiles.*;
+
 /**
  * This class manage the game board. 
  * 
@@ -20,6 +22,7 @@ public class Board {
 	private static final int MAXINDEXBOARD = 40;
 	
 	private Set<Tile> gameBoard;
+	private Set<Pawn> pawns;
 	private String mode;
 	
 	public Board(final String mode) {
@@ -106,4 +109,10 @@ public class Board {
 		//Collections.nCopies(4, new NotBuildable(positionTile, price, mortgage, colorTile, typeOf))
 		
 	}
+
+	public void addPawn(Pawn pawn) {
+		this.pawns.add(pawn);
+	}
+	
+	
 }

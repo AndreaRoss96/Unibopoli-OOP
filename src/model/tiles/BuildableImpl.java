@@ -20,6 +20,11 @@ public class BuildableImpl extends ObtainableImpl implements Buildable{
 		this.priceBuilding = priceBuilding;
 	}
 	
+
+	/***
+	 * TODO: getRent con parametro d'ingresso. 
+	 * */
+	
 	@Override
 	public int getRent() {
 		return this.rents.getRent(this.buildingNum);
