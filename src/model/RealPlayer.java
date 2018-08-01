@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import model.tiles.*;
 import utilities.enumerations.Color;
-import utilities.enumerations.Status.Prison;
 
 public class RealPlayer implements Player {
 
