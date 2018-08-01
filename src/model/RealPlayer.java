@@ -117,7 +117,6 @@ public class RealPlayer implements Player {
 		if (canPay(property.getMortgage())) {
 			payments(property.getMortgage());
 			this.addProperty(property);
-			property.setOwner(Optional.of(this.getName()));
 		} else {
 			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
 			throw new NotEnoughMoneyException(property.getMortgage());
@@ -130,6 +129,7 @@ public class RealPlayer implements Player {
 		tmpList.add(property);
 		this.playersProperties.merge(property.getColorOf(), tmpList,
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
+		property.setOwner(Optional.of(this.getName()));
 	}
 
 	@Override
@@ -139,7 +139,7 @@ public class RealPlayer implements Player {
 	}
 	//è il caso di fare un "List Calculator" o troppo eccessivo?
 
-	private boolean canPay(Integer moneyAmount) {
+	public boolean canPay(Integer moneyAmount) {
 		return this.money >= moneyAmount;
 	}
 

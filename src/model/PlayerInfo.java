@@ -87,6 +87,13 @@ public interface PlayerInfo extends Serializable {
 	 * @return true if player is in jail, false instead
 	 */
 	Prison isInJail();
+	
+	/**
+	 * Check if the can pay an amount of money
+	 * 
+	 * @return true if he/she can pay, false instead
+	 */
+	boolean canPay(Integer moneyAmount);
 
 	Map<Color, List<ObtainableImpl>> getPopertiesByColor();
 }

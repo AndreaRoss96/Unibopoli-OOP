@@ -5,10 +5,10 @@ import javafx.scene.control.Alert.AlertType;
 
 public class AlertAbstractFactory{
 
-	public Alert createErrorAllert(String contentText) {
+	public Alert createErrorAllert(String title, String headerText, String contentText) {
 		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error Dialog");
-		alert.setHeaderText("Ooops, there was an error!");
+		alert.setTitle(title);
+		alert.setHeaderText(headerText);
 		alert.setContentText(contentText);
 		
 		return alert;
