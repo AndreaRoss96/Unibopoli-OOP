@@ -19,7 +19,6 @@ public class BuildableImpl extends ObtainableImpl implements Buildable{
 		this.buildingNum = 0;
 		this.priceBuilding = priceBuilding;
 	}
-	
 
 	/***
 	 * TODO: getRent con parametro d'ingresso. 

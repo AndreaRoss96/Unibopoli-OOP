@@ -4,9 +4,13 @@ import utilities.Point;
 import utilities.Vector;
 import utilities.enumerations.Direction;
 
+/**
+ * 
+ * @author Matteo Alesiani
+ */
+
 public class Pawn  {
 
-	
 	/**
 	 * TODO: Potrebbe essere interessante inserire la classe Icon qua.
 	 * 
@@ -21,6 +25,10 @@ public class Pawn  {
 		this.position = position;
 		this.refresh(Direction.LEFT);
 		//this.avatar = null;
+	}
+	
+	public Pawn() {
+		// TODO Auto-generated constructor stub
 	}
 	
 	protected Pawn(Point position, Vector velocity, Icon avatar, Direction direction){

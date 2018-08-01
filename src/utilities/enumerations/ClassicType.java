@@ -6,27 +6,49 @@ package utilities.enumerations;
  */
 public enum ClassicType {
 
-    GeneralPurposeMap("/mode/staticValuesTile/ValuesTile.txt", "/mode/classic/Classic.txt");
+    GeneralPurposeMap("/mode/staticValuesTile/BuildableValues.txt", "/mode/classic/ClassicMode.txt", "/mode/staticValuesTile/NotBuildableValues.txt");
  
-    private final String staticValuesInitFile;
+    private final String staticBuildableValuesInitFile;
     private final String classicModeInitFile;
-
-    private ClassicType(final String staticValuesInitFile, final String classicModeInitFile) {
-        this.staticValuesInitFile = staticValuesInitFile;
+    private final String staticNotBuildableValuesInitFile;
+    
+    private ClassicType(final String staticBuildableValuesInitFile, final String classicModeInitFile, final String staticNotBuildableValuesInitFile) {
+        this.staticBuildableValuesInitFile = staticBuildableValuesInitFile;
         this.classicModeInitFile = classicModeInitFile;
+        this.staticNotBuildableValuesInitFile = staticBuildableValuesInitFile;
     }
 
     /**
      * @return the path for the initialization tile's values of the map. 
      */
-    public String getStaticValuesInitFile() {
-        return this.staticValuesInitFile;
+    public String getStaticBuildableValuesInitFile() {
+        return this.staticBuildableValuesInitFile;
     }
 
     /**
+     * @return TODO: da fare.
+     */
+    public String getStaticNotBuildableValuesInitFile() {
+    	return this.staticNotBuildableValuesInitFile;
+    }
+    
+    /**
+     * @return TODO: da fare.
+     */
+    public String getModeGame(String mode) {
+    	switch (mode) {    	
+			case "Case": return "Ciao";
+			case "CLASSIC":
+			default: this.getClassicModeInitFile();
+		}
+    	
+    	return null;
+    }
+    
+    /**
      * @return the path for the initialization name of the tile in the board.
      */
-    public String getClassicModeInitFile() {
+    private String getClassicModeInitFile() {
         return this.classicModeInitFile;
     }
 }
