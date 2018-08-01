@@ -6,7 +6,6 @@ import java.util.Map;
 
 import model.tiles.*;
 import utilities.enumerations.Color;
-import utilities.enumerations.Status.Prison;
 
 /**
  * This interface contains all getters and some minimum method for a limited
@@ -17,6 +16,9 @@ import utilities.enumerations.Status.Prison;
  *
  */
 public interface PlayerInfo extends Serializable {
+	
+	enum Prison { PRISON, NOT_PRISON }
+	
 	/**
 	 * Returns player name.
 	 * 

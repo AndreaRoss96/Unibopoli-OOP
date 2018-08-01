@@ -3,31 +3,27 @@ package model.tiles;
 import utilities.enumerations.Color;
 
 /**
+ * 
  * @author Matteo Alesiani 
  */
 
-import utilities.enumerations.Status.NotBiuldableType;
-
 public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 
-	private NotBiuldableType typeOf;
-	private int rent;
+	private static final int RENT = 50;
 	
 	public NotBuildableImpl(final int positionTile, final int price, 
-			  final int mortgage, final Color colorTile, final NotBiuldableType typeOf) {
+			  final int mortgage, final Color colorTile) {
 		super(positionTile, price, mortgage, colorTile);
 		
-		this.typeOf = typeOf;
 	}
 	
-	//TODO: da realizzare in base all'enum e non in base all'attributo.
 	@Override
 	public int getRent() {
-		return this.rent;
+		return RENT;
 	}
-
+	
 	@Override
-	public NotBiuldableType getType() {
-		return this.typeOf;
+	public Color getType() {
+		return this.getColorOf();
 	}
 }

@@ -1,7 +1,9 @@
 package model;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -22,11 +24,12 @@ public class Board {
 	private static final int MAXINDEXBOARD = 40;
 	
 	private Set<Tile> gameBoard;
-	private Set<Pawn> pawns;
+	private Map<PlayerInfo, Integer> pawns;
 	private String mode;
 	
 	public Board(final String mode) {
 		this.gameBoard = new HashSet<>();
+		this.pawns = new HashMap<>();
 		this.mode = mode;
 		this.initializationSetTile();
 	}
@@ -92,27 +95,37 @@ public class Board {
 	
 	private void initializationSetTile() {
 		try {
-			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticValuesInitFile())
-					.map(Parse.PARSING_INIT_TILE_BOARD::apply)
+			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticBuildableValuesInitFile())
+					.map(Parse.PARSING_BUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
+		
+			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticNotBuildableValuesInitFile())
+					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
+					.forEach(gameBoard::add);
+			
 			/**
-			 *	TODO: Gestire la funzione in modo da renderla ancora più generale !!! 
-			 */
-			ReadFile.readFile(ClassicType.GeneralPurposeMap.getClassicModeInitFile())
-					.forEach(record -> this.gameBoard.stream()
-													 .filter(t -> t.getPosition() == Integer.parseInt(record.substring(0, 0)))
-													 .findFirst().get()
-													 .setNameOf(record.substring(2)));
+			 * 
+			 * TODO: Riutilizziamo PARSING_LOAD_MODEGAME anche per i NotBuildable. Osservare cosa succede.
+			 * 
+			 * */
+			ReadFile.readFile(ClassicType.GeneralPurposeMap.getModeGame(this.mode))
+					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
+	
+		
+			
 		}catch (IOException e) {}
 		catch (Exception e) {}
+		
 		
 		//Collections.nCopies(4, new NotBuildable(positionTile, price, mortgage, colorTile, typeOf))
 		
 	}
 
-	public void addPawn(Pawn pawn) {
-		this.pawns.add(pawn);
+	public void addPawn(PlayerInfo player) {
+		this.addPawn(player, new Integer(0));
 	}
 	
-	
+	public void addPawn(PlayerInfo player, Integer position) {
+		this.pawns.put(player, position);
+	}
 }

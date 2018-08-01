@@ -79,7 +79,7 @@ public enum Color {
      * @return a string containing the color name.
      */
     public String getName() {
-        return name;
+        return this.name;
     }
 
     /**

@@ -23,13 +23,13 @@ public class RealPlayer implements Player {
 
 	private Tile position;
 	private final String name;
-	// private final Icon sprite;
+	// private final Pawn sprite;
 	private Map<Color, List<ObtainableImpl>> playersProperties;
 	private List<ObtainableImpl> mortgagedProperties;
 	private Integer money;
 	private Integer housesNumber;
 	private Integer hotelsNumber;
-	private Prison status = utilities.enumerations.Status.Prison.NOT_PRISON;
+	private Prison status = Prison.NOT_PRISON;
 
 
 	public RealPlayer(final String name, final Tile position,
@@ -153,13 +153,13 @@ public class RealPlayer implements Player {
 	@Override
 	public void goToJail() {
 		// move (...);
-		this.status = utilities.enumerations.Status.Prison.PRISON;
+		this.status = Prison.PRISON;
 
 	}
 
 	@Override
 	public void exitFromJail() {
-		this.status = utilities.enumerations.Status.Prison.NOT_PRISON;
+		this.status = Prison.NOT_PRISON;
 	}
 
 	@Override

@@ -1,6 +1,6 @@
 package model.tiles;
 
-import utilities.enumerations.Status.NotBiuldableType;
+import utilities.enumerations.Color;
 
 /**
  * This interface is a sub-set of Tile, obtainable to the Player but they can't 
@@ -14,9 +14,11 @@ import utilities.enumerations.Status.NotBiuldableType;
 public interface NotBuildable extends Obtainable {
 	
 	/**
+	 * 
+	 * TODO: sistemare
 	 * Return a type of NotBuildableType enum, there are STATION or SOCIETY.
 	 * 
 	 * @return <tt>NotBiuldableType</tt> type of enum.
 	 */
-	NotBiuldableType getType(); 
+	Color getType(); 
 }
