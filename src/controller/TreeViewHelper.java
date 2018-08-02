@@ -23,6 +23,12 @@ public class TreeViewHelper {
 	 * playersProperties) { this.playersProperties = new HashMap<>();
 	 * this.playersProperties.putAll(playersProperties); }
 	 */
+	
+	/**dovrà essere aggiunto "getTreeView" per la ridondanza del codice e per aver un treeItem
+	 * di checkBox
+	 * 
+	 * e anche "getSelectedItems" perché java fa cagare
+	 */
 
 	public List<TreeItem<String>> getProducts(final Map<Color, List<ObtainableImpl>> playersProperties) {
 		// this.playersProperties.forEach((k, v) -> {
