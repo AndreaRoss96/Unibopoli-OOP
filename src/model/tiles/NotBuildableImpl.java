@@ -9,7 +9,7 @@ import utilities.enumerations.Color;
 
 public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 
-	private static final int RENT = 50;
+	private static final int RENT = 25;
 	
 	public NotBuildableImpl(final int positionTile, final int price, 
 			  final int mortgage, final Color colorTile) {

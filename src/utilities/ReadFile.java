@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.util.stream.Stream;
 
 /**
- * This class prive a public static method to read File.
+ * This class private a public static method to read File.
  *  
  * @author Matteo Alesiani 
  */
@@ -20,7 +20,7 @@ public class ReadFile {
      * @throws IOException if the specified path is  not valid.
 	 * @return <tt>Stream of String</tt> of record inside the file.
 	 */
-	public static Stream<String> readFile(String pathfile) throws IOException {
+	public static Stream<String> readFile(String pathfile) throws IOException {		
 		return Files.lines(FileSystems.getDefault().getPath(pathfile));
 	}
 }

@@ -70,14 +70,9 @@ public abstract class ObtainableImpl implements Obtainable{
 	public Color getColorOf() {
 		return this.colorTile;
 	}
-	
-	
-	/**
-	 * 
-	 * TODO: ritornare alla funzionalità iniziale.
-	 * */
+
 	@Override
 	public String toString() {
-		return this.getNameOf();
+		return "";
 	}
 }

@@ -1,12 +1,13 @@
 package utilities.enumerations;
 
 /**
- * @author Matteo Alesiani
  * 
+ * @author Matteo Alesiani 
  */
 public enum ClassicType {
 
-    GeneralPurposeMap("/mode/staticValuesTile/BuildableValues.txt", "/mode/classic/ClassicMode.txt", "/mode/staticValuesTile/NotBuildableValues.txt");
+    GeneralPurposeMap("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/classic/ClassicMode.txt", 
+    				  "res/mode/staticValuesTile/NotBuildableValues.txt");
  
     private final String staticBuildableValuesInitFile;
     private final String classicModeInitFile;
@@ -15,7 +16,7 @@ public enum ClassicType {
     private ClassicType(final String staticBuildableValuesInitFile, final String classicModeInitFile, final String staticNotBuildableValuesInitFile) {
         this.staticBuildableValuesInitFile = staticBuildableValuesInitFile;
         this.classicModeInitFile = classicModeInitFile;
-        this.staticNotBuildableValuesInitFile = staticBuildableValuesInitFile;
+        this.staticNotBuildableValuesInitFile = staticNotBuildableValuesInitFile;
     }
 
     /**
@@ -38,11 +39,9 @@ public enum ClassicType {
     public String getModeGame(String mode) {
     	switch (mode) {    	
 			case "Case": return "Ciao";
-			case "CLASSIC":
-			default: this.getClassicModeInitFile();
+			case "CLASSIC": return this.getClassicModeInitFile();
+			default: return this.getClassicModeInitFile();
 		}
-    	
-    	return null;
     }
     
     /**

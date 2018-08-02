@@ -93,6 +93,15 @@ public class Board {
 		return this.mode;
 	}
 	
+	public void addPawn(PlayerInfo player) {
+		this.addPawn(player, new Integer(0));
+	}
+	
+	public void addPawn(PlayerInfo player, Integer position) {
+
+		this.pawns.put(player, position);
+	}
+	
 	private void initializationSetTile() {
 		try {
 			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticBuildableValuesInitFile())
@@ -103,29 +112,11 @@ public class Board {
 					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 			
-			/**
-			 * 
-			 * TODO: Riutilizziamo PARSING_LOAD_MODEGAME anche per i NotBuildable. Osservare cosa succede.
-			 * 
-			 * */
 			ReadFile.readFile(ClassicType.GeneralPurposeMap.getModeGame(this.mode))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
-	
-		
-			
 		}catch (IOException e) {}
 		catch (Exception e) {}
 		
-		
 		//Collections.nCopies(4, new NotBuildable(positionTile, price, mortgage, colorTile, typeOf))
-		
-	}
-
-	public void addPawn(PlayerInfo player) {
-		this.addPawn(player, new Integer(0));
-	}
-	
-	public void addPawn(PlayerInfo player, Integer position) {
-		this.pawns.put(player, position);
 	}
 }
