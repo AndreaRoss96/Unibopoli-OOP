@@ -1,7 +1,7 @@
 /**
  * 
  */
-package view;
+package view.gameDialog;
 
 import java.awt.Toolkit;
 import javafx.geometry.Insets;
@@ -26,15 +26,15 @@ public class Dialog {
     private static final int H_PADDING = 5;
     private static final double SCREEN_H = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     private static final double SCREEN_W = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-    private static final double PREF_H_SIZE = SCREEN_H * 0.40;
-    private static final double PREF_W_SIZE = SCREEN_W * 0.70;
+    private static final double PREF_H_SIZE = SCREEN_H * 0.70;
+    private static final double PREF_W_SIZE = SCREEN_W * 0.40;
 
     /**
      * Getter for SCREEN_H.
      * 
      * @return SCREEN_H.
      */
-    protected double getScreenH() {
+    protected static double getScreenH() {
         return SCREEN_H;
     }
 
@@ -43,7 +43,7 @@ public class Dialog {
      * 
      * @return SCREEN_W.
      */
-    protected double getScreenW() {
+    protected static double getScreenW() {
         return SCREEN_W;
     }
 
