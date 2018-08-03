@@ -5,6 +5,12 @@ package view;
 
 import java.awt.Toolkit;
 import javafx.geometry.Insets;
+import javafx.scene.image.Image;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -97,8 +103,16 @@ public class Dialog {
         stage.centerOnScreen();
         stage.setResizable(false);
         stage.initModality(Modality.APPLICATION_MODAL);
-		stage.setWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth()*0.40);
-		stage.setHeight(Toolkit.getDefaultToolkit().getScreenSize().getHeight()*0.70);
+		stage.setWidth(PREF_W_SIZE);
+		stage.setHeight(PREF_H_SIZE);
         return stage;
+    }
+    
+    protected Background getBackground() {//da modificare per rendere moddabile lo sfondo delle dialog
+    	Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
+		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
+		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
+				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
+		return background;
     }
 }
