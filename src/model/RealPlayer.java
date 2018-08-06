@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.exceptions.NotEnoughMoneyException;
 import model.tiles.*;
 import utilities.enumerations.Color;
 

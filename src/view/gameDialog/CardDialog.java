@@ -32,10 +32,10 @@ import model.tiles.Obtainable;
  */
 public class CardDialog extends Dialog {
 	private static final CardDialog SINGLETON = new CardDialog();
-	private static final Font PRINCIPAL_FONT = Font.font("Arial", FontWeight.BOLD, 18);
+	
 	private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 22);
 	private static final Font VALUE_FONT = Font.font("Arial", FontPosture.ITALIC, 18);
-	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048; // DIALOG
+	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
 
 	private Stage stage;
@@ -45,19 +45,19 @@ public class CardDialog extends Dialog {
 	 * 
 	 * @return the instance
 	 */
-	public static CardDialog getDialog() {
+	public static CardDialog getCardDialog() {
 		return SINGLETON;
 	}
 
 	/**
-	 * Creation of the pane for the cardDialog
+	 * Creation of the pane for the cardDialog.
 	 * 
 	 * @param property
-	 *            the property that have to be shown
+	 *            the property that have to be shown.
 	 * 
 	 */
 	public void createCardDialog(Obtainable property) {
-		this.stage = setStage();
+		this.stage = setStage("Whats'up?");
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox(property));
 		// root.setLeft(DialogController.getController().getContract(property));
@@ -69,16 +69,21 @@ public class CardDialog extends Dialog {
 		stage.show();
 	}
 
+	/**
+	 * Pane with the informations of the interessed card
+	 * 
+	 * @param property
+	 * @return AnchorPane
+	 */
 	private AnchorPane addRightBox(Obtainable property) {
 		AnchorPane anchor = new AnchorPane();
 		GridPane grid = new GridPane();
-		grid.setGridLinesVisible(false);
 
 		Label title = new Label("Contract Infos:\n\n");
 		title.setFont(TITLE_FONT);
 		title.setTextFill(property.getColorOf().getPaint().orElse(Color.BLACK));
 		Label labelOwner = new Label("Owner: ");
-		labelOwner.setFont(PRINCIPAL_FONT);
+		labelOwner.setFont(getPrincipalFont());
 		Label effectiveOwner = new Label(property.getOwner().orElse(" - "));
 		effectiveOwner.setFont(VALUE_FONT);
 		// insertion in the gridPAne
@@ -89,7 +94,7 @@ public class CardDialog extends Dialog {
 		if (property instanceof Buildable) {
 			Label building = new Label((((Buildable) property).getBuildingNumber() == 5 ? "HOTEL"
 					: "Building" + (((Buildable) property).getBuildingNumber() != 0 ? "s" : "")) + ": ");
-			building.setFont(PRINCIPAL_FONT);
+			building.setFont(getPrincipalFont());
 			Label buildingNumer = new Label(Integer.toString(((Buildable) property).getBuildingNumber()));
 			buildingNumer.setFont(VALUE_FONT);
 			grid.add(building, 0, 3);
@@ -116,7 +121,7 @@ public class CardDialog extends Dialog {
 	}
 
 	/**
-	 * update the gridPane with the necessary button to interact with a contract
+	 * Update the gridPane with the necessary button to interact with a contract
 	 * without owner. In short words, allows you to purchase the property in case it
 	 * was not already purchased by someone else.
 	 * 

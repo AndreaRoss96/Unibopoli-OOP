@@ -12,6 +12,10 @@ public class PlayersContractListView extends ListView<Text> {
 	
 	Map<Text, Paint> map;
 	
+	public PlayersContractListView() {
+		
+	}
+	
 	public PlayersContractListView(Player player) {
 		this.map = new HashMap<>();
 		player.getProperties().forEach(c -> {
