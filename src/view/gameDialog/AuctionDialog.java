@@ -29,7 +29,7 @@ public class AuctionDialog extends Dialog {
 	private static final Font COMMENT_FONT = Font.font("Arial", FontPosture.ITALIC, 12);
 
 	/**
-	 * Istance of AuctionDialog.
+	 * Instance of AuctionDialog.
 	 * 
 	 * @return the instance.
 	 */

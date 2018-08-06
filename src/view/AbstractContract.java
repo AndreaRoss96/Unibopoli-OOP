@@ -1,4 +1,4 @@
-package controller;
+package view;
 
 import java.awt.Toolkit;
 import javafx.geometry.Insets;
@@ -14,6 +14,8 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import model.tiles.Buildable;
+import model.tiles.NotBuildable;
 import model.tiles.Obtainable;
 
 /**
@@ -41,6 +43,7 @@ public abstract class AbstractContract {
 		insidePane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 		insidePane.setAlignment(Pos.TOP_CENTER);
 		insidePane.setStyle("-fx-border-color: black;");
+		
 		Image cardBoard = new Image("/images/cardBoard/white_cardstock.jpg");
 		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.REPEAT,
@@ -48,7 +51,9 @@ public abstract class AbstractContract {
 		DropShadow ds = new DropShadow();
 		ds.setOffsetY(3.0f);
 		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
+		
 		inseideFiller(insidePane, property);
+		
 		this.outsidePane = new AnchorPane(insidePane);
 		this.outsidePane.setBackground(background);
 		this.outsidePane.setStyle("-fx-border-color: black; -fx-border-radius: 10px; ");
@@ -77,6 +82,7 @@ public abstract class AbstractContract {
 	 * @param property
 	 */
 	protected abstract void inseideFiller(FlowPane insidePane, Obtainable property);
+	
 
 	protected static double getPrefHeight() {
 		return PREF_HEIGHT;

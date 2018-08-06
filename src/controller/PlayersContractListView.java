@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import model.Player;
+import model.PlayerInfo;
 
 public class PlayersContractListView extends ListView<Text> {
 	
@@ -16,7 +17,7 @@ public class PlayersContractListView extends ListView<Text> {
 		
 	}
 	
-	public PlayersContractListView(Player player) {
+	public PlayersContractListView(PlayerInfo player) {
 		this.map = new HashMap<>();
 		player.getProperties().forEach(c -> {
 			Text property = new Text(c.getNameOf());
@@ -31,9 +32,9 @@ public class PlayersContractListView extends ListView<Text> {
 	
 	private Paint listViewClick(Text text, Paint paint) {
 		if (this.map.containsKey(text)) {
-			Paint paint_tmp = this.map.get(text);
+			Paint tmpPaint = this.map.get(text);
 			this.map.remove(text);
-			return paint_tmp;
+			return tmpPaint;
 		} else {
 			this.map.put(text, paint);
 			return Color.GREY;
