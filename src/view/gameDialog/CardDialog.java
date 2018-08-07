@@ -31,6 +31,7 @@ import model.tiles.Obtainable;
  *
  */
 public class CardDialog extends Dialog {
+	
 	private static final CardDialog SINGLETON = new CardDialog();
 	
 	private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 22);
@@ -70,7 +71,7 @@ public class CardDialog extends Dialog {
 	}
 
 	/**
-	 * Pane with the informations of the interessed card
+	 * Pane with the informations of the interested card
 	 * 
 	 * @param property
 	 * @return AnchorPane

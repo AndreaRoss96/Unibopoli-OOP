@@ -47,6 +47,7 @@ public class MortgageDialog extends Dialog {
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
+		
 		final PlayersContractListView playerListView = new PlayersContractListView(Model.getCurrentPlayer());
 		rootPane.setLeft(playerListView);
 

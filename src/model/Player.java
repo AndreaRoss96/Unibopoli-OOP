@@ -62,14 +62,26 @@ public interface Player extends PlayerInfo {
 	 * the player must go to jail
 	 */
 	void goToJail();
-	
+
 	/**
 	 * the player must exit from jail
 	 */
-	 void exitFromJail();
+	void exitFromJail();
 
+	/**
+	 * Set the destination of the player.
+	 * 
+	 * @param newPosition
+	 *            the new position of the player
+	 */
 	void setPosition(Tile newPosition);
 
+	/**
+	 * It save a list of properties owned by the player but mortgaged.
+	 * 
+	 * @param mortgaged
+	 *            the list of mortgaged properties
+	 */
 	void mortgageProperties(List<ObtainableImpl> mortgaged);
 
 }
