@@ -4,8 +4,8 @@ import java.awt.Toolkit;
 
 public class PaneDimensionSetting {
 
-	private static final int OFFSET = 75;
-	private static final int CommandBridgeWIDTH = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth());
+	private static final int OFFSET = 85;
+	private static final int CommandBridgeWIDTH = ((int) Toolkit.getDefaultToolkit().getScreenSize().getWidth()) - OFFSET;
     private static final int CommandBridgeHEIGHT = ((int) Toolkit.getDefaultToolkit().getScreenSize().getHeight()) - OFFSET;
     
     private static final int GamePaneDIMENSION = CommandBridgeHEIGHT;

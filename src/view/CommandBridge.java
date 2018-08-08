@@ -13,7 +13,7 @@ import utilities.PaneDimensionSetting;
 
 public class CommandBridge extends Scene{
 
-	private static final String TITLE = "Prova";
+	private static final String TITLE = "UNIBOPOLY - La versione Universitaria di Monopoli.";
 	private static final CommandBridge BRIDGE = new CommandBridge();
 
 	private static Stage mainStage;
@@ -29,7 +29,7 @@ public class CommandBridge extends Scene{
 		//commandBridge.setRight(GamePane.get());
 		
 		this.setRoot(commandBridge);
-		//TODO: Da aggiungere foglio di stile -> this.getStylesheets().add("style.css");
+		this.getStylesheets().add("style.css");
 	}
 	
 	/**
