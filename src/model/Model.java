@@ -1,19 +1,28 @@
 package model;
 
-public class Model {
-	public int initGame() {
-		/*
-		 * Getta dal file le info della partita se esiste una partita già salvata 
-		 * e inizializza l'istanza della partita
-		 * Se non esiste una partita ne inizializza una nuova
-		 * 
-		 */
-		return 0;
-		
-	}
-	public void save() {
-		//commentazzo
-		//commento
-	}
+import java.util.List;
+import java.util.Set;
 
+import model.tiles.Tile;
+import utilities.Pair;
+
+public interface Model {
+
+	Player getCurrentPlayer();
+	
+	List<Player> getPlayers();
+	
+	void startGame();
+	
+	void saveGame();
+	
+	void loadGame();
+	
+	Pair<Integer, Integer> exitDice();
+	
+	Set<Tile> getBoard();
+	
+	void addPlayer(final Player player);
+	
+	
 }
