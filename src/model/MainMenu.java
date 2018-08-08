@@ -19,4 +19,5 @@ public interface MainMenu {
 	 * @return
 	 */
 	Icon playerAvatar();
+	
 }
