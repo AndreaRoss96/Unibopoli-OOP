@@ -1,7 +1,7 @@
 /**
  * 
  */
-package controller;
+package view;
 
 import java.util.Optional;
 import javafx.geometry.Insets;
@@ -23,8 +23,8 @@ import model.tiles.Obtainable;
  */
 public class ContractForBuildable extends AbstractContract {
 
-	private static final double STANDARD_HEIGHT = AbstractContract.getPrefHeight() * 0.045;
-	private static final double STANDARD_WIDTH = AbstractContract.getPrefWidth() / 2 - AbstractContract.getHGap() * 3;
+	private static final double STANDARD_HEIGHT = AbstractContract.getThisHeight() * 0.045;
+	private static final double STANDARD_WIDTH = AbstractContract.getThisWidth() / 2 - AbstractContract.getHGap() * 3;
 	private static final double BIG_WIDTH = 255;
 	private static final Font PROPERTY_FONT = Font.font("Arial", FontWeight.BOLD, 24);
 
@@ -39,7 +39,8 @@ public class ContractForBuildable extends AbstractContract {
 	 * model.tiles.Obtainable)
 	 */
 	@Override
-	protected void inseideFiller(FlowPane insidePane, Obtainable property) {
+	protected void inseideFiller(FlowPane insidePane, Obtainable abstractProperty) {
+		Buildable property = (Buildable) abstractProperty;
 		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), STANDARD_HEIGHT * 1.24,
 				insidePane);
 		Label propertyName = new Label(property.getNameOf());
@@ -53,14 +54,14 @@ public class ContractForBuildable extends AbstractContract {
 		labelCreator("RENT", Optional.of(property.getRent() + " $"), STANDARD_HEIGHT, insidePane);
 		for (int i = 1; i <= 5; i++) {
 			labelCreator("With " + (i != 5 ? i + " House" + (i == 1 ? "" : "s") : "HOTEL"),
-					Optional.of("$" /* mi serve il costo per ogni casa */), STANDARD_HEIGHT, insidePane);
+					Optional.of(String.valueOf(property.getRent())), STANDARD_HEIGHT, insidePane); //mi serve il costo per ogni casa
 		}
 		Line line = new Line();
 		line.setStartX(-100);
 		line.setEndX(100);
 		line.setStrokeType(StrokeType.OUTSIDE);
-		labelCreator("House cost", Optional.of("$$"), STANDARD_HEIGHT, insidePane);
-		labelCreator("Hotel cost\n(plus 4 more houses).", Optional.of("$$$"), STANDARD_HEIGHT * 2, insidePane);
+		labelCreator("House cost", Optional.of(String.valueOf(property.getPriceForBuilding())), STANDARD_HEIGHT, insidePane);
+		labelCreator("Hotel cost\n(plus 4 more houses).", Optional.of(String.valueOf(property.getPriceForBuilding())), STANDARD_HEIGHT * 2, insidePane);
 		labelCreator("Mortgage value", Optional.of(property.getMortgage() + ""), STANDARD_HEIGHT, insidePane);
 	}
 

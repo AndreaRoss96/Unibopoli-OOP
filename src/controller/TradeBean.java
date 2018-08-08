@@ -11,7 +11,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import model.Player;
+import model.player.Player;
 import model.tiles.Obtainable;
 
 public class TradeBean extends BorderPane {
@@ -65,7 +65,7 @@ public class TradeBean extends BorderPane {
 		return grid;
 	}
 
-	private VBox vTree(Optional<Player> giocatore) {
+	private VBox vTree(Optional<String> giocatore) {
 		VBox vBox = new VBox();
 		// serve il metodo del controller che trova i giocatori dai nomi
 		listView = giocatore.isPresent() ? new PlayersContractListView(giocatore.get()) : new PlayersContractListView();

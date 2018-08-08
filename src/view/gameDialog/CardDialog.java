@@ -31,6 +31,7 @@ import model.tiles.Obtainable;
  *
  */
 public class CardDialog extends Dialog {
+	
 	private static final CardDialog SINGLETON = new CardDialog();
 	
 	private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 22);
@@ -70,7 +71,7 @@ public class CardDialog extends Dialog {
 	}
 
 	/**
-	 * Pane with the informations of the interessed card
+	 * Pane with the informations of the interested card
 	 * 
 	 * @param property
 	 * @return AnchorPane
@@ -130,7 +131,7 @@ public class CardDialog extends Dialog {
 	private void gridWithNoOwner(GridPane grid) {
 		ImageView cashImage = new ImageView(new Image("/images/dialogButton/cash-in-hand-50.png"));
 		Button buyProperty = new Button("", cashImage);
-		// buyPreporty.setEnable(Controller.GetController().catPay());
+		// buyPreporty.setEnable(Controller.GetController().currentCanBuy(property);
 		Tooltip tooltip = new Tooltip(
 				(buyProperty.isDisable()) ? "You don't have enought money to buy this!" : "Buy this property!");
 		tooltip.setWrapText(true);
@@ -138,6 +139,7 @@ public class CardDialog extends Dialog {
 		buyProperty.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		buyProperty.setOnAction(e -> {
 			// Controller.BuyProperty(property) da implementare
+			//bisogna disabilitare il bottone se il giocatore non è nella stessa casella della carta
 			this.stage.close();
 		});
 		grid.add(buyProperty, 0, 0);
@@ -153,25 +155,26 @@ public class CardDialog extends Dialog {
 	 * @param property
 	 *            the interested property
 	 * @param disableButton
-	 *            if the property is unbuildable it is setted false
+	 *            if the property is unbuildable is setted false
 	 */
-
 	private void gridWithOwner(GridPane grid, Obtainable property, Boolean disableButton) {
 		Button addHouseButton = new Button("", new ImageView(new Image("/images/dialogButton/aggiungi_casa.png")));
 		Button removeHouseButton = new Button("", new ImageView(new Image("/images/dialogButton/rimuovi_casa.png")));
 		Button mortgageProperty = new Button("",
 				new ImageView(new Image("/images/dialogButton/icons8-contract-50.png")));
-		// bisogna implementare il controllo per abilitarli o meno dal COntroller
 		// metterei anche un piccolo tooltip
-		// addHouseButton.setDisable(disableButton ? true : metodo nel controller) vale
+		// addHouseButton.setDisable(disableButton ? true : Controller.getCOntroller().getCurrentPlayer().canPay((buildable) property.getHousePrice()) vale
 		// anche per rimuovi
 		// ricordati di mettere un controllo sul currentPlayer, se non è lo stesso
 		// proprietario della proprietà non deve poter costruire
+		// property.getOwner().get() == 
 		addHouseButton.setOnAction(e -> {
+			//addHouseButton.seDisable(COntroller.buildhouse());
 		});
 		removeHouseButton.setOnAction(e -> {
 		});
 		// mortgageProperty.setDisable(property.isMortgage());
+		// bisognerebbe solamnente cambiare icona al pulsante quanfo una classe viene ipotecata, in questo modo è possibile "spotecare" la propietà
 		grid.add(removeHouseButton, 0, 0);
 		grid.add(addHouseButton, 1, 0);
 		grid.add(mortgageProperty, 2, 0);

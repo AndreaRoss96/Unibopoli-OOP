@@ -1,7 +1,7 @@
 /**
  * 
  */
-package controller;
+package view;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -20,8 +20,8 @@ import model.tiles.Obtainable;
  */
 public class ContractForNotBuildable extends AbstractContract {
 
-	private static final double STANDARD_HEIGHT = AbstractContract.getPrefHeight() * 0.045;
-	private static final double STANDARD_WIDTH = AbstractContract.getPrefWidth() / 2 - AbstractContract.getHGap() * 3;
+	private static final double STANDARD_HEIGHT = AbstractContract.getThisHeight() * 0.045;
+	private static final double STANDARD_WIDTH = AbstractContract.getThisWidth() / 2 - AbstractContract.getHGap() * 3;
 	private static final double BIG_WIDTH = 255;
 	private static final Font PROPERTY_FONT = Font.font("Arial", FontWeight.BOLD, 24);
 

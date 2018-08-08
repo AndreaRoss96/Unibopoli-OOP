@@ -29,7 +29,7 @@ public class AuctionDialog extends Dialog {
 	private static final Font COMMENT_FONT = Font.font("Arial", FontPosture.ITALIC, 12);
 
 	/**
-	 * Istance of AuctionDialog.
+	 * Instance of AuctionDialog.
 	 * 
 	 * @return the instance.
 	 */
@@ -52,7 +52,7 @@ public class AuctionDialog extends Dialog {
 		
 		final GridPane grid = new GridPane();
 		final ObservableList<PasswordField> passwordList = FXCollections.observableArrayList();
-		final Label commentLabel = new Label("(after typer, press enter)");
+		final Label commentLabel = new Label("(after typed, press enter)");
 		final int counter;
 		grid.setPadding(getPrefInsets());
 		for (counter = 0; counter < ModelImpl.getPlayerList().size(); counter++) {

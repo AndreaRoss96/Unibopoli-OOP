@@ -1,4 +1,4 @@
-package model;
+package model.player;
 
 import java.io.Serializable;
 import java.util.List;
@@ -49,7 +49,7 @@ public interface PlayerInfo extends Serializable {
 	
 	/**
 	 * Calculate the total of the player's assets
-	 * (all the properties's mortgages plsu his money)
+	 * (all the properties's mortgages plus his money)
 	 * 
 	 * @return player's total assets
 	 */

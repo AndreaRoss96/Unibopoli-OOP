@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 import java.util.Set;
 
+import model.player.Player;
 import model.tiles.Tile;
 import utilities.Pair;
 

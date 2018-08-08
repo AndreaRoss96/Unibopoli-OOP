@@ -10,8 +10,7 @@ public class MainMenuImpl implements MainMenu {
 
 	@Override
 	public String playerName() {
-		// TODO Auto-generated method stub
-		return null;
+		
 	}
 
 	@Override
