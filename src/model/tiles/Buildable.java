@@ -27,4 +27,6 @@ public interface Buildable extends Obtainable{
 	 * The method increment the number of buildings.
 	 */
 	void incBuildings();
+	
+	int getRent(final int buildingsNr);
 }

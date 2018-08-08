@@ -1,6 +1,6 @@
 package model.tiles;
 
-import utilities.enumerations.Color;
+import javafx.scene.image.ImageView;
 
 /**
  * This interface is a sub-set of Tile, obtainable to the Player but they can't 
@@ -13,6 +13,8 @@ import utilities.enumerations.Color;
 
 public interface NotBuildable extends Obtainable {
 	
+	
+	
 	/**
 	 * 
 	 * TODO: sistemare
@@ -20,5 +22,7 @@ public interface NotBuildable extends Obtainable {
 	 * 
 	 * @return <tt>NotBiuldableType</tt> type of enum.
 	 */
-	Color getType(); 
+	String getType(); 
+	
+	ImageView getImage();
 }

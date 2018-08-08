@@ -1,11 +1,14 @@
 package model;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import utilities.Parse;
 import utilities.ReadFile;
@@ -47,6 +50,16 @@ public class Board {
 	} 
 	
 	/**
+	 * TODO: può ottimizzare gli altri.
+	 * 
+	 */
+	public Set<? super Tile> getTiles(Predicate<? super Tile> predicate){
+		return this.gameBoard.stream()
+				   .filter(predicate::test)
+				   .collect(Collectors.toSet());
+	}
+	
+	/**
 	 * Return the Set of all NotBuildable Tile.
 	 * 
 	 * @return <tt>Set<NotBuildable></tt> of all NotBuildable.
@@ -66,9 +79,7 @@ public class Board {
 	 * @return <tt>Tile</tt> of the specific position.
 	 */
 	public Tile getTileOf(final int index) {
-		if(index >= MAXINDEXBOARD) {
-			throw new IllegalArgumentException();
-		}
+		if(index >= MAXINDEXBOARD) { throw new IllegalArgumentException(); }
 		
 		return this.gameBoard.stream()
 				   .filter(t -> t.getPosition() == index)
@@ -81,7 +92,8 @@ public class Board {
 	 * @return <tt>Set<Tile></tt> of all Tile.
 	 */
 	public Set<Tile> getTileBoard(){
-		return this.gameBoard;
+		return this.gameBoard.stream()
+				   .sorted(Comparator.comparing(Tile::getPosition)).collect(Collectors.toSet());
 	}
 	
 	/**
@@ -101,7 +113,10 @@ public class Board {
 
 		this.pawns.put(player, position);
 	}
-	
+	/**
+	 * TODO: Finire questa inizializzazione ed eliminare metodi non necessari
+	 * 
+	 * */
 	private void initializationSetTile() {
 		try {
 			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticBuildableValuesInitFile())
@@ -116,6 +131,8 @@ public class Board {
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 		}catch (IOException e) {}
 		catch (Exception e) {}
+		
+		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
 		
 		//Collections.nCopies(4, new NotBuildable(positionTile, price, mortgage, colorTile, typeOf))
 	}
