@@ -31,13 +31,13 @@ public class MortgageDialog extends Dialog {
 		
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
-		final PlayersContractListView playerListView = new PlayersContractListView(Model.getCurrentPlayer());
+		final PlayersContractListView playerListView = new PlayersContractListView(ModelImpl.getCurrentPlayer());
 		rootPane.setLeft(playerListView);
 		
 		final VBox vBox = new VBox();
 		vBox.setPadding(getButtonInsets());
 		vBox.setSpacing(SPACING);
-		final Label title = new Label (Model.currentPlayer().getName());
+		final Label title = new Label (ModelImpl.currentPlayer().getName());
 		title.setFont(getPrincipalFont());
 		
 		final BorderPane bottomPane = addButtonBox(stage, "Red", ""); //aggiungi Path

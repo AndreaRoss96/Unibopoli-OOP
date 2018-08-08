@@ -55,8 +55,8 @@ public class AuctionDialog extends Dialog {
 		final Label commentLabel = new Label("(after typer, press enter)");
 		final int counter;
 		grid.setPadding(getPrefInsets());
-		for (counter = 0; counter < Model.getPlayerList().size(); counter++) {
-			grid.add(new Label(Model.getPlayersList().get(counter)), 0, counter);
+		for (counter = 0; counter < ModelImpl.getPlayerList().size(); counter++) {
+			grid.add(new Label(ModelImpl.getPlayersList().get(counter)), 0, counter);
 			PasswordField pw = new PasswordField();
 			pw.setOnAction(e -> {
 				pw.setText(DialogController.getController().passwordFill(pw.getText()));
