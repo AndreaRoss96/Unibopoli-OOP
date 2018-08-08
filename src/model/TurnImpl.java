@@ -1,5 +1,6 @@
 package model;
 
+import model.player.Player;
 import utilities.CircularListImpl;
 
 /**

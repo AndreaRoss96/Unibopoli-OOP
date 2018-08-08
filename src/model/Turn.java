@@ -1,4 +1,7 @@
 package model;
+
+import model.player.Player;
+
 /**
  * This interface contains the implementation of the turn, the rotation of the player
  * will be managed by a circular list.
