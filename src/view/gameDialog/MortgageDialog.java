@@ -12,6 +12,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.Model;
+import utilities.AlertFactory;
 
 /**
  * This dialog allows the current player to mortgage it's properties to pay a
@@ -48,18 +49,18 @@ public class MortgageDialog extends Dialog {
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 		
-		final PlayersContractListView playerListView = new PlayersContractListView(Model.getCurrentPlayer());
+		final PlayersContractListView playerListView = new PlayersContractListView(Controller.getCurrentPlayer());
 		rootPane.setLeft(playerListView);
 
 		final VBox vBox = new VBox();
 		vBox.setPadding(getButtonInsets());
 		vBox.setSpacing(SPACING);
-		final Label title = new Label(Model.currentPlayer().getName());
+		final Label title = new Label(Controller.currentPlayer().getName());
 		title.setFont(getPrincipalFont());
 		final Label obtainedMoney = new Label("Accumulated money:\n0");
 		vBox.getChildren().add(title);
-		vBox.getChildren().add(new Label(Model.getCurrentPlayer().getMoney()));
-		vBox.getChildren().add(new Label(Model.getCurrentPlayer.totalAssets()));
+		vBox.getChildren().add(new Label(Controller.getCurrentPlayer().getMoney()));
+		vBox.getChildren().add(new Label(Controller.getCurrentPlayer.totalAssets()));
 		vBox.getChildren().add(new Label("Minimum expense:\n" + minimumExpense + "$"));
 		vBox.getChildren().add(obtainedMoney);
 		rootPane.setCenter(vBox);
@@ -72,10 +73,13 @@ public class MortgageDialog extends Dialog {
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			// Controller
+			obtainedMoney.setText(/*metodo nel controller che calcola per ogni proprietà selezionata il prezzo totale*/);
 		});
 
 		mortgageButton.setOnAction(e -> {
-			DialogController.getController().setMortgaged(currentPlayer, playerListView.getSelected());
+			AlertFactory.
+			DialogController.getController().setMortgaged(playerListView.getSelected());
+			stage.close();
 		});
 
 	}

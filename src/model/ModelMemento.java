@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
+import model.player.Player;
 import model.tiles.Obtainable;
 
 /**
@@ -34,7 +35,8 @@ public class ModelMemento implements Serializable {
 	 * @param currentPlayer
 	 *            the current player.
 	 * @param properties
-	 *            the properties of the game. -- imprevisti e probabilità --
+	 *            the properties of the game.
+	 * -- imprevisti e probabilità --
 	 */
 	public ModelMemento(final Board gameBoard, final List<Player> players, final int currentPlayer,
 			final Set<Obtainable> properties /*

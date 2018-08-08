@@ -6,8 +6,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import model.Player;
-import model.PlayerInfo;
+import model.player.Player;
+import model.player.PlayerInfo;
 
 public class PlayersContractListView extends ListView<Text> {
 	
