@@ -3,55 +3,58 @@ package model;
 import java.util.List;
 import java.util.Set;
 
-import model.player.Player;
-import model.player.PlayerInfo;
-import model.tiles.Obtainable;
+import model.tiles.Tile;
+import utilities.Pair;
 
-
-public class ModelImpl implements Model {
-	
-	private final Board board;
-	private final List<Player> players;
-	private final Set<Obtainable> properties;
-	private final Player currentPlayer;
-	//imprevisti e probabilità
-	
-
-	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final Player currentPlayer) {
-		this.board = board;
-		this.players = players;
-		this.properties = properties;
-		this.currentPlayer = currentPlayer;
-		// TODO Auto-generated constructor stub
-	}
+public class ModelImpl implements Model{
 
 	@Override
-	public PlayerInfo getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<PlayerInfo> getPlayerList() {
+	public List<Player> getPlayers() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void removePlayer(PlayerInfo player) {
+	public void startGame() {
 		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void saveGame() {
-		ResourceManager.getInstance().saveOnFile(CareMementoTaker.getMementoInstance().getMemento());
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
-	public void endGame() {
+	public void loadGame() {
 		// TODO Auto-generated method stub
-
+		
 	}
+
+	@Override
+	public Pair<Integer, Integer> exitDice() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Tile> getBoard() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void addPlayer(Player player) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

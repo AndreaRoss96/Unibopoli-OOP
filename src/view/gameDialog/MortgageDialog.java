@@ -2,6 +2,7 @@ package view.gameDialog;
 
 import com.sun.xml.internal.ws.message.RootElementSniffer;
 
+import controller.Controller;
 import controller.PlayersContractListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -48,6 +49,7 @@ public class MortgageDialog extends Dialog {
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
+
 		
 		final PlayersContractListView playerListView = new PlayersContractListView(Controller.getCurrentPlayer());
 		rootPane.setLeft(playerListView);
@@ -55,7 +57,9 @@ public class MortgageDialog extends Dialog {
 		final VBox vBox = new VBox();
 		vBox.setPadding(getButtonInsets());
 		vBox.setSpacing(SPACING);
+
 		final Label title = new Label(Controller.currentPlayer().getName());
+
 		title.setFont(getPrincipalFont());
 		final Label obtainedMoney = new Label("Accumulated money:\n0");
 		vBox.getChildren().add(title);

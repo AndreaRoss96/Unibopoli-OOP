@@ -18,7 +18,7 @@ public abstract class ObtainableImpl implements Obtainable{
 	/**
 	 * TODO: aggiunto ora. Check con Rosso. finire di gestire l'attributo.
 	 * */
-	private boolean isMortgage;
+	private StatusTile hasMortgage;
 	private Optional<String> owner;
 	private Color colorTile;
 	
@@ -27,6 +27,7 @@ public abstract class ObtainableImpl implements Obtainable{
 		this.positionTile = positionTile;
 		this.price = price;
 		this.mortgage = mortgage;
+		this.hasMortgage = StatusTile.NOT_MORTGAGE;
 		this.owner = Optional.empty();
 		this.colorTile = colorTile;
 	}
@@ -40,6 +41,12 @@ public abstract class ObtainableImpl implements Obtainable{
 	public String getNameOf() {
 		return this.nameTile;
 	}
+	
+	@Override
+	public StatusTile hasMortgage() {
+		return this.hasMortgage;
+	}
+	
 	
 	@Override
 	public void setNameOf(String nameTile) {

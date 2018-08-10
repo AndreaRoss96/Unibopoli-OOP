@@ -6,6 +6,11 @@ import javafx.scene.control.Alert.AlertType;
 
 public class AlertFactory{
 
+	
+	/***
+	 * TODO: SERVE??
+	 * 
+	 * */
 	public static Alert createErrorAlert(String title, String headerText, String contentText) {
 		Alert alert = new Alert(AlertType.ERROR);
 		alert.setTitle(title);

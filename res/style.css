@@ -1,0 +1,9 @@
+#backgroudTransparentTile{
+    background: #000000;
+    -fx-opacity: 0.9;
+}
+
+#backgroudBoard{
+	-fx-background-color: #83f7c2;
+    
+}

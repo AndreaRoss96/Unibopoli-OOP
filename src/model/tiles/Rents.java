@@ -31,6 +31,12 @@ public class Rents {
 	 * @return int <tt>rent</tt> of relative numHouse.
 	 */
 	public int getRent(int numHouse) {
+		
+		
+		/***
+		 * 
+		 * Aggiungere eccezione.
+		 * */
 		return this.rentsManagement.get(numHouse);
 	}
 }
