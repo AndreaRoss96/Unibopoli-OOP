@@ -4,8 +4,9 @@
 package model;
 
 /**
- * Singleton that manages the actual saved {@link model.ModelMemento}.
+ * Singleton that manages the actual saved ModelMemento.
  *
+ * @author Rossolini Andrea
  */
 public class CareMementoTaker {
 

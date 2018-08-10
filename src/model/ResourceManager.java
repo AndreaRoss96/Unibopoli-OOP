@@ -11,9 +11,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.Instant;
 
-import com.sun.corba.se.impl.transport.ReadTCPTimeoutsImpl;
-
-import javafx.scene.control.Alert;
 import utilities.AlertFactory;
 
 /**
@@ -25,7 +22,8 @@ public class ResourceManager {
 
 	private static final ResourceManager SINGLETON = new ResourceManager();
 
-	private static final Path SAVE_DIRECTORY_PATH = Paths.get(System.getProperty("user.home"), File.separator, ".unibopoli");
+	private static final Path SAVE_DIRECTORY_PATH = Paths.get(System.getProperty("user.home"), File.separator,
+			".unibopoli");
 
 	/**
 	 * @return Instance of resource manager
@@ -35,7 +33,7 @@ public class ResourceManager {
 	}
 
 	private ResourceManager() {
-            if (!Files.exists(SAVE_DIRECTORY_PATH)) {
+		if (!Files.exists(SAVE_DIRECTORY_PATH)) {
 			try {
 				Files.createDirectory(SAVE_DIRECTORY_PATH);
 			} catch (IOException e) {
@@ -68,7 +66,7 @@ public class ResourceManager {
 			fileOutput.close();
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "Ther's been an error during the file saving!", null).showAndWait();
+			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file saving!", null).showAndWait();
 		}
 	}
 
@@ -88,14 +86,16 @@ public class ResourceManager {
 			fileInput.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "Ther's been an error during the file loading!", null).showAndWait();
+			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!", null)
+					.showAndWait();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "Ther's been an error during the file loading!", null).showAndWait();
+			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!", null)
+					.showAndWait();
 		}
 		return memento;
 	}
-	
+
 	public String getSaveDirectory() {
 		return SAVE_DIRECTORY_PATH.toString();
 	}

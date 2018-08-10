@@ -20,7 +20,7 @@ public class ModelMemento implements Serializable {
 
 	private final Board gameBoard;
 	private final List<Player> players;
-	private final int currentPlayer;
+	private final Player currentPlayer;
 	private final Set<Obtainable> properties;
 	// private final Set<Imprevisti> imprevistis;
 	// private final Set<Probabilità> probabilitàs;
@@ -38,7 +38,7 @@ public class ModelMemento implements Serializable {
 	 *            the properties of the game.
 	 * -- imprevisti e probabilità --
 	 */
-	public ModelMemento(final Board gameBoard, final List<Player> players, final int currentPlayer,
+	public ModelMemento(final Board gameBoard, final List<Player> players, final Player currentPlayer,
 			final Set<Obtainable> properties /*
 												 * final Set<Imprevisti> imprevistis, final Set<Probabilità>
 												 * probabilitàs
@@ -67,7 +67,7 @@ public class ModelMemento implements Serializable {
 	/**
 	 * @return the current player.
 	 */
-	public int getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 

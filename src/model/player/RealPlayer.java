@@ -57,9 +57,8 @@ public class RealPlayer implements Player {
 
 	@Override
 	public Integer getHouseNumber() {
-		// con una stream in futuro calcolerò la quantità di case presente in ogni
-		// proprietà del giocatore
-		return this.housesNumber;
+//		getProperties().stream().filter(property -> property instanceof Buildable).collect(Collectors.toList());
+		
 	}
 
 	@Override
