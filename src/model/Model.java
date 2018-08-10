@@ -25,23 +25,15 @@ public interface Model {
 	 */
 	void removePlayer(PlayerInfo player);
 	
-	void startGame();
-	
 	/**
 	 * Saves the game.
 	 */
 	void saveGame();
-	
-	void loadGame();
-	
+		
 	/**
-	 * Quits the game.
+	 * @return game's dice
 	 */
-	void endGame();
-	
 	Pair<Integer, Integer> exitDice();
 	
 	Set<Tile> getBoard();
-	
-	void addPlayer(final Player player);
 }

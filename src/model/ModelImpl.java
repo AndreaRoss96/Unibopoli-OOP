@@ -13,33 +13,22 @@ public class ModelImpl implements Model{
 	private final Board board;
 	private final List<Player> players;
 	private final Set<Obtainable> properties;
-	private final Player currentPlayer;
+	private final PlayerInfo currentPlayer;
+	private final List<PlayerInfo> loserList;
 	//imprevisti e probabilità
 	
-	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final Player currentPlayer) {
+	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final PlayerInfo currentPlayer, final List<PlayerInfo> loserList) {
 		this.board = board;
 		this.players = players;
 		this.properties = properties;
 		this.currentPlayer = currentPlayer;
+		this.loserList = loserList;
 		// TODO Auto-generated constructor stub
 	}
 
 	@Override
-	public Player getCurrentPlayer1() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public List<Player> getPlayers() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void startGame() {
-		// TODO Auto-generated method stub
-		
+		return this.players;
 	}
 
 	@Override
@@ -48,52 +37,24 @@ public class ModelImpl implements Model{
 	}
 
 	@Override
-	public void loadGame() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public Pair<Integer, Integer> exitDice() {
-		// TODO Auto-generated method stub
-		return null;
+		return Dice.getInstance().getDice();
 	}
 
 	@Override
 	public Set<Tile> getBoard() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void addPlayer(Player player) {
-		// TODO Auto-generated method stub
-		
+		return this.board.getTileBoard();
 	}
 
 	@Override
 	public PlayerInfo getCurrentPlayer() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.currentPlayer;
 	}
 
+	//riguarda se è corretto playerInfo/player
 	@Override
 	public void removePlayer(PlayerInfo player) {
-		// TODO Auto-generated method stub
-		
+		this.loserList.add(this.players.remove(this.players.indexOf(player)));
 	}
-
-	@Override
-	public void endGame() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addPlayer(Player player) {
-		// TODO Auto-generated method stub
-		
-	}
-
 
 }

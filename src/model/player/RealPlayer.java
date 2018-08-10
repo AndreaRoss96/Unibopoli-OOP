@@ -27,7 +27,7 @@ public class RealPlayer implements Player {
 	private Map<Color, List<ObtainableImpl>> playersProperties;
 	private List<ObtainableImpl> mortgagedProperties;
 	private Integer money;
-	private Integer housesNumber;
+	private Integer housesNumber;//togli
 	private Integer hotelsNumber;
 	private Prison status = Prison.NOT_PRISON;
 
@@ -99,7 +99,7 @@ public class RealPlayer implements Player {
 
 	public Integer totalAssets() {
 		// mi servirebbe anche il valore di case/alberghi -- ora è nel controller
-		return getProperties().stream().mapToInt(ObtainableImpl::getMortgage).sum() + this.money;
+		return getProperties().stream().mapToInt(ObtainableImpl::getMortgage).sum() + getProperties().stream().map(value -> (BuildableImpl) value).mapToInt(value -> value.getPriceForBuilding()/2).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {
