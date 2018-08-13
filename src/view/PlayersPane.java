@@ -1,5 +1,6 @@
 package view;
 
+import controller.Controller;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -15,7 +16,7 @@ import utilities.PaneDimensionSetting;
  */
 public class PlayersPane extends VBox{
 	
-	private PlayersPane() {
+	public PlayersPane() {
 		super(new VBox());
 		this.setPrefSize(PaneDimensionSetting.getInstance().getLateralPaneWidth(),
 				PaneDimensionSetting.getInstance().getLateralPaneHeight());
@@ -43,7 +44,7 @@ public class PlayersPane extends VBox{
 	 * 
 	 * @return VBox
 	 */
-	public VBox get() {
+	public PlayersPane get() {
 		return this;
 	}
 }

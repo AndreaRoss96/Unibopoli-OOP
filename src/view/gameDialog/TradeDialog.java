@@ -2,7 +2,6 @@ package view.gameDialog;
 
 import java.util.Optional;
 
-import controller.TradeBean;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;

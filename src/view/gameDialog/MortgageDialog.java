@@ -3,7 +3,6 @@ package view.gameDialog;
 import com.sun.xml.internal.ws.message.RootElementSniffer;
 
 import controller.Controller;
-import controller.PlayersContractListView;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;

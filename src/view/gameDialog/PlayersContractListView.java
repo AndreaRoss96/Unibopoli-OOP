@@ -1,4 +1,4 @@
-package controller;
+package view.gameDialog;
 
 import java.util.HashMap;
 import java.util.Map;
