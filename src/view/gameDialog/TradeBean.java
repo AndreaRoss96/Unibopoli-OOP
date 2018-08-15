@@ -25,8 +25,6 @@ public class TradeBean extends BorderPane {
 		moneyToTrade = new TextField("0");
 		this.setTop(addGridPane(Region.USE_COMPUTED_SIZE, currentPlayer));
 		this.setCenter(vTree(Optional.empty()));
-		this.setVisible(true);
-
 		this.autosize();
 	}
 
@@ -39,6 +37,7 @@ public class TradeBean extends BorderPane {
 	 * @param currentPlayer
 	 * @return GridPane
 	 */
+	//posso passargli la lista dei giocatori e il giocatore corrente al trade e fa lui
 	private GridPane addGridPane(double width, boolean currentPlayer) {
 		GridPane grid = new GridPane();
 		grid.setPadding(new Insets(2, 5, 2, 5));

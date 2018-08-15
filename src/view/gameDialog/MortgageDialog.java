@@ -49,7 +49,8 @@ public class MortgageDialog extends Dialog {
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 
-		
+		//attenzione, non vuole solo il current player, ma qualsiasi giocatore può andare in bancarotta, o meglio, bisognerebbe vedere gli imprevisti
+		//comunque sarebbe bene passargli in ingresso il current player per mantenere l'incapulamento
 		final PlayersContractListView playerListView = new PlayersContractListView(Controller.getCurrentPlayer());
 		rootPane.setLeft(playerListView);
 
@@ -77,6 +78,7 @@ public class MortgageDialog extends Dialog {
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			// Controller
 			obtainedMoney.setText(/*metodo nel controller che calcola per ogni proprietà selezionata il prezzo totale*/);
+			//l'altro pulsante è disattivato finché accumulatedMoney >= minimumExpense
 		});
 
 		mortgageButton.setOnAction(e -> {

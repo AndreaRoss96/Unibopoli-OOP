@@ -39,7 +39,7 @@ public interface Player extends PlayerInfo {
 	 * @param String
 	 *            name of property.
 	 */
-	void buyProperty(ObtainableImpl property);
+	void buyProperty(Obtainable property);
 
 	/**
 	 * this method is for the movement of the player.
@@ -74,14 +74,22 @@ public interface Player extends PlayerInfo {
 	 * @param newPosition
 	 *            the new position of the player
 	 */
-	void setPosition(Tile newPosition);
+	void setPosition(int newPosition);
 
 	/**
-	 * It save a list of properties owned by the player but mortgaged.
+	 * It saves a list of properties owned by the player but mortgaged.
 	 * 
 	 * @param mortgaged
 	 *            the list of mortgaged properties
 	 */
-	void mortgageProperties(List<ObtainableImpl> mortgaged);
+	void mortgageProperties(List<Obtainable> mortgaged);
+
+	/**
+	 * Adds a property to player's properties.
+	 * 
+	 * @param property
+	 *            the interested property
+	 */
+	void addProperty(Obtainable property);
 
 }

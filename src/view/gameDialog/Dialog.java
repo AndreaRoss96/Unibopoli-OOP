@@ -33,7 +33,7 @@ public class Dialog {
 	private static final double SCREEN_W = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
 	private static final double PREF_H_SIZE = SCREEN_H * 0.70;
 	private static final double PREF_W_SIZE = SCREEN_W * 0.40;
-	private static final Font PRINCIPAL_FONT = Font.font("Arial", FontWeight.BOLD, 18);
+	private static final Font PRINCIPAL_FONT = Font.font("Kabel", FontWeight.BOLD, 18);
 	private static final Insets BUTTON_INSETS = new Insets(SCREEN_H * 0.02);
 	private static final int BUTTON_WIDTH = 100;
 

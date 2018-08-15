@@ -38,9 +38,9 @@ public class Contract extends AnchorPane {
 	private static final double LABEL_HEIGHT = PREF_HEIGHT * 0.045;
 	private static final double LABEL_WIDTH = PREF_WIDTH / 2 - H_GAP * 3;
 	private static final double LABEL_BIG_WIDTH = 255;
-	private static final Font PROPERTY_FONT = Font.font("Arial", FontWeight.BOLD, 24);
+	private static final Font PROPERTY_FONT = Font.font("Kabel", FontWeight.BOLD, 20);
 
-	public Contract(Obtainable property) {
+	public Contract(Obtainable property) { //aggiungi lo stato per vedere se una proprietà è ipotecata o meno 
 		final FlowPane insidePane = new FlowPane(H_GAP, V_GAP);
 		insidePane.setPadding(new Insets(0, V_PADDING, 0, V_PADDING));
 		insidePane.setPrefSize(PREF_WIDTH, PREF_HEIGHT);

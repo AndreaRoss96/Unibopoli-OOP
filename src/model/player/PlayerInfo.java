@@ -74,7 +74,7 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return Position
 	 */
-	Tile getPosition();
+	int getPosition();
 
 	/**
 	 * Returns the avatar of the player.

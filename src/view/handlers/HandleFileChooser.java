@@ -33,7 +33,7 @@ public class HandleFileChooser implements EventHandler<MouseEvent> {
 		fileChooser.getExtensionFilters().add(ubpFilter);
 
 //		final File file = fileChooser.showSaveDialog(null); // bisogna controllare se così funziona
-		final File file = fileChooser.showOpenDialog();
+		final File file = fileChooser.showOpenDialog(null);
 		if (file != null) {
 			// Controller.getController().loadGameFromFile(file);
 		}

@@ -35,7 +35,7 @@ public class CardDialog extends Dialog {
 	private static final CardDialog SINGLETON = new CardDialog();
 	
 	private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 22);
-	private static final Font VALUE_FONT = Font.font("Arial", FontPosture.ITALIC, 18);
+	private static final Font VALUE_FONT = Font.font("Arial", FontPosture.ITALIC, 18); //da modificare in setStyle(-fx-font-family: kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
 
@@ -79,18 +79,27 @@ public class CardDialog extends Dialog {
 	private AnchorPane addRightBox(Obtainable property) {
 		AnchorPane anchor = new AnchorPane();
 		GridPane grid = new GridPane();
+		Integer column = 1;
 
 		Label title = new Label("Contract Infos:\n\n");
 		title.setFont(TITLE_FONT);
 		title.setTextFill(property.getColorOf().getPaint().orElse(Color.BLACK));
+		
 		Label labelOwner = new Label("Owner: ");
 		labelOwner.setFont(getPrincipalFont());
 		Label effectiveOwner = new Label(property.getOwner().orElse(" - "));
 		effectiveOwner.setFont(VALUE_FONT);
+		
+		Label propertyStatus = new Label("Status: ");
+		propertyStatus.setFont(getPrincipalFont());
+		Label effectivePropertyStatus = new Label(property.hasMortgage().toString());
+		effectivePropertyStatus.setFont(VALUE_FONT);
 		// insertion in the gridPAne
 		grid.add(title, 0, 0, 2, 2);
-		grid.add(labelOwner, 0, 2);
-		grid.add(effectiveOwner, 1, 2);
+		grid.add(labelOwner, 0, ++column);
+		grid.add(effectiveOwner, 1, column);
+		grid.add(propertyStatus, 0, ++column);
+		grid.add(effectivePropertyStatus, 1, column);
 		// if the property is buildable the dialog will show the number of houses/HOTEL
 		if (property instanceof Buildable) {
 			Label building = new Label((((Buildable) property).getBuildingNumber() == 5 ? "HOTEL"
@@ -98,8 +107,8 @@ public class CardDialog extends Dialog {
 			building.setFont(getPrincipalFont());
 			Label buildingNumer = new Label(Integer.toString(((Buildable) property).getBuildingNumber()));
 			buildingNumer.setFont(VALUE_FONT);
-			grid.add(building, 0, 3);
-			grid.add(buildingNumer, 1, 3);
+			grid.add(building, 0, ++column);
+			grid.add(buildingNumer, 1, column);
 		}
 
 		anchor.getChildren().add(grid);
@@ -170,6 +179,7 @@ public class CardDialog extends Dialog {
 		// property.getOwner().get() == 
 		addHouseButton.setOnAction(e -> {
 			//addHouseButton.seDisable(COntroller.buildhouse());
+			//per comodità non disabilito, ma esco un dialog
 		});
 		removeHouseButton.setOnAction(e -> {
 		});

@@ -21,20 +21,20 @@ public class RealPlayer implements Player {
 	private static final long serialVersionUID = 7360356929546552980L;
 
 
-	private Tile position;
+	private int position;
 	private final String name;
 	// private final Pawn sprite;
-	private Map<Color, List<ObtainableImpl>> playersProperties;
-	private List<ObtainableImpl> mortgagedProperties;
+	private Map<Color, List<Obtainable>> playersProperties;
+	private List<Obtainable> mortgagedProperties;
 	private Integer money;
 	private Integer housesNumber;//togli
 	private Integer hotelsNumber;
 	private Prison status = Prison.NOT_PRISON;
 
 
-	public RealPlayer(final String name, final Tile position,
-			final Map<Color, List<ObtainableImpl>> playersProperties, final Integer totMoney,
-			final List<ObtainableImpl> mortgagedProperties /* ... */) {
+	public RealPlayer(final String name, final int position,
+			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
+			final List<Obtainable> mortgagedProperties /* ... */) {
 		this.name = name;
 		this.money = totMoney;
 		this.position = position;
@@ -67,12 +67,12 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void setPosition(Tile newPosition) {
+	public void setPosition(int newPosition) {
 		this.position = newPosition;
 	}
 
 	@Override
-	public Tile getPosition() {
+	public int getPosition() {
 		return this.position;
 	}
 
@@ -86,7 +86,7 @@ public class RealPlayer implements Player {
 		if (!this.canPay(moneyAmount)) {
 			if (moneyAmount > totalAssets()) { // in questo caso il giocatore non è in alcun modo in grado di pagare
 												// l'affitto
-				// BANKAROTTA! - da gestire
+				// BANKAROTTA! - da gestire - model.getModel().removePlayer(This);
 
 			}
 			toMortgage(moneyAmount - this.money);
@@ -98,8 +98,8 @@ public class RealPlayer implements Player {
 	}
 
 	public Integer totalAssets() {
-		// mi servirebbe anche il valore di case/alberghi -- ora è nel controller
-		return getProperties().stream().mapToInt(ObtainableImpl::getMortgage).sum() + getProperties().stream().map(value -> (BuildableImpl) value).mapToInt(value -> value.getPriceForBuilding()/2).sum() + this.money;
+		// mi servirebbe anche il valore di case/alberghi
+		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().map(value -> (Buildable) value).mapToInt(value -> value.getPriceForBuilding()/2).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {
@@ -112,7 +112,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void buyProperty(ObtainableImpl property) {
+	public void buyProperty(Obtainable property) {
 		if (canPay(property.getMortgage())) {
 			payments(property.getMortgage());
 			this.addProperty(property);
@@ -123,8 +123,8 @@ public class RealPlayer implements Player {
 
 	}
 
-	private void addProperty(ObtainableImpl property) {
-		List<ObtainableImpl> tmpList = new ArrayList<>();
+	private void addProperty(Obtainable property) {
+		List<Obtainable> tmpList = new ArrayList<>();
 		tmpList.add(property);
 		this.playersProperties.merge(property.getColorOf(), tmpList,
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
@@ -132,7 +132,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void mortgageProperties(List<ObtainableImpl> mortgaged) {
+	public void mortgageProperties(List<Obtainable> mortgaged) {
 		gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum()); //DialogController.getController().getTotalSpend(mortgaged)
 		this.mortgagedProperties.addAll(mortgaged);
 	}
@@ -162,17 +162,17 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public List<ObtainableImpl> getProperties() {
+	public List<Obtainable> getProperties() {
 		return this.playersProperties.values().stream().flatMap(List::stream).collect(Collectors.toList());
 	}
 
 	@Override
-	public Map<Color, List<ObtainableImpl>> getPopertiesByColor() {
+	public Map<Color, List<Obtainable>> getPopertiesByColor() {
 		return this.playersProperties;
 	}
 
 	@Override
-	public List<ObtainableImpl> getMortgagedProperties() {
+	public List<Obtainable> getMortgagedProperties() {
 		return this.mortgagedProperties;
 	}
 }

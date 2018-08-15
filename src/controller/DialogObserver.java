@@ -2,6 +2,7 @@ package controller;
 
 import java.util.List;
 
+import javafx.collections.ObservableList;
 import javafx.scene.Node;
 import javafx.scene.control.PasswordField;
 import model.player.Player;
@@ -16,31 +17,33 @@ import model.tiles.Obtainable;
  */
 public interface DialogObserver {
 	
-	Node getContract(Obtainable property);
+//	Node getContract(Obtainable property); con la nuova classe "Contract non credo che serva"
 	
 	Obtainable getPropertyByName(String propertyName);
 	
-	String passwordFill(String text);
+	/**
+	 * metodi per AuctionDialog 
+	 */
+	void executeAuction(List<Player> playerList, List<String> passwordList, Obtainable property);
+			
+	/**
+	 * metodi per cardDialog
+	 */
+	void incHouse(Buildable property); //ritorna false se la proprietà interessata ha ancora degli slot liberi per le case e se il giocatore corrente ha abbastanza soldi per comprerne altre, true altrimenti
+	void decHouse(Buildable property);
+	void setMortgage(List<String> propertyList); //se la proprietà non è ipotecata la ipoteca, il contrario altirmenti --> chiedi conferma
+	void buyProperty(Obtainable property); //compra la proprietà interessata, solo se il giocatore è nella stessa posizione del tile --> altrimenti dialog esplicativo
 	
-	List<PlayerInfo> getPlayerListSize();
+	/**
+	 * metodi per mortgageDialog
+	 */
+	int accumulatedMoney(List<Obtainable> propertiesList); //altrimenti una lista di stringhe
+	void executeMortgage(List<Obtainable> propertiesList);
 	
-	PlayerInfo getCurrentPlayer();
 	
-	boolean currentCanBuy(Obtainable property); //controlla se il giocatore corrente ha abbastanza soldi e se è nella stessa posizione della proprietà interessata
+	/**
+	 * metodi per TradeDialog
+	 */
+	void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, List<Obtainable> secondProperties, int firstMoney, int secondMoney);
 	
-	boolean canBuild(Buildable property, boolean build); //controlla se in quella proprietà si può costruire, quindi se ha ancora slot liberi per la costruzione delle case/alberghi e se il giocatore ha abbastanza soldi, deve controllare anche che la proprietà interessata non sia ipotecata e che il giocatorecorrente sia il proprietario della proprietà
-	
-	void buyProperty(Obtainable property); //setta il proprietario alla proprietà e invoca BuyProperty al player
-	
-	boolean buildHouse(Buildable property); //ritorna false se la proprietà interessata ha ancora degli slot liberi per le case e se il giocatore corrente ha abbastanza soldi per comprerne altre, true altrimenti
-
-	void setMortgage(List<String> propertyList); //ipoteca le proprietà scelte dal giocatore corrente
-	
-	boolean unMortgage(Obtainable property);  //ritorna true se il giocatore lo clicca e riesce a pagare l'ipoteca della proprietà, mentre torna false (e un dialog di allerta) se il giocatore non ha abbastaza soldi per pagare l'ipoteca
-	
-	boolean executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, List<Obtainable> secondProperties, Integer firstMoney, Integer secondMoney);
-	
-	boolean checkTextField(List<String> textList); //controlla che le stringhe siano traducibili in integer
-	
-	boolean isCorrect(List<PasswordField> passwordList); //Controlla che ci siano valori uguali
 }

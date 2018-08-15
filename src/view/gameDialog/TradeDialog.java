@@ -75,5 +75,5 @@ public class TradeDialog extends Dialog {
 		stage.setScene(scene);
 		stage.show();
 	}
-
+//riesci a mettere TradeBean qui dentro invece di creare due oggetti diversi? (tra l'altro ha un booleano nel codstruttore, che schifo)
 }

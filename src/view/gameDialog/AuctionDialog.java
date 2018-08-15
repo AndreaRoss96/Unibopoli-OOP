@@ -3,6 +3,11 @@
  */
 package view.gameDialog;
 
+import java.util.Collection;
+import java.util.List;
+import java.util.stream.Collectors;
+
+import controller.DialogController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
@@ -14,6 +19,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
+import model.player.Player;
+import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 
 /**
@@ -26,7 +33,8 @@ public class AuctionDialog extends Dialog {
 	
 	private static final AuctionDialog SINGLETON = new AuctionDialog();
 	
-	private static final Font COMMENT_FONT = Font.font("Arial", FontPosture.ITALIC, 12);
+	private static final Font COMMENT_FONT = Font.font("Arial", FontPosture.ITALIC, 11);
+	private static final int PASSWORD_LIMIT = 15;
 
 	/**
 	 * Instance of AuctionDialog.
@@ -43,23 +51,29 @@ public class AuctionDialog extends Dialog {
 	 * @param Property
 	 *            the property to be auctioned.
 	 */
-	public void createAuctionDialog(Obtainable Property) {
+	public void createAuctionDialog(Obtainable property, List<Player> playerList) {
 		final Stage stage = setStage("Place a bet!");
 		
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
-		rootPane.setLeft(DialogController.getController().getContract(property));
+//		rootPane.setLeft(DialogController.getController().getContract(property));
 		
 		final GridPane grid = new GridPane();
+		grid.setPadding(getPrefInsets());
+		
 		final ObservableList<PasswordField> passwordList = FXCollections.observableArrayList();
 		final Label commentLabel = new Label("(after typed, press enter)");
-		final int counter;
-		grid.setPadding(getPrefInsets());
-		for (counter = 0; counter < ModelImpl.getPlayerList().size(); counter++) {
-			grid.add(new Label(ModelImpl.getPlayersList().get(counter)), 0, counter);
+		
+		int counter;		
+		for (counter = 0; counter < playerList.size(); counter++) {
+			grid.add(new Label(playerList.get(counter).getName()), 0, counter);
 			PasswordField pw = new PasswordField();
 			pw.setOnAction(e -> {
-				pw.setText(DialogController.getController().passwordFill(pw.getText()));
+				String number = pw.getText();
+				for (int tmp = number.length(); tmp < PASSWORD_LIMIT; tmp++ ) {
+					number = ("0" + number);
+				}
+				pw.setText(number);
 			});
 			passwordList.add(pw);
 			grid.add(passwordList.get(counter), 1, counter);
@@ -76,7 +90,10 @@ public class AuctionDialog extends Dialog {
 		rootPane.setBottom(bottomPane);
 		
 		beatButton.setOnAction(e -> {
-			//controller
+			DialogController.getDialogController().executeAuction(playerList, passwordList.stream().map(PasswordField::getText).collect(Collectors.toList()), property);
+			passwordList.forEach(p -> {
+				p.clear();
+			});
 		});
 		
 		final Scene scene = new Scene(rootPane);

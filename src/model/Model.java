@@ -18,7 +18,7 @@ public interface Model {
 	/**
 	 * @return the list of all player in game.
 	 */
-	List<Player> getPlayers();
+	List<PlayerInfo> getPlayers();
 	
 	/**
 	 * remove a player out of the game.
