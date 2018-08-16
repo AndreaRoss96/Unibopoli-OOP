@@ -31,7 +31,20 @@ public class RealPlayer implements Player {
 	private Integer hotelsNumber;
 	private Prison status = Prison.NOT_PRISON;
 
-
+	/**
+	 * This costructor is used by GameInitializer class
+	 * 
+	 * @param name
+	 * @param money
+	 */
+	public RealPlayer(final String name, /*avatar*/ int money) {
+		this.name = name;
+		this.position = 0; //chiedi a matti
+		this.money = money;
+		this.playersProperties = new HashMap<>();
+		this.mortgagedProperties = new ArrayList<>();
+	}
+	
 	public RealPlayer(final String name, final int position,
 			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
 			final List<Obtainable> mortgagedProperties /* ... */) {
@@ -123,7 +136,8 @@ public class RealPlayer implements Player {
 
 	}
 
-	private void addProperty(Obtainable property) {
+	@Override
+	public void addProperty(Obtainable property) {
 		List<Obtainable> tmpList = new ArrayList<>();
 		tmpList.add(property);
 		this.playersProperties.merge(property.getColorOf(), tmpList,

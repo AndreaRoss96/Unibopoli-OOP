@@ -1,4 +1,4 @@
-package view;
+package view.gameSetup;
 
 import java.awt.Toolkit;
 import java.util.Optional;

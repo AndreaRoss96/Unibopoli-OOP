@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import model.player.Player;
 import model.player.PlayerInfo;
@@ -13,11 +14,11 @@ public class ModelImpl implements Model{
 	private final Board board;
 	private final List<Player> players;
 	private final Set<Obtainable> properties;
-	private final PlayerInfo currentPlayer;
-	private final List<PlayerInfo> loserList;
+	private final Player currentPlayer;
+	private final List<Player> loserList;
 	//imprevisti e probabilità
 	
-	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final PlayerInfo currentPlayer, final List<PlayerInfo> loserList) {
+	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final Player currentPlayer, final List<Player> loserList) {
 		this.board = board;
 		this.players = players;
 		this.properties = properties;
@@ -27,8 +28,8 @@ public class ModelImpl implements Model{
 	}
 
 	@Override
-	public List<Player> getPlayers() {
-		return this.players;
+	public List<PlayerInfo> getPlayers() {
+		return this.players.stream().map(player -> (PlayerInfo) player).collect(Collectors.toList());
 	}
 
 	@Override
@@ -47,7 +48,7 @@ public class ModelImpl implements Model{
 	}
 
 	@Override
-	public PlayerInfo getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
 
