@@ -1,44 +1,33 @@
 package utilities.enumerations;
 
-import java.util.ArrayList;
-import java.util.List;
-
-
+/**
+ * Enum which indicates, based on the number of players, the amount of money and
+ * the properties assigned to each one.
+ * 
+ * @author Rossolini Andrea
+ *
+ */
 public enum InitialDistribution {
-	TWO(2, 8750, 7),
-	THREE(3, 7500, 6),
-	FOUR(4, 6250, 5),
-	FIVE(5, 5000, 4),
-	SIX(6, 3750, 3);
-	
-	private int playerNumber;
+	TWO(2, 8750, 7), THREE(3, 7500, 6), FOUR(4, 6250, 5), FIVE(5, 5000, 4), SIX(6, 3750, 3);
+
+	private int playersNumber;
 	private int moneyAmount;
 	private int contractNumber;
-	
+
 	public int getPlayerNumber() {
-		return playerNumber;
+		return this.playersNumber;
 	}
-	
+
 	public int getMoneyAmount() {
-		return moneyAmount;
+		return this.moneyAmount;
 	}
-	
+
 	public int getContractNumber() {
-		return contractNumber;
+		return this.contractNumber;
 	}
-	
-	public List<InitialDistribution> getAll(){
-		List<InitialDistribution> list = new ArrayList<>();
-		list.add(TWO);
-		list.add(THREE);
-		list.add(FOUR);
-		list.add(FIVE);
-		list.add(SIX);
-		return list;
-	}
-	
-	private InitialDistribution(int playerNumber, int moneyAmount, int contractNumber) {
-		this.playerNumber = playerNumber;
+
+	private InitialDistribution(int playersNumber, int moneyAmount, int contractNumber) {
+		this.playersNumber = playersNumber;
 		this.moneyAmount = moneyAmount;
 		this.contractNumber = contractNumber;
 	}

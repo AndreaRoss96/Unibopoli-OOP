@@ -34,7 +34,7 @@ public class CardDialog extends Dialog {
 	
 	private static final CardDialog SINGLETON = new CardDialog();
 	
-	private static final Font TITLE_FONT = Font.font("Arial", FontWeight.BOLD, 22);
+	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
 	private static final Font VALUE_FONT = Font.font("Arial", FontPosture.ITALIC, 18); //da modificare in setStyle(-fx-font-family: kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;

@@ -35,6 +35,7 @@ public final class GameInitializer {
 	 * @param playersMap
 	 *            a map with name of the players and their respective icon
 	 * @return a model already initialized
+	 * 
 	 * @throws IOException
 	 *             when one of the initialization files not is found.
 	 */

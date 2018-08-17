@@ -1,12 +1,14 @@
 package view.gameDialog;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+
 import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import model.player.Player;
 import model.player.PlayerInfo;
 
 public class PlayersContractListView extends ListView<Text> {
@@ -41,9 +43,9 @@ public class PlayersContractListView extends ListView<Text> {
 		}
 	}
 	
-//	public List<Obtainable> getSelected(){
-//		return this.map.keySet().stream().map(Text::getText).collect(Collectors.toList());
-//	} manca il "getPropertisByName()" da implementare nel controller
+	public List<String> getSelected(){
+		return this.map.keySet().stream().map(Text::getText).collect(Collectors.toList());
+	} //manca il "getPropertisByName()" da implementare nel controller
 	
 
 }

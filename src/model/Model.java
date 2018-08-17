@@ -3,8 +3,8 @@ package model;
 import java.util.List;
 import java.util.Set;
 
-import model.player.Player;
 import model.player.PlayerInfo;
+import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
 
@@ -34,6 +34,8 @@ public interface Model {
 	 * @return game's dice
 	 */
 	Pair<Integer, Integer> exitDice();
+	
+	Set<Obtainable> getProperties();
 	
 	Set<Tile> getBoard();
 }

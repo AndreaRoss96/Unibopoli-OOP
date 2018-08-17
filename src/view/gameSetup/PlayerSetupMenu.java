@@ -3,6 +3,11 @@ package view.gameSetup;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import controller.Controller;
+import controller.ControllerImpl;
+import controller.DialogController;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -42,7 +48,7 @@ public class PlayerSetupMenu extends BorderPane {
 		iconList.add("Wine");
 		iconList.add("Iron");
 		iconList.add("Boot");
-		iconList.add("Car"); // DA PASSARE COME ARGOMENTO
+		iconList.add("Car"); // utilizza iconloader vd. esperimento
 
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("setupPlayer.css").toExternalForm());
@@ -94,36 +100,40 @@ public class PlayerSetupMenu extends BorderPane {
 		});
 
 		startGame.setOnAction(e -> {
+			List<PlayerSetupBox> psbList = flowPane.getChildren().stream()
+					.filter(element -> element instanceof PlayerSetupBox).map(pBox -> (PlayerSetupBox) pBox)
+					.collect(Collectors.toList());
 			/* check if all names are presents and are all different */
-			flowPane.getChildren().stream().filter(element -> element instanceof PlayerSetupBox)
-					.map(pBox -> (PlayerSetupBox) pBox).forEach(pBox -> {
-						if (pBox.getNameField().getText().equals("Insert player name...")
-								|| pBox.getNameField().getText().isEmpty()) {
-							AlertFactory.createInformationAlert("Nope", null, "Use valid name!").showAndWait();
-							e.consume();
-						}
-					});
-			if (flowPane.getChildren().stream().filter(element -> element instanceof PlayerSetupBox)
-					.map(pBox -> (PlayerSetupBox) pBox).map(PlayerSetupBox::getNameField).distinct()
-					.count() != flowPane.getChildren().size()) {
+			psbList.forEach(pBox -> {
+				if (pBox.getNameField().getText().equals("Insert player name...")
+						|| pBox.getNameField().getText().isEmpty()) {
+					AlertFactory.createInformationAlert("Nope", null, "Use valid name!").showAndWait();
+					e.consume();
+				}
+			});
+			if (psbList.stream().map(PlayerSetupBox::getNameField).distinct().count() != flowPane.getChildren()
+					.size()) {
 				AlertFactory.createInformationAlert("Nope", null, "Use different names!").showAndWait();
 				e.consume();
 			}
 			/* check if all players have chosen an icon */
-			flowPane.getChildren().stream().filter(element -> element instanceof PlayerSetupBox)
-					.map(pBox -> (PlayerSetupBox) pBox).forEach(bBox -> {
-						if (bBox.getIcons().getSelectionModel().isEmpty()) {
-							AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!").showAndWait();
-							e.consume();
-						}
-					});
+			psbList.forEach(bBox -> {
+				if (bBox.getIcons().getSelectionModel().isEmpty()) {
+					AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!").showAndWait();
+					e.consume();
+				}
+			});
+			/* execute action */
+			List<String> playersName = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
+			List<String> playersIcon = psbList.stream().map(PlayerSetupBox::getIcons).map(elem -> elem.getSelectionModel().getSelectedItem()).collect(Collectors.toList());
+			ControllerImpl.getController().gameInit(playersName, playersIcon);
 		});
 
 		cancel.setOnAction(e -> {
 			new MainMenu(stage);
 		});
 
-		stage.setTitle("Choose players");
+		stage.setTitle("Setup players");
 		stage.show();
 	}
 

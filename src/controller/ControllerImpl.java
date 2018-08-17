@@ -1,8 +1,15 @@
 package controller;
 
 import java.io.File;
+import java.util.List;
+import java.util.Objects;
 
+import model.GameInitializer;
 import model.Model;
+import model.ResourceManager;
+import model.player.Player;
+import model.player.PlayerInfo;
+import model.tiles.Obtainable;
 import view.View;
 
 public class ControllerImpl implements Controller{
@@ -11,13 +18,18 @@ public class ControllerImpl implements Controller{
 	private Model model; 
 	private View view;
 	
-	public ControllerImpl() {
-		// TODO Auto-generated constructor stub
+    /**
+     * Method that return the only one instance of Controller.
+     * 
+     * @return instance of Controller.
+     */
+	public static ControllerImpl getController() {
+		return SINGLETON;
 	}
 
 	@Override
-	public void gameInit() {
-		// TODO Auto-generated method stub
+	public void newGameInit(List<String> playersName, List<String> playersIcon) {
+		
 		
 	}
 
@@ -34,9 +46,9 @@ public class ControllerImpl implements Controller{
 	}
 
 	@Override
-	public void loadGameFromFile(File file) {
-		// TODO Auto-generated method stub
-		
+	public void loadGameFromFile(final File file) {
+		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
+		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
 	}
 
 	@Override
@@ -62,5 +74,14 @@ public class ControllerImpl implements Controller{
 		// TODO Auto-generated method stub
 		
 	}
+	
+	private Obtainable findPropertyByName(String propertyName) {
+		return model.getProperties().stream().filter(property -> property.getNameOf().equals(propertyName)).findFirst().get();
+	}
+	
+	private Player findPlayerByName(String playerName) {
+		return (Player) model.getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
+	}
 
+	
 }

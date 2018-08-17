@@ -35,7 +35,7 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void executeAuction(List<Player> playerList, List<String> passwordList, Obtainable property) {
+	public void executeAuction(List<Player> playerList, List<String> passwordList, Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		try {
 			if (passwordList.stream().distinct().count() != passwordList.size()) {
 				AlertFactory
@@ -46,7 +46,8 @@ public class DialogController implements DialogObserver {
 						.max(Comparator.comparing(Integer::valueOf)).get();
 				passwordList.forEach(e -> {
 					if (Integer.parseInt(e) == moneyAmount) {
-						if (canPay(playerList.get(passwordList.indexOf(e)), moneyAmount)) {
+						/*Si itera tutta la lista dei giocatori, dato che per ogni giocatore esiste un solo passwordFiled determino l'inidce della lista che mi interessa e faccio get nella list adei giocatori*/
+						if (canPay(playerList.get(passwordList.indexOf(e)), moneyAmount)) { 
 							playerList.get(passwordList.indexOf(e)).addProperty(property);
 							playerList.get(passwordList.indexOf(e)).payments(moneyAmount);
 						} else {
@@ -66,10 +67,10 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void incHouse(Buildable property) {
+	public void incHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
 		if (canPay(model.getCurrentPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
-				property.incBuildings();
+				property.incBuildings(); //deve diminuire i soldi del giocatore
 			} else {
 				AlertFactory.createErrorAlert("Oak's words echoed", null,
 						"There's time and place for everything, but not now...").show();
@@ -81,25 +82,27 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void decHouse(Buildable property) {
-		if (property.getBuildingNumber() == 0) {
-			decHouse(property);
-			property.getOwner().get(); // searchPlayerByName, oppure currentPlayer torna Player
-		}
+	public void decHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
+			if (property.getBuildingNumber() == 0) {
+				decHouse(property);
+				property.getOwner().get(); // searchPlayerByName, oppure currentPlayer torna Player
+			} //deve aumentare i solid del giocatore
 	}
 
 	@Override
-	public void setMortgage(List<String> propertyList) {
+	public void setMortgage(List<String> propertyList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		propertyList.forEach(e -> {
 			// getPropertyByName
 		});
 	}
 
 	@Override
-	public void buyProperty(Obtainable property) {
-		if (model.getCurrentPlayer().getPosition() == property.getPosition()) {
-			// model.getCurrentPlayer().buyProperty(property); searchPlayerByName, oppure
-			// currentPlayer torna Player
+	public void buyProperty(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+		if (canPay(model.getCurrentPlayer(), property.getPriceForBuilding())) {
+			if (model.getCurrentPlayer().getPosition() == property.getPosition()) {
+				// model.getCurrentPlayer().buyProperty(property); searchPlayerByName, oppure
+				// currentPlayer torna Player
+			}
 		}
 	}
 
@@ -112,13 +115,12 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void executeMortgage(List<Obtainable> propertiesList) {
-		model.getCurrentPlayer().mortgageProperties(propertiesList); // anche in questo caso sarebbe utile che current
-																		// player fosse un "Player"
+		model.getCurrentPlayer().mortgageProperties(propertiesList); //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model														// player fosse un "Player"
 	}
 
 	@Override
-	public void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties,
-			List<Obtainable> secondProperties, int firstMoney, int secondMoney) {
+	public void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, 
+			List<Obtainable> secondProperties, int firstMoney, int secondMoney) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		if (!canPay(firstPlayer, firstMoney) && canPay(secondPlayer, secondMoney)) {
 			AlertFactory.createErrorAlert("He's trying to cheat you!", null,
 					firstPlayer.getName() + "Doesn't have enought money!").show();

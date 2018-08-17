@@ -1,13 +1,14 @@
 package controller;
 
 import java.io.File;
+import java.util.List;
 
 public interface Controller {
 
 	/**
 	 * Initialization of the game
 	 */
-	void gameInit(); //probabilmente in ingresso vorrà un Map<String, Image> -> nome giocatore e avatar, tutti devono avere un avatar, i nomi devonon essere tutti diversi
+	void newGameInit(List<String> playersName, List<String> playersIcon); //probabilmente in ingresso vorrà un Map<String, Image> -> nome giocatore e avatar, tutti devono avere un avatar, i nomi devonon essere tutti diversi
 
 	/**
 	 * allows to save the game.

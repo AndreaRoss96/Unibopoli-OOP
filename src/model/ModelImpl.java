@@ -51,6 +51,10 @@ public class ModelImpl implements Model{
 	public Player getCurrentPlayer() {
 		return this.currentPlayer;
 	}
+	
+	public Set<Obtainable> getProperties(){
+		return this.properties;
+	}
 
 	//riguarda se è corretto playerInfo/player
 	@Override
