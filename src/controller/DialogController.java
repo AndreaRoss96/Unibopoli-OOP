@@ -13,6 +13,7 @@ import model.player.PlayerInfo;
 import model.tiles.Buildable;
 import model.tiles.Obtainable;
 import utilities.AlertFactory;
+import view.gameDialog.MortgageDialog;
 
 public class DialogController implements DialogObserver {
 
@@ -39,8 +40,7 @@ public class DialogController implements DialogObserver {
 		try {
 			if (passwordList.stream().distinct().count() != passwordList.size()) {
 				AlertFactory
-						.createInformationAlert("Get a plan together", null, "Two o more player entered the same value")
-						.showAndWait();
+						.createInformationAlert("Get a plan together", null, "Two o more player entered the same value");
 			} else {
 				int moneyAmount = passwordList.stream().map(Integer::parseInt)
 						.max(Comparator.comparing(Integer::valueOf)).get();
@@ -53,15 +53,14 @@ public class DialogController implements DialogObserver {
 						} else {
 							AlertFactory.createInformationAlert("Ehi", null,
 									playerList.get(passwordList.indexOf(e)).getName()
-											+ ", you don't have all those money.")
-									.showAndWait();
+											+ ", you don't have all those money.");
 						}
 					}
 				});
 			}
 		} catch (NumberFormatException ex) {
 			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!",
-					"Please, use only numbers...").showAndWait();
+					"Please, use only numbers...");
 		}
 
 	}
@@ -73,11 +72,11 @@ public class DialogController implements DialogObserver {
 				property.incBuildings(); //deve diminuire i soldi del giocatore
 			} else {
 				AlertFactory.createErrorAlert("Oak's words echoed", null,
-						"There's time and place for everything, but not now...").show();
+						"There's time and place for everything, but not now...");
 			}
 		} else {
 			AlertFactory.createErrorAlert("Nope", "You don't have enought money",
-					"you have only: " + this.model.getCurrentPlayer().getMoney()).show();
+					"you have only: " + this.model.getCurrentPlayer().getMoney());
 		}
 	}
 
@@ -98,7 +97,7 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void buyProperty(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
-		if (canPay(model.getCurrentPlayer(), property.getPriceForBuilding())) {
+		if (canPay(model.getCurrentPlayer(), property.getPrice())) {
 			if (model.getCurrentPlayer().getPosition() == property.getPosition()) {
 				// model.getCurrentPlayer().buyProperty(property); searchPlayerByName, oppure
 				// currentPlayer torna Player
@@ -107,14 +106,14 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public int accumulatedMoney(List<Obtainable> propertiesList) {
+	public int accumulatedMoney(List<String> propertiesList) { //getPoperties by name
 		return propertiesList.stream().mapToInt(Obtainable::getMortgage).sum() + propertiesList.stream()
 				.filter(property -> property instanceof Buildable).map(property -> (Buildable) property)
 				.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum();
 	}
 
 	@Override
-	public void executeMortgage(List<Obtainable> propertiesList) {
+	public void executeMortgage(List<String> propertiesList) {
 		model.getCurrentPlayer().mortgageProperties(propertiesList); //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model														// player fosse un "Player"
 	}
 
@@ -123,29 +122,25 @@ public class DialogController implements DialogObserver {
 			List<Obtainable> secondProperties, int firstMoney, int secondMoney) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		if (!canPay(firstPlayer, firstMoney) && canPay(secondPlayer, secondMoney)) {
 			AlertFactory.createErrorAlert("He's trying to cheat you!", null,
-					firstPlayer.getName() + "Doesn't have enought money!").show();
+					firstPlayer.getName() + "Doesn't have enought money!");
 		} else if (!canPay(secondPlayer, secondMoney) && canPay(firstPlayer, firstMoney)) {
 			AlertFactory.createErrorAlert("He's trying to cheat you!", null,
-					secondPlayer.getName() + "Doesn't have enought money!").show();
+					secondPlayer.getName() + "Doesn't have enought money!");
 		} else if (!canPay(firstPlayer, firstMoney) && !canPay(secondPlayer, secondMoney)) {
 			AlertFactory.createErrorAlert("Nope", null,
-					secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallet.").show();
+					secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallet.");
 		} else {
-			Optional<ButtonType> result = AlertFactory
-					.createConfirmationAlert("Are you sure?", null, "Are both agreeing?").showAndWait();
-			if (result.get() == ButtonType.OK) {
-				secondProperties.forEach(e -> {
-					firstPlayer.addProperty(e);
-				});
-				firstPlayer.gainMoney(secondMoney);
-				firstPlayer.payments(firstMoney);
+			secondProperties.forEach(e -> {
+				firstPlayer.addProperty(e);
+			});
+			firstPlayer.gainMoney(secondMoney);
+			firstPlayer.payments(firstMoney);
 
-				firstProperties.forEach(e -> {
-					secondPlayer.addProperty(e);
-				});
-				secondPlayer.gainMoney(firstMoney);
-				secondPlayer.payments(secondMoney);
-			}
+			firstProperties.forEach(e -> {
+				secondPlayer.addProperty(e);
+			});
+			secondPlayer.gainMoney(firstMoney);
+			secondPlayer.payments(secondMoney);
 		}
 	}
 

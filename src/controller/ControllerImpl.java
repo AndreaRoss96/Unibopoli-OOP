@@ -4,6 +4,8 @@ import java.io.File;
 import java.util.List;
 import java.util.Objects;
 
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
@@ -29,14 +31,12 @@ public class ControllerImpl implements Controller{
 
 	@Override
 	public void newGameInit(List<String> playersName, List<String> playersIcon) {
-		
-		
+				
 	}
 
 	@Override
 	public void saveGame() {
-		// TODO Auto-generated method stub
-		
+		model.saveGame();		
 	}
 
 	@Override
@@ -81,6 +81,13 @@ public class ControllerImpl implements Controller{
 	
 	private Player findPlayerByName(String playerName) {
 		return (Player) model.getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
+	}
+
+	@Override
+	public void endGame() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Confirm exit");
+		alert.
 	}
 
 	

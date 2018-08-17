@@ -1,12 +1,23 @@
 package view.gameDialog;
 
+import java.util.List;
 import java.util.Optional;
 
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import model.DialogController;
+import model.PlayerListView;
+import model.player.PlayerInfo;
 import utilities.AlertFactory;
 
 /**
@@ -17,7 +28,7 @@ import utilities.AlertFactory;
  *
  */
 public class TradeDialog extends Dialog {
-	
+
 	private static final TradeDialog SINGLETON = new TradeDialog();
 
 	/**
@@ -32,42 +43,72 @@ public class TradeDialog extends Dialog {
 	/**
 	 * Creation of the pane for the dialog.
 	 */
-	public void createTradeDialog() {
+	public void createTradeDialog(List<PlayerInfo> playerList) {
 		final Stage stage = setStage("Choose what you want to exchange!");
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 
-		final TradeBean leftTradeBean = new TradeBean(true);
-		rootPane.setLeft(leftTradeBean);
+		final GridPane gridA = new GridPane();
+		gridA.setPadding(new Insets(2, 5, 2, 5));
 
-		final TradeBean rightTradeBean = new TradeBean(false);
-		rootPane.setRight(rightTradeBean);
+		Label currentPlayer = new Label("Curr Player");
+		currentPlayer.setStyle("-fx-font-family: Kabel");
+		TextField currMoneyToTrade = new TextField("0");
+		currMoneyToTrade.setPrefWidth(currentPlayer.getWidth());
+		gridA.add(new Label("Player: "), 0, 0);
+		gridA.add(currentPlayer, 1, 0, 1, 1);
+		gridA.add(new Label("Trade: "), 0, 1, 2, 1);
+		gridA.add(currMoneyToTrade, 1, 1, 2, 1);
+		gridA.add(new Label("$"), 2, 1);
+		gridA.add(new PlayersContractListView(), 0, 2, 4, 1);
+		rootPane.setLeft(gridA);
 
-		final BorderPane bottomPane = addButtonBox(stage, "Green", ""); //aggiungi path
+		ComboBox<String> playerBox = new ComboBox<>();
+		playerBox.setStyle("-fx-font-family: Kabel");
+		playerList.forEach(e -> playerBox.getItems().add(e.getName()));
+
+		TextField moneyToTrade = new TextField("0");
+		moneyToTrade.setPrefWidth(currentPlayer.getWidth());
+
+		GridPane gridB = new GridPane();
+		gridB.setGridLinesVisible(true);
+		gridB.add(new Label("Player: "), 0, 0);
+		gridB.add(playerBox, 1, 0, 1, 1);
+		gridB.add(new Label("Trade: "), 0, 1, 2, 1);
+		gridB.add(moneyToTrade, 1, 1, 2, 1);
+		gridB.add(new Label("$"), 2, 1);
+		gridB.add(new PlayersContractListView(), 0, 2, 4, 1);
+		rootPane.setRight(gridB);
+
+		final BorderPane bottomPane = addButtonBox(stage, "Green", ""); // aggiungi path
 		final Button tradeButton = new Button("<==TRADE==>");
 		tradeButton.setFont(getPrincipalFont());
 		bottomPane.setLeft(tradeButton);
 		rootPane.setBottom(bottomPane);
 
-		tradeButton.setOnAction(e -> {
-			if (leftTradeBean.getPlayerSelected().isPresent() && leftTradeBean.getMoneyToTrade().isPresent()
-					&& rightTradeBean.getPlayerSelected().isPresent() && rightTradeBean.getMoneyToTrade().isPresent()) {
-				// operazioni nel controller
-			} else {
-				AlertFactory.createInformationAlert("Caution", 
-						null,
-						"Select two players and some contract to make a trade!");
-			}
+		playerBox.setOnAction(e -> {
+			gridB.add(
+					new PlayersContractListView(playerList.stream()
+							.filter(player -> player.getName().equals(playerBox.getValue())).findFirst().get()),
+					0, 2, 4, 1);
 		});
 
-		stage.setOnCloseRequest(e -> {
-			Optional<ButtonType> result = AlertFactory.createConfirmationAlert("Are you sure?",
-					"Are you really giving up this fantastic offer?",
-					"(Good, temporize is the better strategy)")
-					.showAndWait();
+		tradeButton.setOnAction(e -> {
+			Alert alert = new Alert(AlertType.CONFIRMATION);
+			alert.setTitle("Are you sure?");
+			alert.setHeaderText(null);
+			alert.setContentText("Do both players agree? ");
+			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.CANCEL) {
 				e.consume();
+			} else {
+				if (playerBox.getValue() != null) {
+					// controller
+				} else {
+					AlertFactory.createErrorAlert("???", null, "Choose a player!");
+					e.consume();
+				}
 			}
 		});
 
@@ -75,5 +116,5 @@ public class TradeDialog extends Dialog {
 		stage.setScene(scene);
 		stage.show();
 	}
-//riesci a mettere TradeBean qui dentro invece di creare due oggetti diversi? (tra l'altro ha un booleano nel codstruttore, che schifo)
+
 }

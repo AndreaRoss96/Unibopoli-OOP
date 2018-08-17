@@ -3,6 +3,7 @@ package view.gameDialog;
 import com.sun.xml.internal.ws.message.RootElementSniffer;
 
 import controller.Controller;
+import controller.DialogController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -12,6 +13,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.Model;
+import model.player.PlayerInfo;
 import utilities.AlertFactory;
 
 /**
@@ -43,7 +45,7 @@ public class MortgageDialog extends Dialog {
 	 * @param minimumExpense
 	 *            the minimum amount of money that the player have to pay.
 	 */
-	public void createMortgageDialog(int minimumExpense) {
+	public void createMortgageDialog(int minimumExpense, PlayerInfo player) {
 		final Stage stage = setStage("Choose the properties to be mortgaged");
 
 		final BorderPane rootPane = new BorderPane();
@@ -51,20 +53,20 @@ public class MortgageDialog extends Dialog {
 
 		//attenzione, non vuole solo il current player, ma qualsiasi giocatore può andare in bancarotta, o meglio, bisognerebbe vedere gli imprevisti
 		//comunque sarebbe bene passargli in ingresso il current player per mantenere l'incapulamento
-		final PlayersContractListView playerListView = new PlayersContractListView(Controller.getCurrentPlayer());
+		final PlayersContractListView playerListView = new PlayersContractListView(player);
 		rootPane.setLeft(playerListView);
 
 		final VBox vBox = new VBox();
 		vBox.setPadding(getButtonInsets());
 		vBox.setSpacing(SPACING);
 
-		final Label title = new Label(Controller.currentPlayer().getName());
+		final Label title = new Label(player.getName());
 
 		title.setFont(getPrincipalFont());
 		final Label obtainedMoney = new Label("Accumulated money:\n0");
 		vBox.getChildren().add(title);
-		vBox.getChildren().add(new Label(Controller.getCurrentPlayer().getMoney()));
-		vBox.getChildren().add(new Label(Controller.getCurrentPlayer.totalAssets()));
+		vBox.getChildren().add(new Label(String.valueOf(player.getMoney())));
+		vBox.getChildren().add(new Label(String.valueOf(player.totalAssets())));
 		vBox.getChildren().add(new Label("Minimum expense:\n" + minimumExpense + "$"));
 		vBox.getChildren().add(obtainedMoney);
 		rootPane.setCenter(vBox);
@@ -72,18 +74,17 @@ public class MortgageDialog extends Dialog {
 		final BorderPane bottomPane = addButtonBox(stage, "Red", ""); // aggiungi Path
 		final Button mortgageButton = new Button("Mortgage");
 		mortgageButton.setFont(getPrincipalFont());
+		mortgageButton.setDisable(true);
 		bottomPane.setLeft(mortgageButton);
 		rootPane.setBottom(bottomPane);
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			// Controller
-			obtainedMoney.setText(/*metodo nel controller che calcola per ogni proprietà selezionata il prezzo totale*/);
-			//l'altro pulsante è disattivato finché accumulatedMoney >= minimumExpense
+			obtainedMoney.setText(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected()));
+			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
 		});
 
 		mortgageButton.setOnAction(e -> {
-			AlertFactory.
-			DialogController.getController().setMortgaged(playerListView.getSelected());
+			DialogController.getDialogController().setMortgage(playerListView.getSelected());
 			stage.close();
 		});
 

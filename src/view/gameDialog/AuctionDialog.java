@@ -51,7 +51,7 @@ public class AuctionDialog extends Dialog {
 	 * @param Property
 	 *            the property to be auctioned.
 	 */
-	public void createAuctionDialog(Obtainable property, List<Player> playerList) {
+	public void createAuctionDialog(Obtainable property, List<PlayerInfo> playerList) {
 		final Stage stage = setStage("Place a bet!");
 		
 		final BorderPane rootPane = new BorderPane();

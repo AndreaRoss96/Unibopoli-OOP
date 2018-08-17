@@ -13,14 +13,13 @@ import model.player.PlayerInfo;
 
 public class PlayersContractListView extends ListView<Text> {
 	
-	Map<Text, Paint> map;
+	private final Map<Text, Paint> map =  new HashMap<>();
 	
 	public PlayersContractListView() {
 		
 	}
 	
 	public PlayersContractListView(PlayerInfo player) {
-		this.map = new HashMap<>();
 		player.getProperties().forEach(c -> {
 			Text property = new Text(c.getNameOf());
 			property.setFill(c.getColorOf().getPaint().orElse(Color.BLACK));

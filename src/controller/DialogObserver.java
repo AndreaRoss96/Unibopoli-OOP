@@ -37,8 +37,8 @@ public interface DialogObserver {
 	/**
 	 * metodi per mortgageDialog
 	 */
-	int accumulatedMoney(List<Obtainable> propertiesList); //altrimenti una lista di stringhe
-	void executeMortgage(List<Obtainable> propertiesList);
+	int accumulatedMoney(List<String> propertiesList); //altrimenti una lista di stringhe
+	void executeMortgage(List<String> propertiesList);
 	
 	
 	/**

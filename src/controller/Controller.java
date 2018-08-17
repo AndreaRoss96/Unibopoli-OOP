@@ -48,5 +48,6 @@ public interface Controller {
 	 * Shows settings pane.
 	 */
 	void settingsClick(); // da implementare
+	
 
 }
