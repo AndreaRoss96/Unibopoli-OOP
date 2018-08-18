@@ -1,9 +1,11 @@
-#backgroudTransparentTile{
-    background: #000000;
-    -fx-opacity: 0.9;
-}
-
 #backgroudBoard{
-	-fx-background-color: #83f7c2;
+	-fx-background-color: #CDE6D0;
     
+}
+#gridPane{
+    -fx-grid-lines-visible: true;
+}
+.separator .line{
+	-fx-border-color: black;
+	-fx-border-width: 1 1 2 2;
 }

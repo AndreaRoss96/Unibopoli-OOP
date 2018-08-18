@@ -5,7 +5,7 @@ import model.player.Player;
 /**
  * This interface contains the implementation of the turn, the rotation of the player
  * will be managed by a circular list.
- * @author Edoardo Doglioni
+ * @author Matteo Alesiani
  *
  */
 
@@ -26,10 +26,13 @@ public interface Turn {
 	 * @return Player
 	 * 			whose next turn is
 	 */
-	Player nextPlayer();
+	void nextPlayer();
+	
 	/**
 	 * This method will return true of the current player is in jail
 	 * @return boolean
 	 */
 	boolean isInJail();
+	
+	boolean remove(Player player);
 }

@@ -1,34 +1,39 @@
 package model;
 
+import java.util.List;
+
 import model.player.Player;
+import model.player.PlayerInfo.Prison;
 import utilities.CircularListImpl;
 
 /**
- * @author Edoardo Doglioni
+ * @author Matteo Alesiani
  *
  */
 public class TurnImpl implements Turn {
 
-	public CircularListImpl<Player> turnList;
+	private CircularListImpl<Player> turnManagement;
+	
+	public TurnImpl(List<Player> players) {
+		this.turnManagement = new CircularListImpl<>(players);
+		this.nextPlayer();
+	}
 	
 	public Player getCurrentPlayer() {
-		// TODO Auto-generated method stub
-		return turnList.getHead();
-	}
-
-	public Player nextPlayer() {
-		// TODO Auto-generated method stub
-		 turnList.shift();
-		 return turnList.getHead();
+		return this.turnManagement.getHead();
 	}
 
 	public boolean isInJail() {
-		// TODO Auto-generated method stub
-		/*
-		 * if Player is in prision -> true
-		 * else -> false
-		 */
-		return true;
+		return this.getCurrentPlayer().isInJail() == Prison.PRISON;
 	}
 
+	@Override
+	public void nextPlayer() {
+		this.turnManagement.shift();
+	}
+
+	@Override
+	public boolean remove(Player player) {
+		return this.turnManagement.remove(player);
+	}
 }

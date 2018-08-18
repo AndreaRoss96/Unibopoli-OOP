@@ -5,24 +5,25 @@ import utilities.Pair;
 
 /**
  * 
- * 
+ * Ricontrollare tramite singleton VIROLI.
  * @author Matteo Alesiani
  */
 public class Dice {
 
 	private static final int MAX_NUM_DICE = 6;
+	private static Dice DICE_SINGLETON;
 	
 	private Random random = new Random();
-	
-	private static class DiceSafe{
-		private static final Dice DICE_SINGLETON = new Dice();
-	}
-	
+
 	private Dice(){
 	}
 	
-	public Dice getIstance() {
-		return DiceSafe.DICE_SINGLETON; 
+	public Dice getInstance() {
+		if(DICE_SINGLETON == null) {
+			DICE_SINGLETON = new Dice();
+		}
+		
+		return DICE_SINGLETON; 
 	}
 	
 	public Pair<Integer, Integer> getDice(){

@@ -1,11 +1,23 @@
 package utilities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Implementation of the interface CircularList<E>.
  */
+
+interface CircularList<E> extends Serializable, Iterable<E> {
+
+    void shift();
+
+    E getHead();
+
+    int size();
+    
+    boolean remove(Object elem);
+}
 
 public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E> {
     
@@ -28,6 +40,10 @@ public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E>
         return super.get(head);
     }
 
+    /**
+     * TODO: Metodo non utilizzato. Controllare se necessario.
+     * 
+     * */
     @Override
     public E get(final int index) {
         if (index < super.size()) {
@@ -35,13 +51,6 @@ public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E>
         }
         
         return null;
-    }
-
-    @Override
-    public void setHead(final int pos) {
-        if (pos < super.size()) {
-            this.head = pos;
-        }
     }
 
     @Override
