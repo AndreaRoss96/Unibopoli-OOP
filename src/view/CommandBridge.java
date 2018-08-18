@@ -22,12 +22,10 @@ public class CommandBridge extends Scene{
 		super(new BorderPane(), PaneDimensionSetting.getInstance().getCommandBridgeWidth(), PaneDimensionSetting.getInstance().getCommandBridgeHeight());
 		
 		final BorderPane commandBridge = new BorderPane();
-		//cambiare con PlayersPane
-		//commandBridge.setLeft(GamePane.get());
+		//commandBridge.setLeft(new LeftPlayersPane(playerList));
 		commandBridge.setCenter(GamePane.get());
 		//cambiare con ActionsPane
-		//commandBridge.setRight(GamePane.get());
-		
+		//commandBridge.setRight(new RightInormationPane());
 		this.setRoot(commandBridge);
 		this.getStylesheets().add("style.css");
 	}

@@ -1,8 +1,8 @@
 package view;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 
 /**
@@ -26,11 +26,9 @@ public class InitialWindows extends Application {
      */
     @Override
     public void start(final Stage primaryStage) {
-    	/**
-    	 * Modificare path e inserire in ClassicType.
-    	 * 
-    	 * */
-        this.initialWindow.getIcons().add(new Image(ClassicType.GeneralPurposeMap.getIconWindows()));
+    	this.initialWindow.getIcons().add(IconLoader.getLoader()
+    												.getImageFromPath(ClassicType.GeneralPurposeMap.getIconWindows())
+    												.getImage());
         
         /*
          * TODO: 

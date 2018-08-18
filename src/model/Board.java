@@ -1,7 +1,7 @@
 package model;
 
 import java.io.IOException;
-import java.util.Comparator;
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -22,8 +22,13 @@ import model.tiles.*;
  * @author Matteo Alesiani
  */
 
-public class Board {
+public class Board implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	private static final int MAXINDEXBOARD = 40;
 	
 	private Set<Tile> gameBoard;
@@ -41,33 +46,13 @@ public class Board {
 	 * Return the Set of all Obtainable Tile.
 	 * 
 	 * @return <tt>Set<Obtainable></tt> of all Obtainable.
-	 */
-	public Set<Obtainable> getObtainable(){
-		return this.gameBoard.stream()
-				   .filter(t -> t instanceof Obtainable)
-				   .map(obj -> (ObtainableImpl) obj)
-				   .collect(Collectors.toSet());
-	} 
-	
-	/**
+	 *
 	 * TODO: può ottimizzare gli altri.
 	 * 
 	 */
-	public Set<? super Tile> getTiles(Predicate<? super Tile> predicate){
+	public Set<? extends Tile> getTiles(Predicate<Tile> predicate){
 		return this.gameBoard.stream()
 				   .filter(predicate::test)
-				   .collect(Collectors.toSet());
-	}
-	
-	/**
-	 * Return the Set of all NotBuildable Tile.
-	 * 
-	 * @return <tt>Set<NotBuildable></tt> of all NotBuildable.
-	 */
-	public Set<NotBuildable> getNotBuildable(){
-		return this.gameBoard.stream()
-				   .filter(t -> t instanceof NotBuildable)
-				   .map(obj -> (NotBuildableImpl) obj)
 				   .collect(Collectors.toSet());
 	}
 	
@@ -93,7 +78,7 @@ public class Board {
 	 */
 	public Set<Tile> getTileBoard(){
 		return this.gameBoard.stream()
-				   .sorted(Comparator.comparing(Tile::getPosition)).collect(Collectors.toSet());
+				   .collect(Collectors.toSet());
 	}
 	
 	/**
@@ -113,6 +98,7 @@ public class Board {
 
 		this.pawns.put(player, position);
 	}
+	
 	/**
 	 * TODO: Finire questa inizializzazione ed eliminare metodi non necessari
 	 * 
@@ -126,14 +112,17 @@ public class Board {
 			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticNotBuildableValuesInitFile())
 					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
-			
+								
 			ReadFile.readFile(ClassicType.GeneralPurposeMap.getModeGame(this.mode))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
-		}catch (IOException e) {}
-		catch (Exception e) {}
+			
+		}catch (IOException e) {System.out.println("IOExce");}
+		catch (Exception e) { System.out.println(e.getCause()); }
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
 		
+		
+		//this.getTiles(t -> true).stream().sorted(Comparator.comparing(Tile::getPosition)).forEach(t -> System.out.println(t.getPosition() + ": " + t.getNameOf()));
 		//Collections.nCopies(4, new NotBuildable(positionTile, price, mortgage, colorTile, typeOf))
 	}
 }
