@@ -1,16 +1,15 @@
 package model.tiles;
 
-import model.Icon;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 
-public class Corner implements NotObtainable {
+public class Corner extends NotObtainableImpl {
 
 	public enum CornerTile{
-		GO(ClassicType.GeneralPurposeMap.getGoImagePath(),"COLLECT $200\nAS YOU PASS"),
-		FREE_TRANSIT(ClassicType.GeneralPurposeMap.getTransitJailPath(),"IN\nJAIL"),
-		FREE_PARKING(ClassicType.GeneralPurposeMap.getTransitTrainPath(),"FREE\nPARKING"),
-		GO_JAIL(ClassicType.GeneralPurposeMap.getGoJailPath(),"GO TO\nJAIL");
+		GO(ClassicType.GeneralPurposeMap.getGoImagePath(), "COLLECT $200\nAS YOU PASS"),
+		FREE_TRANSIT(ClassicType.GeneralPurposeMap.getTransitJailPath(), "IN\nJAIL"),
+		FREE_PARKING(ClassicType.GeneralPurposeMap.getTransitTrainPath(), "FREE\nPARKING"),
+		GO_JAIL(ClassicType.GeneralPurposeMap.getGoJailPath(), "GO TO\nJAIL");
 		
 		private String path;
 		private String headerText;
@@ -39,38 +38,16 @@ public class Corner implements NotObtainable {
 		}
 	}
 	
-	private int positionTile;
-	private String nameTile;
-	private Icon image;
 	private CornerTile cornerTile;
 	
 	public Corner(final int positionTile, final String nameTile, final CornerTile cornerTile) {
-		this.positionTile = positionTile;
-		this.nameTile = nameTile;
+		super(positionTile, nameTile);
+		
 		this.cornerTile = cornerTile;
 		this.image = IconLoader.getLoader().getImageFromPath(this.cornerTile.getPath());
 	}
 	
 	@Override
-	public int getPosition() {
-		return this.positionTile;
-	}
-
-	@Override
-	public String getNameOf() {
-		return this.nameTile;
-	}
-
-	@Override
-	public void setNameOf(String nameTile) {
-		throw new UnsupportedOperationException();
-	}
-
-	@Override
-	public Icon getImage() {
-		return this.image;
-	}
-	
 	public String getHeaderText() {
 		return this.cornerTile.getHeaderText();
 	}
