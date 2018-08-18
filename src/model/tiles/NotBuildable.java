@@ -13,8 +13,6 @@ import javafx.scene.image.ImageView;
 
 public interface NotBuildable extends Obtainable {
 	
-	
-	
 	/**
 	 * 
 	 * TODO: sistemare

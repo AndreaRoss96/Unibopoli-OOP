@@ -2,6 +2,8 @@ package model.tiles;
 
 import javafx.scene.image.ImageView;
 import model.Icon;
+import utilities.IconLoader;
+import utilities.enumerations.ClassicType;
 import utilities.enumerations.Color;
 
 /**
@@ -11,9 +13,9 @@ import utilities.enumerations.Color;
 
 public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 
-	private static final String TRAIN = "";
-	private static final String AZIENDA_ELETTRICA = "";
-	private static final String AZIENDA_ACQUA = "";
+	private static final String TRAIN = ClassicType.GeneralPurposeMap.getTrainImagePath();
+	private static final String AZIENDA_ELETTRICA = ClassicType.GeneralPurposeMap.getBulbImagePath();
+	private static final String AZIENDA_ACQUA = ClassicType.GeneralPurposeMap.getWaterImagePath();
 	private static final int RENT = 25;
 	
 	private Icon image;
@@ -25,6 +27,9 @@ public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 		this.initImage();
 	}
 	
+	/**
+	 * TODO: Controllare se è effettivamente così.
+	 * */
 	@Override
 	public int getRent() {
 		return RENT;
@@ -45,15 +50,15 @@ public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 	}
 	
 	/**
-	 * Inserire Path.
+	 * Inserire Commento.
 	 * */
 	private void initImage() {
 		if(this.getType().equals("Station")) {
-			this.setImage(new Icon(TRAIN));
+			this.setImage(IconLoader.getLoader().getImageFromPath(TRAIN));
 		}else if(this.getPosition() == 12) {
-			this.setImage(new Icon(AZIENDA_ELETTRICA));
+			this.setImage(IconLoader.getLoader().getImageFromPath(AZIENDA_ELETTRICA));
 		}else {
-			this.setImage(new Icon(AZIENDA_ACQUA));
+			this.setImage(IconLoader.getLoader().getImageFromPath(AZIENDA_ACQUA));
 		}
 	}
 }

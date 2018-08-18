@@ -13,5 +13,4 @@ public interface NotObtainable extends Tile{
 	void optionalQuantityOf();*/
 	
 	Icon getImage();
-	
 }

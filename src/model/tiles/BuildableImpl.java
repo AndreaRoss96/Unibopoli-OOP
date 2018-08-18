@@ -44,4 +44,10 @@ public class BuildableImpl extends ObtainableImpl implements Buildable{
 	public int getPriceForBuilding() {
 		return this.priceBuilding;
 	}
+
+	@Override
+	public void decBuildings() {
+		// TODO Auto-generated method stub
+		
+	}
 }

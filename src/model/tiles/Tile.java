@@ -7,6 +7,10 @@ package model.tiles;
  */
 
 public interface Tile {
+	/**
+	 * Simple Factory per Tile controllare relazione risiko
+	 * 
+	 * */
 	
 	/**
 	 * Return the position in the game board.

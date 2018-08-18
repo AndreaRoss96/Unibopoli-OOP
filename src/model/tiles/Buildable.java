@@ -28,5 +28,8 @@ public interface Buildable extends Obtainable{
 	 */
 	void incBuildings();
 	
+	
+	void decBuildings();
+	
 	int getRent(final int buildingsNr);
 }
