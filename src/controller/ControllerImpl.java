@@ -19,7 +19,12 @@ public class ControllerImpl implements Controller{
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
 	private Model model; 
 	private View view;
+	private final SoundController 
 	
+	private ControllerImpl() {
+		//cose
+		
+	}
     /**
      * Method that return the only one instance of Controller.
      * 
