@@ -71,7 +71,7 @@ public class RealPlayer implements Player {
 	@Override
 	public Integer getHouseNumber() {
 //		getProperties().stream().filter(property -> property instanceof Buildable).collect(Collectors.toList());
-		
+		return 0;
 	}
 
 	@Override
