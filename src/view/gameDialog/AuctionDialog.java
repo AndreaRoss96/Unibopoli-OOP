@@ -56,6 +56,8 @@ public class AuctionDialog extends Dialog {
 		
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
+		rootPane.getStylesheets().add("style.css");
+		
 //		rootPane.setLeft(DialogController.getController().getContract(property));
 		
 		final GridPane grid = new GridPane();

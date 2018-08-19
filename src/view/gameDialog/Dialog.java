@@ -174,6 +174,7 @@ public class Dialog {
 	 */
 	protected BorderPane addButtonBox(Stage stage, String color, String ImagePath) {
 		final BorderPane buttonBox = new BorderPane();
+		
 		buttonBox.setPadding(BUTTON_INSETS);
 		buttonBox.setStyle("-fx-background-color: " + color);
 

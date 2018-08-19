@@ -95,6 +95,7 @@ public class Contract extends AnchorPane {
 		line.setStartX(-100);
 		line.setEndX(100);
 		line.setStrokeType(StrokeType.OUTSIDE);
+		insidePane.getChildren().add(line);
 		labelCreator("House cost", Optional.of(String.valueOf(property.getPriceForBuilding())), LABEL_HEIGHT,
 				insidePane);
 		labelCreator("Hotel cost\n(plus 4 more houses).", Optional.of(String.valueOf(property.getPriceForBuilding())),
