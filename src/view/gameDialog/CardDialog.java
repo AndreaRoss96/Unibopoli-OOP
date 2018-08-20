@@ -59,7 +59,7 @@ public class CardDialog extends Dialog {
 	 * 
 	 */
 	public void createCardDialog(Obtainable property) {
-		this.stage = setStage("Whats'up?");
+		this.stage = setStage();
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox(property));
 		// root.setLeft(DialogController.getController().getContract(property));
@@ -67,9 +67,15 @@ public class CardDialog extends Dialog {
 		root.setBottom(addBottom(property));
 		final Scene scene = new Scene(root);
 		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, BOTTOM_MARGIN, LEFT_MARGIN));
-		root.setBackground(getBackground());
+		root.setBackground(getBackground());		
 		stage.setScene(scene);
 		stage.show();
+		
+		stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
+			if(!isNowFocused) {
+				stage.close();
+			}
+		});
 	}
 
 	/**

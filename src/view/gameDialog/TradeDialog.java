@@ -15,8 +15,7 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import model.DialogController;
-import model.PlayerListView;
+import controller.DialogController;
 import model.player.PlayerInfo;
 import utilities.AlertFactory;
 
@@ -30,7 +29,9 @@ import utilities.AlertFactory;
 public class TradeDialog extends Dialog {
 
 	private static final TradeDialog SINGLETON = new TradeDialog();
-
+	
+	private PlayersContractListView allPlayersListView;
+	
 	/**
 	 * Istance of TradeDialog.
 	 * 
@@ -43,8 +44,10 @@ public class TradeDialog extends Dialog {
 	/**
 	 * Creation of the pane for the dialog.
 	 */
-	public void createTradeDialog(List<PlayerInfo> playerList) {
-		final Stage stage = setStage("Choose what you want to exchange!");
+	public void createTradeDialog(PlayerInfo currentPlayer, List<PlayerInfo> playerList) {
+		final DialogController controller = DialogController.getDialogController();
+		
+		final Stage stage = setStage();
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
@@ -52,16 +55,17 @@ public class TradeDialog extends Dialog {
 		final GridPane gridA = new GridPane();
 		gridA.setPadding(new Insets(2, 5, 2, 5));
 
-		Label currentPlayer = new Label("Curr Player");
-		currentPlayer.setStyle("-fx-font-family: Kabel");
+		Label currPlayerLabel = new Label("Curr Player");
+		currPlayerLabel.setStyle("-fx-font-family: Kabel");
 		TextField currMoneyToTrade = new TextField("0");
-		currMoneyToTrade.setPrefWidth(currentPlayer.getWidth());
+		currMoneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
+		PlayersContractListView currListView = new PlayersContractListView(currentPlayer);
 		gridA.add(new Label("Player: "), 0, 0);
-		gridA.add(currentPlayer, 1, 0, 1, 1);
+		gridA.add(currPlayerLabel, 1, 0, 1, 1);
 		gridA.add(new Label("Trade: "), 0, 1, 2, 1);
 		gridA.add(currMoneyToTrade, 1, 1, 2, 1);
 		gridA.add(new Label("$"), 2, 1);
-		gridA.add(new PlayersContractListView(), 0, 2, 4, 1);
+		gridA.add(currListView, 0, 2, 4, 1);
 		rootPane.setLeft(gridA);
 
 		ComboBox<String> playerBox = new ComboBox<>();
@@ -69,8 +73,9 @@ public class TradeDialog extends Dialog {
 		playerList.forEach(e -> playerBox.getItems().add(e.getName()));
 
 		TextField moneyToTrade = new TextField("0");
-		moneyToTrade.setPrefWidth(currentPlayer.getWidth());
-
+		moneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
+		this.allPlayersListView = new PlayersContractListView();
+		
 		GridPane gridB = new GridPane();
 		gridB.setGridLinesVisible(true);
 		gridB.add(new Label("Player: "), 0, 0);
@@ -78,7 +83,7 @@ public class TradeDialog extends Dialog {
 		gridB.add(new Label("Trade: "), 0, 1, 2, 1);
 		gridB.add(moneyToTrade, 1, 1, 2, 1);
 		gridB.add(new Label("$"), 2, 1);
-		gridB.add(new PlayersContractListView(), 0, 2, 4, 1);
+		gridB.add(this.allPlayersListView, 0, 2, 4, 1);
 		rootPane.setRight(gridB);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Green", ""); // aggiungi path
@@ -88,10 +93,13 @@ public class TradeDialog extends Dialog {
 		rootPane.setBottom(bottomPane);
 
 		playerBox.setOnAction(e -> {
-			gridB.add(
-					new PlayersContractListView(playerList.stream()
-							.filter(player -> player.getName().equals(playerBox.getValue())).findFirst().get()),
-					0, 2, 4, 1);
+			if(playerBox.getValue() != null) {
+				updateGrid(controller.getPlayerByName(playerBox.getValue()));
+			}
+//			gridB.add(
+//					new PlayersContractListView(playerList.stream()
+//							.filter(player -> player.getName().equals(playerBox.getValue())).findFirst().get()),
+//					0, 2, 4, 1);
 		});
 
 		tradeButton.setOnAction(e -> {
@@ -104,7 +112,7 @@ public class TradeDialog extends Dialog {
 				e.consume();
 			} else {
 				if (playerBox.getValue() != null) {
-					// controller
+					controller.executeTrade(playerBox.getValue(), currListView.getSelected(), allPlayersListView.getSelected(), currMoneyToTrade.getText(), moneyToTrade.getText());
 				} else {
 					AlertFactory.createErrorAlert("???", null, "Choose a player!");
 					e.consume();
@@ -115,6 +123,10 @@ public class TradeDialog extends Dialog {
 		final Scene scene = new Scene(rootPane);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	private void updateGrid(PlayerInfo player) {
+		this.allPlayersListView = new PlayersContractListView(player);
 	}
 
 }

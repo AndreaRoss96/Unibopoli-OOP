@@ -24,7 +24,7 @@ public interface DialogObserver {
 	/**
 	 * metodi per AuctionDialog 
 	 */
-	void executeAuction(List<Player> playerList, List<String> passwordList, Obtainable property);
+	void executeAuction(List<PlayerInfo> playerList, List<String> passwordList, Obtainable property);
 			
 	/**
 	 * metodi per cardDialog
@@ -44,6 +44,9 @@ public interface DialogObserver {
 	/**
 	 * metodi per TradeDialog
 	 */
-	void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, List<Obtainable> secondProperties, int firstMoney, int secondMoney);
+//	void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, List<Obtainable> secondProperties, int firstMoney, int secondMoney);
+	void executeTrade(String secondPlayerName, List<String> firstPropertiesNames, List<String> secondPropertiesNames, String firstMoney, String secondMoney);
 	
+	
+	PlayerInfo getPlayerByName(String playerName);
 }

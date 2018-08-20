@@ -19,6 +19,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utilities.PaneDimensionSetting;
 
 /**
  * Class for dialogs, other classes can extends this class to initiate the stage
@@ -29,10 +30,10 @@ import javafx.stage.StageStyle;
 public class Dialog {
 	private static final int V_PADDING = 2;
 	private static final int H_PADDING = 5;
-	private static final double SCREEN_H = Toolkit.getDefaultToolkit().getScreenSize().getHeight();
-	private static final double SCREEN_W = Toolkit.getDefaultToolkit().getScreenSize().getWidth();
-	private static final double PREF_H_SIZE = SCREEN_H * 0.70;
-	private static final double PREF_W_SIZE = SCREEN_W * 0.40;
+	private static final double SCREEN_H = PaneDimensionSetting.getInstance().getCommandBridgeHeight();
+	private static final double SCREEN_W = PaneDimensionSetting.getInstance().getCommandBridgeWidth();
+	private static final double PREF_H_SIZE = SCREEN_H * 0.75;
+	private static final double PREF_W_SIZE = SCREEN_W * 0.45;
 	private static final Font PRINCIPAL_FONT = Font.font("Kabel", FontWeight.BOLD, 18);
 	private static final Insets BUTTON_INSETS = new Insets(SCREEN_H * 0.02);
 	private static final int BUTTON_WIDTH = 100;
@@ -132,13 +133,12 @@ public class Dialog {
 	 * 
 	 * @return the stage with settings.
 	 */
-	protected Stage setStage(String title) {
+	protected Stage setStage() {
 		final Stage stage = new Stage();
-		stage.setTitle(title);
 		stage.initStyle(StageStyle.UNDECORATED);
 		stage.centerOnScreen();
 		stage.setResizable(false);
-		stage.initModality(Modality.APPLICATION_MODAL);
+		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setWidth(PREF_W_SIZE);
 		stage.setHeight(PREF_H_SIZE);
 		return stage;

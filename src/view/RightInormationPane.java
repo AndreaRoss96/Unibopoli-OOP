@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import model.player.PlayerInfo;
 import utilities.PaneDimensionSetting;
 
-public class RightInormationPane {
+public class RightInormationPane extends VBox {
 	
 	private static final double H_DISTANCE = 0.43;
 	private static final double V_DISTANCE = 0.21;
@@ -28,9 +28,10 @@ public class RightInormationPane {
 	private Label prisonLabel;
 
 	public RightInormationPane() {
-		final VBox root = new VBox(SPACING);
-		root.setAlignment(Pos.TOP_CENTER);
-		
+//		final VBox root = new VBox(SPACING);
+//		root.setAlignment(Pos.TOP_CENTER);
+		this.setAlignment(Pos.TOP_CENTER);
+		this.setStyle("-fx-border-color: black");
 		final AnchorPane topAnchorPane = new AnchorPane();
 		topAnchorPane.setPrefWidth(PANE_WIDTH);
 		topAnchorPane.setPrefHeight(PANE_WIDTH/2); // sicuro ?
@@ -47,14 +48,14 @@ public class RightInormationPane {
 		AnchorPane.setTopAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(rightDiceResult);
 		
-		final Button diceBtn = new Button("", new ImageView(new Image("dice"))); //serve il path dei dadi
+		final Button diceBtn = new Button("", new ImageView(new Image("/images/Icons/Anello.png"))); //serve il path dei dadi
 		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		AnchorPane.setTopAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(diceBtn);
 		
-		final Button setting = new Button("ing"); //PATH DELL'INGRANAGGIO
+		final Button setting = new Button("/images/Icons/Anello.png"); //PATH DELL'INGRANAGGIO
 		setting.setStyle("-fx-background-radius: 5em; "
 				+ "-fx-min-width: 40px; " + "-fx-min-height: 40px; "
 				+ "-fx-max-width: 40px; " + "-fx-max-height: 40px;");
@@ -62,11 +63,11 @@ public class RightInormationPane {
 		AnchorPane.setTopAnchor(setting, SETTINGS_DISTANCE);
 		topAnchorPane.getChildren().add(setting);
 		
-		root.getChildren().add(topAnchorPane);
+		this.getChildren().add(topAnchorPane);
 		
 		final Button tradeBtn = new Button ("Trade");
 		tradeBtn.setPrefWidth(PANE_WIDTH);
-		root.getChildren().add(tradeBtn);
+		this.getChildren().add(tradeBtn);
 		
 		playerLabel = new Label();
 		playerLabel.setWrapText(true);
@@ -76,9 +77,9 @@ public class RightInormationPane {
 		netWorthLabel.setWrapText(true);
 		prisonLabel = new Label();
 		prisonLabel.setWrapText(true);
-		root.getChildren().addAll(playerLabel, cashLabel, netWorthLabel, prisonLabel);
+		this.getChildren().addAll(playerLabel, cashLabel, netWorthLabel, prisonLabel);
 		
-		final Button endTurn = new Button("", new ImageView(new Image("freccia"))); //pathhh
+		final Button endTurn = new Button("", new ImageView(new Image("/images/Icons/Anello.png"))); //pathhh
 		endTurn.setStyle("-fx-background-radius: 5em; "
 				+ "-fx-min-width: 52px; " + "-fx-min-height: 52px; "
 				+ "-fx-max-width: 52px; " + "-fx-max-height: 52px;");
@@ -91,7 +92,7 @@ public class RightInormationPane {
 		bottomAnchorPane.setPrefHeight(PANE_HEIGHT);
 		bottomAnchorPane.setPrefWidth(PANE_WIDTH);
 		
-		root.getChildren().add(bottomAnchorPane);
+		this.getChildren().add(bottomAnchorPane);
 		
 		diceBtn.setOnAction(e -> {
 			//controller bisogna vedere se attivare o meno il pulsante endTurn -- in caso di dado doppio bisogna ritirare

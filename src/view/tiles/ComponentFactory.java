@@ -75,6 +75,8 @@ public class ComponentFactory {
 		label.setOnMouseEntered(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 10)));
 		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
 		label.setWrapText(true);
+		
+		label.setMaxWidth(LandHEIGHT);
 		setAlignmentNode(label, position);
 		
 		return label;

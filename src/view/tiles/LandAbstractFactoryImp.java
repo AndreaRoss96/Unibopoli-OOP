@@ -14,6 +14,7 @@ import model.tiles.Corner;
 import model.tiles.NotBuildable;
 import model.tiles.NotObtainable;
 import model.tiles.Tile;
+import utilities.PaneDimensionSetting;
 import view.gameDialog.CardDialog;
 
 /**
@@ -55,6 +56,7 @@ public class LandAbstractFactoryImp{
 		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
 		Separator seperator = ComponentFactory.getSeparator(Orientation.VERTICAL);
 		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
+		textHeader.setStyle("-fx-border-color: BLACK");
 		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
 		
 		if(position == Pos.CENTER_LEFT) {
@@ -78,7 +80,8 @@ public class LandAbstractFactoryImp{
 		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
 		//utilizzare uno StackPane per inserire le case.
 		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);		
-		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);		
+		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
+		textHeader.setStyle("-fx-border-color: BLACK");
 		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
 		
 		if(position == Pos.BOTTOM_CENTER) {
