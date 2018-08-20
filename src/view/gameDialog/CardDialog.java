@@ -21,6 +21,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Stage;
 import model.tiles.Buildable;
 import model.tiles.Obtainable;
+import view.Contract;
 
 /**
  * This dialog allows the players to interact directly with the property of the
@@ -62,6 +63,7 @@ public class CardDialog extends Dialog {
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox(property));
 		// root.setLeft(DialogController.getController().getContract(property));
+		root.setLeft(new Contract(property));
 		root.setBottom(addBottom(property));
 		final Scene scene = new Scene(root);
 		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, BOTTOM_MARGIN, LEFT_MARGIN));

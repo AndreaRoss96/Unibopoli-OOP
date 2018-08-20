@@ -38,14 +38,14 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return the properties of the player
 	 */
-	List<ObtainableImpl> getProperties();
+	List<Obtainable> getProperties();
 	
 	/**
 	 * Returns a set of all player's mortgaged properties.
 	 * 
 	 * @return the mortgaged properties of the player
 	 */
-	List<ObtainableImpl> getMortgagedProperties();
+	List<Obtainable> getMortgagedProperties();
 	
 	/**
 	 * Calculate the total of the player's assets
@@ -97,5 +97,5 @@ public interface PlayerInfo extends Serializable {
 	 */
 	boolean canPay(Integer moneyAmount);
 
-	Map<Color, List<ObtainableImpl>> getPopertiesByColor();
+	Map<Color, List<Obtainable>> getPopertiesByColor();
 }

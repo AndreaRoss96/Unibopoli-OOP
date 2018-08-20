@@ -2,6 +2,7 @@ package model;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -10,6 +11,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import utilities.Pair;
 import utilities.Parse;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
@@ -24,11 +26,7 @@ import model.tiles.*;
 
 public class Board implements Serializable{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
-
 	private static final int MAXINDEXBOARD = 40;
 	
 	private Set<Tile> gameBoard;
@@ -72,16 +70,6 @@ public class Board implements Serializable{
 	}
 	
 	/**
-	 * Return the Set of all Tile.
-	 * 
-	 * @return <tt>Set<Tile></tt> of all Tile.
-	 */
-	public Set<Tile> getTileBoard(){
-		return this.gameBoard.stream()
-				   .collect(Collectors.toSet());
-	}
-	
-	/**
 	 * Return the String corresponding to the mode of game.
 	 * 
 	 * @return <tt>mode</tt> of game.
@@ -95,7 +83,6 @@ public class Board implements Serializable{
 	}
 	
 	public void addPawn(PlayerInfo player, Integer position) {
-
 		this.pawns.put(player, position);
 	}
 	
@@ -121,8 +108,14 @@ public class Board implements Serializable{
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
 		
+		Arrays.asList(new Pair<Integer, Boolean>(2, false),
+					  new Pair<Integer, Boolean>(17, false),
+					  new Pair<Integer, Boolean>(33, false),
+					  new Pair<Integer, Boolean>(7, true),
+					  new Pair<Integer, Boolean>(22, true),
+					  new Pair<Integer, Boolean>(36, true)
+					  ).stream().map(t -> new Chance(t.getX(), t.getY())).forEach(gameBoard::add); 
 		
-		//this.getTiles(t -> true).stream().sorted(Comparator.comparing(Tile::getPosition)).forEach(t -> System.out.println(t.getPosition() + ": " + t.getNameOf()));
-		//Collections.nCopies(4, new NotBuildable(positionTile, price, mortgage, colorTile, typeOf))
+		Arrays.asList(4, 38).stream().map(t -> new Tax(t)).forEach(gameBoard::add);
 	}
 }

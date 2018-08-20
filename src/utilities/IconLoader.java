@@ -25,21 +25,20 @@ public final class IconLoader {
 	 * @return the current Singleton instance of the ImageLoader.
 	 */
 	public static IconLoader getLoader() {
-		if (IconLoader.ICONS == null) {
-			IconLoader.ICONS = new IconLoader();
+		if (ICONS == null) {
+			ICONS = new IconLoader();
 		}
-		return IconLoader.ICONS;
+		return ICONS;
 	}
 
 	public Icon getImageFromPath(final String path) {
 		try {
 			if (!this.iconsMap.containsKey(path)) {
-				this.iconsMap.put(path, new Icon(path) /**Image(IconLoader.class.getResourceAsStream("/" + path))*/);
+				this.iconsMap.put(path, new Icon(path));
 			}
+			
 			return this.iconsMap.get(path);
-		} catch (final Exception e) {
-			//TODO: Aggiungere conseguenza dell'errore.
-		}
+		} catch (final Exception e) {System.out.println("Path non trovato");}
 		
 		return null;
 	}
