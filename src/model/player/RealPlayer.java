@@ -32,7 +32,7 @@ public class RealPlayer implements Player {
 	private Prison status = Prison.NOT_PRISON;
 
 	/**
-	 * This costructor is used by GameInitializer class
+	 * This constructor is used by GameInitializer class
 	 * 
 	 * @param name
 	 * @param money
@@ -188,5 +188,17 @@ public class RealPlayer implements Player {
 	@Override
 	public List<Obtainable> getMortgagedProperties() {
 		return this.mortgagedProperties;
+	}
+
+	@Override
+	public void addMoney(int moneyAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void takeMoney(int moneyAmount) {
+		// TODO Auto-generated method stub
+		
 	}
 }

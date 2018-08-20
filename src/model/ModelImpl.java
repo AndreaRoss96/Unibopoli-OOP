@@ -62,4 +62,40 @@ public class ModelImpl implements Model{
 		this.loserList.add(this.players.remove(this.players.indexOf(player)));
 	}
 
+	@Override
+	public void buyProperty(PlayerInfo player, Obtainable property) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mortgageProperties(PlayerInfo player, List<Obtainable> mortgaged) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addProperty(PlayerInfo player, Obtainable property) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void payment(PlayerInfo player, Integer moneyAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void gainMoney(PlayerInfo player, Integer moneyAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeProperties(PlayerInfo player, List<Obtainable> removedProperties) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

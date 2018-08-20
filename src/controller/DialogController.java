@@ -99,7 +99,7 @@ public class DialogController implements DialogObserver {
 	public void buyProperty(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		if (canPay(model.getCurrentPlayer(), property.getPrice())) {
 			if (model.getCurrentPlayer().getPosition() == property.getPosition()) {
-				// model.getCurrentPlayer().buyProperty(property); searchPlayerByName, oppure
+				((Player) model.getCurrentPlayer()).buyProperty(property); //searchPlayerByName, oppure
 				// currentPlayer torna Player
 			}
 		}
