@@ -62,7 +62,7 @@ public class GamePane extends StackPane{
 		
 		board.getTiles(t -> true).stream().sorted(orderCre()).skip(skip).limit(limit)
 			 .sorted(order ? orderCre() : orderDec()).map(tile -> new LandAbstractFactoryImp().createLand(tile, position))
-			  .forEach(land -> consumer.accept(land, pane));
+			 .forEach(land -> consumer.accept(land, pane));
 		  
 		pane.setId("gridPane");
 		return pane;
@@ -75,12 +75,13 @@ public class GamePane extends StackPane{
 	private Comparator<? super Tile> orderCre(){
 		return (o1, o2) -> o1.getPosition() - o2.getPosition();
 	}
+	
 	private GridPane getTopNode() {
-		return this.builder(0, 11, Pos.TOP_CENTER, (land, pane) -> pane.addRow(0, land), true);
+		return this.builder(20, 11, Pos.TOP_CENTER, (land, pane) -> pane.addRow(0, land), true);
 	}
 	
 	private GridPane getLeftNode() {
-		return this.builder(31, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addColumn(0, land), false);
+		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addColumn(0, land), false);
 	}
 	
 	private GridPane getCenterNode() {
@@ -88,11 +89,11 @@ public class GamePane extends StackPane{
 	}
 	
 	private GridPane getRightNode() {
-		return this.builder(11, 9, Pos.CENTER_RIGHT, (land, pane) -> pane.addColumn(0, land), true);
+		return this.builder(31, 9, Pos.CENTER_RIGHT, (land, pane) -> pane.addColumn(0, land), true);
 	}
 	
 	private GridPane getBottomNode() {
-		return this.builder(20, 11, Pos.BOTTOM_CENTER, (land, pane) -> pane.addRow(0, land), false);
+		return this.builder(0, 11, Pos.BOTTOM_CENTER, (land, pane) -> pane.addRow(0, land), false);
 	}
 	
 	public static GamePane get() {        

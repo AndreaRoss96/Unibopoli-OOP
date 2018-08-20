@@ -29,6 +29,11 @@ public class ComponentFactory {
 	public static AnchorPane getAnchorPane(final boolean isCorner, final Pos position) {
 		AnchorPane landPane = new AnchorPane();
 		
+		/**
+		 * Utilizzare setRotate.
+		 * 
+		 * **/
+		
 		if(isCorner) {
 			landPane.setMinHeight(LandCornerDimension);
 			landPane.setMinWidth(LandCornerDimension);
@@ -69,6 +74,12 @@ public class ComponentFactory {
 			label.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
 		}
 		
+		/*if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
+			label.setMaxHeight(LandHEIGHT);
+			label.setPrefHeight(LandHEIGHT);
+			label.setMinHeight(LandHEIGHT);
+		}*/
+		
 		label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8));
 		label.setAlignment(Pos.CENTER);
 		label.setTextAlignment(TextAlignment.CENTER);
@@ -87,10 +98,10 @@ public class ComponentFactory {
 	public static Label getLabelImage(final ImageView ImageView, final Pos position) {
 		Label image = new Label();
 		ImageView imageView = ImageView;
-		imageView.setFitWidth(LandSimpleWIDTH * 0.6);
-		imageView.setFitHeight(LandSimpleWIDTH * 0.6);	
+		imageView.setFitWidth(LandSimpleWIDTH * 0.7);
+		imageView.setFitHeight(LandSimpleWIDTH * 0.7);	
 		image.setGraphic(imageView);
-		image.setAlignment(Pos.CENTER);
+		image.setAlignment(Pos.BASELINE_CENTER);
 		
 		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
 			image.setRotate(NOT_ROTATE);
@@ -105,7 +116,6 @@ public class ComponentFactory {
 	public static Separator getSeparator(final Orientation orientation) {
 		Separator seperator = new Separator(orientation);		
 		setAlignmentNode(seperator, orientation == Orientation.VERTICAL ? Pos.CENTER_LEFT :  Pos.TOP_CENTER);
-		seperator.setId("separator");
 		
 		return seperator;
 	}

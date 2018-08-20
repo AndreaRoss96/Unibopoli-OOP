@@ -13,17 +13,18 @@ public class Dice {
 	private static final int MAX_NUM_DICE = 6;
 	private static Dice DICE_SINGLETON;
 	
-	private Random random = new Random();
+	private Random random;
 
 	private Dice(){
+		this.random = new Random();
 	}
 	
-	public Dice getInstance() {
-		if(DICE_SINGLETON == null) {
-			DICE_SINGLETON = new Dice();
+	public static Dice getInstance() {
+		if(Dice.DICE_SINGLETON == null) {
+			Dice.DICE_SINGLETON = new Dice();
 		}
 		
-		return DICE_SINGLETON; 
+		return Dice.DICE_SINGLETON; 
 	}
 	
 	public Pair<Integer, Integer> getDice(){

@@ -44,6 +44,7 @@ public class LandAbstractFactoryImp{
 		}else {
 			this.getVerticalBuildable(landPane, buildableTile, position); 
 		}
+		
 		//deve passare prima per il controller
 		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(buildableTile));
 		
@@ -113,11 +114,11 @@ public class LandAbstractFactoryImp{
 		
 		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
 			AnchorPane.setTopAnchor(top, 0.0);					
-			AnchorPane.setTopAnchor(image, 35.0);		
+			AnchorPane.setTopAnchor(image, 40.0);		
 			AnchorPane.setBottomAnchor(bottom, 5.0);
 		}else {
 			AnchorPane.setLeftAnchor(top, 0.0);					
-			AnchorPane.setLeftAnchor(image, 35.0);		
+			AnchorPane.setLeftAnchor(image, 40.0);		
 			AnchorPane.setRightAnchor(bottom, 5.0);
 		}
 		
@@ -137,7 +138,7 @@ public class LandAbstractFactoryImp{
 			landPane.getChildren().add(bottom);
 		}
 		
-		AnchorPane.setTopAnchor(image, 20.0);
+		AnchorPane.setTopAnchor(image, 40.0);
 		AnchorPane.setTopAnchor(top, 10.0);
 		
 		landPane.getChildren().addAll(top, image);
@@ -154,7 +155,7 @@ public class LandAbstractFactoryImp{
 		Label image = ComponentFactory.getLabelImage(cornerTile.getImage().get(), Pos.TOP_CENTER);
 		Label bottom = ComponentFactory.getLabelString(temp.get(1), Pos.TOP_CENTER);
 		
-		AnchorPane.setTopAnchor(image, 20.0);
+		AnchorPane.setTopAnchor(image, 30.0);
 		AnchorPane.setTopAnchor(top, 10.0);
 		AnchorPane.setBottomAnchor(bottom, 10.0);
 		
