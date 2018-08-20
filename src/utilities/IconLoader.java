@@ -25,10 +25,10 @@ public final class IconLoader {
 	 * @return the current Singleton instance of the ImageLoader.
 	 */
 	public static IconLoader getLoader() {
-		if (ICONS == null) {
-			ICONS = new IconLoader();
+		if (IconLoader.ICONS == null) {
+			IconLoader.ICONS = new IconLoader();
 		}
-		return ICONS;
+		return IconLoader.ICONS;
 	}
 
 	public Icon getImageFromPath(final String path) {
