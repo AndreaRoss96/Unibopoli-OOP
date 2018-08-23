@@ -70,8 +70,7 @@ public class ControllerImpl implements Controller{
 
 	@Override
 	public void diceClick() {
-		// TODO Auto-generated method stub
-		
+				
 	}
 
 	@Override

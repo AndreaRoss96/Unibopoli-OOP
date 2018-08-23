@@ -43,6 +43,7 @@ public class ModelMemento implements Serializable {
 												 * final Set<Imprevisti> imprevistis, final Set<Probabilità>
 												 * probabilitàs
 												 */) {
+		//salva la lista dei giocatori, non il giocatore corrente
 		this.gameBoard = gameBoard;
 		this.players = players;
 		this.currentPlayer = currentPlayer;

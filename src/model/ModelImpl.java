@@ -14,6 +14,7 @@ import model.tiles.Tile;
 import utilities.Pair;
 
 public class ModelImpl implements Model{
+	
 	private final Board board;
 	/**
 	 * Se vogliamo tenere qui players, è necessario eliminare la mappa da dentro la classe Board.
@@ -27,8 +28,8 @@ public class ModelImpl implements Model{
 	 * per accedere rapidamente alle loro posizioni, prezzo, affitto ecc, poi dipende se queste informazioni
 	 * possono essere estratte dalla board di gioco si possono canellare
 	 * */
-	private final Set<Obtainable> properties;
-	private Player currentPlayer;
+	private final Set<Obtainable> properties; //Board.getTiles(Tile -> tile instanceof Obtainable) ritorna un bellissimo set quindi togli questo attributo
+//	private Player currentPlayer;
 	private final List<Player> loserList;
 	//imprevisti e probabilità
 	private Turn turnPlayer;
