@@ -107,19 +107,19 @@ public class PlayerSetupMenu extends BorderPane {
 			psbList.forEach(pBox -> {
 				if (pBox.getNameField().getText().equals("Insert player name...")
 						|| pBox.getNameField().getText().isEmpty()) {
-					AlertFactory.createInformationAlert("Nope", null, "Use valid name!").showAndWait();
+					AlertFactory.createInformationAlert("Nope", null, "Use valid name!");
 					e.consume();
 				}
 			});
 			if (psbList.stream().map(PlayerSetupBox::getNameField).distinct().count() != flowPane.getChildren()
 					.size()) {
-				AlertFactory.createInformationAlert("Nope", null, "Use different names!").showAndWait();
+				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
 				e.consume();
 			}
 			/* check if all players have chosen an icon */
 			psbList.forEach(bBox -> {
 				if (bBox.getIcons().getSelectionModel().isEmpty()) {
-					AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!").showAndWait();
+					AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
 					e.consume();
 				}
 			});

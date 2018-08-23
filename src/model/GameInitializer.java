@@ -25,6 +25,11 @@ public final class GameInitializer {
 	public GameInitializer() {
 	}
 
+	/**
+	 * The instance of GameInitializer
+	 * 
+	 * @return the singleton
+	 */
 	public static GameInitializer getInstance() {
 		return SINGLETON;
 	}
@@ -39,7 +44,7 @@ public final class GameInitializer {
 	 * @throws IOException
 	 *             when one of the initialization files not is found.
 	 */
-	public Model newGame(Map<String, Icon> playersMap) throws IOException {
+	public Model newGame(final Map<String, Icon> playersMap) throws IOException {
 		Objects.requireNonNull(playersMap, "NullPointerException: playersMap required non-null.");
 		if (this.alreadyCalled) {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");

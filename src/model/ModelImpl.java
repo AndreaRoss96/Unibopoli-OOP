@@ -23,6 +23,9 @@ public class ModelImpl implements Model{
 	/**
 	 * 
 	 * A cosa serve Set<Obtainable> properties ?
+	 * -rosso: presumo sia utile tenere traccia delle properietà presenti nel gioco
+	 * per accedere rapidamente alle loro posizioni, prezzo, affitto ecc, poi dipende se queste informazioni
+	 * possono essere estratte dalla board di gioco si possono canellare
 	 * */
 	private final Set<Obtainable> properties;
 	private Player currentPlayer;

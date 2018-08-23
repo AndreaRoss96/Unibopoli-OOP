@@ -39,18 +39,31 @@ public class ComponentFactory {
 			landPane.setMinWidth(LandCornerDimension);
 			landPane.setMaxHeight(LandCornerDimension);
 			landPane.setMaxWidth(LandCornerDimension);
-		}else if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-			landPane.setMinHeight(LandSimpleWIDTH);
-			landPane.setMinWidth(LandHEIGHT);
-			landPane.setMaxHeight(LandSimpleWIDTH);
-			landPane.setMaxWidth(LandHEIGHT);
-		}else {
+//		}else if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
+//			landPane.setMinHeight(LandHEIGHT);
+//			landPane.setMinWidth(LandSimpleWIDTH);
+//			landPane.setMaxHeight(LandHEIGHT);
+//			landPane.setMaxWidth(LandSimpleWIDTH);
+//			if(position == Pos.CENTER_LEFT) {
+//				landPane.setRotate(ROTATE_RIGHT);
+//			} else if(position == Pos.CENTER_RIGHT) {
+//				landPane.setRotate(ROTATE_LEFT);
+//			}
+		} else {
 			landPane.setMinHeight(LandHEIGHT);
 			landPane.setMinWidth(LandSimpleWIDTH);
 			landPane.setMaxHeight(LandHEIGHT);
 			landPane.setMaxWidth(LandSimpleWIDTH);
+			
+//			 if(position == Pos.BOTTOM_CENTER) {
+//				landPane.setRotate(ROTATE_LEFT * 2);
+//			} else if(position == Pos.CENTER_LEFT) {
+//				landPane.setRotate(ROTATE_RIGHT);
+//			} else if(position == Pos.CENTER_RIGHT) {
+//				landPane.setRotate(ROTATE_LEFT);
+//			}
 		}
-		
+		landPane.setStyle("-fx-border-color: blue");
 		return landPane;
 	}
 	
@@ -68,11 +81,11 @@ public class ComponentFactory {
 	public static Label getLabelString(final String textLabel, final Pos position) {
 		Label label = new Label(textLabel);
 		
-		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-			label.setRotate(NOT_ROTATE);
-		}else {
-			label.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
-		}
+//		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
+//			label.setRotate(NOT_ROTATE);
+//		}else {
+//			label.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
+//		}
 		
 		/*if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
 			label.setMaxHeight(LandHEIGHT);
@@ -87,7 +100,7 @@ public class ComponentFactory {
 		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
 		label.setWrapText(true);
 		
-		label.setMaxWidth(LandHEIGHT);
+//		label.setMaxWidth(LandHEIGHT);
 		setAlignmentNode(label, position);
 		
 		return label;
@@ -105,30 +118,30 @@ public class ComponentFactory {
 		image.setGraphic(imageView);
 		image.setAlignment(Pos.BASELINE_CENTER);
 		
-		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-			image.setRotate(NOT_ROTATE);
-		}else {
-			image.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
-		}
+//		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
+//			image.setRotate(NOT_ROTATE);
+//		}else {
+//			image.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
+//		}
 		setAlignmentNode(image, position);
 		
 		return image;
 	}
 
 	public static Separator getSeparator(final Orientation orientation) {
-		Separator seperator = new Separator(orientation);		
+		Separator seperator = new Separator(orientation);
 		setAlignmentNode(seperator, orientation == Orientation.VERTICAL ? Pos.CENTER_LEFT :  Pos.TOP_CENTER);
 		
 		return seperator;
 	}
 
 	private static void setAlignmentNode(Control node, final Pos position) {
-		if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-			AnchorPane.setTopAnchor(node, 0.0);
-			AnchorPane.setBottomAnchor(node, 0.0);
-		}else {
+//		if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
+//			AnchorPane.setTopAnchor(node, 0.0);
+//			AnchorPane.setBottomAnchor(node, 0.0);
+//		}else {
 			AnchorPane.setLeftAnchor(node, 0.0);
 			AnchorPane.setRightAnchor(node, 0.0);		
-		}
+//		}
 	}
 }

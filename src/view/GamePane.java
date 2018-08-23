@@ -4,6 +4,7 @@ import java.util.Comparator;
 import java.util.function.BiConsumer;
 
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -45,15 +46,28 @@ public class GamePane extends StackPane{
 		return backGround;
 	}
 	
-	private BorderPane lowerLayer() {
-		BorderPane lowerLayer = new BorderPane();
+	private AnchorPane lowerLayer() {
+		AnchorPane lowerLayer = new AnchorPane();
 		
-		lowerLayer.setTop(this.getTopNode());
-		lowerLayer.setLeft(this.getLeftNode());
-		lowerLayer.setCenter(this.getCenterNode());
-		lowerLayer.setRight(this.getRightNode());
-		lowerLayer.setBottom(this.getBottomNode());
-
+//		lowerLayer.setTop(this.getTopNode());
+//		lowerLayer.setLeft(this.getLeftNode());
+//		lowerLayer.setCenter(this.getCenterNode());
+//		lowerLayer.setRight(this.getRightNode());
+//		lowerLayer.setBottom(this.getBottomNode());
+		GridPane topNode = this.getTopNode();
+		GridPane leftNode = this.getLeftNode();
+		GridPane rightNode = this.getRightNode();
+		GridPane bottomNode = this.getBottomNode();
+		lowerLayer.getChildren().addAll(topNode, leftNode, rightNode, bottomNode);
+		AnchorPane.setTopAnchor(topNode, -1.0);
+		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
+		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 17);
+		AnchorPane.setBottomAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
+		AnchorPane.setTopAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
+		AnchorPane.setRightAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 17);
+		AnchorPane.setBottomAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
+		AnchorPane.setBottomAnchor(bottomNode, -1.0);
+		
 		return lowerLayer;
 	}
 	
@@ -63,7 +77,15 @@ public class GamePane extends StackPane{
 		board.getTiles(t -> true).stream().sorted(orderCre()).skip(skip).limit(limit)
 			 .sorted(order ? orderCre() : orderDec()).map(tile -> new LandAbstractFactoryImp().createLand(tile, position))
 			 .forEach(land -> consumer.accept(land, pane));
-		  
+		
+		 if(position == Pos.BOTTOM_CENTER) {
+			 pane.setRotate(90 * 2);
+		} else if(position == Pos.CENTER_LEFT) {
+			pane.setRotate(-90);
+		} else if(position == Pos.CENTER_RIGHT) {
+			pane.setRotate(90);
+		}
+		
 		pane.setId("gridPane");
 		return pane;
 	}
@@ -81,7 +103,7 @@ public class GamePane extends StackPane{
 	}
 	
 	private GridPane getLeftNode() {
-		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addColumn(0, land), false);
+		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addRow(0, land), false);
 	}
 	
 	private GridPane getCenterNode() {
@@ -89,7 +111,7 @@ public class GamePane extends StackPane{
 	}
 	
 	private GridPane getRightNode() {
-		return this.builder(31, 9, Pos.CENTER_RIGHT, (land, pane) -> pane.addColumn(0, land), true);
+		return this.builder(31, 9, Pos.CENTER_RIGHT, (land, pane) -> pane.addRow(0, land), true);
 	}
 	
 	private GridPane getBottomNode() {

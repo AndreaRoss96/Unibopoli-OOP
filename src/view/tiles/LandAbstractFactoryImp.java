@@ -40,11 +40,11 @@ public class LandAbstractFactoryImp{
 	private AnchorPane getBuildable(final Buildable buildableTile, final Pos position) {
 		AnchorPane landPane = ComponentFactory.getAnchorPane(false, position);
 		
-		if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-			this.getHorizontalBuildable(landPane, buildableTile, position); 
-		}else {
+//		if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
+//			this.getHorizontalBuildable(landPane, buildableTile, position); 
+//		}else {
 			this.getVerticalBuildable(landPane, buildableTile, position); 
-		}
+//		}
 		
 		//deve passare prima per il controller
 		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(buildableTile));
@@ -52,28 +52,29 @@ public class LandAbstractFactoryImp{
 		return landPane;
 	}
 	
-	private void getHorizontalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
-	{		
-		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
-		Separator seperator = ComponentFactory.getSeparator(Orientation.VERTICAL);
-		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
-		textHeader.setStyle("-fx-border-color: BLACK");
-		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
+//	private void getHorizontalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
+//	{		
+//		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
+////		Separator seperator = ComponentFactory.getSeparator(Orientation.VERTICAL);
+//		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);
+//		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
+//		textHeader.setStyle("-fx-border-color: BLACK");
+//		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
+//		
+//		if(position == Pos.CENTER_LEFT) {
+//			AnchorPane.setRightAnchor(colorFamily, 0.0);
+//			AnchorPane.setRightAnchor(seperator, 17.0);
+//			AnchorPane.setRightAnchor(textHeader, 22.0);	
+//			AnchorPane.setLeftAnchor(textRent, 5.0);
+//		}else {
+//			AnchorPane.setLeftAnchor(colorFamily, 0.0);
+//			AnchorPane.setLeftAnchor(seperator, 17.0);
+//			AnchorPane.setLeftAnchor(textHeader, 22.0);	
+//			AnchorPane.setRightAnchor(textRent, 5.0);
+//		}
 		
-		if(position == Pos.CENTER_LEFT) {
-			AnchorPane.setRightAnchor(colorFamily, 0.0);
-			AnchorPane.setRightAnchor(seperator, 17.0);
-			AnchorPane.setRightAnchor(textHeader, 22.0);	
-			AnchorPane.setLeftAnchor(textRent, 5.0);
-		}else {
-			AnchorPane.setLeftAnchor(colorFamily, 0.0);
-			AnchorPane.setLeftAnchor(seperator, 17.0);
-			AnchorPane.setLeftAnchor(textHeader, 22.0);	
-			AnchorPane.setRightAnchor(textRent, 5.0);
-		}
-		
-		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
-	}
+//		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
+//	}
 	
 	private void getVerticalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
 	{
@@ -82,21 +83,21 @@ public class LandAbstractFactoryImp{
 		//utilizzare uno StackPane per inserire le case.
 		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);		
 		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
-		textHeader.setStyle("-fx-border-color: BLACK");
+//		textHeader.setStyle("-fx-border-color: BLACK");
 		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
 		
-		if(position == Pos.BOTTOM_CENTER) {
-			AnchorPane.setTopAnchor(colorFamily, 0.0);
-			AnchorPane.setTopAnchor(seperator, 17.0);
-			AnchorPane.setTopAnchor(textHeader, 22.0);	
-			AnchorPane.setBottomAnchor(textRent, 5.0);
-		}else {
+//		if(position == Pos.BOTTOM_CENTER) {
+//			AnchorPane.setTopAnchor(colorFamily, 0.0);
+//			AnchorPane.setTopAnchor(seperator, 17.0);
+//			AnchorPane.setTopAnchor(textHeader, 22.0);	
+//			AnchorPane.setBottomAnchor(textRent, 5.0);
+//		}else {
 			AnchorPane.setBottomAnchor(colorFamily, 0.0);
 			AnchorPane.setBottomAnchor(seperator, 17.0);
 			AnchorPane.setBottomAnchor(textHeader, 22.0);	
 			AnchorPane.setTopAnchor(textRent, 5.0);
-		}
-		
+//		}
+			
 		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
 	}
 	
