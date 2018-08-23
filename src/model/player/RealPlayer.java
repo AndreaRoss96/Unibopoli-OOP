@@ -19,20 +19,19 @@ public class RealPlayer implements Player {
 	 * 
 	 */
 	private static final long serialVersionUID = 7360356929546552980L;
-
-
+	
 	private int position;
 	private final String name;
 	// private final Pawn sprite;
 	private Map<Color, List<Obtainable>> playersProperties;
 	private List<Obtainable> mortgagedProperties;
-	private Integer money;
-	private Integer housesNumber;//togli
-	private Integer hotelsNumber;
+	private int money;
+	private int housesNumber;//togli
+	private int hotelsNumber;
 	private Prison status = Prison.NOT_PRISON;
 
 	/**
-	 * This costructor is used by GameInitializer class
+	 * This constructor is used by GameInitializer class
 	 * 
 	 * @param name
 	 * @param money
@@ -46,7 +45,7 @@ public class RealPlayer implements Player {
 	}
 	
 	public RealPlayer(final String name, final int position,
-			final Map<Color, List<Obtainable>> playersProperties, final Integer totMoney,
+			final Map<Color, List<Obtainable>> playersProperties, final int totMoney,
 			final List<Obtainable> mortgagedProperties /* ... */) {
 		this.name = name;
 		this.money = totMoney;
@@ -64,18 +63,18 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public Integer getMoney() {
+	public int getMoney() {
 		return this.money;
 	}
 
 	@Override
-	public Integer getHouseNumber() {
+	public int getHouseNumber() {
 //		getProperties().stream().filter(property -> property instanceof Buildable).collect(Collectors.toList());
 		return 0;
 	}
 
 	@Override
-	public Integer getHotelNumber() {
+	public int getHotelNumber() {
 		return this.hotelsNumber;
 	}
 
@@ -165,9 +164,7 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void goToJail() {
-		// move (...);
 		this.status = Prison.PRISON;
-
 	}
 
 	@Override
@@ -188,5 +185,17 @@ public class RealPlayer implements Player {
 	@Override
 	public List<Obtainable> getMortgagedProperties() {
 		return this.mortgagedProperties;
+	}
+
+	@Override
+	public void addMoney(int moneyAmount) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void takeMoney(int moneyAmount) {
+		// TODO Auto-generated method stub
+		
 	}
 }

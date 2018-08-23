@@ -2,7 +2,9 @@ package view;
 
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import utilities.PaneDimensionSetting;
 
 /**
@@ -22,10 +24,10 @@ public class CommandBridge extends Scene{
 		super(new BorderPane(), PaneDimensionSetting.getInstance().getCommandBridgeWidth(), PaneDimensionSetting.getInstance().getCommandBridgeHeight());
 		
 		final BorderPane commandBridge = new BorderPane();
-		//commandBridge.setLeft(new LeftPlayersPane(playerList));
+//		commandBridge.setLeft(new LeftPlayersPane(playerList));
 		commandBridge.setCenter(GamePane.get());
 		//cambiare con ActionsPane
-		//commandBridge.setRight(new RightInormationPane());
+//		commandBridge.setRight(new RightInormationPane());
 		this.setRoot(commandBridge);
 		this.getStylesheets().add("style.css");
 	}
@@ -38,6 +40,7 @@ public class CommandBridge extends Scene{
      */
     static CommandBridge get(final Stage initialWindow) {
         mainStage = initialWindow;
+//        mainStage.initStyle(StageStyle.TRANSPARENT);
         mainStage.setFullScreen(false);
         mainStage.centerOnScreen();
         mainStage.setTitle(TITLE);

@@ -90,9 +90,7 @@ public class ControllerImpl implements Controller{
 
 	@Override
 	public void endGame() {
-		Alert alert = new Alert(AlertType.CONFIRMATION);
-		alert.setTitle("Confirm exit");
-		alert.
+		
 	}
 
 	

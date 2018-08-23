@@ -14,46 +14,22 @@ import model.tiles.Tile;
 import utilities.Pair;
 
 public class ModelImpl implements Model{
-	private final Board board;
-	/**
-	 * Se vogliamo tenere qui players, è necessario eliminare la mappa da dentro la classe Board.
-	 * Vedendo lo sviluppo di Player credo che sia la scelta migliore.
-	 * */
-	private final List<Player> players;
-	/**
-	 * 
-	 * A cosa serve Set<Obtainable> properties ?
-	 * */
-	private final Set<Obtainable> properties;
-	private Player currentPlayer;
-	private final List<Player> loserList;
-	//imprevisti e probabilità
+	
+	private static final int JAIL = 30;
+
+	private Board board;
+	private List<Player> loserList;
 	private Turn turnPlayer;
 	
-	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final Player currentPlayer, final List<Player> loserList) {
+	public ModelImpl(final Board board, final List<Player> players) {
 		this.board = board;
-		this.players = players;
-		this.properties = properties;
-		this.currentPlayer = currentPlayer;
-		this.loserList = loserList;
-		// TODO Auto-generated constructor stub
-	}
-
-	public ModelImpl(final String mode, final List<Player> players) {
-		this.board = new Board(mode);
-		this.players = players;
-		this.properties = new HashSet<>();
-		/**
-		 * Può essere utilite avere un costruttore diverso ??
-		 * */
-		this.currentPlayer = new RealPlayer("", 10);
 		this.loserList = new ArrayList<>();
-		this.turnPlayer = new TurnImpl(this.players);
+		this.turnPlayer = new TurnImpl(players);
 	}
 	
 	@Override
 	public List<PlayerInfo> getPlayers() {
-		return this.players.stream().map(player -> (PlayerInfo) player).collect(Collectors.toList());
+		return this.turnPlayer.getPlayers();
 	}
 
 	@Override
@@ -62,23 +38,28 @@ public class ModelImpl implements Model{
 	}
 
 	/**
-	 * La modifica della posizione possiamo farla qui ??
-	 * Oppure passiamo tramite il Controller...
+	 * Ricordarsi che solo i giocatori non in JAIL possono muoversi.
 	 * 
 	 * */
 	@Override
-	public Pair<Integer, Integer> exitDice() {
-		return Dice.getInstance().getDice();
-	}
-
-	/**
-	 * 
-	 * non so che metodo utilizzare, magari ne esiste una specifico.
-	public void movePlayer(int movePosition) {
-		this.turnPlayer.getCurrentPlayer().setPosition(movePosition);
-	}
-	*/
+	public Pair<Integer> exitDice() {
+		if(this.turnPlayer.isThrows()) {			
+			Pair<Integer> temp = Dice.getInstance().getDice();
+			
+			if(this.turnPlayer.isInJail()){
+				this.turnPlayer.tunInJail();
+				
+				if(temp.areSame() || this.turnPlayer.exitFromJail()) {
+					this.exitFromJail();
+				}
+			}
 	
+			return temp; 
+		}else {
+			this.goToJail();
+			return null;
+		}
+	}	
 	
 	@Override
 	public Set<Tile> getBoard() {
@@ -86,12 +67,13 @@ public class ModelImpl implements Model{
 	}
 
 	@Override
-	public Player getCurrentPlayer() {
-		return this.currentPlayer;
+	public PlayerInfo getCurrentPlayer() {
+		return this.turnPlayer.getCurrentPlayer();
 	}
 	
-	public Set<Obtainable> getProperties(){
-		return this.properties;
+	public Set<Obtainable> getProperties(){ 
+		return this.board.getTiles(tile -> tile instanceof Obtainable).stream()
+				   .map(tile -> (Obtainable) tile).collect(Collectors.toSet());
 	}
 
 	//riguarda se è corretto playerInfo/player
@@ -100,13 +82,26 @@ public class ModelImpl implements Model{
 		this.loserList.add(this.players.remove(this.players.indexOf(player)));
 	}
 
-	/**
-	 * Trovare un nome migliore se necessario.
-	 * Verificare se è necessario currentuPlayer.
-	 * */
 	public void endTurn() {
 		this.turnPlayer.nextPlayer();
-		this.currentPlayer = this.turnPlayer.getCurrentPlayer();
+	}
+
+	@Override
+	public void movement(int value) {
+		this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
+	}
+	
+	private void setNewPosition(int value) {
+		this.turnPlayer.getCurrentPlayer().setPosition(value);
+	}
+	
+	public void goToJail() {
+		this.setNewPosition(JAIL);
+		this.endTurn();
+	}
+	
+	public void exitFromJail() {
+		this.turnPlayer.getCurrentPlayer().exitFromJail();
 	}
 	
 	/**
@@ -116,7 +111,4 @@ public class ModelImpl implements Model{
 	 * - Aggiungere un metodo che passa il turno al giocatore successivo. FATTO, ma verificare
 	 * - 
 	 */
-	
-	
-	
 }

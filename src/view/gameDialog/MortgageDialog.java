@@ -46,7 +46,7 @@ public class MortgageDialog extends Dialog {
 	 *            the minimum amount of money that the player have to pay.
 	 */
 	public void createMortgageDialog(int minimumExpense, PlayerInfo player) {
-		final Stage stage = setStage("Choose the properties to be mortgaged");
+		final Stage stage = setStage();
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
@@ -79,7 +79,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setBottom(bottomPane);
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			obtainedMoney.setText(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected()));
+			obtainedMoney.setText(String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected())));
 			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
 		});
 

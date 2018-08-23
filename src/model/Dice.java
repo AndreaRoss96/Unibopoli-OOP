@@ -27,7 +27,7 @@ public class Dice {
 		return Dice.DICE_SINGLETON; 
 	}
 	
-	public Pair<Integer, Integer> getDice(){
+	public Pair<Integer> getDice(){
 		return new Pair<>(this.random.nextInt(MAX_NUM_DICE) + 1, this.random.nextInt(MAX_NUM_DICE) + 1);
 	}
 }

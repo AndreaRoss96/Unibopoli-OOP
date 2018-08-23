@@ -34,10 +34,8 @@ public interface Player extends PlayerInfo {
 	/**
 	 * this method allows the player to buy a property.
 	 * 
-	 * @param Integer
-	 *            price of the property.
-	 * @param String
-	 *            name of property.
+	 * @param Obtainable
+	 *            the interested property
 	 */
 	void buyProperty(Obtainable property);
 
@@ -87,9 +85,12 @@ public interface Player extends PlayerInfo {
 	/**
 	 * Adds a property to player's properties.
 	 * 
-	 * @param property
+	 * @param Obtainable
 	 *            the interested property
 	 */
 	void addProperty(Obtainable property);
-
+	
+	void addMoney(int moneyAmount);
+	void takeMoney(int moneyAmount);
+	
 }

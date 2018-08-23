@@ -1,6 +1,10 @@
 package model;
 
+import java.io.Serializable;
+import java.util.List;
+
 import model.player.Player;
+import model.player.PlayerInfo;
 
 /**
  * This interface contains the implementation of the turn, the rotation of the player
@@ -9,7 +13,7 @@ import model.player.Player;
  *
  */
 
-public interface Turn {
+public interface Turn extends Serializable{
 	
 	/**
 	 * This method will return the reference to the player whose 
@@ -34,5 +38,14 @@ public interface Turn {
 	 */
 	boolean isInJail();
 	
+	void tunInJail();
+	
+	boolean exitFromJail();
+	
 	boolean remove(Player player);
+	
+	List<PlayerInfo> getPlayers();
+	
+	boolean isThrows();
+	
 }

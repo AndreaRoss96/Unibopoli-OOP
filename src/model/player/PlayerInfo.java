@@ -31,7 +31,7 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return Player's money
 	 */
-	Integer getMoney();
+	int getMoney();
 
 	/**
 	 * Returns a set of all player's properties.
@@ -60,14 +60,14 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return player's houses number
 	 */
-	Integer getHouseNumber();
+	int getHouseNumber();
 
 	/**
 	 * Return the number of all all hotels of the player.
 	 * 
 	 * @return player's hotels number
 	 */
-	Integer getHotelNumber();
+	int getHotelNumber();
 
 	/**
 	 * Returns the position of the player inside the boerd game.

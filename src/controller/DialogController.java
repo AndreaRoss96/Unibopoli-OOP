@@ -1,12 +1,16 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.PasswordField;
+import jdk.nashorn.internal.runtime.PropertyListeners;
 import model.Model;
 import model.player.Player;
 import model.player.PlayerInfo;
@@ -32,11 +36,11 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public Obtainable getPropertyByName(String propertyName) {
-		return null; // model.getProperties().stream().filter
+		return this.model.getProperties().stream().filter(property -> property.getNameOf().equals(propertyName)).findFirst().get();
 	}
 
 	@Override
-	public void executeAuction(List<Player> playerList, List<String> passwordList, Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+	public void executeAuction(List<PlayerInfo> playerList, List<String> passwordList, Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		try {
 			if (passwordList.stream().distinct().count() != passwordList.size()) {
 				AlertFactory
@@ -48,8 +52,8 @@ public class DialogController implements DialogObserver {
 					if (Integer.parseInt(e) == moneyAmount) {
 						/*Si itera tutta la lista dei giocatori, dato che per ogni giocatore esiste un solo passwordFiled determino l'inidce della lista che mi interessa e faccio get nella list adei giocatori*/
 						if (canPay(playerList.get(passwordList.indexOf(e)), moneyAmount)) { 
-							playerList.get(passwordList.indexOf(e)).addProperty(property);
-							playerList.get(passwordList.indexOf(e)).payments(moneyAmount);
+							((Player) playerList.get(passwordList.indexOf(e))).addProperty(property);
+							((Player) playerList.get(passwordList.indexOf(e))).payments(moneyAmount);
 						} else {
 							AlertFactory.createInformationAlert("Ehi", null,
 									playerList.get(passwordList.indexOf(e)).getName()
@@ -70,13 +74,14 @@ public class DialogController implements DialogObserver {
 		if (canPay(model.getCurrentPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
 				property.incBuildings(); //deve diminuire i soldi del giocatore
+				((Player) model.getCurrentPlayer()).payments(property.getPriceForBuilding());
 			} else {
 				AlertFactory.createErrorAlert("Oak's words echoed", null,
 						"There's time and place for everything, but not now...");
 			}
 		} else {
 			AlertFactory.createErrorAlert("Nope", "You don't have enought money",
-					"you have only: " + this.model.getCurrentPlayer().getMoney());
+					"you have only: " + this.model.getCurrentPlayer().getMoney() +"$");
 		}
 	}
 
@@ -84,14 +89,14 @@ public class DialogController implements DialogObserver {
 	public void decHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
 			if (property.getBuildingNumber() == 0) {
 				decHouse(property);
-				property.getOwner().get(); // searchPlayerByName, oppure currentPlayer torna Player
-			} //deve aumentare i solid del giocatore
+				((Player) model.getCurrentPlayer()).gainMoney(property.getPriceForBuilding()/2); // searchPlayerByName, oppure currentPlayer torna Player
+			}
 	}
 
 	@Override
-	public void setMortgage(List<String> propertyList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
-		propertyList.forEach(e -> {
-			// getPropertyByName
+	public void setMortgage(List<String> propertiesList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+		propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).forEach(e -> {
+			e.hasMortgage(); //non so come si imposti una proprietà ipotecata
 		});
 	}
 
@@ -99,53 +104,77 @@ public class DialogController implements DialogObserver {
 	public void buyProperty(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		if (canPay(model.getCurrentPlayer(), property.getPrice())) {
 			if (model.getCurrentPlayer().getPosition() == property.getPosition()) {
-				// model.getCurrentPlayer().buyProperty(property); searchPlayerByName, oppure
-				// currentPlayer torna Player
+				((Player) model.getCurrentPlayer()).buyProperty(property); 
 			}
 		}
 	}
 
 	@Override
 	public int accumulatedMoney(List<String> propertiesList) { //getPoperties by name
-		return propertiesList.stream().mapToInt(Obtainable::getMortgage).sum() + propertiesList.stream()
-				.filter(property -> property instanceof Buildable).map(property -> (Buildable) property)
-				.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum();
+		List<Obtainable> obtainableList = propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).collect(Collectors.toList());
+		return obtainableList.stream().mapToInt(property -> property.getMortgage()).sum()
+				+ obtainableList.stream().filter(property -> property instanceof Buildable).map(property -> (Buildable) property)
+						.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum();
 	}
 
 	@Override
 	public void executeMortgage(List<String> propertiesList) {
-		model.getCurrentPlayer().mortgageProperties(propertiesList); //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model														// player fosse un "Player"
+		((Player) model.getCurrentPlayer()).mortgageProperties(propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).collect(Collectors.toList())); //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model														// player fosse un "Player"
+		setMortgage(propertiesList);
 	}
 
-	@Override
-	public void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, 
-			List<Obtainable> secondProperties, int firstMoney, int secondMoney) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
-		if (!canPay(firstPlayer, firstMoney) && canPay(secondPlayer, secondMoney)) {
-			AlertFactory.createErrorAlert("He's trying to cheat you!", null,
-					firstPlayer.getName() + "Doesn't have enought money!");
-		} else if (!canPay(secondPlayer, secondMoney) && canPay(firstPlayer, firstMoney)) {
-			AlertFactory.createErrorAlert("He's trying to cheat you!", null,
-					secondPlayer.getName() + "Doesn't have enought money!");
-		} else if (!canPay(firstPlayer, firstMoney) && !canPay(secondPlayer, secondMoney)) {
-			AlertFactory.createErrorAlert("Nope", null,
-					secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallet.");
-		} else {
-			secondProperties.forEach(e -> {
-				firstPlayer.addProperty(e);
+//	public void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, 
+//			List<Obtainable> secondProperties, int firstMoney, int secondMoney) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+	public void executeTrade(String secondPlayerName, List<String> firstPropertiesNames, 
+			List<String> secondPropertiesNames, String firstMoneyInput, String secondMoneyInput) { 
+		try {
+			int firstMoney = Integer.parseInt(firstMoneyInput);
+			int secondMoney = Integer.parseInt(secondMoneyInput);
+		
+			Player firstPlayer = (Player) model.getCurrentPlayer();
+			Player secondPlayer = (Player) getPlayerByName(secondPlayerName);
+			List<Obtainable> firstProperties = new ArrayList<>();
+			List<Obtainable> secondProperties = new ArrayList<>();
+			firstPropertiesNames.forEach(e -> {
+				firstProperties.add(getPropertyByName(e));
 			});
-			firstPlayer.gainMoney(secondMoney);
-			firstPlayer.payments(firstMoney);
-
-			firstProperties.forEach(e -> {
-				secondPlayer.addProperty(e);
+			secondPropertiesNames.forEach(e -> {
+				secondProperties.add(getPropertyByName(e));
 			});
-			secondPlayer.gainMoney(firstMoney);
-			secondPlayer.payments(secondMoney);
+			
+			if (!canPay(firstPlayer, firstMoney) && canPay(secondPlayer, secondMoney)) {
+				AlertFactory.createErrorAlert("He's trying to cheat you!", null,
+						firstPlayer.getName() + "Doesn't have enought money!");
+			} else if (!canPay(secondPlayer, secondMoney) && canPay(firstPlayer, firstMoney)) {
+				AlertFactory.createErrorAlert("He's trying to cheat you!", null,
+						secondPlayer.getName() + "Doesn't have enought money!");
+			} else if (!canPay(firstPlayer, firstMoney) && !canPay(secondPlayer, secondMoney)) {
+				AlertFactory.createErrorAlert("Nope", null,
+						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
+			} else {
+				secondProperties.forEach(e -> {
+					firstPlayer.addProperty(e);
+				});
+				firstPlayer.gainMoney(secondMoney);
+				firstPlayer.payments(firstMoney);
+	
+				firstProperties.forEach(e -> {
+					secondPlayer.addProperty(e);
+				});
+				secondPlayer.gainMoney(firstMoney);
+				secondPlayer.payments(secondMoney);
+			}
+		} catch (NumberFormatException ex) {
+			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!",
+					"Please, use only numbers...");
 		}
 	}
 
 	private boolean canPay(PlayerInfo player, int moneyAmount) {
 		return player.canPay(moneyAmount);
 	}
-
+	
+	public PlayerInfo getPlayerByName(String playerName) {
+		return this.model.getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
+	}
 }
