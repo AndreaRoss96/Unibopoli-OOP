@@ -60,11 +60,13 @@ public class LandAbstractFactoryImp{
 		
 		if(position == Pos.CENTER_LEFT) {
 			AnchorPane.setRightAnchor(colorFamily, 0.0);
+			AnchorPane.setLeftAnchor(colorFamily,  ComponentFactory.LandHEIGHT  - 17.0);
 			AnchorPane.setRightAnchor(seperator, 17.0);
-			AnchorPane.setRightAnchor(textHeader, 22.0);	
+			AnchorPane.setRightAnchor(textHeader, 22.0);
 			AnchorPane.setLeftAnchor(textRent, 5.0);
 		}else {
 			AnchorPane.setLeftAnchor(colorFamily, 0.0);
+			AnchorPane.setRightAnchor(colorFamily, ComponentFactory.LandHEIGHT  - 17.0);
 			AnchorPane.setLeftAnchor(seperator, 17.0);
 			AnchorPane.setLeftAnchor(textHeader, 22.0);	
 			AnchorPane.setRightAnchor(textRent, 5.0);
@@ -84,7 +86,7 @@ public class LandAbstractFactoryImp{
 		
 		if(position == Pos.BOTTOM_CENTER) {
 			AnchorPane.setTopAnchor(colorFamily, 0.0);
-			AnchorPane.setTopAnchor(seperator, 17.0);
+			AnchorPane.setTopAnchor(seperator,  17.0);
 			AnchorPane.setTopAnchor(textHeader, 22.0);	
 			AnchorPane.setBottomAnchor(textRent, 5.0);
 		}else {
@@ -113,11 +115,21 @@ public class LandAbstractFactoryImp{
 		Label bottom = ComponentFactory.getLabelString("$" + String.valueOf(notBuildableTile.getPrice()), position);
 		
 		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-			AnchorPane.setTopAnchor(top, 0.0);					
 			AnchorPane.setTopAnchor(image, 40.0);		
-			AnchorPane.setBottomAnchor(bottom, 5.0);
+			
+			if(position == Pos.BOTTOM_CENTER) {
+				AnchorPane.setTopAnchor(top, 5.0);					
+				AnchorPane.setBottomAnchor(bottom, 5.0);
+			}else {
+				AnchorPane.setBottomAnchor(top, 5.0);					
+				AnchorPane.setTopAnchor(bottom, 5.0);
+			}			
+		}else if(position == Pos.CENTER_LEFT){
+			AnchorPane.setRightAnchor(top, 5.0);					
+			AnchorPane.setRightAnchor(image, 40.0);		
+			AnchorPane.setLeftAnchor(bottom, 5.0);
 		}else {
-			AnchorPane.setLeftAnchor(top, 0.0);					
+			AnchorPane.setLeftAnchor(top, 5.0);					
 			AnchorPane.setLeftAnchor(image, 40.0);		
 			AnchorPane.setRightAnchor(bottom, 5.0);
 		}

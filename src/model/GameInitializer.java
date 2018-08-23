@@ -65,7 +65,7 @@ public final class GameInitializer {
 				});
 			}
 		}
-		return new ModelImpl();// mi serve la board
+		return new ModelImpl(); // mi serve la board
 	}
 
 	/**
