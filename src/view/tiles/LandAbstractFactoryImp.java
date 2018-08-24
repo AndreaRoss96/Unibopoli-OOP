@@ -14,7 +14,6 @@ import model.tiles.Corner;
 import model.tiles.NotBuildable;
 import model.tiles.NotObtainable;
 import model.tiles.Tile;
-import utilities.PaneDimensionSetting;
 import view.gameDialog.CardDialog;
 
 /**
@@ -51,32 +50,7 @@ public class LandAbstractFactoryImp{
 		
 		return landPane;
 	}
-	
-<<<<<<< HEAD
-	private void getHorizontalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
-	{		
-		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
-		Separator seperator = ComponentFactory.getSeparator(Orientation.VERTICAL);
-		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
-		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
-		
-		if(position == Pos.CENTER_LEFT) {
-			AnchorPane.setRightAnchor(colorFamily, 0.0);
-			AnchorPane.setLeftAnchor(colorFamily,  ComponentFactory.LandHEIGHT  - 17.0);
-			AnchorPane.setRightAnchor(seperator, 17.0);
-			AnchorPane.setRightAnchor(textHeader, 22.0);
-			AnchorPane.setLeftAnchor(textRent, 5.0);
-		}else {
-			AnchorPane.setLeftAnchor(colorFamily, 0.0);
-			AnchorPane.setRightAnchor(colorFamily, ComponentFactory.LandHEIGHT  - 17.0);
-			AnchorPane.setLeftAnchor(seperator, 17.0);
-			AnchorPane.setLeftAnchor(textHeader, 22.0);	
-			AnchorPane.setRightAnchor(textRent, 5.0);
-		}
-		
-		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
-	}
-=======
+
 //	private void getHorizontalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
 //	{		
 //		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
@@ -100,7 +74,7 @@ public class LandAbstractFactoryImp{
 		
 //		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
 //	}
->>>>>>> b066df91a573c77c5bab26c23c9a72334d5bd4a1
+
 	
 	private void getVerticalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
 	{
@@ -111,22 +85,14 @@ public class LandAbstractFactoryImp{
 		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
 //		textHeader.setStyle("-fx-border-color: BLACK");
 		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
-		
-<<<<<<< HEAD
-		if(position == Pos.BOTTOM_CENTER) {
-			AnchorPane.setTopAnchor(colorFamily, 0.0);
-			AnchorPane.setTopAnchor(seperator,  17.0);
-			AnchorPane.setTopAnchor(textHeader, 22.0);	
-			AnchorPane.setBottomAnchor(textRent, 5.0);
-		}else {
-=======
+
 //		if(position == Pos.BOTTOM_CENTER) {
 //			AnchorPane.setTopAnchor(colorFamily, 0.0);
 //			AnchorPane.setTopAnchor(seperator, 17.0);
 //			AnchorPane.setTopAnchor(textHeader, 22.0);	
 //			AnchorPane.setBottomAnchor(textRent, 5.0);
 //		}else {
->>>>>>> b066df91a573c77c5bab26c23c9a72334d5bd4a1
+
 			AnchorPane.setBottomAnchor(colorFamily, 0.0);
 			AnchorPane.setBottomAnchor(seperator, 17.0);
 			AnchorPane.setBottomAnchor(textHeader, 22.0);	

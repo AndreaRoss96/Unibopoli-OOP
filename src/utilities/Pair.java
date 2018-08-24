@@ -6,16 +6,15 @@ public class Pair<E> {
 	private final E y;
 	
 	public Pair(E x, E y) {
-		super();
 		this.x = x;
 		this.y = y;
 	}
 
-	public E getX() {
+	public E getFirst() {
 		return x;
 	}
 
-	public E getY() {
+	public E getSecond() {
 		return y;
 	}
 

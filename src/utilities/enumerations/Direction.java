@@ -1,54 +1,88 @@
 package utilities.enumerations;
 
-import java.util.function.Supplier;
+import model.Location;
 
-import utilities.Vector;
-
+/**
+ * Enumeration for the 4 possible directions of the entities.<br>
+ * List of Possible Direction:<br>
+ * <b>North (N)</b><br>
+ * <b>East (E)</b><br>
+ * <b>South (S)</b><br>
+ * <b>West (W)</b><br>
+ */
 public enum Direction {
+   
+    /**
+     * North.
+     */
+	N(0) {
+		@Override
+		public void moveLocation(final Location loc, final double v) {
+			loc.setY(loc.getY() - v);
+		}
+	},
+    /**
+     * East.
+     */
+	E(1) {
+		@Override
+		public void moveLocation(final Location loc, final double v) {
+			loc.setX(loc.getX() + v);
+		}
+	},
+	 /**
+     * South.
+     */
+	S(2) {
+		@Override
+		public void moveLocation(final Location loc, final double v) {
+			loc.setY(loc.getY() + v);
+		}
+	},
+	 /**
+     * West.
+     */
+	W(3) {
+		@Override
+		public void moveLocation(final Location loc, final double v) {
+			loc.setX(loc.getX() - v);
+		}
+	};
+    
+    //internal index
+    private int index; 
+    
 
 	/**
-	 * TODO: modificare l'ordine in base alla direzone che si vuole dare alla board! 
+	 * Constructor
+	 * @param initindex index of the Direction
 	 */
-	
-	UP(() -> new Vector(0, 1)), 
-	
-	DOWN(() -> new Vector(0, -1)), 
-	
-	LEFT(() -> new Vector(-1, 0)), 
-	
-	RIGHT(() -> new Vector(1, 0));
-	
-	private final Supplier<Vector> direction;
-	
-	private Direction(final Supplier<Vector> command) {
-		this.direction = command;
+	private Direction(final int initindex) {
+		this.index = initindex;
 	}
-	
-	public Vector exec(){
-        return this.direction.get();
-    }
-	
+
 	/**
-	 * TODO: IMPROVE METHOD !! 
+	 * Move the input location (loc) in the specified direction from which this method is called.<br>
+	 * If the Direction is oblique, the movement velocity used is DIAGONALVELOCITY.
+	 * @param loc Location to move
+	 * @param d Velocity of the movement
 	 */
-	public Direction change() {
-		Direction ret; 
-		
-		if(this == UP) {
-			ret = DOWN;
-		}else if (this == DOWN) {
-			ret = LEFT;
-		}else if (this == LEFT) {
-			ret = RIGHT;
-		}else {
-			ret = UP;
-		} 
-		
-		 return ret;
+	public abstract void moveLocation(final Location loc, final double d);
+
+	/**
+	 * Get the index of the direction
+	 * @return index the index of the direction
+	 */
+	private int getIndex() {
+		return this.index;
 	}
-	
-	/*
-	public Direction next() {
-		return this++;
-	}*/
+
+	/**
+	 * 
+	 * @return 
+	 */
+	public Direction rotation() {
+		return Direction.values()[(this.getIndex() + 1) % Direction.values().length];
+	}
 }
+

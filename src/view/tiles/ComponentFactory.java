@@ -63,7 +63,7 @@ public class ComponentFactory {
 //				landPane.setRotate(ROTATE_LEFT);
 //			}
 		}
-		landPane.setStyle("-fx-border-color: blue");
+
 		return landPane;
 	}
 	
@@ -90,11 +90,6 @@ public class ComponentFactory {
 		label.setOnMouseEntered(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 10)));
 		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
 		label.setWrapText(true);
-		
-<<<<<<< HEAD
-=======
-//		label.setMaxWidth(LandHEIGHT);
->>>>>>> b066df91a573c77c5bab26c23c9a72334d5bd4a1
 		setAlignmentNode(label, position);
 		
 		/*AnchorPane.setLeftAnchor(label, 0.0);
@@ -121,23 +116,13 @@ public class ComponentFactory {
 		ImageView imageView = ImageView;
 		imageView.setFitWidth(LandSimpleWIDTH * 0.7);
 		imageView.setFitHeight(LandSimpleWIDTH * 0.7);
-		
-<<<<<<< HEAD
-		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-			imageView.setRotate(NOT_ROTATE);
-		}else {
-			imageView.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
-		}
-		
-		image.setGraphic(imageView);
-		image.setAlignment(Pos.BASELINE_CENTER);
-=======
+
 //		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
 //			image.setRotate(NOT_ROTATE);
 //		}else {
 //			image.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
 //		}
->>>>>>> b066df91a573c77c5bab26c23c9a72334d5bd4a1
+
 		setAlignmentNode(image, position);
 		
 		return image;

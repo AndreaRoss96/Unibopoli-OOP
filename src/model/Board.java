@@ -3,13 +3,14 @@ package model;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import utilities.Pair;
 import utilities.Parse;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
@@ -25,6 +26,16 @@ public class Board implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private static final int MAXINDEXBOARD = 40;
+	
+	private static Map<Integer, Boolean> chances = new HashMap<>();
+	static {
+		chances.put(2, false);
+		chances.put(17, false);
+		chances.put(33, false);
+		chances.put(7, true);
+		chances.put(22, true);
+		chances.put(36, true);
+	}
 	
 	private Set<Tile> gameBoard;
 	private String mode;
@@ -97,15 +108,9 @@ public class Board implements Serializable{
 		catch (Exception e) { System.out.println(e.getCause()); }
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
-		
-		/*Arrays.asList(new Pair<Integer, Boolean>(2, false),
-					  new Pair<Integer, Boolean>(17, false),
-					  new Pair<Integer, Boolean>(33, false),
-					  new Pair<Integer, Boolean>(7, true),
-					  new Pair<Integer, Boolean>(22, true),
-					  new Pair<Integer, Boolean>(36, true)
-					  ).stream().map(t -> new Chance(t.getX(), t.getY())).forEach(gameBoard::add); */
-		
+
+		chances.entrySet().stream().map(entry -> new Chance(entry.getKey(), entry.getValue())).forEach(gameBoard::add);
+
 		Arrays.asList(4, 38).stream().map(t -> new Tax(t)).forEach(gameBoard::add);
 	}
 }

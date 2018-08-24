@@ -1,14 +1,12 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import model.player.Player;
 import model.player.PlayerInfo;
-import model.player.RealPlayer;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
@@ -79,7 +77,7 @@ public class ModelImpl implements Model{
 	//riguarda se è corretto playerInfo/player
 	@Override
 	public void removePlayer(PlayerInfo player) {
-		this.loserList.add(this.players.remove(this.players.indexOf(player)));
+		this.loserList.add((Player) this.turnPlayer.getPlayers().remove(this.turnPlayer.getPlayers().indexOf(player)));
 	}
 
 	public void endTurn() {
