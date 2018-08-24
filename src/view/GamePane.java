@@ -4,9 +4,7 @@ import java.util.Comparator;
 import java.util.function.BiConsumer;
 
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
@@ -103,7 +101,7 @@ public class GamePane extends StackPane{
 	}
 	
 	private GridPane getLeftNode() {
-		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addRow(0, land), false);
+		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addRow(0, land), true);
 	}
 	
 	private GridPane getCenterNode() {
@@ -115,7 +113,7 @@ public class GamePane extends StackPane{
 	}
 	
 	private GridPane getBottomNode() {
-		return this.builder(0, 11, Pos.BOTTOM_CENTER, (land, pane) -> pane.addRow(0, land), false);
+		return this.builder(0, 11, Pos.BOTTOM_CENTER, (land, pane) -> pane.addRow(0, land), true);
 	}
 	
 	public static GamePane get() {        

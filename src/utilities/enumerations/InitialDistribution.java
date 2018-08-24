@@ -8,12 +8,26 @@ package utilities.enumerations;
  *
  */
 public enum InitialDistribution {
-	TWO(2, 8750, 7), THREE(3, 7500, 6), FOUR(4, 6250, 5), FIVE(5, 5000, 4), SIX(6, 3750, 3);
+	TWO(2, 8750, 7), 
+	
+	THREE(3, 7500, 6), 
+	
+	FOUR(4, 6250, 5), 
+	
+	FIVE(5, 5000, 4), 
+	
+	SIX(6, 3750, 3);
 
 	private int playersNumber;
 	private int moneyAmount;
 	private int contractNumber;
 
+	private InitialDistribution(int playersNumber, int moneyAmount, int contractNumber) {
+		this.playersNumber = playersNumber;
+		this.moneyAmount = moneyAmount;
+		this.contractNumber = contractNumber;
+	}
+	
 	public int getPlayerNumber() {
 		return this.playersNumber;
 	}
@@ -24,11 +38,5 @@ public enum InitialDistribution {
 
 	public int getContractNumber() {
 		return this.contractNumber;
-	}
-
-	private InitialDistribution(int playersNumber, int moneyAmount, int contractNumber) {
-		this.playersNumber = playersNumber;
-		this.moneyAmount = moneyAmount;
-		this.contractNumber = contractNumber;
 	}
 }

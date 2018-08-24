@@ -1,6 +1,5 @@
 package utilities;
 
-import javafx.event.ActionEvent;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 
@@ -26,12 +25,4 @@ public class AlertFactory{
 		alert.setContentText(contentText);
 		alert.showAndWait();
 	}
-	
-//	public static Alert createConfirmationAlert(String title, String headerText, String contentText) {
-//		Alert alert = new Alert(AlertType.CONFIRMATION);
-//		alert.setTitle(title);
-//		alert.setHeaderText(headerText);
-//		alert.setContentText(contentText);
-//		return alert;
-//	}
 }

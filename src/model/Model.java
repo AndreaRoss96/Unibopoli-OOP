@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 import java.util.Set;
 
-import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;

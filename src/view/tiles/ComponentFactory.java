@@ -19,9 +19,9 @@ import utilities.PaneDimensionSetting;
 
 public class ComponentFactory {
 	
-	private static final double LandSimpleWIDTH = PaneDimensionSetting.getInstance().getGamePaneHeight() / 13;
-	private static final double LandHEIGHT = LandSimpleWIDTH * 2;
-	private static final double LandCornerDimension = LandHEIGHT;
+	public static final double LandSimpleWIDTH = PaneDimensionSetting.getInstance().getGamePaneHeight() / 13;
+	public static final double LandHEIGHT = LandSimpleWIDTH * 2;
+	public static final double LandCornerDimension = LandHEIGHT;
 	private static final double ROTATE_LEFT = +90.0;
 	private static final double ROTATE_RIGHT = -90.0;
 	private static final double NOT_ROTATE = 0.0;
@@ -63,13 +63,10 @@ public class ComponentFactory {
 //				landPane.setRotate(ROTATE_LEFT);
 //			}
 		}
-		landPane.setStyle("-fx-border-color: blue");
+
 		return landPane;
 	}
 	
-	/**
-	 * TODO: quelli orizzontali non vengono creati.
-	 * */
 	public static Label getLabelColor(final Paint paint, final Pos position) {
 		Label colorFamily = new Label();
 		colorFamily.setBackground(new Background(new BackgroundFill(paint, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -87,21 +84,25 @@ public class ComponentFactory {
 //			label.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
 //		}
 		
-		/*if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-			label.setMaxHeight(LandHEIGHT);
-			label.setPrefHeight(LandHEIGHT);
-			label.setMinHeight(LandHEIGHT);
-		}*/
-		
 		label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8));
 		label.setAlignment(Pos.CENTER);
 		label.setTextAlignment(TextAlignment.CENTER);
 		label.setOnMouseEntered(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 10)));
 		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
 		label.setWrapText(true);
-		
-//		label.setMaxWidth(LandHEIGHT);
 		setAlignmentNode(label, position);
+		
+		/*AnchorPane.setLeftAnchor(label, 0.0);
+		AnchorPane.setRightAnchor(label, 0.0);
+		
+		/*if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER){
+			AnchorPane.setLeftAnchor(label, 0.0);
+			AnchorPane.setRightAnchor(label, 0.0);
+		}else {
+			/*AnchorPane.setLeftAnchor(label, 0.0);
+			AnchorPane.setLeftAnchor(label, 0.0);
+		}
+		//setAlignmentNode(label, position);*/
 		
 		return label;
 	}
@@ -114,15 +115,14 @@ public class ComponentFactory {
 		Label image = new Label();
 		ImageView imageView = ImageView;
 		imageView.setFitWidth(LandSimpleWIDTH * 0.7);
-		imageView.setFitHeight(LandSimpleWIDTH * 0.7);	
-		image.setGraphic(imageView);
-		image.setAlignment(Pos.BASELINE_CENTER);
-		
+		imageView.setFitHeight(LandSimpleWIDTH * 0.7);
+
 //		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
 //			image.setRotate(NOT_ROTATE);
 //		}else {
 //			image.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
 //		}
+
 		setAlignmentNode(image, position);
 		
 		return image;
