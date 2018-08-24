@@ -3,12 +3,18 @@ package controller;
 import java.io.File;
 import java.util.List;
 
+import model.player.PlayerInfo;
+import model.tiles.Obtainable;
+
 public interface Controller {
 
 	/**
 	 * Initialization of the game
 	 */
-	void newGameInit(List<String> playersName, List<String> playersIcon); //probabilmente in ingresso vorrà un Map<String, Image> -> nome giocatore e avatar, tutti devono avere un avatar, i nomi devonon essere tutti diversi
+	void newGameInit(List<String> playersName, List<String> playersIcon); // probabilmente in ingresso vorrà un
+																			// Map<String, Image> -> nome giocatore e
+																			// avatar, tutti devono avere un avatar, i
+																			// nomi devonon essere tutti diversi
 
 	/**
 	 * allows to save the game.
@@ -18,7 +24,7 @@ public interface Controller {
 	/**
 	 * To terminate the current player's turn
 	 */
-	void endTurn(); // andrà a chiamare la classe nextPlayer del model
+	void endTurnClick();
 
 	/**
 	 * Allows to load an old game.
@@ -30,9 +36,11 @@ public interface Controller {
 	/**
 	 * Shows the "card dialog" of a specific property
 	 * 
-	 * @param contractName
+	 * @param property
+	 *            property selected by the player
 	 */
-	void showContract(String contractName, String currentPlayer); //il cardDialog dovrà controllare che currPl e proprietario siano gli stessi per utilizzare i bottoni
+	void showContract(Obtainable property); // il cardDialog dovrà controllare che currPl e proprietario siano gli
+											// stessi per utilizzare i bottoni
 
 	/**
 	 * Shows the "trade dialog" that allows the player to make trading
@@ -42,7 +50,8 @@ public interface Controller {
 	/**
 	 * The player throws dices.
 	 */
-	void diceClick(); // andrà ad aggiornare i label presenti nella parte destra della schermata di gioco
+	void diceClick(); // andrà ad aggiornare i label presenti nella parte destra della schermata di
+						// gioco
 
 	/**
 	 * Shows settings pane.
@@ -50,6 +59,24 @@ public interface Controller {
 	void settingsClick(); // da implementare
 
 	void endGame();
-	
+
+	/**
+	 * Shows the "AuctionDialog" for start an auction for a determinated property.
+	 * 
+	 * @param property
+	 *            the property put up for auction
+	 */
+	void startAuciton(Obtainable property);
+
+	/**
+	 * Show the "MortgageDialog" that obliges a determinated player who can't pay
+	 * something to mortgage his/her properties to reach the required amount.
+	 * 
+	 * @param minimumExpense
+	 *            minimum amount of money to be reach
+	 * @param player
+	 *            the player that needs money
+	 */
+	void startMortgage(int minimumExpense, PlayerInfo player);
 
 }

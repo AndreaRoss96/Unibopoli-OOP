@@ -90,7 +90,6 @@ public interface Player extends PlayerInfo {
 	 */
 	void addProperty(Obtainable property);
 	
-	void addMoney(int moneyAmount);
-	void takeMoney(int moneyAmount);
+	void unmortgageProperty(Obtainable property);
 	
 }

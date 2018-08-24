@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import controller.ControllerImpl;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.player.RealPlayer;
@@ -15,49 +16,21 @@ import utilities.Pair;
 
 public class ModelImpl implements Model{
 	
-	private final Board board;
-	/**
-	 * Se vogliamo tenere qui players, è necessario eliminare la mappa da dentro la classe Board.
-	 * Vedendo lo sviluppo di Player credo che sia la scelta migliore.
-	 * */
-	private final List<Player> players;
-	/**
-	 * 
-	 * A cosa serve Set<Obtainable> properties ?
-	 * -rosso: presumo sia utile tenere traccia delle properietà presenti nel gioco
-	 * per accedere rapidamente alle loro posizioni, prezzo, affitto ecc, poi dipende se queste informazioni
-	 * possono essere estratte dalla board di gioco si possono canellare
-	 * */
-	private final Set<Obtainable> properties; //Board.getTiles(Tile -> tile instanceof Obtainable) ritorna un bellissimo set quindi togli questo attributo
-//	private Player currentPlayer;
-	private final List<Player> loserList;
-	//imprevisti e probabilità
+	private static final int JAIL = 30;
+
+	private Board board;
+	private List<PlayerInfo> loserList;
 	private Turn turnPlayer;
 	
-	public ModelImpl(final Board board, final List<Player> players, final Set<Obtainable> properties, final Player currentPlayer, final List<Player> loserList) {
+	public ModelImpl(final Board board, final List<Player> players) {
 		this.board = board;
-		this.players = players;
-		this.properties = properties;
-		this.currentPlayer = currentPlayer;
-		this.loserList = loserList;
-		// TODO Auto-generated constructor stub
-	}
-
-	public ModelImpl(final String mode, final List<Player> players) {
-		this.board = new Board(mode);
-		this.players = players;
-		this.properties = new HashSet<>();
-		/**
-		 * Può essere utilite avere un costruttore diverso ??
-		 * */
-		this.currentPlayer = new RealPlayer("", 10);
 		this.loserList = new ArrayList<>();
-		this.turnPlayer = new TurnImpl(this.players);
+		this.turnPlayer = new TurnImpl(players);
 	}
 	
 	@Override
 	public List<PlayerInfo> getPlayers() {
-		return this.players.stream().map(player -> (PlayerInfo) player).collect(Collectors.toList());
+		return this.turnPlayer.getPlayers();
 	}
 
 	@Override
@@ -66,23 +39,31 @@ public class ModelImpl implements Model{
 	}
 
 	/**
-	 * La modifica della posizione possiamo farla qui ??
-	 * Oppure passiamo tramite il Controller...
+	 * Ricordarsi che solo i giocatori non in JAIL possono muoversi.
 	 * 
 	 * */
 	@Override
-	public Pair<Integer, Integer> exitDice() {
-		return Dice.getInstance().getDice();
-	}
-
-	/**
-	 * 
-	 * non so che metodo utilizzare, magari ne esiste una specifico.
-	public void movePlayer(int movePosition) {
-		this.turnPlayer.getCurrentPlayer().setPosition(movePosition);
-	}
-	*/
+	public Pair<Integer> exitDice() {
+		Pair<Integer> temp = Dice.getInstance().getDice();
+		if(this.turnPlayer.isThrows()) {
+			
+			if(this.turnPlayer.isInJail()){
+				this.turnPlayer.turnInJail();
+				
+				if(temp.areSame() || this.turnPlayer.exitFromJail()) {
+					this.exitFromJail();
+				}
+			}
 	
+			return temp; 
+		}else {
+			this.goToJail();
+			return temp;
+			//si può far comunque ritornare il risultato,
+			//poiché se il giocatoee finisce in carcere prima di muoversi non si muove,
+			//ma in questo modo è comunque possibile mostrare il risultato
+		}
+	}	
 	
 	@Override
 	public Set<Tile> getBoard() {
@@ -91,33 +72,76 @@ public class ModelImpl implements Model{
 
 	@Override
 	public PlayerInfo getCurrentPlayer() {
-		return this.currentPlayer;
+		return this.turnPlayer.getCurrentPlayer();
 	}
 	
-	public Set<Obtainable> getProperties(){
-		return this.properties;
+	public Set<Obtainable> getProperties(){ 
+		return this.board.getTiles(tile -> tile instanceof Obtainable).stream()
+				   .map(tile -> (Obtainable) tile).collect(Collectors.toSet());
 	}
 
 	//riguarda se è corretto playerInfo/player
 	@Override
 	public void removePlayer(PlayerInfo player) {
-		this.loserList.add(this.players.remove(this.players.indexOf(player)));
+		this.loserList.add((PlayerInfo) this.getPlayers().remove(this.getPlayers().indexOf(player)));
 	}
 
-	/**
-	 * Trovare un nome migliore se necessario.
-	 * Verificare se è necessario currentuPlayer.
-	 * */
 	public void endTurn() {
 		this.turnPlayer.nextPlayer();
-		this.currentPlayer = this.turnPlayer.getCurrentPlayer();
+	}
+
+	@Override
+	public void movement(int value) {
+		if(!this.getCurrentPlayer().isInJail()) {
+			this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
+		}
 	}
 	
+	private void setNewPosition(int value) {
+		this.turnPlayer.getCurrentPlayer().setPosition(value);
+	}
+	
+	public void goToJail() {
+		this.setNewPosition(JAIL);
+		((Player) this.getCurrentPlayer()).goToJail();
+		//this.endTurn();
+	}
+	
+	public void exitFromJail() {
+		this.turnPlayer.getCurrentPlayer().exitFromJail();
+	}
+
+	/*
+	public void payment(PlayerInfo player, int moneyAmount) {
+		if(!this.getCurrentPlayer().canPay(moneyAmount)) {
+			if(moneyAmount > this.getCurrentPlayer().totalAssets()) {
+				this.removePlayer(player);
+			}
+			ControllerImpl.getController().startMortgage(moneyAmount, player);
+		} else {
+			//((Player) player).decMoney(moneyAmount);
+		}
+	}
+	
+	public void buyProperty(Obtainable property) {
+		if(this.getCurrentPlayer().canPay(property.getPrice())) {
+			this.payments(getCurrentPlayer(), property.getPrice());
+			((Player) this.getCurrentPlayer()).addProperty(property);
+		} else {
+			ControllerImpl.getController().startAuciton(property);
+		}
+	} */
+	
+
 	/**
 	 * OSSERVAZIONI:
 	 * -  LA gestione del turno dei giocatori dove va ?? Si potrebbe sapere il curruntPlayer tramite quella classe. 
 	 *    Ciò non significa eliminare l'attributo, bensì inizializzrlo continuamente tramite quella classe.
 	 * - Aggiungere un metodo che passa il turno al giocatore successivo. FATTO, ma verificare
 	 * - 
+	 */
+	/**
+	 * se può essere utile alle conseguenze del movimento si può mettere "buyProperty" nel model, in modo da rendere anche più
+	 * efficente la generazione di aste
 	 */
 }

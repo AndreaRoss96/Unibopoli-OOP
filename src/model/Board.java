@@ -3,9 +3,7 @@ package model;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -15,7 +13,6 @@ import utilities.Pair;
 import utilities.Parse;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
-import model.player.PlayerInfo;
 import model.tiles.*;
 
 /**
@@ -30,12 +27,10 @@ public class Board implements Serializable{
 	private static final int MAXINDEXBOARD = 40;
 	
 	private Set<Tile> gameBoard;
-	private Map<PlayerInfo, Integer> pawns;
 	private String mode;
 	
 	public Board(final String mode) {
 		this.gameBoard = new HashSet<>();
-		this.pawns = new HashMap<>();
 		this.mode = mode;
 		this.initializationSetTile();
 	}
@@ -78,14 +73,9 @@ public class Board implements Serializable{
 		return this.mode;
 	}
 	
-	public void addPawn(PlayerInfo player) {
-		this.addPawn(player, new Integer(0));
+	public int getTilesNumber() {
+		return MAXINDEXBOARD;
 	}
-	
-	public void addPawn(PlayerInfo player, Integer position) {
-		this.pawns.put(player, position);
-	}
-	
 	/**
 	 * TODO: Finire questa inizializzazione ed eliminare metodi non necessari
 	 * 
@@ -108,13 +98,13 @@ public class Board implements Serializable{
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
 		
-		Arrays.asList(new Pair<Integer, Boolean>(2, false),
+		/*Arrays.asList(new Pair<Integer, Boolean>(2, false),
 					  new Pair<Integer, Boolean>(17, false),
 					  new Pair<Integer, Boolean>(33, false),
 					  new Pair<Integer, Boolean>(7, true),
 					  new Pair<Integer, Boolean>(22, true),
 					  new Pair<Integer, Boolean>(36, true)
-					  ).stream().map(t -> new Chance(t.getX(), t.getY())).forEach(gameBoard::add); 
+					  ).stream().map(t -> new Chance(t.getX(), t.getY())).forEach(gameBoard::add); */
 		
 		Arrays.asList(4, 38).stream().map(t -> new Tax(t)).forEach(gameBoard::add);
 	}

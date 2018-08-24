@@ -1,6 +1,7 @@
 package model.player;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,9 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import controller.Controller;
+import controller.ControllerImpl;
+import controller.DialogController;
 import model.exceptions.NotEnoughMoneyException;
 import model.tiles.*;
 import utilities.enumerations.Color;
@@ -20,6 +24,7 @@ public class RealPlayer implements Player {
 	 */
 	private static final long serialVersionUID = 7360356929546552980L;
 
+	private static final double UNMORTGAGE_FEE = 10 / 100;
 
 	private int position;
 	private final String name;
@@ -27,27 +32,34 @@ public class RealPlayer implements Player {
 	private Map<Color, List<Obtainable>> playersProperties;
 	private List<Obtainable> mortgagedProperties;
 	private int money;
-	private int housesNumber;//togli
+	private int housesNumber;// togli
 	private int hotelsNumber;
 	private Prison status = Prison.NOT_PRISON;
 
 	/**
-	 * This constructor is used by GameInitializer class
+	 * This constructor is used by GameInitializer class.
 	 * 
 	 * @param name
+	 *            player's name
 	 * @param money
+	 *            initial player's money
 	 */
-	public RealPlayer(final String name, /*avatar*/ int money) {
+	public RealPlayer(final String name, /* avatar */ int money) {
 		this.name = name;
-		this.position = 0; //chiedi a matti
+		this.position = 0; // chiedi a matti
 		this.money = money;
 		this.playersProperties = new HashMap<>();
 		this.mortgagedProperties = new ArrayList<>();
 	}
-	
-	public RealPlayer(final String name, final int position,
-			final Map<Color, List<Obtainable>> playersProperties, final int totMoney,
-			final List<Obtainable> mortgagedProperties /* ... */) {
+
+	/**
+	 * This constructor is used by a load game.
+	 * 
+	 * @param name
+	 * @param money
+	 */
+	public RealPlayer(final String name, final int position, final Map<Color, List<Obtainable>> playersProperties,
+			final int totMoney, final List<Obtainable> mortgagedProperties /* ... */) {
 		this.name = name;
 		this.money = totMoney;
 		this.position = position;
@@ -70,7 +82,8 @@ public class RealPlayer implements Player {
 
 	@Override
 	public int getHouseNumber() {
-//		getProperties().stream().filter(property -> property instanceof Buildable).collect(Collectors.toList());
+		// getProperties().stream().filter(property -> property instanceof
+		// Buildable).collect(Collectors.toList());
 		return 0;
 	}
 
@@ -90,17 +103,21 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public Prison isInJail() {
-		return this.status;
+	public boolean isInJail() {
+		return this.status == Prison.PRISON;
+	}
+	
+	public void decMoney(int moneyAmount) {
+		this.money -= moneyAmount;
 	}
 
 	@Override
-	public void payments(Integer moneyAmount) {//per evitare di fare dei thread sposterei il richiamp del toMortgage nel metodo can pay, in modo che, una volta guadagnati i soldi possa comunquecontinuare con il pagamento
+	public void payments(Integer moneyAmount) {// per evitare di fare dei thread sposterei il richiamp del toMortgage
+												// nel metodo can pay, in modo che, una volta guadagnati i soldi possa
+												// comunquecontinuare con il pagamento
 		if (!this.canPay(moneyAmount)) {
-			if (moneyAmount > totalAssets()) { // in questo caso il giocatore non è in alcun modo in grado di pagare
-												// l'affitto
-				// BANKAROTTA! - da gestire - model.getModel().removePlayer(This);
-
+			if (moneyAmount > totalAssets()) {
+				// ControllerImpl.getController().removePlayer()
 			}
 			toMortgage(moneyAmount - this.money);
 			// in questo caso il giocatore non è in grado di pagare con i liquidi
@@ -112,7 +129,8 @@ public class RealPlayer implements Player {
 
 	public Integer totalAssets() {
 		// mi servirebbe anche il valore di case/alberghi
-		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().map(value -> (Buildable) value).mapToInt(value -> value.getPriceForBuilding()/2).sum() + this.money;
+		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream()
+				.map(value -> (Buildable) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {
@@ -126,8 +144,8 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void buyProperty(Obtainable property) {
-		if (canPay(property.getMortgage())) {
-			payments(property.getMortgage());
+		if (canPay(property.getPrice())) {
+			payments(property.getPrice());
 			this.addProperty(property);
 		} else {
 			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
@@ -138,19 +156,25 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void addProperty(Obtainable property) {
-		List<Obtainable> tmpList = new ArrayList<>();
-		tmpList.add(property);
-		this.playersProperties.merge(property.getColorOf(), tmpList,
+		this.playersProperties.merge(property.getColorOf(), Arrays.asList(property),
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
 		property.setOwner(Optional.of(this.getName()));
 	}
 
 	@Override
 	public void mortgageProperties(List<Obtainable> mortgaged) {
-		gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum()); //DialogController.getController().getTotalSpend(mortgaged)
+		DialogController.getDialogController()
+				.accumulatedMoney(mortgaged.stream().map(Obtainable::getNameOf).collect(Collectors.toList()));
+		// gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum());
+		// DialogController.getController().getTotalSpend(mortgaged)
 		this.mortgagedProperties.addAll(mortgaged);
 	}
-	//è il caso di fare un "List Calculator" o troppo eccessivo?
+
+	public void unmortgageProperty(Obtainable property) {
+		this.payments((int) (property.getMortgage() * UNMORTGAGE_FEE));
+		this.mortgagedProperties.remove(property);
+		// property.setMortgage();
+	}
 
 	public boolean canPay(Integer moneyAmount) {
 		return this.money >= moneyAmount;
@@ -158,16 +182,12 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void toMortgage(Integer minimumAmount) {
-		// TODO Auto-generated method stub
-		// "alberizzatore" nelle utilities e metodo nella view
 
 	}
 
 	@Override
 	public void goToJail() {
-		// move (...);
 		this.status = Prison.PRISON;
-
 	}
 
 	@Override
@@ -188,17 +208,5 @@ public class RealPlayer implements Player {
 	@Override
 	public List<Obtainable> getMortgagedProperties() {
 		return this.mortgagedProperties;
-	}
-
-	@Override
-	public void addMoney(int moneyAmount) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void takeMoney(int moneyAmount) {
-		// TODO Auto-generated method stub
-		
 	}
 }

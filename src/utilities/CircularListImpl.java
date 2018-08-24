@@ -1,23 +1,7 @@
 package utilities;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-
-/**
- * Implementation of the interface CircularList<E>.
- */
-
-interface CircularList<E> extends Serializable, Iterable<E> {
-
-    void shift();
-
-    E getHead();
-
-    int size();
-    
-    boolean remove(Object elem);
-}
 
 public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E> {
     
