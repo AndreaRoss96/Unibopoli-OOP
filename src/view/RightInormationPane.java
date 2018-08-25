@@ -1,12 +1,10 @@
 package view;
 
-import controller.Controller;
 import controller.ControllerImpl;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
@@ -61,7 +59,7 @@ public class RightInormationPane extends VBox {
 		final Button setting = new Button("", new ImageView("/images/Icons/gear.png"));
 		setting.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 40px; " + "-fx-min-height: 40px; "
 				       + "-fx-max-width: 40px; " + "-fx-max-height: 40px;");
-		AnchorPane.setRightAnchor(setting, SETTINGS_DISTANCE * 2.5);
+		AnchorPane.setRightAnchor(setting, SETTINGS_DISTANCE * 1.5);
 		AnchorPane.setTopAnchor(setting, SETTINGS_DISTANCE);
 		topAnchorPane.getChildren().add(setting);
 
@@ -106,6 +104,8 @@ public class RightInormationPane extends VBox {
 		tradeBtn.setOnAction(e -> {
 			ControllerImpl.getController().tradeClick();
 		});
+		
+		this.setId("RightInformationPane");
 	}
 
 	/**
@@ -154,7 +154,7 @@ public class RightInormationPane extends VBox {
 	 */
 	public static void updateJailButton(boolean isJail) {
 		endTurn.setGraphic(new ImageView(isJail ? EXIT_JAIL_PATH : END_TURN_PATH));
-		endTurn.setTooltip(isJail ? new Tooltip("jail fee: 500 $") : null);
+		endTurn.setTooltip(isJail ? new Tooltip("jail fee: 125 $") : null);
 		endTurn.setDisable(!isJail);
 	}
 

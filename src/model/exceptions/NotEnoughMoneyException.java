@@ -11,6 +11,6 @@ public class NotEnoughMoneyException extends RuntimeException {
 	
 	public NotEnoughMoneyException (Integer moneyAmount) {
 		super();
-		AlertFactory.createErrorAlert("You tried it!", "You don't have enough money!", "You have only " + moneyAmount).showAndWait();
+		AlertFactory.createErrorAlert("You tried it!", "You don't have enough money!", "You have only " + moneyAmount);
 	}
 }

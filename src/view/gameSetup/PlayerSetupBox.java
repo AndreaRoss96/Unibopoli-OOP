@@ -1,6 +1,7 @@
 package view.gameSetup;
 
-import java.awt.Toolkit;
+import java.io.File;
+import java.util.Map;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -11,8 +12,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import view.ShapeCell;
-import view.ShapeCellFactory;
+import utilities.PaneDimensionSetting;
+import view.comboBoxCell.*;
 
 public class PlayerSetupBox extends HBox {
 
@@ -22,17 +23,17 @@ public class PlayerSetupBox extends HBox {
 	private final ComboBox<String> icons;
 	private final Button removePlayer;
 
-	public PlayerSetupBox() {
+	public PlayerSetupBox(Map<String, String> imageMap) {
 		this.setPrefWidth(Region.USE_COMPUTED_SIZE);
 		nameField = new TextField("Insert player name...");
-
 		this.icons = new ComboBox<>();
-		this.icons.setPrefWidth(Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.10);
-		this.icons.setCellFactory(new ShapeCellFactory());
-		this.icons.setButtonCell(new ShapeCell());
+		this.icons.setPrefWidth(PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.10);
+		this.icons.setCellFactory(new ShapeCellFactory(imageMap));
+		this.icons.setButtonCell(new ShapeCell(imageMap));
 		HBox.setMargin(this.icons, new Insets(0, INSETS_VALUE, 0, INSETS_VALUE));
 
-		removePlayer = new Button("", new ImageView(new Image("/Icone/icons8-trash-40 (1).png"))); // CAMBIA PATH
+		removePlayer = new Button("",
+				new ImageView(new Image("images" + File.separator + "Icons" + File.separator + "trash.png")));
 
 		this.getChildren().addAll(nameField, icons, removePlayer);
 		this.setAlignment(Pos.CENTER);

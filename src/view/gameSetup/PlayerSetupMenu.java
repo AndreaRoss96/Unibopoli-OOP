@@ -1,13 +1,13 @@
 package view.gameSetup;
 
 import java.awt.Toolkit;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
-import controller.Controller;
 import controller.ControllerImpl;
-import controller.DialogController;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -29,16 +29,18 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utilities.AlertFactory;
+import utilities.PaneDimensionSetting;
 
 public class PlayerSetupMenu extends BorderPane {
 
-	private static final double STANDARD_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.40;
-	private static final double STANDARD_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.80;
+	private static final double STANDARD_WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.40;
+	private static final double STANDARD_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.80;
 	private static final int PLAYER_MIN = 2;
 	private static final int PLAYER_MAX = 6;
 
 	private List<String> iconList;
 	private List<String> chosenList;
+	private Map<String, String> imageMap;
 
 	public PlayerSetupMenu(Stage stage) {
 		iconList = new ArrayList<>();
@@ -49,7 +51,10 @@ public class PlayerSetupMenu extends BorderPane {
 		iconList.add("Iron");
 		iconList.add("Boot");
 		iconList.add("Car"); // utilizza iconloader vd. esperimento
-
+		/* implementare nell'iconloader, parla con matti
+		IconLoader iconPath = new IconLoader();
+		imageMap = iconPath.getMap();
+		*/
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("setupPlayer.css").toExternalForm());
 		stage.setScene(scene);
@@ -57,17 +62,17 @@ public class PlayerSetupMenu extends BorderPane {
 		stage.setHeight(STANDARD_HEIGHT);
 		stage.show();
 		stage.centerOnScreen();
-		stage.setResizable(true);
 
-		Image cardBoard = new Image("/ImmaginiProva/mopoli_cfu.png");
+		Image cardBoard = new Image("images" + File.separator + "backgrounds" + File.separator + "monopoli_cfu.png");
 		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
 				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
 		this.setBackground(background);
 
 		final FlowPane flowPane = new FlowPane();
-		final Button addPlayer = new Button("", new ImageView(new Image("/Icone/icons8-plus-50.png")));
+		final Button addPlayer = new Button("", new ImageView(new Image("/Icone/icons8-plus-50.png"))); //cambia path
 		flowPane.getChildren().add(addPlayer);
+		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
 		this.setCenter(flowPane);
 
@@ -75,6 +80,7 @@ public class PlayerSetupMenu extends BorderPane {
 		final Label mapLabel = new Label("Choose map:");
 		final ComboBox<String> mapBox = new ComboBox<>();
 		mapBox.getItems().add("Classical"); // ci dovrebbe essere un metodo che va a leggere un ifle ocn tutte le mappe
+		mapBox.setValue(mapBox.getItems().get(0));
 		final Button startGame = new Button("Start Game");
 		final Button cancel = new Button("Cancel");
 		hBox.getChildren().add(mapLabel);
@@ -126,7 +132,7 @@ public class PlayerSetupMenu extends BorderPane {
 			/* execute action */
 			List<String> playersName = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
 			List<String> playersIcon = psbList.stream().map(PlayerSetupBox::getIcons).map(elem -> elem.getSelectionModel().getSelectedItem()).collect(Collectors.toList());
-			ControllerImpl.getController().gameInit(playersName, playersIcon);
+			ControllerImpl.getController().newGameInit(playersName, playersIcon);
 		});
 
 		cancel.setOnAction(e -> {
@@ -138,8 +144,11 @@ public class PlayerSetupMenu extends BorderPane {
 	}
 
 	private PlayerSetupBox addPlayerSetupBox(FlowPane flowPane) {
-		PlayerSetupBox pBox = new PlayerSetupBox();
+		PlayerSetupBox pBox = new PlayerSetupBox(this.imageMap);
 		pBox.getIcons().getItems().addAll(iconList);
+		
+		pBox.getRemovePlayer().setDisable(flowPane.getChildren().size() <= PLAYER_MIN );
+
 
 		pBox.getRemovePlayer().setOnAction(a -> {
 			if (pBox.getIcons().getValue() != null) {

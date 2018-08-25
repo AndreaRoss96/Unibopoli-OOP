@@ -1,14 +1,17 @@
 package controller;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import model.GameInitializer;
+import model.Icon;
 import model.Model;
 import model.ResourceManager;
 import model.player.Player;
@@ -26,7 +29,7 @@ import view.gameSetup.MainMenu;
 public class ControllerImpl implements Controller {
 
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
-	private static final int JAIL_FEE = 500;
+	private static final int JAIL_FEE = 125;
 
 	private Model model;
 	private View view;
@@ -47,13 +50,18 @@ public class ControllerImpl implements Controller {
 		return SINGLETON;
 	}
 
-	private void setBackgroundMusic() {
+	private void setBackgroundMusic() { //bisogna chiamarlo quando si inizializza la view, in modo da fare poter controllare il thread della musica
 		MainMenu.setBeckgroundMusic(sound);
 	}
 
 	@Override
 	public void newGameInit(List<String> playersName, List<String> playersIcon) {
-
+		List<Icon> iconList = playersIcon.stream().map(path -> new Icon(path)).collect(Collectors.toList());
+		try {
+			GameInitializer.getInstance().newGame(IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, iconList::get)));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}		
 	}
 
 	@Override
@@ -106,8 +114,8 @@ public class ControllerImpl implements Controller {
 		new SoundController("/music/Dice-roll.wav").play(false);
 		Pair<Integer> result = model.exitDice();
 		new SoundController("/music/Dice-roll.wav").play(false);
-		RightInormationPane.updateDiceLabel(result.getX(), result.getY());
-		model.movement(result.getX() + result.getY()); // se il giocatore finisce in carcere non si muove ed il turno
+		RightInormationPane.updateDiceLabel(result.getFirst(), result.getSecond());
+		model.movement(result.getFirst() + result.getSecond()); // se il giocatore finisce in carcere non si muove ed il turno
 														// finisce automaticamente
 		/*
 		 * if the two dice have same result the player have to roll dices again, even if
