@@ -3,7 +3,6 @@ package view;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
 import javafx.geometry.Pos;
@@ -27,11 +26,17 @@ public class GamePane extends StackPane{
 	
 	private static final double ROTATE_LEFT = +90.0;
 	private static final double ROTATE_RIGHT = -90.0;
+	private static final double BHOO1 = 16 / 1.5;
+	private static final double BHOO2 = 17;
+	
+	private static GamePane GAMEPANE = null;
 	
 	private Board board = new Board("CLASSIC");
 	private StackPane mainPane = new StackPane();
 	public static List<PlayerInfo> prova;
-	public GamePane() {
+	private Pane pane;
+	
+	private GamePane() {
 		super(new StackPane());
 		
 		this.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
@@ -46,7 +51,7 @@ public class GamePane extends StackPane{
 	}
 	
 	private Pane playerLayer() {
-		Pane pane = new Pane();
+		 pane = new Pane();
 		
 		prova = new ArrayList<>();
 		
@@ -79,23 +84,23 @@ public class GamePane extends StackPane{
 		GridPane bottomNode = this.getBottomNode();
 		lowerLayer.getChildren().addAll(topNode, leftNode, centreNode, rightNode, bottomNode);
 		AnchorPane.setTopAnchor(topNode, -1.0);
-		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
-		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 17);
-		AnchorPane.setBottomAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
-		AnchorPane.setTopAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
-		AnchorPane.setRightAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 17);
-		AnchorPane.setBottomAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
+		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
+		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO2);
+		AnchorPane.setBottomAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
+		AnchorPane.setTopAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
+		AnchorPane.setRightAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO2);
+		AnchorPane.setBottomAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
 		AnchorPane.setBottomAnchor(bottomNode, -1.0);
 		
 		return lowerLayer;
 	}
 	
-	private GridPane builder(long skip, long limit, Pos position, BiConsumer<Pane, GridPane> consumer, boolean order) {
+	private GridPane builder(long skip, long limit, Pos position) {
 		GridPane pane = new GridPane();
 		
 		board.getTiles(t -> true).stream().sorted(orderCre()).skip(skip).limit(limit)
-			 .sorted(order ? orderCre() : orderDec()).map(tile -> new LandAbstractFactoryImp().createLand(tile))
-			 .forEach(land -> consumer.accept(land, pane));
+			 .map(tile -> new LandAbstractFactoryImp().createLand(tile))
+			 .forEach(land -> pane.addRow(0, land));
 		
 		 if(position == Pos.BOTTOM_CENTER) {
 			 pane.setRotate(ROTATE_LEFT * 2);
@@ -109,20 +114,16 @@ public class GamePane extends StackPane{
 		return pane;
 	}
 	
-	private Comparator<? super Tile> orderDec(){
-		return (o1, o2) -> o2.getPosition() - o1.getPosition();
-	}
-	
 	private Comparator<? super Tile> orderCre(){
 		return (o1, o2) -> o1.getPosition() - o2.getPosition();
 	}
 	
 	private GridPane getTopNode() {
-		return this.builder(20, 11, Pos.TOP_CENTER, (land, pane) -> pane.addRow(0, land), true);
+		return this.builder(20, 11, Pos.TOP_CENTER);
 	}
 	
 	private GridPane getLeftNode() {
-		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addRow(0, land), true);
+		return this.builder(11, 9, Pos.CENTER_LEFT);
 	}
 	
 	private AnchorPane getCenterNode() {
@@ -130,14 +131,18 @@ public class GamePane extends StackPane{
 	}
 	
 	private GridPane getRightNode() {
-		return this.builder(31, 9, Pos.CENTER_RIGHT, (land, pane) -> pane.addRow(0, land), true);
+		return this.builder(31, 9, Pos.CENTER_RIGHT);
 	}
 	
 	private GridPane getBottomNode() {
-		return this.builder(0, 11, Pos.BOTTOM_CENTER, (land, pane) -> pane.addRow(0, land), true);
+		return this.builder(0, 11, Pos.BOTTOM_CENTER);
 	}
 	
-	public static GamePane get() {        
-		return new GamePane();
+	public static GamePane get() {
+		if(GAMEPANE == null) {
+			GAMEPANE = new GamePane();
+		}
+			
+		return GAMEPANE;
 	}
 }
