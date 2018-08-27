@@ -72,7 +72,7 @@ public final class GameInitializer {
 				});
 			}
 		}
-		return new ModelImpl(); // mi serve la board
+		return new ModelImpl(board, new TurnImpl(playerList)); // mi serve la board
 	}
 
 	/**
@@ -88,8 +88,7 @@ public final class GameInitializer {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");
 		}
 		this.alreadyCalled = true;
-		final Model model = new ModelImpl(memento.getGameBoard(), memento.getPlayers(), memento.getProperties(),
-				memento.getCurrentPlayer()); // imprevisti e probabilità
+		final Model model = new ModelImpl(memento.getGameBoard(), memento.getPlayers()); // imprevisti e probabilità
 		return model;
 	}
 

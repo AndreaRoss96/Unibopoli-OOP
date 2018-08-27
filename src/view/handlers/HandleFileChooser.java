@@ -5,11 +5,11 @@ import java.nio.file.Files;
 import java.nio.file.LinkOption;
 import java.nio.file.Paths;
 
+import controller.ControllerImpl;
 import javafx.event.EventHandler;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
-import javafx.stage.Window;
 
 /**
  * Allows to choose the file, of an old game, to load.
@@ -32,10 +32,9 @@ public class HandleFileChooser implements EventHandler<MouseEvent> {
 		final FileChooser.ExtensionFilter ubpFilter = new ExtensionFilter("UBP files (*.ubp)", "*.ubp");
 		fileChooser.getExtensionFilters().add(ubpFilter);
 
-//		final File file = fileChooser.showSaveDialog(null); // bisogna controllare se così funziona
 		final File file = fileChooser.showOpenDialog(null);
 		if (file != null) {
-			// Controller.getController().loadGameFromFile(file);
+			ControllerImpl.getController().loadGameFromFile(file);
 		}
 	}
 }

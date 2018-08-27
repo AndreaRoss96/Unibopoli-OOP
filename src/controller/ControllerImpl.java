@@ -113,7 +113,6 @@ public class ControllerImpl implements Controller {
 	public void diceClick() {
 		new SoundController("/music/Dice-roll.wav").play(false);
 		Pair<Integer> result = model.exitDice();
-		new SoundController("/music/Dice-roll.wav").play(false);
 		RightInormationPane.updateDiceLabel(result.getFirst(), result.getSecond());
 		model.movement(result.getFirst() + result.getSecond()); // se il giocatore finisce in carcere non si muove ed il turno
 														// finisce automaticamente

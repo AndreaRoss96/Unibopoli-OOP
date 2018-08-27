@@ -54,6 +54,7 @@ public class PlayerSetupMenu extends BorderPane {
 		/* implementare nell'iconloader, parla con matti
 		IconLoader iconPath = new IconLoader();
 		imageMap = iconPath.getMap();
+		oppure gli passo la mappa richiamando questo form dal controller
 		*/
 		Scene scene = new Scene(this);
 		scene.getStylesheets().add(getClass().getResource("setupPlayer.css").toExternalForm());

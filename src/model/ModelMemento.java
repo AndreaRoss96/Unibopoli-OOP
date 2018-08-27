@@ -1,11 +1,6 @@
 package model;
 
 import java.io.Serializable;
-import java.util.List;
-import java.util.Set;
-
-import model.player.Player;
-import model.tiles.Obtainable;
 
 /**
  * Captures and externalize a partial snapshot of a Model's subclass internal
@@ -19,9 +14,8 @@ public class ModelMemento implements Serializable {
 	private static final long serialVersionUID = -2066419006358603603L;
 
 	private final Board gameBoard;
-	private final List<Player> players;
-	private final Player currentPlayer;
-	private final Set<Obtainable> properties;
+	private final Turn players;
+	//private final Set<Obtainable> properties; //attenzione non sono serializzabili
 	// private final Set<Imprevisti> imprevistis;
 	// private final Set<Probabilità> probabilitàs;
 
@@ -38,16 +32,14 @@ public class ModelMemento implements Serializable {
 	 *            the properties of the game.
 	 * -- imprevisti e probabilità --
 	 */
-	public ModelMemento(final Board gameBoard, final List<Player> players, final Player currentPlayer,
-			final Set<Obtainable> properties /*
+	public ModelMemento(final Board gameBoard, final Turn players) {
+			 /*final Set<Obtainable> properties
 												 * final Set<Imprevisti> imprevistis, final Set<Probabilità>
 												 * probabilitàs
-												 */) {
-		//salva la lista dei giocatori, non il giocatore corrente
+												 */
 		this.gameBoard = gameBoard;
 		this.players = players;
-		this.currentPlayer = currentPlayer;
-		this.properties = properties;
+//		this.properties = properties;
 		// imprevisti e probabilità
 	}
 
@@ -61,21 +53,14 @@ public class ModelMemento implements Serializable {
 	/**
 	 * @return a list of all players in game.
 	 */
-	public List<Player> getPlayers() {
+	public Turn getPlayers() {
 		return this.players;
-	}
-
-	/**
-	 * @return the current player.
-	 */
-	public Player getCurrentPlayer() {
-		return this.currentPlayer;
 	}
 
 	/**
 	 * @return the all the properties.
 	 */
-	public Set<Obtainable> getProperties() {
-		return this.properties;
-	}
+//	public Set<Obtainable> getProperties() {
+//		return this.properties;
+//	}
 }

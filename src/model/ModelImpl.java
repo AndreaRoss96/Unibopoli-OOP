@@ -1,11 +1,9 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import controller.ControllerImpl;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
@@ -17,13 +15,11 @@ public class ModelImpl implements Model{
 	private static final int JAIL = 30;
 
 	private Board board;
-	private List<PlayerInfo> loserList;
 	private Turn turnPlayer;
 	
-	public ModelImpl(final Board board, final List<Player> players) {
+	public ModelImpl(final Board board, final Turn players) {
 		this.board = board;
-		this.loserList = new ArrayList<>();
-		this.turnPlayer = new TurnImpl(players);
+		this.turnPlayer = players;
 	}
 	
 	@Override
@@ -31,8 +27,10 @@ public class ModelImpl implements Model{
 		return this.turnPlayer.getPlayers();
 	}
 
+	
 	@Override
 	public void saveGame() {
+		CareMementoTaker.getMementoInstance().setMemento(new ModelMemento(this.board, turnPlayer));
 		ResourceManager.getInstance().saveOnFile(CareMementoTaker.getMementoInstance().getMemento());
 	}
 
@@ -58,7 +56,7 @@ public class ModelImpl implements Model{
 			this.goToJail();
 			return temp;
 			//si può far comunque ritornare il risultato,
-			//poiché se il giocatoee finisce in carcere prima di muoversi non si muove,
+			//poiché se il giocatore finisce in carcere prima di muoversi non si muove,
 			//ma in questo modo è comunque possibile mostrare il risultato
 		}
 	}	
@@ -78,10 +76,9 @@ public class ModelImpl implements Model{
 				   .map(tile -> (Obtainable) tile).collect(Collectors.toSet());
 	}
 
-	//riguarda se è corretto playerInfo/player
 	@Override
 	public void removePlayer(PlayerInfo player) {
-		this.loserList.add((Player) this.turnPlayer.getPlayers().remove(this.turnPlayer.getPlayers().indexOf(player)));
+		this.turnPlayer.remove(player);
 	}
 
 	public void endTurn() {
@@ -95,16 +92,19 @@ public class ModelImpl implements Model{
 		}
 	}
 	
+	
 	private void setNewPosition(int value) {
 		this.turnPlayer.getCurrentPlayer().setPosition(value);
 	}
 	
+	@Override
 	public void goToJail() {
 		this.setNewPosition(JAIL);
 		((Player) this.getCurrentPlayer()).goToJail();
 		//this.endTurn();
 	}
 	
+	@Override
 	public void exitFromJail() {
 		this.turnPlayer.getCurrentPlayer().exitFromJail();
 	}
