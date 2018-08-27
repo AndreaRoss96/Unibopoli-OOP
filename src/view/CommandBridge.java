@@ -27,7 +27,7 @@ public class CommandBridge extends Scene{
 //		commandBridge.setLeft(new LeftPlayersPane(playerList));
 		commandBridge.setCenter(GamePane.get());
 		//cambiare con ActionsPane
-//		commandBridge.setRight(new RightInormationPane());
+		commandBridge.setRight(new RightInormationPane());
 		this.setRoot(commandBridge);
 		this.getStylesheets().add("style.css");
 	}

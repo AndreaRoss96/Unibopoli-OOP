@@ -27,7 +27,6 @@ public class PlayersContractListView extends ListView<Text> {
 			this.getSelectionModel().selectedItemProperty().addListener(l -> {
 				this.getSelectionModel().getSelectedItem().setFill(listViewClick(this.getSelectionModel().getSelectedItem(), this.getSelectionModel().getSelectedItem().getFill()));
 			});
-			
 		});
 	}
 	

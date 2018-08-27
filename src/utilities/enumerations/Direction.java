@@ -4,6 +4,7 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.util.Duration;
+import view.tiles.ComponentFactory;
 
 /**
  * Enumeration for the 4 possible directions of the entities.<br>
@@ -72,7 +73,7 @@ public enum Direction {
 		}
 	};
 	
-	private static final int STEP_SIZE = 100;
+	private static final double STEP_SIZE = ComponentFactory.LandCornerDimension;
 	private static final Duration DURATION = Duration.millis(500);
 	
 	private static final TranslateTransition transition = new TranslateTransition(DURATION);

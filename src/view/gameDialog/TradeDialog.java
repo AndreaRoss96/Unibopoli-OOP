@@ -86,7 +86,7 @@ public class TradeDialog extends Dialog {
 		gridB.add(this.allPlayersListView, 0, 2, 4, 1);
 		rootPane.setRight(gridB);
 
-		final BorderPane bottomPane = addButtonBox(stage, "Green", ""); // aggiungi path
+		final BorderPane bottomPane = addButtonBox(stage, "Green", "/images/Icons/dialog/shopping_cart.png");
 		final Button tradeButton = new Button("<==TRADE==>");
 		tradeButton.setFont(getPrincipalFont());
 		bottomPane.setLeft(tradeButton);
@@ -96,6 +96,7 @@ public class TradeDialog extends Dialog {
 			if(playerBox.getValue() != null) {
 				updateGrid(controller.getPlayerByName(playerBox.getValue()));
 			}
+			//è commentato perché adesso c'è il metodo updateGrid
 //			gridB.add(
 //					new PlayersContractListView(playerList.stream()
 //							.filter(player -> player.getName().equals(playerBox.getValue())).findFirst().get()),
@@ -106,13 +107,14 @@ public class TradeDialog extends Dialog {
 			Alert alert = new Alert(AlertType.CONFIRMATION);
 			alert.setTitle("Are you sure?");
 			alert.setHeaderText(null);
-			alert.setContentText("Do both players agree? ");
+			alert.setContentText("Do both players agree?");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get() == ButtonType.CANCEL) {
 				e.consume();
 			} else {
 				if (playerBox.getValue() != null) {
-					controller.executeTrade(playerBox.getValue(), currListView.getSelected(), allPlayersListView.getSelected(), currMoneyToTrade.getText(), moneyToTrade.getText());
+					controller.executeTrade(playerBox.getValue(), currListView.getSelected(),
+							allPlayersListView.getSelected(), currMoneyToTrade.getText(), moneyToTrade.getText());
 				} else {
 					AlertFactory.createErrorAlert("???", null, "Choose a player!");
 					e.consume();
@@ -128,5 +130,4 @@ public class TradeDialog extends Dialog {
 	private void updateGrid(PlayerInfo player) {
 		this.allPlayersListView = new PlayersContractListView(player);
 	}
-
 }

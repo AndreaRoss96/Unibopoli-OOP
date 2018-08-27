@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,13 +15,11 @@ public class ModelImpl implements Model{
 	private static final int JAIL = 30;
 
 	private Board board;
-	private List<Player> loserList;
 	private Turn turnPlayer;
 	
-	public ModelImpl(final Board board, final List<Player> players) {
+	public ModelImpl(final Board board, final Turn players) {
 		this.board = board;
-		this.loserList = new ArrayList<>();
-		this.turnPlayer = new TurnImpl(players);
+		this.turnPlayer = players;
 	}
 	
 	@Override
@@ -30,8 +27,10 @@ public class ModelImpl implements Model{
 		return this.turnPlayer.getPlayers();
 	}
 
+	
 	@Override
 	public void saveGame() {
+		CareMementoTaker.getMementoInstance().setMemento(new ModelMemento(this.board, turnPlayer));
 		ResourceManager.getInstance().saveOnFile(CareMementoTaker.getMementoInstance().getMemento());
 	}
 
@@ -41,11 +40,11 @@ public class ModelImpl implements Model{
 	 * */
 	@Override
 	public Pair<Integer> exitDice() {
-		if(this.turnPlayer.isThrows()) {			
-			Pair<Integer> temp = Dice.getInstance().getDice();
+		Pair<Integer> temp = Dice.getInstance().getDice();
+		if(this.turnPlayer.isThrows()) {
 			
 			if(this.turnPlayer.isInJail()){
-				this.turnPlayer.tunInJail();
+				this.turnPlayer.turnInJail();
 				
 				if(temp.areSame() || this.turnPlayer.exitFromJail()) {
 					this.exitFromJail();
@@ -55,7 +54,10 @@ public class ModelImpl implements Model{
 			return temp; 
 		}else {
 			this.goToJail();
-			return null;
+			return temp;
+			//si può far comunque ritornare il risultato,
+			//poiché se il giocatore finisce in carcere prima di muoversi non si muove,
+			//ma in questo modo è comunque possibile mostrare il risultato
 		}
 	}	
 	
@@ -74,10 +76,9 @@ public class ModelImpl implements Model{
 				   .map(tile -> (Obtainable) tile).collect(Collectors.toSet());
 	}
 
-	//riguarda se è corretto playerInfo/player
 	@Override
 	public void removePlayer(PlayerInfo player) {
-		this.loserList.add((Player) this.turnPlayer.getPlayers().remove(this.turnPlayer.getPlayers().indexOf(player)));
+		this.turnPlayer.remove(player);
 	}
 
 	public void endTurn() {
@@ -86,27 +87,59 @@ public class ModelImpl implements Model{
 
 	@Override
 	public void movement(int value) {
-		this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
+		if(!this.getCurrentPlayer().isInJail()) {
+			this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
+		}
 	}
+	
 	
 	private void setNewPosition(int value) {
 		this.turnPlayer.getCurrentPlayer().setPosition(value);
 	}
 	
+	@Override
 	public void goToJail() {
 		this.setNewPosition(JAIL);
-		this.endTurn();
+		((Player) this.getCurrentPlayer()).goToJail();
+		//this.endTurn();
 	}
 	
+	@Override
 	public void exitFromJail() {
 		this.turnPlayer.getCurrentPlayer().exitFromJail();
 	}
+
+	/*
+	public void payment(PlayerInfo player, int moneyAmount) {
+		if(!this.getCurrentPlayer().canPay(moneyAmount)) {
+			if(moneyAmount > this.getCurrentPlayer().totalAssets()) {
+				this.removePlayer(player);
+			}
+			ControllerImpl.getController().startMortgage(moneyAmount, player);
+		} else {
+			//((Player) player).decMoney(moneyAmount);
+		}
+	}
 	
+	public void buyProperty(Obtainable property) {
+		if(this.getCurrentPlayer().canPay(property.getPrice())) {
+			this.payments(getCurrentPlayer(), property.getPrice());
+			((Player) this.getCurrentPlayer()).addProperty(property);
+		} else {
+			ControllerImpl.getController().startAuciton(property);
+		}
+	} */
+	
+
 	/**
 	 * OSSERVAZIONI:
 	 * -  LA gestione del turno dei giocatori dove va ?? Si potrebbe sapere il curruntPlayer tramite quella classe. 
 	 *    Ciò non significa eliminare l'attributo, bensì inizializzrlo continuamente tramite quella classe.
 	 * - Aggiungere un metodo che passa il turno al giocatore successivo. FATTO, ma verificare
 	 * - 
+	 */
+	/**
+	 * se può essere utile alle conseguenze del movimento si può mettere "buyProperty" nel model, in modo da rendere anche più
+	 * efficente la generazione di aste
 	 */
 }

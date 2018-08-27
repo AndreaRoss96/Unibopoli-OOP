@@ -12,14 +12,12 @@ import model.tiles.Obtainable;
 
 /**
  * This interface contains all method used by Dialog's classes.
- * 
- * @author Rossolini Andrea
  */
 public interface DialogObserver {
 	
 //	Node getContract(Obtainable property); con la nuova classe "Contract non credo che serva"
 	
-	Obtainable getPropertyByName(String propertyName);
+//	Obtainable getPropertyByName(String propertyName); è privata
 	
 	/**
 	 * metodi per AuctionDialog 
@@ -29,16 +27,19 @@ public interface DialogObserver {
 	/**
 	 * metodi per cardDialog
 	 */
-	void incHouse(Buildable property); //ritorna false se la proprietà interessata ha ancora degli slot liberi per le case e se il giocatore corrente ha abbastanza soldi per comprerne altre, true altrimenti
+	/**
+	 * Increseases
+	 * @param property
+	 */
+	void incHouse(Buildable property); 
 	void decHouse(Buildable property);
 	void setMortgage(List<String> propertyList); //se la proprietà non è ipotecata la ipoteca, il contrario altirmenti --> chiedi conferma
-	void buyProperty(Obtainable property); //compra la proprietà interessata, solo se il giocatore è nella stessa posizione del tile --> altrimenti dialog esplicativo
+	void buyPropertyClick(Obtainable property); //compra la proprietà interessata, solo se il giocatore è nella stessa posizione del tile --> altrimenti dialog esplicativo
 	
 	/**
 	 * metodi per mortgageDialog
 	 */
 	int accumulatedMoney(List<String> propertiesList); //altrimenti una lista di stringhe
-	void executeMortgage(List<String> propertiesList);
 	
 	
 	/**

@@ -3,15 +3,12 @@ package view.gameSetup;
 import java.awt.Toolkit;
 import java.util.Optional;
 
-import application.AudioPlayer;
 import controller.SoundController;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
 import javafx.scene.control.Label;
-import javafx.scene.control.Tooltip;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -21,11 +18,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import utilities.AlertFactory;
 import view.handlers.HandleFileChooser;
 
 /**
- * Principal menu, here you can choose whether to start a new perch or upload
+ * Principal menu, here you can choose whether to start a new play or upload
  * one
  * 
  * @author Rossolini Andrea
@@ -124,7 +120,7 @@ public final class MainMenu {
 			alert.setHeaderText(null);
 			alert.setTitle("Credits");
 			Label message = new Label(
-					"Alesiani Matteo: Movement and consequences, management of contracts and contingencies/probabilities, game Board graphics, initialization of the game\n" +
+					"Alesiani Matteo: Movement and consequences, management of contracts and contingencies/probabilities, game Board graphics and game turn\n" +
 					"Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading of the Game, main menu and initialization of the game.");
 			message.setStyle("-fx-font-family: Kabel");
 			alert.getDialogPane().setContent(message);

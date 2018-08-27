@@ -1,8 +1,5 @@
 package view.gameDialog;
 
-import com.sun.xml.internal.ws.message.RootElementSniffer;
-
-import controller.Controller;
 import controller.DialogController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -12,9 +9,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
-import model.Model;
 import model.player.PlayerInfo;
-import utilities.AlertFactory;
 
 /**
  * This dialog allows the current player to mortgage it's properties to pay a
@@ -71,7 +66,7 @@ public class MortgageDialog extends Dialog {
 		vBox.getChildren().add(obtainedMoney);
 		rootPane.setCenter(vBox);
 
-		final BorderPane bottomPane = addButtonBox(stage, "Red", ""); // aggiungi Path
+		final BorderPane bottomPane = addButtonBox(stage, "Red", "/images/Icons/dialog/ruined_house.png");
 		final Button mortgageButton = new Button("Mortgage");
 		mortgageButton.setFont(getPrincipalFont());
 		mortgageButton.setDisable(true);
@@ -87,6 +82,5 @@ public class MortgageDialog extends Dialog {
 			DialogController.getDialogController().setMortgage(playerListView.getSelected());
 			stage.close();
 		});
-
 	}
 }

@@ -46,7 +46,7 @@ public class LandAbstractFactoryImp{
 //		}
 		
 		//deve passare prima per il controller
-		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(buildableTile));
+		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(buildableTile, false));
 		
 		return landPane;
 	}
@@ -107,7 +107,7 @@ public class LandAbstractFactoryImp{
 		
 		this.getNotBuildables(landPane, notBuildableTile, position);
 		//deve passare prima per il controller
-		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(notBuildableTile));
+		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(notBuildableTile, false));
 		
 		return landPane;
 	}

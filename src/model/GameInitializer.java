@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import model.player.Player;
 import model.player.RealPlayer;
@@ -65,13 +66,14 @@ public final class GameInitializer {
 					 */
 					for (int i = 0; i <= v.getContractNumber(); i++) {
 						player.buyProperty(this.propertiesList.stream().filter(prop -> !prop.getOwner().isPresent())
-								.findAny().get());
+								.findAny().get()); //addProperties invece di buy, per mettere buy nel model
 					}
+//					player.decMoney(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
 					this.playerList.add(player);
 				});
 			}
 		}
-		return new ModelImpl(); // mi serve la board
+		return new ModelImpl(board, new TurnImpl(playerList)); // mi serve la board
 	}
 
 	/**
@@ -87,8 +89,7 @@ public final class GameInitializer {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");
 		}
 		this.alreadyCalled = true;
-		final Model model = new ModelImpl(memento.getGameBoard(), memento.getPlayers(), memento.getProperties(),
-				memento.getCurrentPlayer()); // imprevisti e probabilità
+		final Model model = new ModelImpl(memento.getGameBoard(), memento.getPlayers()); // imprevisti e probabilità
 		return model;
 	}
 

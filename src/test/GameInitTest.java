@@ -69,12 +69,4 @@ public class GameInitTest {
     	
     	//aggiungi robe tipo getTurn, nextTurn ecc
     }
-
-
-
-	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
-
 }

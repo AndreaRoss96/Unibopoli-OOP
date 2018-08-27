@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 
 import model.player.Player;
 import model.player.PlayerInfo;
-import model.player.PlayerInfo.Prison;
 import utilities.CircularListImpl;
 
 /**
@@ -26,6 +25,7 @@ public class TurnImpl implements Turn {
 	private static final int TURN_IN_JAIL = 3;
 	
 	private CircularListImpl<Player> turnManagement;
+	private List<PlayerInfo> loserPlayer;
 	private Map<PlayerInfo, Integer> jailMap;
 	private int rolls;
 	
@@ -35,17 +35,18 @@ public class TurnImpl implements Turn {
 		this.nextPlayer();
 	}
 	
+	@Override
 	public Player getCurrentPlayer() {
 		return this.turnManagement.getHead();
 	}
 
 	@Override
 	public boolean isInJail() {
-		return this.getCurrentPlayer().isInJail() == Prison.PRISON;
+		return this.getCurrentPlayer().isInJail();
 	}
 	
 	@Override
-	public void tunInJail() {
+	public void turnInJail() {
 		this.jailMap.merge(this.getCurrentPlayer(), 0, (oldV, newV) -> oldV++);		
 	}
 	
@@ -67,7 +68,8 @@ public class TurnImpl implements Turn {
 	}
 
 	@Override
-	public boolean remove(Player player) {
+	public boolean remove(PlayerInfo player) {
+		this.loserPlayer.add(player);
 		return this.turnManagement.remove(player);
 	}
 	

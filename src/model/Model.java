@@ -11,12 +11,16 @@ import utilities.Pair;
 public interface Model {
 
 	/**
-	 * @return the player who is currently playing.
+	 * Getter for the player in turn.
+	 * 
+	 * @return the player who is currently playing
 	 */
 	PlayerInfo getCurrentPlayer();
 
 	/**
-	 * @return the list of all player in game.
+	 * Getter for the player.
+	 * 
+	 * @return the list of all player in game
 	 */
 	List<PlayerInfo> getPlayers();
 
@@ -26,18 +30,51 @@ public interface Model {
 	void removePlayer(PlayerInfo player);
 
 	/**
-	 * Saves the game.
+	 * Save the current game.
 	 */
 	void saveGame();
 
 	/**
-	 * @return game's dice
+	 * Execute the dice throws, whereas if the player makes double dice he/she rolls
+	 * again, but if this happens three times in a row he/she will go to jail.
+	 * 
+	 * @return game's dice result
 	 */
 	Pair<Integer> exitDice();
 
+	/**
+	 * Getter for properties.
+	 * 
+	 * @return the properties of the game
+	 */
 	Set<Obtainable> getProperties();
 
+	/**
+	 * Getter for the board.
+	 * 
+	 * @return the game board
+	 */
 	Set<Tile> getBoard();
-	
+
+	/**
+	 * Move the current player of <b>value</b> positions.
+	 * 
+	 * @param value
+	 */
 	void movement(final int value);
+
+	/**
+	 * End the current player's turn and shift the player list.
+	 */
+	void endTurn();
+
+	/**
+	 * Allows the current player to exit from jail.
+	 */
+	void exitFromJail();
+
+	/**
+	 * Allows the current player to go to jail.
+	 */
+	void goToJail();
 }

@@ -3,7 +3,6 @@
  */
 package view.gameDialog;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,7 +18,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
-import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 
@@ -57,9 +55,7 @@ public class AuctionDialog extends Dialog {
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 		rootPane.getStylesheets().add("style.css");
-		
-//		rootPane.setLeft(DialogController.getController().getContract(property));
-		
+				
 		final GridPane grid = new GridPane();
 		grid.setPadding(getPrefInsets());
 		
@@ -84,7 +80,7 @@ public class AuctionDialog extends Dialog {
 		grid.add(commentLabel, 0, counter, 2, 1);
 		rootPane.setRight(grid);
 		
-		final BorderPane bottomPane = addButtonBox(stage, "Yellow", ""); //aggiungi path
+		final BorderPane bottomPane = addButtonBox(stage, "Yellow", "/images/Icons/dialog/Auction.png");
 		final Button beatButton = new Button("Beat");
 		beatButton.setFont(getPrincipalFont());
 		beatButton.setPrefHeight(getButtonWidth());
