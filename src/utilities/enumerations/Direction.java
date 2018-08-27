@@ -21,10 +21,12 @@ public enum Direction {
      */
 	W(0) {
 		@Override
-		public void moveLocation(Scene scene, Node player) {
+		public void moveLocation(Scene scene, Node player, int position) {
+		
+			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
-            transition.setToX(player.getTranslateX() - STEP_SIZE);
+            transition.setToX(player.getTranslateX() - (STEP_SIZE*position));
             transition.setToY(player.getTranslateY());
             transition.playFromStart();			
 		}
@@ -34,11 +36,13 @@ public enum Direction {
      */
 	N(1) {
 		@Override
-		public void moveLocation(Scene scene, Node player) {
+		public void moveLocation(Scene scene, Node player, int position) {
+			
+			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
             transition.setToX(player.getTranslateX());
-            transition.setToY(player.getTranslateY() - STEP_SIZE);
+            transition.setToY(player.getTranslateY() - (STEP_SIZE*position));
             transition.playFromStart();
 		}
 	},
@@ -47,11 +51,12 @@ public enum Direction {
      */
 	E(2) {
 		@Override
-		public void moveLocation(Scene scene, Node player) {
+		public void moveLocation(Scene scene, Node player, int position) {
+			
 			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
-            transition.setToX(player.getTranslateX() + STEP_SIZE);
+            transition.setToX(player.getTranslateX() + (STEP_SIZE*position));
             transition.setToY(player.getTranslateY());
             transition.playFromStart();
 
@@ -62,21 +67,22 @@ public enum Direction {
      */
 	S(3) {
 		@Override
-		public void moveLocation(Scene scene, Node player) {
+		public void moveLocation(Scene scene, Node player, int position) {
+			
 			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
             transition.setToX(player.getTranslateX());
-            transition.setToY(player.getTranslateY() + STEP_SIZE);
+            transition.setToY(player.getTranslateY() + (STEP_SIZE*position));
             transition.playFromStart();
 
 		}
 	};
 	
-	private static final double STEP_SIZE = ComponentFactory.LandCornerDimension;
+	private static final double STEP_SIZE = ComponentFactory.LandSimpleWIDTH;
 	private static final Duration DURATION = Duration.millis(500);
 	
-	private static final TranslateTransition transition = new TranslateTransition(DURATION);
+	protected static TranslateTransition transition = new TranslateTransition(DURATION);
     
     //internal index
     private int index; 
@@ -95,7 +101,7 @@ public enum Direction {
 	 * @param loc Location to move
 	 * @param d Velocity of the movement
 	 */
-	public abstract void moveLocation(Scene scene, Node player);
+	public abstract void moveLocation(Scene scene, Node player, int position);
 
 	/**
 	 * Get the index of the direction

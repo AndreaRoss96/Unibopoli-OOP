@@ -1,23 +1,22 @@
 package view;
 
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.function.BiConsumer;
-import com.sun.javafx.geom.transform.BaseTransform;
+import java.util.stream.Collectors;
 
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.transform.Transform;
-import javafx.scene.transform.Translate;
 import model.Board;
+import model.Icon;
+import model.player.PlayerInfo;
+import model.player.RealPlayer;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
-import utilities.enumerations.Direction;
 import view.tiles.LandAbstractFactoryImp;
 
 /**
@@ -25,10 +24,14 @@ import view.tiles.LandAbstractFactoryImp;
 * @author Matteo Alesiani 
 */
 public class GamePane extends StackPane{
- 
+	
+	private static final double ROTATE_LEFT = +90.0;
+	private static final double ROTATE_RIGHT = -90.0;
+	
 	private Board board = new Board("CLASSIC");
 	private StackPane mainPane = new StackPane();
-	private GamePane() {
+	public static List<PlayerInfo> prova;
+	public GamePane() {
 		super(new StackPane());
 		
 		this.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
@@ -37,34 +40,26 @@ public class GamePane extends StackPane{
 		this.setMaxWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMaxHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
 		
-		mainPane.getChildren().addAll(background(), lowerLayer(), playerLayer());
-		
+		mainPane.getChildren().addAll(background(), playerLayer(), boardLayer());
+
 		this.getChildren().add(mainPane);
 	}
 	
-	private Group playerLayer() {
-		Group gruop = new Group();
+	private Pane playerLayer() {
+		Pane pane = new Pane();
 		
-		Scene scene = new Scene(gruop);
-		ImageView prova = new ImageView("mode/classic/avatars/Bowl.png");
-		gruop.getChildren().add(prova);
-		scene.setOnKeyPressed(value -> {
-			switch (value.getCode()) {
-			case UP:
-				Direction.N.moveLocation(scene, prova);
-				break;
-			case DOWN: 
-				Direction.S.moveLocation(scene, prova);
-				break;
-			case LEFT:
-				Direction.W.moveLocation(scene, prova);
-				break;
-			default:
-				break;
-			}
+		prova = new ArrayList<>();
+		
+		prova.add(new RealPlayer("Gino", 1000, new Icon("mode/classic/avatars/Car.png")));
+		prova.add(new RealPlayer("Mario", 200, new Icon("mode/classic/avatars/Bowl.png")));
+		prova.stream().map(player -> player.getIcon()).peek(icon -> icon.setScene(mainPane.getScene())).forEach(icon -> {
+			icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
+			icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
 		});
 		
-		return gruop;
+		pane.getChildren().addAll(prova.stream().map(player -> player.getIcon().get()).collect(Collectors.toList()));
+		
+		return pane;
 	}
 	
 	private AnchorPane background() {
@@ -74,19 +69,15 @@ public class GamePane extends StackPane{
 		return backGround;
 	}
 	
-	private AnchorPane lowerLayer() {
+	private AnchorPane boardLayer() {
 		AnchorPane lowerLayer = new AnchorPane();
 		
-//		lowerLayer.setTop(this.getTopNode());
-//		lowerLayer.setLeft(this.getLeftNode());
-//		lowerLayer.setCenter(this.getCenterNode());
-//		lowerLayer.setRight(this.getRightNode());
-//		lowerLayer.setBottom(this.getBottomNode());
 		GridPane topNode = this.getTopNode();
 		GridPane leftNode = this.getLeftNode();
+		AnchorPane centreNode = this.getCenterNode();
 		GridPane rightNode = this.getRightNode();
 		GridPane bottomNode = this.getBottomNode();
-		lowerLayer.getChildren().addAll(topNode, leftNode, rightNode, bottomNode);
+		lowerLayer.getChildren().addAll(topNode, leftNode, centreNode, rightNode, bottomNode);
 		AnchorPane.setTopAnchor(topNode, -1.0);
 		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 16 * 1.5);
 		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / 17);
@@ -103,15 +94,15 @@ public class GamePane extends StackPane{
 		GridPane pane = new GridPane();
 		
 		board.getTiles(t -> true).stream().sorted(orderCre()).skip(skip).limit(limit)
-			 .sorted(order ? orderCre() : orderDec()).map(tile -> new LandAbstractFactoryImp().createLand(tile, position))
+			 .sorted(order ? orderCre() : orderDec()).map(tile -> new LandAbstractFactoryImp().createLand(tile))
 			 .forEach(land -> consumer.accept(land, pane));
 		
 		 if(position == Pos.BOTTOM_CENTER) {
-			 pane.setRotate(90 * 2);
+			 pane.setRotate(ROTATE_LEFT * 2);
 		} else if(position == Pos.CENTER_LEFT) {
-			pane.setRotate(-90);
+			pane.setRotate(ROTATE_RIGHT);
 		} else if(position == Pos.CENTER_RIGHT) {
-			pane.setRotate(90);
+			pane.setRotate(ROTATE_LEFT);
 		}
 		
 		pane.setId("gridPane");
@@ -134,8 +125,8 @@ public class GamePane extends StackPane{
 		return this.builder(11, 9, Pos.CENTER_LEFT, (land, pane) -> pane.addRow(0, land), true);
 	}
 	
-	private GridPane getCenterNode() {
-		return null;
+	private AnchorPane getCenterNode() {
+		return new AnchorPane();
 	}
 	
 	private GridPane getRightNode() {

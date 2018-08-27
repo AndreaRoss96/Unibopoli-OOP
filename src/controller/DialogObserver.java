@@ -2,10 +2,6 @@ package controller;
 
 import java.util.List;
 
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
-import javafx.scene.control.PasswordField;
-import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Buildable;
 import model.tiles.Obtainable;

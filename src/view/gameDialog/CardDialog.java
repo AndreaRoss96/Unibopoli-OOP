@@ -3,10 +3,6 @@
  */
 package view.gameDialog;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-
 import controller.DialogController;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -107,7 +103,7 @@ public class CardDialog extends Dialog {
 		
 		Label propertyStatus = new Label("Status: ");
 		propertyStatus.setFont(getPrincipalFont());
-		Label effectivePropertyStatus = new Label(property.hasMortgage().toString());
+		Label effectivePropertyStatus = new Label(property.hasMortgage() ? Obtainable.StatusTile.MORTGAGE.toString() : Obtainable.StatusTile.NOT_MORTGAGE.toString());
 		effectivePropertyStatus.setFont(VALUE_FONT);
 		
 		// insertion in the gridPAne

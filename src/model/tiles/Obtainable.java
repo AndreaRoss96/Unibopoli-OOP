@@ -11,7 +11,7 @@ import utilities.enumerations.Color;
 
 public interface Obtainable extends Tile{
 	
-	enum StatusTile { MORTGAGE, NOT_MORTGAGE; }
+	public enum StatusTile { MORTGAGE, NOT_MORTGAGE; }
 	
 	/**
 	 * Return the total rent of the Tile.

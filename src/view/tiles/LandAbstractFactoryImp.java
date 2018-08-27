@@ -4,7 +4,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
@@ -14,6 +13,7 @@ import model.tiles.Corner;
 import model.tiles.NotBuildable;
 import model.tiles.NotObtainable;
 import model.tiles.Tile;
+
 import view.gameDialog.CardDialog;
 
 /**
@@ -23,152 +23,93 @@ import view.gameDialog.CardDialog;
 
 public class LandAbstractFactoryImp{
 
-	public Pane createLand(final Tile tile, final Pos position) {
+	public Pane createLand(final Tile tile) {
 		if(tile instanceof Buildable) {
-			return this.getBuildable((Buildable) tile, position);
+			return this.getBuildable((Buildable) tile);
 		}else if(tile instanceof NotBuildable) {
-			return this.getNotBuildable((NotBuildable) tile, position);
+			return this.getNotBuildable((NotBuildable) tile);
 		}else if(tile instanceof Corner) {
 			return this.getCorner((Corner) tile);
 		}else if(tile instanceof NotObtainable){
-			return this.getNotObtainables((NotObtainable) tile, position);
+			return this.getNotObtainables((NotObtainable) tile);
 		}
 		throw new IllegalArgumentException();
 	}
 	
-	private AnchorPane getBuildable(final Buildable buildableTile, final Pos position) {
-		AnchorPane landPane = ComponentFactory.getAnchorPane(false, position);
+	private AnchorPane getBuildable(final Buildable buildableTile) {
+		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		
-//		if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-//			this.getHorizontalBuildable(landPane, buildableTile, position); 
-//		}else {
-			this.getVerticalBuildable(landPane, buildableTile, position); 
-//		}
-		
-		//deve passare prima per il controller
+		this.getBuildables(landPane, buildableTile); 
 		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(buildableTile, false));
 		
 		return landPane;
 	}
-
-//	private void getHorizontalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
-//	{		
-//		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
-////		Separator seperator = ComponentFactory.getSeparator(Orientation.VERTICAL);
-//		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);
-//		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
-//		textHeader.setStyle("-fx-border-color: BLACK");
-//		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
-//		
-//		if(position == Pos.CENTER_LEFT) {
-//			AnchorPane.setRightAnchor(colorFamily, 0.0);
-//			AnchorPane.setRightAnchor(seperator, 17.0);
-//			AnchorPane.setRightAnchor(textHeader, 22.0);	
-//			AnchorPane.setLeftAnchor(textRent, 5.0);
-//		}else {
-//			AnchorPane.setLeftAnchor(colorFamily, 0.0);
-//			AnchorPane.setLeftAnchor(seperator, 17.0);
-//			AnchorPane.setLeftAnchor(textHeader, 22.0);	
-//			AnchorPane.setRightAnchor(textRent, 5.0);
-//		}
-		
-//		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
-//	}
-
 	
-	private void getVerticalBuildable(final AnchorPane landPane, final Buildable buildableTile, final Pos position)
+	private void getBuildables(final AnchorPane landPane, final Buildable buildableTile)
 	{
-		// Aggiungere css per definire il bordo di colore nero e specificare la grandezza (Separator)
-		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get(), position);
-		//utilizzare uno StackPane per inserire le case.
+		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get());
 		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);		
-		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'), position);
-//		textHeader.setStyle("-fx-border-color: BLACK");
-		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice(), position);
+		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'));
+		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice());
 
-//		if(position == Pos.BOTTOM_CENTER) {
-//			AnchorPane.setTopAnchor(colorFamily, 0.0);
-//			AnchorPane.setTopAnchor(seperator, 17.0);
-//			AnchorPane.setTopAnchor(textHeader, 22.0);	
-//			AnchorPane.setBottomAnchor(textRent, 5.0);
-//		}else {
+		AnchorPane.setBottomAnchor(colorFamily, 0.0);
+		AnchorPane.setBottomAnchor(seperator, 17.0);
+		AnchorPane.setBottomAnchor(textHeader, 22.0);	
+		AnchorPane.setTopAnchor(textRent, 5.0);
 
-			AnchorPane.setBottomAnchor(colorFamily, 0.0);
-			AnchorPane.setBottomAnchor(seperator, 17.0);
-			AnchorPane.setBottomAnchor(textHeader, 22.0);	
-			AnchorPane.setTopAnchor(textRent, 5.0);
-//		}
-			
 		landPane.getChildren().addAll(colorFamily, seperator, textHeader, textRent);
 	}
 	
-	private AnchorPane getNotBuildable(final NotBuildable notBuildableTile, final Pos position) {
-		AnchorPane landPane = ComponentFactory.getAnchorPane(false, position);
+	private AnchorPane getNotBuildable(final NotBuildable notBuildableTile) {
+		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		
-		this.getNotBuildables(landPane, notBuildableTile, position);
+		this.getNotBuildables(landPane, notBuildableTile);
+		
 		//deve passare prima per il controller
 		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(notBuildableTile, false));
 		
 		return landPane;
 	}
 	
-	private void getNotBuildables(final AnchorPane landPane, final NotBuildable notBuildableTile, final Pos position) {
-		Label top = ComponentFactory.getLabelString(notBuildableTile.getNameOf().replace(' ', '\n'), position);
-		Label image = ComponentFactory.getLabelImage(notBuildableTile.getImage(), position);		
-		Label bottom = ComponentFactory.getLabelString("$" + String.valueOf(notBuildableTile.getPrice()), position);
+	private void getNotBuildables(final AnchorPane landPane, final NotBuildable notBuildableTile) {
+		Label top = ComponentFactory.getLabelString(notBuildableTile.getNameOf().replace(' ', '\n'));
+		Label image = ComponentFactory.getLabelImage(notBuildableTile.getImage());		
+		Label bottom = ComponentFactory.getLabelString("$" + String.valueOf(notBuildableTile.getPrice()));
 		
-		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-			AnchorPane.setTopAnchor(image, 40.0);		
-			
-			if(position == Pos.BOTTOM_CENTER) {
-				AnchorPane.setTopAnchor(top, 5.0);					
-				AnchorPane.setBottomAnchor(bottom, 5.0);
-			}else {
-				AnchorPane.setBottomAnchor(top, 5.0);					
-				AnchorPane.setTopAnchor(bottom, 5.0);
-			}			
-		}else if(position == Pos.CENTER_LEFT){
-			AnchorPane.setRightAnchor(top, 5.0);					
-			AnchorPane.setRightAnchor(image, 40.0);		
-			AnchorPane.setLeftAnchor(bottom, 5.0);
-		}else {
-			AnchorPane.setLeftAnchor(top, 5.0);					
-			AnchorPane.setLeftAnchor(image, 40.0);		
-			AnchorPane.setRightAnchor(bottom, 5.0);
-		}
+		AnchorPane.setBottomAnchor(top, 5.0);					
+		AnchorPane.setTopAnchor(bottom, 5.0);
+		AnchorPane.setTopAnchor(image, 40.0);		
 		
 		landPane.getChildren().addAll(top, image, bottom);
 	}
 
-	private AnchorPane getNotObtainables(final NotObtainable notObtainableTile, final Pos position) {
-		AnchorPane landPane = ComponentFactory.getAnchorPane(false, position);
+	private AnchorPane getNotObtainables(final NotObtainable notObtainableTile) {
+		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		List<String> temp = Arrays.stream(notObtainableTile.getNameOf().split("\n")).collect(Collectors.toList());
 		
-		Label top = ComponentFactory.getLabelString(temp.get(0), position);
-		Label image = ComponentFactory.getLabelImage(notObtainableTile.getImage().get(), position);
+		Label top = ComponentFactory.getLabelString(temp.get(0));
+		Label image = ComponentFactory.getLabelImage(notObtainableTile.getImage().get());
 		
 		if(temp.size() > 1) {
-			Label bottom = ComponentFactory.getLabelString(temp.get(1), position);
-			AnchorPane.setBottomAnchor(bottom, 10.0);
+			Label bottom = ComponentFactory.getLabelString(temp.get(1));
+			AnchorPane.setTopAnchor(bottom, 10.0);
 			landPane.getChildren().add(bottom);
 		}
 		
-		AnchorPane.setTopAnchor(image, 40.0);
-		AnchorPane.setTopAnchor(top, 10.0);
+		AnchorPane.setBottomAnchor(image, 40.0);
+		AnchorPane.setBottomAnchor(top, 10.0);
 		
 		landPane.getChildren().addAll(top, image);
 		return landPane;
 	}
-	/**
-	 * Realizzare un Pane apposito per free_transit.
-	 * */
-	private AnchorPane getCorner(final Corner cornerTile/*, final Pos position*/) {
-		AnchorPane landPane = ComponentFactory.getAnchorPane(true, Pos.TOP_CENTER);
+	
+	private AnchorPane getCorner(final Corner cornerTile) {
+		AnchorPane landPane = ComponentFactory.getAnchorPane(true);
 		List<String> temp = Arrays.stream(cornerTile.getHeaderText().split("\n")).collect(Collectors.toList());
 		
-		Label top = ComponentFactory.getLabelString(temp.get(0), Pos.TOP_CENTER);
-		Label image = ComponentFactory.getLabelImage(cornerTile.getImage().get(), Pos.TOP_CENTER);
-		Label bottom = ComponentFactory.getLabelString(temp.get(1), Pos.TOP_CENTER);
+		Label top = ComponentFactory.getLabelString(temp.get(0));
+		Label image = ComponentFactory.getLabelImage(cornerTile.getImage().get());
+		Label bottom = ComponentFactory.getLabelString(temp.get(1));
 		
 		AnchorPane.setTopAnchor(image, 30.0);
 		AnchorPane.setTopAnchor(top, 10.0);

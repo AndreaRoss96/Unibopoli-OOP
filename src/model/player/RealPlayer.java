@@ -11,26 +11,27 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import model.Icon;
-import controller.Controller;
-import controller.ControllerImpl;
-import controller.DialogController;
 import model.exceptions.NotEnoughMoneyException;
-import model.tiles.*;
+import model.tiles.Buildable;
+import model.tiles.Obtainable;
+import controller.DialogController;
+
 import utilities.enumerations.Color;
 
 public class RealPlayer implements Player {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7360356929546552980L;
 
 	private static final double UNMORTGAGE_FEE = 10 / 100;
 
 	private int position;
 	private final String name;
-	//private final Icon sprite;
+	private Icon sprite;
 	private Map<Color, List<Obtainable>> playersProperties;
+	/**
+	 * E' necessaria averla ??
+	 * C'è l'attributo dentro la Classe Obtainable
+	 * */
 	private List<Obtainable> mortgagedProperties;
 	private int money;
 	private int housesNumber;// togli
@@ -45,11 +46,11 @@ public class RealPlayer implements Player {
 	 * @param money
 	 *            initial player's money
 	 */
-	public RealPlayer(final String name, /* avatar */ int money) {
+	public RealPlayer(final String name, int money, Icon icon) {
 		this.name = name;
-		this.position = 0; // chiedi a matti
+		this.position = 0;
 		this.money = money;
-		//this.sprite = new Icon("");
+		this.sprite = icon;
 		this.playersProperties = new HashMap<>();
 		this.mortgagedProperties = new ArrayList<>();
 	}
@@ -104,6 +105,11 @@ public class RealPlayer implements Player {
 		return this.position;
 	}
 
+	@Override
+	public Icon getIcon() {
+		return this.sprite; 
+	}
+	
 	@Override
 	public boolean isInJail() {
 		return this.status == Prison.PRISON;

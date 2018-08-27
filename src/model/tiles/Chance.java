@@ -5,8 +5,8 @@ import utilities.enumerations.ClassicType;
 
 public class Chance extends NotObtainableImpl{
 
-	public static final String UNEXPECTED = ClassicType.GeneralPurposeMap.getUnexpectedImage();
-	public static final String PROBABILITY = ClassicType.GeneralPurposeMap.getCofferImagePath();
+	public static final String UNEXPECTED = ClassicType.Image.GeneralImagesMap.getUnexpectedImage();
+	public static final String PROBABILITY = ClassicType.Image.GeneralImagesMap.getCofferImagePath();
 	
 	public Chance(final int positionTile, final boolean type) {
 		super(positionTile, type ? "Unexpected" : "Probability");
