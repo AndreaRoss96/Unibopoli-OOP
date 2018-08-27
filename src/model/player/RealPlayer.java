@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.Icon;
 import model.exceptions.NotEnoughMoneyException;
 import model.tiles.*;
 import utilities.enumerations.Color;
@@ -22,7 +23,7 @@ public class RealPlayer implements Player {
 	
 	private int position;
 	private final String name;
-	// private final Pawn sprite;
+	private final Icon sprite;
 	private Map<Color, List<Obtainable>> playersProperties;
 	private List<Obtainable> mortgagedProperties;
 	private int money;

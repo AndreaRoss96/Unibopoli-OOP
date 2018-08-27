@@ -2,16 +2,22 @@ package view;
 
 import java.util.Comparator;
 import java.util.function.BiConsumer;
+import com.sun.javafx.geom.transform.BaseTransform;
 
 import javafx.geometry.Pos;
+import javafx.scene.Group;
+import javafx.scene.Scene;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.transform.Transform;
+import javafx.scene.transform.Translate;
 import model.Board;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
-
+import utilities.enumerations.Direction;
 import view.tiles.LandAbstractFactoryImp;
 
 /**
@@ -21,7 +27,7 @@ import view.tiles.LandAbstractFactoryImp;
 public class GamePane extends StackPane{
  
 	private Board board = new Board("CLASSIC");
-	
+	private StackPane mainPane = new StackPane();
 	private GamePane() {
 		super(new StackPane());
 		
@@ -31,10 +37,34 @@ public class GamePane extends StackPane{
 		this.setMaxWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMaxHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
 		
-		StackPane mainPane = new StackPane();
-		mainPane.getChildren().addAll(background(), lowerLayer());
+		mainPane.getChildren().addAll(background(), lowerLayer(), playerLayer());
 		
 		this.getChildren().add(mainPane);
+	}
+	
+	private Group playerLayer() {
+		Group gruop = new Group();
+		
+		Scene scene = new Scene(gruop);
+		ImageView prova = new ImageView("mode/classic/avatars/Bowl.png");
+		gruop.getChildren().add(prova);
+		scene.setOnKeyPressed(value -> {
+			switch (value.getCode()) {
+			case UP:
+				Direction.N.moveLocation(scene, prova);
+				break;
+			case DOWN: 
+				Direction.S.moveLocation(scene, prova);
+				break;
+			case LEFT:
+				Direction.W.moveLocation(scene, prova);
+				break;
+			default:
+				break;
+			}
+		});
+		
+		return gruop;
 	}
 	
 	private AnchorPane background() {

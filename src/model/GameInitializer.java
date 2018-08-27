@@ -49,6 +49,7 @@ public final class GameInitializer {
 		if (this.alreadyCalled) {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");
 		}
+		
 		this.alreadyCalled = true;
 
 		this.propertiesList = new ArrayList<>();

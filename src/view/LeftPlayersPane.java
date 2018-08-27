@@ -45,7 +45,7 @@ public class LeftPlayersPane extends VBox{
 	 * 
 	 * @return VBox
 	 */
-	public PlayersPane get() {
+	public LeftPlayersPane get() {
 		return this;
 	}
 }

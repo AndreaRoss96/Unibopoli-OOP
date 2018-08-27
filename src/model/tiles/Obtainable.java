@@ -38,7 +38,9 @@ public interface Obtainable extends Tile{
 	 */
 	int getMortgage();
 	
-	StatusTile hasMortgage();
+	boolean hasMortgage();
+	
+	void changeMortgageStatus();
 	
 	/**
 	 * Return the Optional<X> of String corresponding to the name of the owner. 

@@ -25,6 +25,7 @@ public class Icon {
 	 * */
 	private Icon(final Image image) {
 		this.image = new ImageView(image);
+		this.direction = Direction.W;
 	}
 	
 	public ImageView get() {
