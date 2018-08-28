@@ -1,7 +1,5 @@
 package view.gameSetup;
 
-import java.awt.Toolkit;
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -29,58 +27,69 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utilities.AlertFactory;
+import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
+import view.CommandBridge;
 
-public class PlayerSetupMenu extends BorderPane {
+public class PlayerSetupMenu extends Scene {
 
-	private static final double STANDARD_WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.40;
-	private static final double STANDARD_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.80;
+	private static final double STANDARD_WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.4;
+	private static final double STANDARD_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.9;
 	private static final int PLAYER_MIN = 2;
 	private static final int PLAYER_MAX = 6;
 
+	private static Stage mainStage;
+	
 	private List<String> iconList;
 	private List<String> chosenList;
 	private Map<String, String> imageMap;
 
-	public PlayerSetupMenu(Stage stage) {
+	private PlayerSetupMenu() {
+		super(new BorderPane(), STANDARD_WIDTH, STANDARD_HEIGHT);
+		
+		BorderPane borderPane = new BorderPane();
+		
+		this.imageMap = IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
+		
+		//System.out.println(imageMap.toString());
+		
 		iconList = new ArrayList<>();
 		chosenList = new ArrayList<>();
-		iconList.add("Mushroom");
-		iconList.add("Hat");
-		iconList.add("Wine");
-		iconList.add("Iron");
-		iconList.add("Boot");
-		iconList.add("Car"); // utilizza iconloader vd. esperimento
+//    iconList.add("Mushroom");
+//		iconList.add("Hat");
+//		iconList.add("Wine");
+//		iconList.add("Iron");
+//	iconList.add("Boot");
+//	iconList.add("Car"); 
+//		
+		iconList.addAll(imageMap.keySet());
+		
+		// utilizza iconloader vd. esperimento
 		/* implementare nell'iconloader, parla con matti
 		IconLoader iconPath = new IconLoader();
 		imageMap = iconPath.getMap();
 		oppure gli passo la mappa richiamando questo form dal controller
 		*/
-		Scene scene = new Scene(this);
-		scene.getStylesheets().add(getClass().getResource("setupPlayer.css").toExternalForm());
-		stage.setScene(scene);
-		stage.setWidth(STANDARD_WIDTH);
-		stage.setHeight(STANDARD_HEIGHT);
-		stage.show();
-		stage.centerOnScreen();
-
-		Image cardBoard = new Image("images" + File.separator + "backgrounds" + File.separator + "monopoli_cfu.png");
+		this.getStylesheets().add(getClass().getResource("/style/setupPlayer.css").toExternalForm());
+		
+		Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
 		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
 				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
-		this.setBackground(background);
+		
+		borderPane.setBackground(background);
 
 		final FlowPane flowPane = new FlowPane();
-		final Button addPlayer = new Button("", new ImageView(new Image("/Icone/icons8-plus-50.png"))); //cambia path
+		final Button addPlayer = new Button("", new ImageView(new Image("images/Icons/gear.png"))); //cambia path
 		flowPane.getChildren().add(addPlayer);
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
-		this.setCenter(flowPane);
+		borderPane.setCenter(flowPane);
 
 		final HBox hBox = new HBox();
 		final Label mapLabel = new Label("Choose map:");
 		final ComboBox<String> mapBox = new ComboBox<>();
-		mapBox.getItems().add("Classical"); // ci dovrebbe essere un metodo che va a leggere un ifle ocn tutte le mappe
+		mapBox.getItems().add("CLASSIC"); // ci dovrebbe essere un metodo che va a leggere un ifle ocn tutte le mappe
 		mapBox.setValue(mapBox.getItems().get(0));
 		final Button startGame = new Button("Start Game");
 		final Button cancel = new Button("Cancel");
@@ -94,7 +103,7 @@ public class PlayerSetupMenu extends BorderPane {
 		hBox.setAlignment(Pos.CENTER_RIGHT);
 		hBox.setPadding(new Insets(0, 15, 10, 0));
 
-		this.setBottom(hBox);
+		borderPane.setBottom(hBox);
 
 		flowPane.getChildren().addListener((ListChangeListener<? super Node>) e -> {
 			addPlayer.setDisable(flowPane.getChildren().size() > 6);
@@ -119,7 +128,7 @@ public class PlayerSetupMenu extends BorderPane {
 				}
 			});
 			if (psbList.stream().map(PlayerSetupBox::getNameField).distinct().count() != flowPane.getChildren()
-					.size()) {
+					.size() - 1) {
 				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
 				e.consume();
 			}
@@ -132,16 +141,26 @@ public class PlayerSetupMenu extends BorderPane {
 			});
 			/* execute action */
 			List<String> playersName = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
-			List<String> playersIcon = psbList.stream().map(PlayerSetupBox::getIcons).map(elem -> elem.getSelectionModel().getSelectedItem()).collect(Collectors.toList());
-			ControllerImpl.getController().newGameInit(playersName, playersIcon);
+//			
+			
+			
+			
+			//psbList.forEach(bBox -> {
+//				System.out.println(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
+//			});
+//			List<String> playersIcon = psbList.stream().map(PlayerSetupBox::getIcons).map(elem -> elem.getSelectionModel().getSelectedItem()).collect(Collectors.toList());
+			
+			//System.out.println(playersIcon.toString());
+			/*ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersName, playersIcon);
+			mainStage.setScene(CommandBridge.get(mainStage));*/
 		});
 
 		cancel.setOnAction(e -> {
-			new MainMenu(stage);
+			mainStage.setScene(MainMenu.get(mainStage));
 		});
 
-		stage.setTitle("Setup players");
-		stage.show();
+		mainStage.setTitle("Setup players");
+		this.setRoot(borderPane);
 	}
 
 	private PlayerSetupBox addPlayerSetupBox(FlowPane flowPane) {
@@ -190,4 +209,11 @@ public class PlayerSetupMenu extends BorderPane {
 		return pBox;
 	}
 
+	public static PlayerSetupMenu get(Stage stage) {
+		mainStage = stage;
+		mainStage.centerOnScreen();
+
+		return new PlayerSetupMenu();
+		
+	}
 }

@@ -19,7 +19,6 @@ public class ClassicType {
 	        this.staticBuildableValuesInitFile = staticBuildableValuesInitFile;
 	        this.classicModeInitFile = classicModeInitFile;
 	        this.staticNotBuildableValuesInitFile = staticNotBuildableValuesInitFile;
-	        
 	    }
 	
 	    /**
@@ -139,6 +138,16 @@ public class ClassicType {
 	}
 	
 	public enum Avatar{
-		GeneralAvatarsMap
+		GeneralAvatarsMap("mode/classic/avatars/Boot.png");
+		
+		private final String boot;
+		
+		private Avatar(final String boot) {
+			this.boot = boot;
+		}
+		
+		public String getBootImage() {
+			return this.boot;
+		}
 	}
 }

@@ -11,7 +11,7 @@ public interface Controller {
 	/**
 	 * Initialization of the game
 	 */
-	void newGameInit(List<String> playersName, List<String> playersIcon); // probabilmente in ingresso vorrà un
+	void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon); // probabilmente in ingresso vorrà un
 																			// Map<String, Image> -> nome giocatore e
 																			// avatar, tutti devono avere un avatar, i
 																			// nomi devonon essere tutti diversi
@@ -78,5 +78,7 @@ public interface Controller {
 	 *            the player that needs money
 	 */
 	void startMortgage(int minimumExpense, PlayerInfo player);
+	
+	List<PlayerInfo> getPlayers();
 
 }

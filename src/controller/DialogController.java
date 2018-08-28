@@ -57,18 +57,18 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void incHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
-		if (canPay(model.getCurrentPlayer(), property.getPriceForBuilding())) {
+		if (canPay(ControllerImpl.getController().getCurruntPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
 				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
 				property.incBuildings(); //deve diminuire i soldi del giocatore
-				((Player) model.getCurrentPlayer()).payments(property.getPriceForBuilding());
+				((Player) ControllerImpl.getController().getCurruntPlayer()).payments(property.getPriceForBuilding());
 			} else {
 				AlertFactory.createErrorAlert("Oak's words echoed", null,
 						"There's time and place for everything, but not now...");
 			}
 		} else {
 			AlertFactory.createErrorAlert("Nope", "You don't have enought money",
-					"you have only: " + this.model.getCurrentPlayer().getMoney() +"$");
+					"you have only: " + ControllerImpl.getController().getCurruntPlayer().getMoney() +"$");
 		}
 	}
 
@@ -77,7 +77,7 @@ public class DialogController implements DialogObserver {
 			if (property.getBuildingNumber() != 0) {
 				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
 				decHouse(property);
-				((Player) model.getCurrentPlayer()).gainMoney(property.getPriceForBuilding()/2); // searchPlayerByName, oppure currentPlayer torna Player
+				((Player) ControllerImpl.getController().getCurruntPlayer()).gainMoney(property.getPriceForBuilding()/2); // searchPlayerByName, oppure currentPlayer torna Player
 			}
 	}
 
@@ -85,18 +85,18 @@ public class DialogController implements DialogObserver {
 	public void setMortgage(List<String> propertiesList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).forEach(e -> {
 			//e.setMortgage();
-			((Player) model.getCurrentPlayer()).gainMoney(e.getMortgage());
+			((Player) ControllerImpl.getController().getCurruntPlayer()).gainMoney(e.getMortgage());
 			e.hasMortgage(); //non so come si imposti una proprietà ipotecata
 		});
 	}
 	
  	public void mortgageDialogClick(Obtainable property) {
-		if(property.getOwner().get() == model.getCurrentPlayer().getName()) {
+		if(property.getOwner().get() == ControllerImpl.getController().getCurruntPlayer().getName()) {
 //			if(property.isMortgage) {
 			setMortgage(Arrays.asList(property.getNameOf()));
 			// } else {
-			if(canPay(model.getCurrentPlayer(), property.getMortgage() * 10/100)) {
-				((Player) model.getCurrentPlayer()).unmortgageProperty(property);
+			if(canPay(ControllerImpl.getController().getCurruntPlayer(), property.getMortgage() * 10/100)) {
+				((Player) ControllerImpl.getController().getCurruntPlayer()).unmortgageProperty(property);
 			}
 		} else {
 			AlertFactory.createInformationAlert("Ehi", null, "That's not your turn!");
@@ -106,7 +106,7 @@ public class DialogController implements DialogObserver {
 	@Override
 	public void buyPropertyClick(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		try {
-			((Player) model.getCurrentPlayer()).buyProperty(property);
+			((Player) ControllerImpl.getController().getCurruntPlayer()).buyProperty(property);
 		} catch (NotEnoughMoneyException e) {
 			//Auction Dialog
 		}
@@ -135,7 +135,7 @@ public class DialogController implements DialogObserver {
 			int firstMoney = Integer.parseInt(firstMoneyInput);
 			int secondMoney = Integer.parseInt(secondMoneyInput);
 		
-			Player firstPlayer = (Player) model.getCurrentPlayer();
+			Player firstPlayer = (Player) ControllerImpl.getController().getCurruntPlayer();
 			Player secondPlayer = (Player) getPlayerByName(secondPlayerName);
 			List<Obtainable> firstProperties = new ArrayList<>();
 			List<Obtainable> secondProperties = new ArrayList<>();

@@ -4,6 +4,7 @@ import javafx.application.Application;
 import javafx.stage.Stage;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
+import view.gameSetup.MainMenu;
 
 /**
  * 
@@ -40,7 +41,7 @@ public class InitialWindows extends Application {
             ClosureHandler.closeProgram(this.mainWindow);
         });*/
 
-        this.initialWindow.setScene(CommandBridge.get(this.initialWindow));
+        this.initialWindow.setScene(MainMenu.get(this.initialWindow));
         this.initialWindow.setResizable(false);
         this.initialWindow.show();
     }

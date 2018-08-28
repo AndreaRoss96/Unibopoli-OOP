@@ -14,7 +14,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -27,27 +26,26 @@ import view.handlers.HandleFileChooser;
  * @author Rossolini Andrea
  *
  */
-public final class MainMenu {
+public final class MainMenu extends Scene{
 
 	private static final double MAIN_MENU_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.70;
 	private static final double MAIN_MENU_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.80;
 	private static final double STANDARD_ANCHOR = 15d;
 	private static final double BUTTON_BOX_WIDTH = MAIN_MENU_WIDTH / 2 - STANDARD_ANCHOR * 2;
 	private static SoundController music;
-
-	public MainMenu(Stage stage) {
+	
+	private static Stage mainStage;
+	
+	private MainMenu() {
+		super(new StackPane(), MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
+		
 		StackPane root = new StackPane();
-		Scene scene = new Scene(root, Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-		scene.getStylesheets().add(getClass().getResource("/style/styled-unique-expanded-tree.css").toExternalForm());
-		stage.setScene(scene);
-		stage.setWidth(MAIN_MENU_WIDTH);
-		stage.setHeight(MAIN_MENU_HEIGHT);
-		stage.centerOnScreen();
-		stage.show();
+		
+		this.getStylesheets().add(getClass().getResource("/style/principalStyle.css").toExternalForm());
 
-		final ImageView background = new ImageView(new Image("unibopoli-logo.jpg"));
-		background.fitWidthProperty().bind(stage.widthProperty());
-		background.fitHeightProperty().bind(stage.heightProperty());
+		final ImageView background = new ImageView(new Image("images/Logo/unibopoli-logo.jpg"));
+		background.fitWidthProperty().bind(mainStage.widthProperty());
+		background.fitHeightProperty().bind(mainStage.heightProperty());
 		root.getChildren().add(background);
 
 		final AnchorPane anchorPane = new AnchorPane();
@@ -84,20 +82,20 @@ public final class MainMenu {
 		AnchorPane.setTopAnchor(helpBtn, STANDARD_ANCHOR);
 		AnchorPane.setRightAnchor(helpBtn, STANDARD_ANCHOR);
 
-		final Button musicBtn = new Button("", new ImageView(new Image("/res/images/Icons/Music.png")));
+		final Button musicBtn = new Button("", new ImageView(new Image("images/Icons/Music.png")));
 		anchorPane.getChildren().add(musicBtn);
 		AnchorPane.setTopAnchor(musicBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(musicBtn, STANDARD_ANCHOR);
 
-		final Button soundBtn = new Button("", new ImageView(new Image("/res/images/Icons/Sound.png")));
+		final Button soundBtn = new Button("", new ImageView(new Image("images/Icons/Sound.png")));
 		anchorPane.getChildren().add(soundBtn);
 		AnchorPane.setTopAnchor(soundBtn, STANDARD_ANCHOR);
-		AnchorPane.setLeftAnchor(soundBtn, STANDARD_ANCHOR * 2);
+		AnchorPane.setLeftAnchor(soundBtn, STANDARD_ANCHOR * 5.5);
 
 		root.getChildren().add(anchorPane);
 
 		newGameBtn.setOnAction(e -> {
-			// new PlayerSetup(stage);
+			mainStage.setScene(PlayerSetupMenu.get(mainStage));
 		});
 
 		loadGameBtn.addEventFilter(MouseEvent.MOUSE_CLICKED, new HandleFileChooser());
@@ -109,7 +107,7 @@ public final class MainMenu {
 			alert.setContentText("Are you sure you want to quit from Unibopoli?");
 			Optional<ButtonType> result = alert.showAndWait();
 			if (result.get().equals(ButtonType.OK)) {
-				stage.close();
+				mainStage.close();
 			} else {
 				e.consume();
 			}
@@ -130,23 +128,31 @@ public final class MainMenu {
 		musicBtn.setOnAction(e -> {
 			music.changeMusicMute();
 			if (music.isMusicMute()) {
-				musicBtn.setGraphic(new ImageView(new Image("/res/images/Icons/No_Music.png")));
+				musicBtn.setGraphic(new ImageView(new Image("images/Icons/No_Music.png")));
 			} else {
-				musicBtn.setGraphic(new ImageView(new Image("/res/images/Icons/Music.png")));
+				musicBtn.setGraphic(new ImageView(new Image("images/Icons/Music.png")));
 			}
 		});
 
 		soundBtn.setOnAction(e -> {
 			music.changeSoundsMute();
 			if (music.isSoundMute()) {
-				soundBtn.setGraphic(new ImageView(new Image("/res/images/Icons/No_sound.png")));
+				soundBtn.setGraphic(new ImageView(new Image("images/Icons/No_sound.png")));
 			} else {
-				soundBtn.setGraphic(new ImageView(new Image("/res/images/Icons/Sound.png")));
+				soundBtn.setGraphic(new ImageView(new Image("images/Icons/Sound.png")));
 			}
 		});
+		
+		this.setRoot(root);
 	}
 
 	public static void setBeckgroundMusic(final SoundController backgroundMusic) {
 		music = backgroundMusic;
+	}
+
+	public static MainMenu get(Stage stage) {
+		mainStage = stage;
+		mainStage.centerOnScreen();
+		return new MainMenu();
 	}
 }

@@ -30,8 +30,7 @@ public class CommandBridge extends Scene{
 		this.setRoot(commandBridge);
 		this.getStylesheets().add("style.css");
 		
-		
-		
+		/*
 		this.setOnKeyReleased(value -> {
 			switch (value.getCode()) {
 			case UP:
@@ -43,7 +42,7 @@ public class CommandBridge extends Scene{
 			default:
 				break;
 			}
-		});
+		});*/
 	}
 	
 	/**
@@ -52,7 +51,7 @@ public class CommandBridge extends Scene{
      *            
      * @return 
      */
-    static CommandBridge get(final Stage initialWindow) {
+    public static CommandBridge get(final Stage initialWindow) {
         mainStage = initialWindow;
 //        mainStage.initStyle(StageStyle.TRANSPARENT);
         mainStage.setFullScreen(false);

@@ -2,15 +2,9 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
-import java.util.stream.Collectors;
-
 import model.player.Player;
 import model.player.RealPlayer;
 import model.tiles.Obtainable;
@@ -45,22 +39,21 @@ public final class GameInitializer {
 	 * @throws IOException
 	 *             when one of the initialization files not is found.
 	 */
-	public Model newGame(final Map<String, Icon> playersMap) throws IOException {
+	public Model newGame(final String mode, final Map<String, Icon> playersMap) throws IOException {
 		Objects.requireNonNull(playersMap, "NullPointerException: playersMap required non-null.");
 		if (this.alreadyCalled) {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");
 		}
 		
 		this.alreadyCalled = true;
-
+		
 		this.propertiesList = new ArrayList<>();
-		// qui si dovrebbe leggere da file le informazioni per leggere e fillare il set
-
+		
 		this.playerList = new ArrayList<>();
 		for (InitialDistribution v : InitialDistribution.values()) {
 			if (v.getPlayerNumber() == playersMap.size()) {
 				playersMap.keySet().forEach(e -> {
-					Player player = new RealPlayer(e, v.getMoneyAmount()); // icona
+					Player player = new RealPlayer(e, v.getMoneyAmount(), playersMap.get(e));
 					/* for each properties diceded by the rules (enum - InitialDistribution) a
 					 * player buy a determinated number of any property
 					 */
@@ -73,7 +66,7 @@ public final class GameInitializer {
 				});
 			}
 		}
-		return new ModelImpl(board, new TurnImpl(playerList)); // mi serve la board
+		return new ModelImpl(new Board(mode), new TurnImpl(playerList)); // mi serve la board
 	}
 
 	/**
