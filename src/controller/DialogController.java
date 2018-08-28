@@ -24,6 +24,7 @@ public class DialogController implements DialogObserver {
 	}
 
 	private DialogController() {
+		//mi serve un controller, lo prendo da ControllerImpl o lo passo come costruttore
 	}
 
 	@Override
@@ -60,7 +61,7 @@ public class DialogController implements DialogObserver {
 		if (canPay(model.getCurrentPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
 				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
-				property.incBuildings(); //deve diminuire i soldi del giocatore
+				property.incBuildings(); 
 				((Player) model.getCurrentPlayer()).payments(property.getPriceForBuilding());
 			} else {
 				AlertFactory.createErrorAlert("Oak's words echoed", null,
@@ -84,7 +85,7 @@ public class DialogController implements DialogObserver {
 	@Override
 	public void setMortgage(List<String> propertiesList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).forEach(e -> {
-			//e.setMortgage();
+//			e.setMortgage();
 			((Player) model.getCurrentPlayer()).gainMoney(e.getMortgage());
 			e.hasMortgage(); //non so come si imposti una proprietà ipotecata
 		});
@@ -93,7 +94,7 @@ public class DialogController implements DialogObserver {
  	public void mortgageDialogClick(Obtainable property) {
 		if(property.getOwner().get() == model.getCurrentPlayer().getName()) {
 //			if(property.isMortgage) {
-			setMortgage(Arrays.asList(property.getNameOf()));
+				setMortgage(Arrays.asList(property.getNameOf()));
 			// } else {
 			if(canPay(model.getCurrentPlayer(), property.getMortgage() * 10/100)) {
 				((Player) model.getCurrentPlayer()).unmortgageProperty(property);
@@ -157,13 +158,13 @@ public class DialogController implements DialogObserver {
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
 				secondProperties.forEach(e -> {
-					firstPlayer.addProperty(e);
+					firstPlayer.addProperty(secondPlayer.removeProperty(e));
 				});
 				firstPlayer.gainMoney(secondMoney);
 				firstPlayer.payments(firstMoney);
 	
 				firstProperties.forEach(e -> {
-					secondPlayer.addProperty(e);
+					secondPlayer.addProperty(firstPlayer.removeProperty(e));
 				});
 				secondPlayer.gainMoney(firstMoney);
 				secondPlayer.payments(secondMoney);

@@ -1,9 +1,12 @@
 package model;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import controller.ControllerImpl;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
@@ -71,6 +74,7 @@ public class ModelImpl implements Model{
 		return this.turnPlayer.getCurrentPlayer();
 	}
 	
+	@Override
 	public Set<Obtainable> getProperties(){ 
 		return this.board.getTiles(tile -> tile instanceof Obtainable).stream()
 				   .map(tile -> (Obtainable) tile).collect(Collectors.toSet());
@@ -79,8 +83,15 @@ public class ModelImpl implements Model{
 	@Override
 	public void removePlayer(PlayerInfo player) {
 		this.turnPlayer.remove(player);
+		this.getProperties().stream().forEach(tile -> {
+			if(tile.getOwner().get().equals(player.getName())) {
+				tile.setOwner(Optional.empty());
+				ControllerImpl.getController().startAuciton(tile);
+			}
+		});
 	}
 
+	@Override
 	public void endTurn() {
 		this.turnPlayer.nextPlayer();
 	}

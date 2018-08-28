@@ -89,7 +89,22 @@ public interface Player extends PlayerInfo {
 	 *            the interested property
 	 */
 	void addProperty(Obtainable property);
-	
+
+	/**
+	 * Unmotgages a property.
+	 * 
+	 * @param property
+	 *            the interested property
+	 */
 	void unmortgageProperty(Obtainable property);
-	
+
+	/**
+	 * It removes a property from the player.
+	 * 
+	 * @param property
+	 *            the property to be removed
+	 * @return the removed property
+	 */
+	Obtainable removeProperty(Obtainable property);
+
 }

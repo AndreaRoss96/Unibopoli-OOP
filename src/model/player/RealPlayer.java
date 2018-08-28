@@ -116,8 +116,8 @@ public class RealPlayer implements Player {
 												// nel metodo can pay, in modo che, una volta guadagnati i soldi possa
 												// comunquecontinuare con il pagamento
 		if (!this.canPay(moneyAmount)) {
-			if (moneyAmount > totalAssets()) {
-				// ControllerImpl.getController().removePlayer()
+			if (moneyAmount > totalAssets()) {//in questo caso il giocatore va in bancarotta e deve essere eliminato
+				throw new NotEnoughMoneyException(moneyAmount);
 			}
 			toMortgage(moneyAmount - this.money);
 			// in questo caso il giocatore non è in grado di pagare con i liquidi
@@ -208,5 +208,11 @@ public class RealPlayer implements Player {
 	@Override
 	public List<Obtainable> getMortgagedProperties() {
 		return this.mortgagedProperties;
+	}
+	
+	@Override
+	public Obtainable removeProperty(Obtainable property) {
+		this.playersProperties.remove(property.getColorOf(), property);
+		return property;
 	}
 }
