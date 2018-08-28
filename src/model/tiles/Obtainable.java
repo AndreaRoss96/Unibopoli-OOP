@@ -11,7 +11,7 @@ import utilities.enumerations.Color;
 
 public interface Obtainable extends Tile{
 	
-	enum StatusTile { MORTGAGE, NOT_MORTGAGE; }
+	public enum StatusTile { MORTGAGE, NOT_MORTGAGE; }
 	
 	/**
 	 * Return the total rent of the Tile.
@@ -38,7 +38,9 @@ public interface Obtainable extends Tile{
 	 */
 	int getMortgage();
 	
-	StatusTile hasMortgage();
+	boolean hasMortgage();
+	
+	void changeMortgageStatus();
 	
 	/**
 	 * Return the Optional<X> of String corresponding to the name of the owner. 

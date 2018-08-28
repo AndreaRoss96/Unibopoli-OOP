@@ -2,7 +2,6 @@ package view.tiles;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.geometry.Pos;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -22,88 +21,45 @@ public class ComponentFactory {
 	public static final double LandSimpleWIDTH = PaneDimensionSetting.getInstance().getGamePaneHeight() / 13;
 	public static final double LandHEIGHT = LandSimpleWIDTH * 2;
 	public static final double LandCornerDimension = LandHEIGHT;
-	private static final double ROTATE_LEFT = +90.0;
-	private static final double ROTATE_RIGHT = -90.0;
-	private static final double NOT_ROTATE = 0.0;
 	
-	public static AnchorPane getAnchorPane(final boolean isCorner, final Pos position) {
+	public static AnchorPane getAnchorPane(final boolean isCorner) {
 		AnchorPane landPane = new AnchorPane();
-		
-		/**
-		 * Utilizzare setRotate.
-		 * 
-		 * **/
-		
+
 		if(isCorner) {
 			landPane.setMinHeight(LandCornerDimension);
 			landPane.setMinWidth(LandCornerDimension);
 			landPane.setMaxHeight(LandCornerDimension);
 			landPane.setMaxWidth(LandCornerDimension);
-//		}else if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-//			landPane.setMinHeight(LandHEIGHT);
-//			landPane.setMinWidth(LandSimpleWIDTH);
-//			landPane.setMaxHeight(LandHEIGHT);
-//			landPane.setMaxWidth(LandSimpleWIDTH);
-//			if(position == Pos.CENTER_LEFT) {
-//				landPane.setRotate(ROTATE_RIGHT);
-//			} else if(position == Pos.CENTER_RIGHT) {
-//				landPane.setRotate(ROTATE_LEFT);
-//			}
 		} else {
 			landPane.setMinHeight(LandHEIGHT);
 			landPane.setMinWidth(LandSimpleWIDTH);
 			landPane.setMaxHeight(LandHEIGHT);
 			landPane.setMaxWidth(LandSimpleWIDTH);
-			
-//			 if(position == Pos.BOTTOM_CENTER) {
-//				landPane.setRotate(ROTATE_LEFT * 2);
-//			} else if(position == Pos.CENTER_LEFT) {
-//				landPane.setRotate(ROTATE_RIGHT);
-//			} else if(position == Pos.CENTER_RIGHT) {
-//				landPane.setRotate(ROTATE_LEFT);
-//			}
 		}
 
 		return landPane;
 	}
 	
-	public static Label getLabelColor(final Paint paint, final Pos position) {
+	public static Label getLabelColor(final Paint paint) {
 		Label colorFamily = new Label();
 		colorFamily.setBackground(new Background(new BackgroundFill(paint, CornerRadii.EMPTY, Insets.EMPTY)));
-		setAlignmentNode(colorFamily, position);
+		setAlignmentNode(colorFamily);
 		
 		return colorFamily;
 	}
 
-	public static Label getLabelString(final String textLabel, final Pos position) {
+	public static Label getLabelString(final String textLabel) {
 		Label label = new Label(textLabel);
-		
-//		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-//			label.setRotate(NOT_ROTATE);
-//		}else {
-//			label.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
-//		}
-		
+	
 		label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8));
-		label.setAlignment(Pos.CENTER);
+		label.setAlignment(javafx.geometry.Pos.CENTER);
 		label.setTextAlignment(TextAlignment.CENTER);
 		label.setOnMouseEntered(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 10)));
 		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
 		label.setWrapText(true);
-		setAlignmentNode(label, position);
-		
-		/*AnchorPane.setLeftAnchor(label, 0.0);
-		AnchorPane.setRightAnchor(label, 0.0);
-		
-		/*if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER){
-			AnchorPane.setLeftAnchor(label, 0.0);
-			AnchorPane.setRightAnchor(label, 0.0);
-		}else {
-			/*AnchorPane.setLeftAnchor(label, 0.0);
-			AnchorPane.setLeftAnchor(label, 0.0);
-		}
-		//setAlignmentNode(label, position);*/
-		
+		label.setRotate(180.0);
+		setAlignmentNode(label);
+			
 		return label;
 	}
 
@@ -111,37 +67,26 @@ public class ComponentFactory {
 	 * Migliorare la dimensione dell'immagine
 	 * 
 	 * */
-	public static Label getLabelImage(final ImageView ImageView, final Pos position) {
+	public static Label getLabelImage(final ImageView ImageView) {
 		Label image = new Label();
 		ImageView imageView = ImageView;
 		imageView.setFitWidth(LandSimpleWIDTH * 0.7);
 		imageView.setFitHeight(LandSimpleWIDTH * 0.7);
 
-//		if(position == Pos.TOP_CENTER || position == Pos.BOTTOM_CENTER) {
-//			image.setRotate(NOT_ROTATE);
-//		}else {
-//			image.setRotate(position == Pos.CENTER_LEFT ? ROTATE_LEFT : ROTATE_RIGHT);
-//		}
-
-		setAlignmentNode(image, position);
+		setAlignmentNode(image);
 		
 		return image;
 	}
 
 	public static Separator getSeparator(final Orientation orientation) {
 		Separator seperator = new Separator(orientation);
-		setAlignmentNode(seperator, orientation == Orientation.VERTICAL ? Pos.CENTER_LEFT :  Pos.TOP_CENTER);
+		setAlignmentNode(seperator);
 		
 		return seperator;
 	}
 
-	private static void setAlignmentNode(Control node, final Pos position) {
-//		if(position == Pos.CENTER_LEFT || position == Pos.CENTER_RIGHT) {
-//			AnchorPane.setTopAnchor(node, 0.0);
-//			AnchorPane.setBottomAnchor(node, 0.0);
-//		}else {
-			AnchorPane.setLeftAnchor(node, 0.0);
-			AnchorPane.setRightAnchor(node, 0.0);		
-//		}
+	private static void setAlignmentNode(Control node) {
+		AnchorPane.setLeftAnchor(node, 0.0);
+		AnchorPane.setRightAnchor(node, 0.0);		
 	}
 }

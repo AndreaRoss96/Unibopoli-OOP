@@ -13,9 +13,9 @@ import utilities.enumerations.Color;
 
 public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 
-	private static final String TRAIN = ClassicType.GeneralPurposeMap.getTrainImagePath();
-	private static final String AZIENDA_ELETTRICA = ClassicType.GeneralPurposeMap.getBulbImagePath();
-	private static final String AZIENDA_ACQUA = ClassicType.GeneralPurposeMap.getWaterImagePath();
+	private static final String TRAIN = ClassicType.Image.GeneralImagesMap.getTrainImagePath();
+	private static final String AZIENDA_ELETTRICA = ClassicType.Image.GeneralImagesMap.getBulbImagePath();
+	private static final String AZIENDA_ACQUA = ClassicType.Image.GeneralImagesMap.getWaterImagePath();
 	private static final int RENT = 25;
 	
 	private Icon image;

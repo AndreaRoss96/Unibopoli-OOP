@@ -93,15 +93,15 @@ public class Board implements Serializable{
 	 * */
 	private void initializationSetTile() {
 		try {
-			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticBuildableValuesInitFile())
+			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticBuildableValuesInitFile())
 					.map(Parse.PARSING_BUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 		
-			ReadFile.readFile(ClassicType.GeneralPurposeMap.getStaticNotBuildableValuesInitFile())
+			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticNotBuildableValuesInitFile())
 					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 								
-			ReadFile.readFile(ClassicType.GeneralPurposeMap.getModeGame(this.mode))
+			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getModeGame(this.mode))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 			
 		}catch (IOException e) {System.out.println("IOExce");}

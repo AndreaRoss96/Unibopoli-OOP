@@ -1,10 +1,9 @@
 package view;
 
+import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 import utilities.PaneDimensionSetting;
 
 /**
@@ -30,6 +29,21 @@ public class CommandBridge extends Scene{
 		commandBridge.setRight(new RightInormationPane());
 		this.setRoot(commandBridge);
 		this.getStylesheets().add("style.css");
+		
+		
+		
+		this.setOnKeyReleased(value -> {
+			switch (value.getCode()) {
+			case UP:
+				Platform.runLater(() -> GamePane.prova.get(0).getIcon().move(1));
+				break;
+			case DOWN: 
+				GamePane.prova.get(1).getIcon().move(1);
+				break;
+			default:
+				break;
+			}
+		});
 	}
 	
 	/**

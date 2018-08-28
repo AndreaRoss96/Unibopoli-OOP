@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
+import model.Icon;
 import model.tiles.*;
 import utilities.enumerations.Color;
 
@@ -104,4 +105,7 @@ public interface PlayerInfo extends Serializable {
 	 *         player
 	 */
 	Map<Color, List<Obtainable>> getPopertiesByColor();
+	
+	
+	Icon getIcon();
 }

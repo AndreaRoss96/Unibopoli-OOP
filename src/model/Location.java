@@ -10,7 +10,6 @@ import utilities.Pair;
 public class Location {
 	
 	private Pair<Double> position;
-	private Area area;
 	
 	/**
 	 * Constructor with one parameters.
@@ -18,7 +17,7 @@ public class Location {
 	 * @param loc input location
 	 */
 	public Location(final Location loc) {
-		this(loc.getX(), loc.getY(), new Area(loc.area));		
+		this(loc.getX(), loc.getY());		
 	}
 		
 	/**
@@ -28,9 +27,9 @@ public class Location {
 	 * @param inity ordinate value
 	 * @param initarea Area occupied by the entity
 	 */
-	public Location(final double initx, final double inity, final Area initarea) {		
+	public Location(final double initx, final double inity) {		
 		this.position = new Pair<>(initx, inity);
-		this.area = initarea;
+		
 	}
 	
 	/**
@@ -50,14 +49,6 @@ public class Location {
 	}
 	
 	/**
-	 * Getter of the Area of the Location.
-	 * @return area as an Area
-	 */
-	public Area getArea() {
-		return this.area;
-	}
-	
-	/**
 	 * Setter of x coordinate of the Location.
 	 * @param newx abscissa value
 	 */
@@ -71,13 +62,5 @@ public class Location {
 	 */
 	public void setY(final double newy) {
 		this.position = new Pair<>(this.position.getFirst(), newy);
-	}
-	
-	/**
-	 * Setter of the Area of the Location.
-	 * @param newarea as the new Area
-	 */
-	public void setArea(final Area newarea) {
-		this.area = newarea;
 	}
 }

@@ -15,6 +15,12 @@ import utilities.CircularListImpl;
  */
 public class TurnImpl implements Turn {
 
+	/**
+	 * 
+	 * Controllare metodo clear();
+	 * 
+	 * Aggiungi loserList alla classe e toglierla da ModelImpl.
+	 * **/
 	private static final long serialVersionUID = -754218580225904481L;
 	private static final int TURN_IN_JAIL = 3;
 	
@@ -27,7 +33,6 @@ public class TurnImpl implements Turn {
 		this.turnManagement = new CircularListImpl<>(players);
 		this.jailMap = new HashMap<>();
 		this.nextPlayer();
-		this.clear();
 	}
 	
 	@Override

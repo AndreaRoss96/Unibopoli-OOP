@@ -101,8 +101,7 @@ public class ModelImpl implements Model{
 		if(!this.getCurrentPlayer().isInJail()) {
 			this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
 		}
-	}
-	
+	}	
 	
 	private void setNewPosition(int value) {
 		this.turnPlayer.getCurrentPlayer().setPosition(value);

@@ -2,14 +2,11 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
 import model.GameInitializer;
 import model.Icon;
 import model.Model;
@@ -30,7 +27,8 @@ public class ControllerImpl implements Controller {
 
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
 	private static final int JAIL_FEE = 125;
-
+	
+	
 	private Model model;
 	private View view;
 	private final SoundController sound;
@@ -133,8 +131,13 @@ public class ControllerImpl implements Controller {
 		// TODO Auto-generated method stub
 
 	}
-
+	
+	/**
+	 * 
+	 * Platform.runLater();
+	 * */
 	private void updateButtons() {
+		
 		RightInormationPane.updateButton(false);
 		RightInormationPane.updateLabels(model.getCurrentPlayer());
 		RightInormationPane.updateJailButton(model.getCurrentPlayer().isInJail());

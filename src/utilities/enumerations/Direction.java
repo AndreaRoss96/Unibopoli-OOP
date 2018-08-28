@@ -1,6 +1,10 @@
 package utilities.enumerations;
 
-import model.Location;
+import javafx.animation.TranslateTransition;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.util.Duration;
+import view.tiles.ComponentFactory;
 
 /**
  * Enumeration for the 4 possible directions of the entities.<br>
@@ -11,48 +15,78 @@ import model.Location;
  * <b>West (W)</b><br>
  */
 public enum Direction {
-   
-    /**
+    
+	/**
+     * West.
+     */
+	W(0) {
+		@Override
+		public void moveLocation(Scene scene, Node player, int position) {
+		
+			transition.setNode(player);
+			transition.setFromX(player.getTranslateX());
+            transition.setFromY(player.getTranslateY());
+            transition.setToX(player.getTranslateX() - (STEP_SIZE*position));
+            transition.setToY(player.getTranslateY());
+            transition.playFromStart();			
+		}
+	},
+	/**
      * North.
      */
-	N(0) {
+	N(1) {
 		@Override
-		public void moveLocation(final Location loc, final double v) {
-			loc.setY(loc.getY() - v);
+		public void moveLocation(Scene scene, Node player, int position) {
+			
+			transition.setNode(player);
+			transition.setFromX(player.getTranslateX());
+            transition.setFromY(player.getTranslateY());
+            transition.setToX(player.getTranslateX());
+            transition.setToY(player.getTranslateY() - (STEP_SIZE*position));
+            transition.playFromStart();
 		}
 	},
     /**
      * East.
      */
-	E(1) {
+	E(2) {
 		@Override
-		public void moveLocation(final Location loc, final double v) {
-			loc.setX(loc.getX() + v);
+		public void moveLocation(Scene scene, Node player, int position) {
+			
+			transition.setNode(player);
+			transition.setFromX(player.getTranslateX());
+            transition.setFromY(player.getTranslateY());
+            transition.setToX(player.getTranslateX() + (STEP_SIZE*position));
+            transition.setToY(player.getTranslateY());
+            transition.playFromStart();
+
 		}
 	},
 	 /**
      * South.
      */
-	S(2) {
+	S(3) {
 		@Override
-		public void moveLocation(final Location loc, final double v) {
-			loc.setY(loc.getY() + v);
-		}
-	},
-	 /**
-     * West.
-     */
-	W(3) {
-		@Override
-		public void moveLocation(final Location loc, final double v) {
-			loc.setX(loc.getX() - v);
+		public void moveLocation(Scene scene, Node player, int position) {
+			
+			transition.setNode(player);
+			transition.setFromX(player.getTranslateX());
+            transition.setFromY(player.getTranslateY());
+            transition.setToX(player.getTranslateX());
+            transition.setToY(player.getTranslateY() + (STEP_SIZE*position));
+            transition.playFromStart();
+
 		}
 	};
+	
+	private static final double STEP_SIZE = ComponentFactory.LandSimpleWIDTH;
+	private static final Duration DURATION = Duration.millis(500);
+	
+	protected static TranslateTransition transition = new TranslateTransition(DURATION);
     
     //internal index
     private int index; 
     
-
 	/**
 	 * Constructor
 	 * @param initindex index of the Direction
@@ -67,7 +101,7 @@ public enum Direction {
 	 * @param loc Location to move
 	 * @param d Velocity of the movement
 	 */
-	public abstract void moveLocation(final Location loc, final double d);
+	public abstract void moveLocation(Scene scene, Node player, int position);
 
 	/**
 	 * Get the index of the direction

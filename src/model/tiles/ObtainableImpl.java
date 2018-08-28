@@ -43,10 +43,14 @@ public abstract class ObtainableImpl implements Obtainable{
 	}
 	
 	@Override
-	public StatusTile hasMortgage() {
-		return this.hasMortgage;
+	public boolean hasMortgage() {
+		return this.hasMortgage == StatusTile.MORTGAGE;
 	}
 	
+	@Override
+	public void changeMortgageStatus() {
+		this.hasMortgage = this.hasMortgage() ? StatusTile.NOT_MORTGAGE: StatusTile.MORTGAGE;
+	}
 	
 	@Override
 	public void setNameOf(String nameTile) {
