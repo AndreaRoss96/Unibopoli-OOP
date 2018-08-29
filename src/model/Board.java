@@ -87,10 +87,7 @@ public class Board implements Serializable{
 	public int getTilesNumber() {
 		return MAXINDEXBOARD;
 	}
-	/**
-	 * TODO: Finire questa inizializzazione ed eliminare metodi non necessari
-	 * 
-	 * */
+	
 	private void initializationSetTile() {
 		try {
 			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticBuildableValuesInitFile())
@@ -101,11 +98,14 @@ public class Board implements Serializable{
 					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 								
-			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getModeGame(this.mode))
+			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getModeGame(this.getModeGame()))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 			
-		}catch (IOException e) {System.out.println("IOExce");}
-		catch (Exception e) { System.out.println(e.getCause()); }
+		}catch (IOException e) {
+			System.out.println("IOExce");
+		} catch (Exception e) { 
+			System.out.println(e.getCause()); 
+		}
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
 

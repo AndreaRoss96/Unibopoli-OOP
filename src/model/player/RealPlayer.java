@@ -1,6 +1,5 @@
 package model.player;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
@@ -10,13 +9,13 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import model.Icon;
 import model.exceptions.NotEnoughMoneyException;
 import model.tiles.Buildable;
 import model.tiles.Obtainable;
 import controller.DialogController;
 
 import utilities.enumerations.Color;
+import view.Icon;
 
 public class RealPlayer implements Player {
 
@@ -26,10 +25,9 @@ public class RealPlayer implements Player {
 
 	private int position;
 	private final String name;
-	private Icon sprite; //metti final
 	private Map<Color, List<Obtainable>> playersProperties;
 	private int money;
-	private int housesNumber;// togli
+	private int housesNumber; // togli
 	private int hotelsNumber;
 	private Prison status = Prison.NOT_PRISON;
 
@@ -41,11 +39,10 @@ public class RealPlayer implements Player {
 	 * @param money
 	 *            initial player's money
 	 */
-	public RealPlayer(final String name, int money, Icon icon) {
+	public RealPlayer(final String name, int money) {
 		this.name = name;
 		this.position = 0;
 		this.money = money;
-		this.sprite = icon;
 		this.playersProperties = new HashMap<>();
 	}
 
@@ -97,11 +94,6 @@ public class RealPlayer implements Player {
 	@Override
 	public int getPosition() {
 		return this.position;
-	}
-
-	@Override
-	public Icon getIcon() {
-		return this.sprite; 
 	}
 	
 	@Override
@@ -214,5 +206,11 @@ public class RealPlayer implements Player {
 	public Obtainable removeProperty(Obtainable property) {
 		this.playersProperties.remove(property.getColorOf(), property);
 		return property;
+	}
+
+	@Override
+	public String getIconPath() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

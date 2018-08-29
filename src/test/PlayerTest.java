@@ -12,7 +12,6 @@ import org.junit.Test;
 import controller.ControllerImpl;
 import controller.DialogController;
 import javafx.scene.image.Image;
-import model.Icon;
 import model.ModelImpl;
 import model.player.Player;
 import model.player.RealPlayer;
@@ -23,6 +22,7 @@ import model.tiles.NotBuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Rents;
 import utilities.enumerations.Color;
+import view.Icon;
 
 public class PlayerTest {
 	

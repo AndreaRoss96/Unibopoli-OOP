@@ -9,6 +9,7 @@ import model.player.Player;
 import model.player.RealPlayer;
 import model.tiles.Obtainable;
 import utilities.enumerations.InitialDistribution;
+import view.Icon;
 
 public final class GameInitializer {
 

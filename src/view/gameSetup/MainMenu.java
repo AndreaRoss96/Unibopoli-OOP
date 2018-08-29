@@ -33,10 +33,10 @@ public final class MainMenu extends Scene{
 	
 	private MainMenu() {
 		super(new StackPane(), MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
-		
 		StackPane root = new StackPane();
+	
 		final AnchorPane anchorPane = new AnchorPane();
-
+		
 		final VBox leftButtonBox = new VBox();
 		leftButtonBox.setPrefSize(BUTTON_BOX_WIDTH, MAIN_MENU_HEIGHT / 4);
 		final Button newGameBtn = new Button("New game");
@@ -78,6 +78,8 @@ public final class MainMenu extends Scene{
 
 		newGameBtn.setOnAction(e -> {
 			mainStage.setScene(PlayerSetupMenu.get(mainStage));
+			mainStage.centerOnScreen();
+			
 		});
 
 		loadGameBtn.addEventFilter(MouseEvent.MOUSE_CLICKED, new HandleFileChooser());
@@ -125,7 +127,7 @@ public final class MainMenu extends Scene{
 
 	public static MainMenu get(Stage stage) {
 		mainStage = stage;
-		mainStage.centerOnScreen();
+		//mainStage.centerOnScreen();
 		return new MainMenu();
 	}
 }

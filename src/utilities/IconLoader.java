@@ -1,10 +1,10 @@
 package utilities;
 
-import model.Icon;
-
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+
+import view.Icon;
 
 public final class IconLoader {
 

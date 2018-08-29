@@ -1,6 +1,6 @@
 package model.tiles;
 
-import model.Icon;
+import view.Icon;
 
 public abstract class NotObtainableImpl implements NotObtainable{
 

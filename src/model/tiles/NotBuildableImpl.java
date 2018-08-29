@@ -1,10 +1,10 @@
 package model.tiles;
 
 import javafx.scene.image.ImageView;
-import model.Icon;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.Color;
+import view.Icon;
 
 /**
  * 

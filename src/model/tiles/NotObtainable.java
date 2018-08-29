@@ -1,6 +1,6 @@
 package model.tiles;
 
-import model.Icon;
+import view.Icon;
 
 /**
  * @author Matteo Alesiani 

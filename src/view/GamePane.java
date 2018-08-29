@@ -40,7 +40,7 @@ public class GamePane extends StackPane{
 		this.setMaxWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMaxHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
 		
-		mainPane.getChildren().addAll(background(), boardLayer(), playerLayer());
+		mainPane.getChildren().addAll(background(), playerLayer(), boardLayer());
 
 		this.getChildren().add(mainPane);
 	}

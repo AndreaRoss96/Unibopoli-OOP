@@ -17,11 +17,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -133,9 +128,9 @@ public class PlayerSetupMenu extends Scene {
 				playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
 			});
 			
-			System.out.println(playersIcon.toString());
 			ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersName, playersIcon);
 			mainStage.setScene(CommandBridge.get(mainStage));
+			mainStage.centerOnScreen();
 		});
 
 		cancel.setOnAction(e -> {
@@ -145,6 +140,7 @@ public class PlayerSetupMenu extends Scene {
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		borderPane.setId("setupPlayer");
 		this.setRoot(borderPane);
+		//mainStage.centerOnScreen();
 	}
 
 	private PlayerSetupBox addPlayerSetupBox(FlowPane flowPane) {
@@ -195,7 +191,6 @@ public class PlayerSetupMenu extends Scene {
 
 	public static PlayerSetupMenu get(Stage stage) {
 		mainStage = stage;
-		mainStage.centerOnScreen();
 		mainStage.setTitle(TITLE);
 		
 		return new PlayerSetupMenu();	
