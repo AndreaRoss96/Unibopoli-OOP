@@ -24,9 +24,9 @@ public class PlayersContractListView extends ListView<Text> {
 			Text property = new Text(c.getNameOf());
 			property.setFill(c.getColorOf().getPaint().orElse(Color.BLACK));
 			this.getItems().add(property);
-			this.getSelectionModel().selectedItemProperty().addListener(l -> {
-				this.getSelectionModel().getSelectedItem().setFill(listViewClick(this.getSelectionModel().getSelectedItem(), this.getSelectionModel().getSelectedItem().getFill()));
-			});
+		});
+		this.getSelectionModel().selectedItemProperty().addListener(l -> {
+			this.getSelectionModel().getSelectedItem().setFill(listViewClick(this.getSelectionModel().getSelectedItem(), this.getSelectionModel().getSelectedItem().getFill()));
 		});
 	}
 	

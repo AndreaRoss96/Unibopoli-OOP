@@ -38,6 +38,7 @@ public class ControllerImpl implements Controller {
 	private ControllerImpl() {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
 		this.sound.play(true);
+		setBackgroundMusic();
 	}
 
 	/**
@@ -166,6 +167,10 @@ public class ControllerImpl implements Controller {
 	
 	public DialogController getDialogController() {
 		return DialogController.getDialogController();
+	}
+	
+	public List<Obtainable> getProperties(){
+		return model.getProperties().stream().collect(Collectors.toList());
 	}
 	
 	public List<String> getGameMode() {

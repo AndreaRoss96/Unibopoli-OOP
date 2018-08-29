@@ -1,5 +1,6 @@
 package view;
 
+import controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import utilities.IconLoader;
@@ -41,9 +42,9 @@ public class InitialWindows extends Application {
             }
             ClosureHandler.closeProgram(this.mainWindow);
         });*/
-
         this.initialWindow.setScene(MainMenu.get(this.initialWindow));
         this.initialWindow.setResizable(false);
         this.initialWindow.show();
+        ControllerImpl.getController();
     }
 }

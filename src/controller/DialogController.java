@@ -17,14 +17,12 @@ public class DialogController implements DialogObserver {
 
 	private static final DialogController SINGLETON = new DialogController();
 	private static final int NUM_BUILD_MAX = 5; // sarebbe utile un getter di questo valore nelle buildable?
-	private Model model; // final
-
+	
 	public static DialogController getDialogController() {
 		return SINGLETON;
 	}
 
 	private DialogController() {
-		//mi serve un controller, lo prendo da ControllerImpl o lo passo come costruttore
 	}
 
 	@Override
@@ -85,25 +83,25 @@ public class DialogController implements DialogObserver {
 	@Override
 	public void setMortgage(List<String> propertiesList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).forEach(e -> {
-			e.setMortgage();
+//			e.setMortgage();
 			((Player) ControllerImpl.getController().getCurruntPlayer()).gainMoney(e.getMortgage());
 			e.hasMortgage(); //non so come si imposti una proprietà ipotecata
 		});
 	}
 	
 	public void mortgageDialogClick(Obtainable property) {
-		if(property.getOwner().get() == ControllerImpl.getController().getCurruntPlayer().getName()) {
-			if(property.isMortgage) {
-				setMortgage(Arrays.asList(property.getNameOf()));
-			 } else {
-				if(canPay(ControllerImpl.getController().getCurruntPlayer(), property.getMortgage() * 10/100)) {
-					((Player) ControllerImpl.getController().getCurruntPlayer()).unmortgageProperty(property);
-			}
-		} else {
-			AlertFactory.createInformationAlert("Ehi", null, "That's not your turn!");
-		}
+//		if(property.getOwner().get().equals(ControllerImpl.getController().getCurruntPlayer().getName())) {
+//			if(property.isMortgage()) {
+//				setMortgage(Arrays.asList(property.getNameOf()));
+//			} else {
+//				if (canPay(ControllerImpl.getController().getCurruntPlayer(), property.getMortgage() * 10 / 100)) {
+//					((Player) ControllerImpl.getController().getCurruntPlayer()).unmortgageProperty(property);
+//				}
+//			}
+//		} else {
+//			AlertFactory.createInformationAlert("Ehi", null, "That's not your turn!");
+//		}
 	}
- 	}
 
 	@Override
 	public void buyPropertyClick(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
@@ -161,6 +159,7 @@ public class DialogController implements DialogObserver {
 			} else {
 				secondProperties.forEach(e -> {
 					firstPlayer.addProperty(secondPlayer.removeProperty(e));
+					
 				});
 				firstPlayer.gainMoney(secondMoney);
 				firstPlayer.payments(firstMoney);
@@ -178,7 +177,7 @@ public class DialogController implements DialogObserver {
 	}
 	
 	private Obtainable getPropertyByName(String propertyName) {
-		return this.model.getProperties().stream().filter(property -> property.getNameOf().equals(propertyName)).findFirst().get();
+		return ControllerImpl.getController().getProperties().stream().filter(property -> property.getNameOf().equals(propertyName)).findFirst().get();
 	}
 
 	private boolean canPay(PlayerInfo player, int moneyAmount) {
@@ -186,6 +185,6 @@ public class DialogController implements DialogObserver {
 	}
 	
 	public PlayerInfo getPlayerByName(String playerName) {
-		return this.model.getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
+		return ControllerImpl.getController().getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
 	}
 }

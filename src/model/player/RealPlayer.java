@@ -125,7 +125,7 @@ public class RealPlayer implements Player {
 
 	public Integer totalAssets() {
 		// mi servirebbe anche il valore di case/alberghi
-		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream()
+		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().filter(value -> value instanceof Buildable)
 				.map(value -> (Buildable) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money;
 	}
 

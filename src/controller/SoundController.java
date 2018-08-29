@@ -53,7 +53,7 @@ public final class SoundController {
 					final FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 					volume.setValue(VOLUME_REDUCE);
 					clip.loop(Clip.LOOP_CONTINUOUSLY);
-				} else if (!isSoundMute()) {
+				} else if (isSoundMute()) {
 					clip.start();
 				}
 			}

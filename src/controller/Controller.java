@@ -82,4 +82,5 @@ public interface Controller {
 	List<PlayerInfo> getPlayers();
 	
 	 List<String> getGameMode();
+	 List<Obtainable> getProperties();
 }

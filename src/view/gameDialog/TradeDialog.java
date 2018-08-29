@@ -30,7 +30,7 @@ public class TradeDialog extends Dialog {
 
 	private static final TradeDialog SINGLETON = new TradeDialog();
 	
-	private PlayersContractListView allPlayersListView;
+	private static PlayersContractListView allPlayersListView;
 	
 	/**
 	 * Istance of TradeDialog.
@@ -55,8 +55,9 @@ public class TradeDialog extends Dialog {
 		final GridPane gridA = new GridPane();
 		gridA.setPadding(new Insets(2, 5, 2, 5));
 
-		Label currPlayerLabel = new Label("Curr Player");
-		currPlayerLabel.setStyle("-fx-font-family: Kabel");
+		Label currPlayerLabel = new Label(currentPlayer.getName());
+		currPlayerLabel.setFont(getPrincipalFont());
+//		currPlayerLabel.setStyle("-fx-font-family: Kabel");
 		TextField currMoneyToTrade = new TextField("0");
 		currMoneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
 		PlayersContractListView currListView = new PlayersContractListView(currentPlayer);
@@ -74,16 +75,15 @@ public class TradeDialog extends Dialog {
 
 		TextField moneyToTrade = new TextField("0");
 		moneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
-		this.allPlayersListView = new PlayersContractListView();
+		allPlayersListView = new PlayersContractListView();
 		
 		GridPane gridB = new GridPane();
-		gridB.setGridLinesVisible(true);
 		gridB.add(new Label("Player: "), 0, 0);
 		gridB.add(playerBox, 1, 0, 1, 1);
 		gridB.add(new Label("Trade: "), 0, 1, 2, 1);
 		gridB.add(moneyToTrade, 1, 1, 2, 1);
 		gridB.add(new Label("$"), 2, 1);
-		gridB.add(this.allPlayersListView, 0, 2, 4, 1);
+		gridB.add(allPlayersListView, 0, 2, 4, 1);
 		rootPane.setRight(gridB);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Green", "/images/Icons/dialog/shopping_cart.png");
@@ -94,13 +94,9 @@ public class TradeDialog extends Dialog {
 
 		playerBox.setOnAction(e -> {
 			if(playerBox.getValue() != null) {
-				updateGrid(controller.getPlayerByName(playerBox.getValue()));
+				gridB.add(new PlayersContractListView(controller.getPlayerByName(playerBox.getValue())), 0, 2, 4, 1);
+				//updateGrid(controller.getPlayerByName(playerBox.getValue()));
 			}
-			//è commentato perché adesso c'è il metodo updateGrid
-//			gridB.add(
-//					new PlayersContractListView(playerList.stream()
-//							.filter(player -> player.getName().equals(playerBox.getValue())).findFirst().get()),
-//					0, 2, 4, 1);
 		});
 
 		tradeButton.setOnAction(e -> {
@@ -122,7 +118,7 @@ public class TradeDialog extends Dialog {
 		stage.show();
 	}
 	
-	private void updateGrid(PlayerInfo player) {
-		this.allPlayersListView = new PlayersContractListView(player);
+	private static void updateGrid(PlayerInfo player) {
+		allPlayersListView = new PlayersContractListView(player);
 	}
 }

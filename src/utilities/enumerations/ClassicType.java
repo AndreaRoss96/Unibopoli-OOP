@@ -127,7 +127,7 @@ public class ClassicType {
 	
 	public enum Other{
 		GeneralOthersMap("images/Logo/Mr_Monopoly.png", "images/Icons/Music.png", "images/Icons/Sound.png", "images/Icons/No_Music.png",
-						 "images/Icons/No_sound.png");
+						 "images/Icons/No_sounds.png");
 		
 		private final String iconWindows;
 		private final String music;
