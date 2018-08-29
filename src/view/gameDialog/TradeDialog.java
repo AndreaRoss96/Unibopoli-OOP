@@ -104,21 +104,16 @@ public class TradeDialog extends Dialog {
 		});
 
 		tradeButton.setOnAction(e -> {
-			Alert alert = new Alert(AlertType.CONFIRMATION);
-			alert.setTitle("Are you sure?");
-			alert.setHeaderText(null);
-			alert.setContentText("Do both players agree?");
-			Optional<ButtonType> result = alert.showAndWait();
-			if (result.get() == ButtonType.CANCEL) {
-				e.consume();
-			} else {
+			if(AlertFactory.createConfirmationAlert("Are you sure?", null, "Do both players agree?")) {
 				if (playerBox.getValue() != null) {
-					controller.executeTrade(playerBox.getValue(), currListView.getSelected(),
-							allPlayersListView.getSelected(), currMoneyToTrade.getText(), moneyToTrade.getText());
+				controller.executeTrade(playerBox.getValue(), currListView.getSelected(),
+						allPlayersListView.getSelected(), currMoneyToTrade.getText(), moneyToTrade.getText());
 				} else {
 					AlertFactory.createErrorAlert("???", null, "Choose a player!");
 					e.consume();
 				}
+			} else {
+				e.consume();
 			}
 		});
 

@@ -43,7 +43,7 @@ public class PlayersContractListView extends ListView<Text> {
 	
 	public List<String> getSelected(){
 		return this.map.keySet().stream().map(Text::getText).collect(Collectors.toList());
-	} //manca il "getPropertisByName()" da implementare nel controller
+	}
 	
 
 }

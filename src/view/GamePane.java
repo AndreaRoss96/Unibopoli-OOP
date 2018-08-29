@@ -1,19 +1,15 @@
 package view;
 
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.List;
 import java.util.stream.Collectors;
 
+import controller.ControllerImpl;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import model.Board;
-import model.Icon;
-import model.player.PlayerInfo;
-import model.player.RealPlayer;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
 import view.tiles.LandAbstractFactoryImp;
@@ -26,14 +22,13 @@ public class GamePane extends StackPane{
 	
 	private static final double ROTATE_LEFT = +90.0;
 	private static final double ROTATE_RIGHT = -90.0;
-	private static final double BHOO1 = 16 / 1.5;
-	private static final double BHOO2 = 17;
+	private static final double FIXLEFT = 10.6;
+	private static final double FIXRIGHT = 17.0;
 	
 	private static GamePane GAMEPANE = null;
 	
 	private Board board = new Board("CLASSIC");
 	private StackPane mainPane = new StackPane();
-	public static List<PlayerInfo> prova;
 	private Pane pane;
 	
 	private GamePane() {
@@ -45,24 +40,21 @@ public class GamePane extends StackPane{
 		this.setMaxWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMaxHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
 		
-		mainPane.getChildren().addAll(background(), playerLayer(), boardLayer());
+		mainPane.getChildren().addAll(background(), boardLayer(), playerLayer());
 
 		this.getChildren().add(mainPane);
 	}
 	
 	private Pane playerLayer() {
-		 pane = new Pane();
+		pane = new Pane();
 		
-		prova = new ArrayList<>();
+		ControllerImpl.getController().getPlayers().stream().map(player -> player.getIcon())
+					  .peek(icon -> icon.setScene(mainPane.getScene())).forEach(icon -> {
+						  icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
+						  icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
+					  });
 		
-		prova.add(new RealPlayer("Gino", 1000, new Icon("mode/classic/avatars/Car.png")));
-		prova.add(new RealPlayer("Mario", 200, new Icon("mode/classic/avatars/Bowl.png")));
-		prova.stream().map(player -> player.getIcon()).peek(icon -> icon.setScene(mainPane.getScene())).forEach(icon -> {
-			icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
-			icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
-		});
-		
-		pane.getChildren().addAll(prova.stream().map(player -> player.getIcon().get()).collect(Collectors.toList()));
+		pane.getChildren().addAll(ControllerImpl.getController().getPlayers().stream().map(player -> player.getIcon().get()).collect(Collectors.toList()));
 		
 		return pane;
 	}
@@ -84,12 +76,12 @@ public class GamePane extends StackPane{
 		GridPane bottomNode = this.getBottomNode();
 		lowerLayer.getChildren().addAll(topNode, leftNode, centreNode, rightNode, bottomNode);
 		AnchorPane.setTopAnchor(topNode, -1.0);
-		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
-		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO2);
-		AnchorPane.setBottomAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
-		AnchorPane.setTopAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
-		AnchorPane.setRightAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO2);
-		AnchorPane.setBottomAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / BHOO1);
+		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
+		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXRIGHT);
+		AnchorPane.setBottomAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
+		AnchorPane.setTopAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
+		AnchorPane.setRightAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXRIGHT);
+		AnchorPane.setBottomAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
 		AnchorPane.setBottomAnchor(bottomNode, -1.0);
 		
 		return lowerLayer;

@@ -20,6 +20,7 @@ import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
+import utilities.AlertFactory;
 
 /**
  * This dialog allows the not purchased contracts to be auctioned.
@@ -92,6 +93,13 @@ public class AuctionDialog extends Dialog {
 			passwordList.forEach(p -> {
 				p.clear();
 			});
+		});
+		
+		stage.setOnCloseRequest(e -> {
+			if (!AlertFactory.createConfirmationAlert("Are you sure?",
+					"If you exit you will no longer be able to participate in this auction", "Confirm?")) {
+				e.consume();
+			}
 		});
 		
 		final Scene scene = new Scene(rootPane);

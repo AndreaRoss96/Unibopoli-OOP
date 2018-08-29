@@ -28,11 +28,6 @@ public class RealPlayer implements Player {
 	private final String name;
 	private Icon sprite; //metti final
 	private Map<Color, List<Obtainable>> playersProperties;
-	/**
-	 * E' necessaria averla ??
-	 * C'è l'attributo dentro la Classe Obtainable
-	 * */
-	private List<Obtainable> mortgagedProperties;
 	private int money;
 	private int housesNumber;// togli
 	private int hotelsNumber;
@@ -52,7 +47,6 @@ public class RealPlayer implements Player {
 		this.money = money;
 		this.sprite = icon;
 		this.playersProperties = new HashMap<>();
-		this.mortgagedProperties = new ArrayList<>();
 	}
 
 	/**
@@ -70,7 +64,7 @@ public class RealPlayer implements Player {
 		this.hotelsNumber = 0;
 		this.playersProperties = new HashMap<>();
 		this.playersProperties.putAll(playersProperties);
-		this.mortgagedProperties = new ArrayList<>();
+
 	}
 
 	@Override
@@ -175,12 +169,10 @@ public class RealPlayer implements Player {
 				.accumulatedMoney(mortgaged.stream().map(Obtainable::getNameOf).collect(Collectors.toList()));
 		// gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum());
 		// DialogController.getController().getTotalSpend(mortgaged)
-		this.mortgagedProperties.addAll(mortgaged);
 	}
 
 	public void unmortgageProperty(Obtainable property) {
 		this.payments((int) (property.getMortgage() * UNMORTGAGE_FEE));
-		this.mortgagedProperties.remove(property);
 		// property.setMortgage();
 	}
 
@@ -215,7 +207,7 @@ public class RealPlayer implements Player {
 
 	@Override
 	public List<Obtainable> getMortgagedProperties() {
-		return this.mortgagedProperties;
+		return null;
 	}
 	
 	@Override
