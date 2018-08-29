@@ -56,9 +56,8 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
-		List<Icon> iconList = playersIcon.stream().map(path -> new Icon(path)).collect(Collectors.toList());
 		try {
-			GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, iconList::get)));
+			GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		

@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
 import javafx.collections.ListChangeListener;
+import javafx.event.Event;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -105,37 +106,46 @@ public class PlayerSetupMenu extends Scene {
 			List<PlayerSetupBox> psbList = flowPane.getChildren().stream()
 					.filter(element -> element instanceof PlayerSetupBox).map(pBox -> (PlayerSetupBox) pBox)
 					.collect(Collectors.toList());
+			List<String> playersNames = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
 			/* check if all names are presents and are all different */
-			psbList.forEach(pBox -> {
-				if (pBox.getNameField().getText().equals("Insert player name...")
-						|| pBox.getNameField().getText().isEmpty()) {
-					AlertFactory.createInformationAlert("Nope", null, "Use valid name!");
-					e.consume();
-				}
-			});
-			if (psbList.stream().map(PlayerSetupBox::getNameField).distinct().count() != flowPane.getChildren()
-					.size() - 1) {
-				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
-				e.consume();
+			if(this.checkNames(playersNames)) {
+				psbList.forEach(bBox -> {
+					if (bBox.getIcons().getSelectionModel().isEmpty()) {
+						AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");						
+					}
+				});
+			} else {
+				/* execute action */
+				List<String> playersIcon = new ArrayList<String>();
+				psbList.forEach(bBox -> {
+					playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
+				});
+				ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersNames, playersIcon);
+				mainStage.setScene(CommandBridge.get(mainStage));
 			}
-			/* check if all players have chosen an icon */
-			psbList.forEach(bBox -> {
-				if (bBox.getIcons().getSelectionModel().isEmpty()) {
-					AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
-					e.consume();
-				}
-			});
-			/* execute action */
-			List<String> playersName = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
-
-			List<String> playersIcon = new ArrayList<String>();
-			psbList.forEach(bBox -> {
-				playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
-			});
 			
-			System.out.println(playersIcon.toString());
-			ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersName, playersIcon);
-			mainStage.setScene(CommandBridge.get(mainStage));
+//			psbList.forEach(pBox -> {
+//				if (pBox.getNameField().getText().equals("Insert player name...")
+//						|| pBox.getNameField().getText().isEmpty()) {
+//					AlertFactory.createInformationAlert("Nope", null, "Use valid name!");
+//					e.consume();
+//				}
+//			});
+//			if (psbList.stream().map(PlayerSetupBox::getNameField).distinct().count() != flowPane.getChildren()
+//					.size() - 1) {
+//				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
+//				e.consume();
+//			}
+//			
+//			/* check if all players have chosen an icon */
+//			psbList.forEach(bBox -> {
+//				if (bBox.getIcons().getSelectionModel().isEmpty()) {
+//					AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
+//					e.consume();
+//					
+//				}
+//			});
+
 		});
 
 		cancel.setOnAction(e -> {
@@ -191,6 +201,20 @@ public class PlayerSetupMenu extends Scene {
 		});
 
 		return pBox;
+	}
+	
+	private boolean checkNames (List<String> names) {
+		for (String name : names) {
+			if(name.equals("Insert player name...") || name.isEmpty()) {
+				AlertFactory.createInformationAlert("Nope", null, "All player need a name!");
+				return false;
+			}
+		}
+		if (names.stream().distinct().count() != names.size()) {
+			AlertFactory.createInformationAlert("Nope", null, "Use different names!");
+			return false;
+		}
+		return true;
 	}
 
 	public static PlayerSetupMenu get(Stage stage) {
