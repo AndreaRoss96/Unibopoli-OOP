@@ -31,7 +31,7 @@ public class CommandBridge extends Scene{
 		//cambiare con ActionsPane
 		commandBridge.setRight(new RightInormationPane());
 		this.setRoot(commandBridge);
-		this.getStylesheets().add("style.css");
+		this.getStylesheets().add(getClass().getResource("style.css").toExternalForm());
 		
 		/*
 		this.setOnKeyReleased(value -> {

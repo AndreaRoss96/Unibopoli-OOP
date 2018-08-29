@@ -6,10 +6,10 @@ import utilities.enumerations.ClassicType;
 public class Corner extends NotObtainableImpl {
 
 	public enum CornerTile{
-		GO(ClassicType.Image.GeneralImagesMap.getGoImagePath(), "COLLECT $200\nAS YOU PASS"),
-		FREE_TRANSIT(ClassicType.Image.GeneralImagesMap.getTransitJailPath(), "IN\nJAIL"),
-		FREE_PARKING(ClassicType.Image.GeneralImagesMap.getTransitTrainPath(), "FREE\nPARKING"),
-		GO_JAIL(ClassicType.Image.GeneralImagesMap.getGoJailPath(), "GO TO\nJAIL");
+		GO(ClassicType.Board.GeneralImagesMap.getGoImagePath(), "COLLECT $200\nAS YOU PASS"),
+		FREE_TRANSIT(ClassicType.Board.GeneralImagesMap.getTransitJailPath(), "IN\nJAIL"),
+		FREE_PARKING(ClassicType.Board.GeneralImagesMap.getTransitTrainPath(), "FREE\nPARKING"),
+		GO_JAIL(ClassicType.Board.GeneralImagesMap.getGoJailPath(), "GO TO\nJAIL");
 		
 		private String path;
 		private String headerText;

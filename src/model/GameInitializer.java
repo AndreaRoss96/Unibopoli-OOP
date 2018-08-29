@@ -47,7 +47,7 @@ public final class GameInitializer {
 		
 		this.alreadyCalled = true;
 		
-		this.propertiesList = new ArrayList<>();
+		Board board = new Board(mode);
 		
 		this.playerList = new ArrayList<>();
 		for (InitialDistribution v : InitialDistribution.values()) {
@@ -58,7 +58,7 @@ public final class GameInitializer {
 					 * player buy a determinated number of any property
 					 */
 					for (int i = 0; i <= v.getContractNumber(); i++) {
-						player.buyProperty(this.propertiesList.stream().filter(prop -> !prop.getOwner().isPresent())
+						player.buyProperty(board.getTiles(t -> t instanceof Obtainable).stream().map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
 								.findAny().get()); //addProperties invece di buy, per mettere buy nel model
 					}
 //					player.decMoney(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
@@ -66,7 +66,7 @@ public final class GameInitializer {
 				});
 			}
 		}
-		return new ModelImpl(new Board(mode), new TurnImpl(playerList)); // mi serve la board
+		return new ModelImpl(board, new TurnImpl(playerList)); // mi serve la board
 	}
 
 	/**
