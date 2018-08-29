@@ -40,7 +40,7 @@ public final class GameInitializer {
 	 * @throws IOException
 	 *             when one of the initialization files not is found.
 	 */
-	public Model newGame(final String mode, final Map<String, Icon> playersMap) throws IOException {
+	public Model newGame(final String mode, final Map<String, String> playersMap) throws IOException {
 		Objects.requireNonNull(playersMap, "NullPointerException: playersMap required non-null.");
 		if (this.alreadyCalled) {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");

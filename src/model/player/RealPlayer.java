@@ -29,6 +29,7 @@ public class RealPlayer implements Player {
 	private int money;
 	private int housesNumber; // togli
 	private int hotelsNumber;
+	private String iconPath;
 	private Prison status = Prison.NOT_PRISON;
 
 	/**
@@ -39,10 +40,11 @@ public class RealPlayer implements Player {
 	 * @param money
 	 *            initial player's money
 	 */
-	public RealPlayer(final String name, int money) {
+	public RealPlayer(final String name, int money, final String iconPath) {
 		this.name = name;
 		this.position = 0;
 		this.money = money;
+		this.iconPath = iconPath;
 		this.playersProperties = new HashMap<>();
 	}
 
@@ -210,7 +212,6 @@ public class RealPlayer implements Player {
 
 	@Override
 	public String getIconPath() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.iconPath;
 	}
 }

@@ -26,23 +26,9 @@ public class CommandBridge extends Scene{
 //		commandBridge.setLeft(new LeftPlayersPane(playerList));
 		commandBridge.setCenter(GamePane.get());
 		commandBridge.setRight(new RightInormationPane());
+		
 		this.setRoot(commandBridge);
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
-//		
-//		
-//		this.setOnKeyReleased(value -> {
-//			switch (value.getCode()) {
-//			case UP:
-//				Platform.runLater(() -> ControllerImpl.getController().getCurruntPlayer().getIcon().move(1));
-//				break;
-//			case DOWN: 
-//				
-//				break;
-//			default:
-//				break;
-//			}
-//		});
-//		
 	}
 	
 	/**
