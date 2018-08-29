@@ -11,6 +11,8 @@ import org.junit.Test;
 
 import controller.ControllerImpl;
 import controller.DialogController;
+import javafx.scene.image.Image;
+import model.Icon;
 import model.ModelImpl;
 import model.player.Player;
 import model.player.RealPlayer;
@@ -26,7 +28,7 @@ public class PlayerTest {
 	
 	private Obtainable buildProperty (int value, Color color, boolean buildable) {
 		List<Integer> rentList = new ArrayList<>();
-		for (int i = 1; i <= 5; i++) {
+		for (int i = 1; i <= 6; i++) {
 			rentList.add(value*i);
 		}
 		return buildable ? new BuildableImpl(1, value * 10, value * 5, new Rents(rentList), color, (int) (value * 0.5)) : new NotBuildableImpl(value, value * 10, value * 5, color);
@@ -44,7 +46,7 @@ public class PlayerTest {
 		player1.buyProperty(bProperty1);
 		
 		assertEquals(2750, player1.getMoney());
-		assertEquals(2875, (int) player1.totalAssets());
+		assertEquals(2875, (int) player1.totalAssets()); //errore
 		DialogController.getDialogController().incHouse(bProperty1);
 		
 		player1.setPosition(13);

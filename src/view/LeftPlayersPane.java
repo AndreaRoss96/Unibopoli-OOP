@@ -21,7 +21,7 @@ public class LeftPlayersPane extends VBox{
 		super(new VBox());
 		this.setPrefSize(PaneDimensionSetting.getInstance().getLateralPaneWidth(),
 				PaneDimensionSetting.getInstance().getLateralPaneHeight());
-//		this.setStyle("-fx-background-color: Red");
+		this.setStyle("-fx-background-color: Red");
 		updatePane(playerList);
 	}
 	

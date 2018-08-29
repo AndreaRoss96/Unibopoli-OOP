@@ -26,7 +26,7 @@ public class RealPlayer implements Player {
 
 	private int position;
 	private final String name;
-	private Icon sprite;
+	private Icon sprite; //metti final
 	private Map<Color, List<Obtainable>> playersProperties;
 	/**
 	 * E' necessaria averla ??
