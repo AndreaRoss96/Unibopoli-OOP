@@ -80,5 +80,6 @@ public interface Controller {
 	void startMortgage(int minimumExpense, PlayerInfo player);
 	
 	List<PlayerInfo> getPlayers();
-
+	
+	 List<String> getGameMode();
 }

@@ -1,0 +1,42 @@
+@font-face{
+	src: url("/font/Kabel.ttf");
+}
+
+#backgroudBoard{
+	-fx-background-color: #CDE6D0;
+    
+}
+#gridPane{
+    -fx-grid-lines-visible: true;
+}
+.separator .line{
+	-fx-border-color: grey;
+	-fx-border-width: 1 1 1 1;
+}
+
+#RightInformationPane{
+	-fx-font-size: 10pt;
+    -fx-font-family: "Kabel";
+    -fx-base: rgb(132, 145, 47);
+ 	-fx-background: rgb(225, 228, 203);
+}
+
+#mainMenu{
+    -fx-font-size: 14pt;
+    -fx-font-family: "Kabel";
+	-fx-base: rgb(51, 51, 204);
+    -fx-background-image: url("/images/Logo/unibopoli-logo.jpg");
+    -fx-background-size: 100% 100%;
+   -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+#setupPlayer{
+    -fx-font-size: 10pt;
+    -fx-font-family: "Kabel";
+    -fx-base: rgb(132, 145, 47);
+ 	-fx-background-image: url("/images/backgrounds/monopoli_cfu.png");
+    -fx-background-repeat: stretch;   
+    -fx-background-position: center center;
+}
+

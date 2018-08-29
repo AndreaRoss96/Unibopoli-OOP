@@ -37,7 +37,8 @@ public class PlayerSetupMenu extends Scene {
 	private static final double STANDARD_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.9;
 	private static final int PLAYER_MIN = 2;
 	private static final int PLAYER_MAX = 6;
-
+	private static final String TITLE = "Setup players";
+	
 	private static Stage mainStage;
 	
 	private List<String> iconList;
@@ -51,34 +52,19 @@ public class PlayerSetupMenu extends Scene {
 		
 		this.imageMap = IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
 		
-		//System.out.println(imageMap.toString());
-		
 		iconList = new ArrayList<>();
 		chosenList = new ArrayList<>();
-//    iconList.add("Mushroom");
-//		iconList.add("Hat");
-//		iconList.add("Wine");
-//		iconList.add("Iron");
-//	iconList.add("Boot");
-//	iconList.add("Car"); 
-//		
+		
 		iconList.addAll(imageMap.keySet());
 		
-		// utilizza iconloader vd. esperimento
-		/* implementare nell'iconloader, parla con matti
-		IconLoader iconPath = new IconLoader();
-		imageMap = iconPath.getMap();
-		oppure gli passo la mappa richiamando questo form dal controller
-		*/
-		this.getStylesheets().add(getClass().getResource("/style/setupPlayer.css").toExternalForm());
 		
-		Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
+		/*Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
 		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
 				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
 		
-		borderPane.setBackground(background);
-
+		borderPane.setBackground(background);*/
+		
 		final FlowPane flowPane = new FlowPane();
 		final Button addPlayer = new Button("", new ImageView(new Image("images/Icons/gear.png"))); //cambia path
 		flowPane.getChildren().add(addPlayer);
@@ -89,7 +75,7 @@ public class PlayerSetupMenu extends Scene {
 		final HBox hBox = new HBox();
 		final Label mapLabel = new Label("Choose map:");
 		final ComboBox<String> mapBox = new ComboBox<>();
-		mapBox.getItems().add("CLASSIC"); // ci dovrebbe essere un metodo che va a leggere un ifle ocn tutte le mappe
+		mapBox.getItems().addAll(ControllerImpl.getController().getGameMode()); // ci dovrebbe essere un metodo che va a leggere un ifle ocn tutte le mappe
 		mapBox.setValue(mapBox.getItems().get(0));
 		final Button startGame = new Button("Start Game");
 		final Button cancel = new Button("Cancel");
@@ -141,25 +127,23 @@ public class PlayerSetupMenu extends Scene {
 			});
 			/* execute action */
 			List<String> playersName = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
-//			
+
+			psbList.forEach(bBox -> {
+				System.out.println(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
+			});
+			List<String> playersIcon = psbList.stream().map(PlayerSetupBox::getIcons).map(elem -> elem.getSelectionModel().getSelectedItem()).collect(Collectors.toList());
 			
-			
-			
-			//psbList.forEach(bBox -> {
-//				System.out.println(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
-//			});
-//			List<String> playersIcon = psbList.stream().map(PlayerSetupBox::getIcons).map(elem -> elem.getSelectionModel().getSelectedItem()).collect(Collectors.toList());
-			
-			//System.out.println(playersIcon.toString());
-			/*ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersName, playersIcon);
-			mainStage.setScene(CommandBridge.get(mainStage));*/
+			System.out.println(playersIcon.toString());
+			ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersName, playersIcon);
+			mainStage.setScene(CommandBridge.get(mainStage));
 		});
 
 		cancel.setOnAction(e -> {
 			mainStage.setScene(MainMenu.get(mainStage));
 		});
 
-		mainStage.setTitle("Setup players");
+		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
+		borderPane.setId("setupPlayer");
 		this.setRoot(borderPane);
 	}
 
@@ -212,7 +196,8 @@ public class PlayerSetupMenu extends Scene {
 	public static PlayerSetupMenu get(Stage stage) {
 		mainStage = stage;
 		mainStage.centerOnScreen();
-
+		mainStage.setTitle(TITLE);
+		
 		return new PlayerSetupMenu();
 		
 	}

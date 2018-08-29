@@ -2,6 +2,7 @@ package controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -15,6 +16,7 @@ import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import utilities.Pair;
+import utilities.enumerations.ModeGame;
 import view.RightInormationPane;
 import view.View;
 import view.gameDialog.AuctionDialog;
@@ -166,5 +168,9 @@ public class ControllerImpl implements Controller {
 	
 	public DialogController getDialogController() {
 		return DialogController.getDialogController();
+	}
+	
+	public List<String> getGameMode() {
+		return Arrays.asList(ModeGame.values()).stream().map(t -> String.valueOf(t)).collect(Collectors.toList());
 	}
 }

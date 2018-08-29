@@ -58,13 +58,11 @@ public class ClassicType {
 	}
 	
 	
-	public enum Image{
-		GeneralImagesMap("images/Logo/Mr_Monopoly.png", "images/Icons/Via.png", 
-	    				  "images/Icons/Prigione.png", "images/Icons/Poliziotto.png", "images/Icons/Treno.png", "images/Icons/Anello.png",
-	    				  "images/Icons/Train.png", "images/Icons/Lampadina.png", "images/Icons/Rubinetto.png", "images/Icons/Scrigno.png",
-	    				  "images/Icons/PuntoInterrogativo.png");
+	public enum Board{
+		GeneralImagesMap("images/Icons/Via.png", "images/Icons/Prigione.png", "images/Icons/Poliziotto.png", "images/Icons/Treno.png",
+						 "images/Icons/Anello.png", "images/Icons/Train.png", "images/Icons/Lampadina.png", "images/Icons/Rubinetto.png", 
+						 "images/Icons/Scrigno.png", "images/Icons/PuntoInterrogativo.png");
 		
-		private final String iconWindows;
 	    private final String goImage;
 	    private final String transitJail;
 	    private final String goJail;
@@ -76,11 +74,9 @@ public class ClassicType {
 	    private final String cofferImage;
 	    private final String unexpectedImage;
 	    
-	    private Image(final String iconWindows, final String goImage,
-				final String transitJail, final String goJail, final String transitCar, final String ringImage, 
-				final String trainImage, final String bulbImage, final String waterImage, final String cofferImage,
-				final String unexpectedImage) {
-	    	this.iconWindows = iconWindows;
+	    private Board(final String goImage, final String transitJail, final String goJail, final String transitCar, 
+	    		final String ringImage, final String trainImage, final String bulbImage, final String waterImage, 
+	    		final String cofferImage, final String unexpectedImage) {
 	        this.goImage = goImage;
 	        this.transitJail = transitJail;
 	        this.goJail = goJail;
@@ -91,10 +87,6 @@ public class ClassicType {
 	        this.waterImage = waterImage;
 	        this.cofferImage = cofferImage;
 	        this.unexpectedImage = unexpectedImage;
-	    }
-	    
-	    public String getIconWindows() {
-	    	return this.iconWindows;
 	    }
 	    
 	    public String getGoImagePath() {
@@ -148,6 +140,47 @@ public class ClassicType {
 		
 		public String getBootImage() {
 			return this.boot;
+		}
+	}
+	
+	public enum Other{
+		GeneralOthersMap("images/Logo/Mr_Monopoly.png", "images/Icons/Music.png", "images/Icons/Sound.png", "images/Icons/No_Music.png",
+						 "images/Icons/No_sound.png");
+		
+		private final String iconWindows;
+		private final String music;
+		private final String sound;
+		private final String noMusic;
+		private final String noSound;
+		
+		private Other(final String iconWindows, final String music, final String sound, final String noMusic, 
+					  final String noSound) {
+			this.iconWindows = iconWindows;
+			this.music = music;
+			this.sound = sound;
+			this.noMusic = noMusic;
+			this.noSound = noSound;
+		}
+		
+		  
+	    public String getIconWindows() {
+	    	return this.iconWindows;
+	    }
+	    
+		public String getMusicImage() {
+			return this.music;
+		}
+		
+		public String getSoundImage() {
+			return this.sound;
+		}
+		
+		public String getNoMusicImage() {
+			return this.noMusic;
+		}
+		
+		public String getNoSoundImage() {
+			return this.noSound;
 		}
 	}
 }

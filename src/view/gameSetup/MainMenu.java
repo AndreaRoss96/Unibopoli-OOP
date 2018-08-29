@@ -1,6 +1,5 @@
 package view.gameSetup;
 
-import java.awt.Toolkit;
 import java.util.Optional;
 
 import controller.SoundController;
@@ -10,13 +9,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import utilities.IconLoader;
+import utilities.PaneDimensionSetting;
+import utilities.enumerations.ClassicType;
 import view.handlers.HandleFileChooser;
 
 /**
@@ -28,26 +28,18 @@ import view.handlers.HandleFileChooser;
  */
 public final class MainMenu extends Scene{
 
-	private static final double MAIN_MENU_WIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() * 0.70;
-	private static final double MAIN_MENU_HEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() * 0.80;
+	private static final double MAIN_MENU_WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.70;
+	private static final double MAIN_MENU_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.80;
 	private static final double STANDARD_ANCHOR = 15d;
 	private static final double BUTTON_BOX_WIDTH = MAIN_MENU_WIDTH / 2 - STANDARD_ANCHOR * 2;
-	private static SoundController music;
 	
+	private static SoundController music;
 	private static Stage mainStage;
 	
 	private MainMenu() {
 		super(new StackPane(), MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
 		
 		StackPane root = new StackPane();
-		
-		this.getStylesheets().add(getClass().getResource("/style/principalStyle.css").toExternalForm());
-
-		final ImageView background = new ImageView(new Image("images/Logo/unibopoli-logo.jpg"));
-		background.fitWidthProperty().bind(mainStage.widthProperty());
-		background.fitHeightProperty().bind(mainStage.heightProperty());
-		root.getChildren().add(background);
-
 		final AnchorPane anchorPane = new AnchorPane();
 
 		final VBox leftButtonBox = new VBox();
@@ -58,9 +50,7 @@ public final class MainMenu extends Scene{
 		final Button creditsBtn = new Button("Credits");
 		creditsBtn.setPrefWidth(BUTTON_BOX_WIDTH);
 		creditsBtn.setPrefHeight(leftButtonBox.getPrefHeight() / 2);
-
 		leftButtonBox.getChildren().addAll(newGameBtn, creditsBtn);
-		anchorPane.getChildren().add(leftButtonBox);
 		AnchorPane.setLeftAnchor(leftButtonBox, STANDARD_ANCHOR);
 		AnchorPane.setBottomAnchor(leftButtonBox, STANDARD_ANCHOR);
 
@@ -73,25 +63,22 @@ public final class MainMenu extends Scene{
 		cancelBtn.setPrefWidth(BUTTON_BOX_WIDTH);
 		cancelBtn.setPrefHeight(rightButtonBox.getPrefHeight() / 2);
 		rightButtonBox.getChildren().addAll(loadGameBtn, cancelBtn);
-		anchorPane.getChildren().add(rightButtonBox);
 		AnchorPane.setRightAnchor(rightButtonBox, STANDARD_ANCHOR);
 		AnchorPane.setBottomAnchor(rightButtonBox, STANDARD_ANCHOR);
 
 		final Button helpBtn = new Button("?");
-		anchorPane.getChildren().add(helpBtn);
 		AnchorPane.setTopAnchor(helpBtn, STANDARD_ANCHOR);
 		AnchorPane.setRightAnchor(helpBtn, STANDARD_ANCHOR);
 
-		final Button musicBtn = new Button("", new ImageView(new Image("images/Icons/Music.png")));
-		anchorPane.getChildren().add(musicBtn);
+		final Button musicBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getMusicImage()).get());
 		AnchorPane.setTopAnchor(musicBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(musicBtn, STANDARD_ANCHOR);
 
-		final Button soundBtn = new Button("", new ImageView(new Image("images/Icons/Sound.png")));
-		anchorPane.getChildren().add(soundBtn);
+		final Button soundBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getSoundImage()).get());
 		AnchorPane.setTopAnchor(soundBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(soundBtn, STANDARD_ANCHOR * 5.5);
-
+		
+		anchorPane.getChildren().addAll(leftButtonBox, rightButtonBox, helpBtn, musicBtn, soundBtn);
 		root.getChildren().add(anchorPane);
 
 		newGameBtn.setOnAction(e -> {
@@ -128,21 +115,23 @@ public final class MainMenu extends Scene{
 		musicBtn.setOnAction(e -> {
 			music.changeMusicMute();
 			if (music.isMusicMute()) {
-				musicBtn.setGraphic(new ImageView(new Image("images/Icons/No_Music.png")));
+				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getNoMusicImage()).get());
 			} else {
-				musicBtn.setGraphic(new ImageView(new Image("images/Icons/Music.png")));
+				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getMusicImage()).get());
 			}
 		});
 
 		soundBtn.setOnAction(e -> {
 			music.changeSoundsMute();
 			if (music.isSoundMute()) {
-				soundBtn.setGraphic(new ImageView(new Image("images/Icons/No_sound.png")));
+				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getNoSoundImage()).get());
 			} else {
-				soundBtn.setGraphic(new ImageView(new Image("images/Icons/Sound.png")));
+				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getSoundImage()).get());
 			}
 		});
 		
+		root.setId("mainMenu");
+		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		this.setRoot(root);
 	}
 
