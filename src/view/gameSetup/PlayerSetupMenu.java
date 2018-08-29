@@ -106,21 +106,25 @@ public class PlayerSetupMenu extends Scene {
 			List<PlayerSetupBox> psbList = flowPane.getChildren().stream()
 					.filter(element -> element instanceof PlayerSetupBox).map(pBox -> (PlayerSetupBox) pBox)
 					.collect(Collectors.toList());
-			List<String> playersNames = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText).collect(Collectors.toList());
+			List<String> playersNames = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText)
+					.collect(Collectors.toList());
 			/* check if all names are presents and are all different */
-			if(this.checkNames(playersNames)) {
-				psbList.forEach(bBox -> {
-					if (bBox.getIcons().getSelectionModel().isEmpty()) {
-						AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");						
-					}
-				});
+			if (!this.checkNames(playersNames)) {
+				AlertFactory.createInformationAlert("Nope", null, "All player need a name!");
+			} else if (playersNames.stream().distinct().count() != playersNames.size()) {
+				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
+				/* check if all player have an avatar */
+			} else if (!this.checkIcon(psbList.stream().map(PlayerSetupBox::getIcons).collect(Collectors.toList()))) {
+				AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
 			} else {
 				/* execute action */
 				List<String> playersIcon = new ArrayList<String>();
 				psbList.forEach(bBox -> {
 					playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
 				});
-				ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersNames, playersIcon);
+				System.out.println("Ha funzionato dio ***");
+				ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersNames,
+						playersIcon);
 				mainStage.setScene(CommandBridge.get(mainStage));
 			}
 			
@@ -162,7 +166,6 @@ public class PlayerSetupMenu extends Scene {
 		pBox.getIcons().getItems().addAll(iconList);
 		
 		pBox.getRemovePlayer().setDisable(flowPane.getChildren().size() <= PLAYER_MIN );
-
 
 		pBox.getRemovePlayer().setOnAction(a -> {
 			if (pBox.getIcons().getValue() != null) {
@@ -206,13 +209,17 @@ public class PlayerSetupMenu extends Scene {
 	private boolean checkNames (List<String> names) {
 		for (String name : names) {
 			if(name.equals("Insert player name...") || name.isEmpty()) {
-				AlertFactory.createInformationAlert("Nope", null, "All player need a name!");
 				return false;
 			}
 		}
-		if (names.stream().distinct().count() != names.size()) {
-			AlertFactory.createInformationAlert("Nope", null, "Use different names!");
-			return false;
+		return true;
+	}
+	
+	private boolean checkIcon(List<ComboBox<String>> icons) {
+		for (ComboBox<String> icon : icons) {
+			if(icon.getSelectionModel().isEmpty()) {
+				return false;
+			}
 		}
 		return true;
 	}

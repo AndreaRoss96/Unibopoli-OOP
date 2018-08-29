@@ -31,7 +31,7 @@ public class AlertFactory{
 		Label content = new Label(contentText);
 		content.setFont(Font.loadFont("file:res/font/kabel.ttf", 13));
 		alert.setGraphic(content);
-		alert.initStyle(StageStyle.UNIFIED);
+		alert.initStyle(StageStyle.UTILITY);
 		return alert;
 	}
 	
