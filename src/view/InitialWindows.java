@@ -24,9 +24,10 @@ public class InitialWindows extends Application {
 	
 	/**
      * It starts the JavaFX application.
+	 * @throws Exception 
      */
     @Override
-    public void start(final Stage primaryStage) {
+    public void start(final Stage primaryStage) throws Exception {
     	this.initialWindow.getIcons().add(IconLoader.getLoader()
     												.getImageFromPath(ClassicType.Other.GeneralOthersMap.getIconWindows())
     												.getImage());

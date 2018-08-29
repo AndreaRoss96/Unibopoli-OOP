@@ -9,7 +9,6 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import model.GameInitializer;
-import model.Icon;
 import model.Model;
 import model.ResourceManager;
 import model.player.Player;
@@ -17,6 +16,7 @@ import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import utilities.Pair;
 import utilities.enumerations.ModeGame;
+import view.Icon;
 import view.RightInormationPane;
 import view.View;
 import view.gameDialog.AuctionDialog;
@@ -38,7 +38,6 @@ public class ControllerImpl implements Controller {
 	private ControllerImpl() {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
 		this.sound.play(true);
-
 	}
 
 	/**
@@ -57,7 +56,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
-			GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
+			this.model = GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		

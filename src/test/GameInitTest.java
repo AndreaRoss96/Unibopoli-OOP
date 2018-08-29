@@ -12,9 +12,9 @@ import org.junit.Test;
 
 import model.Board;
 import model.GameInitializer;
-import model.Icon;
 import model.Model;
 import utilities.enumerations.InitialDistribution;
+import view.Icon;
 
 public class GameInitTest {
 	

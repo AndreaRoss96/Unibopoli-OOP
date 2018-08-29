@@ -6,18 +6,14 @@
  */
 public class ClassicType {
 	public enum Files{
-	    GeneralFilesMap("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/classic/ClassicMode.txt", 
-	    				  "res/mode/staticValuesTile/NotBuildableValues.txt"); 
+	    GeneralFilesMap("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/staticValuesTile/NotBuildableValues.txt"); 
 	 
 	    private final String staticBuildableValuesInitFile;
-	    private final String classicModeInitFile;
 	    private final String staticNotBuildableValuesInitFile;
 	    
 	    
-	    private Files(final String staticBuildableValuesInitFile, final String classicModeInitFile, 
-	    					final String staticNotBuildableValuesInitFile) {
+	    private Files(final String staticBuildableValuesInitFile, final String staticNotBuildableValuesInitFile) {
 	        this.staticBuildableValuesInitFile = staticBuildableValuesInitFile;
-	        this.classicModeInitFile = classicModeInitFile;
 	        this.staticNotBuildableValuesInitFile = staticNotBuildableValuesInitFile;
 	    }
 	
@@ -36,25 +32,11 @@ public class ClassicType {
 	    }
 	    
 	    /**
-	     * @return TODO: da fare.
+	     * @return TODO: da fare. Ricordarsi di cambiare il nome della cartella
 	     */
 	    public String getModeGame(String mode) {
-	    	//return "res/mode/" + mode + "/ClassicMode.txt";
-	    	
-	    	switch (mode) {    	
-				case "Case": return "Ciao";
-				case "CLASSIC": return this.getClassicModeInitFile();
-				default: return this.getClassicModeInitFile();
-			}
+	    	return "res/mode/" + mode + "/ClassicMode.txt";
 	    }
-	    
-	    /**
-	     * @return the path for the initialization name of the tile in the board.
-	     */
-	    private String getClassicModeInitFile() {
-	        return this.classicModeInitFile;
-	    }
-
 	}
 	
 	

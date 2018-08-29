@@ -18,11 +18,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundImage;
-import javafx.scene.layout.BackgroundPosition;
-import javafx.scene.layout.BackgroundRepeat;
-import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
@@ -93,7 +88,7 @@ public class PlayerSetupMenu extends Scene {
 		borderPane.setBottom(hBox);
 
 		flowPane.getChildren().addListener((ListChangeListener<? super Node>) e -> {
-			addPlayer.setDisable(flowPane.getChildren().size() > 6);
+			addPlayer.setDisable(flowPane.getChildren().size() > PLAYER_MAX);
 		});
 
 		addPlayer.setOnAction(e -> {
@@ -108,48 +103,23 @@ public class PlayerSetupMenu extends Scene {
 					.collect(Collectors.toList());
 			List<String> playersNames = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText)
 					.collect(Collectors.toList());
-			/* check if all names are presents and are all different */
+			/* check if all names are presents and are all different and all player have an avatar */
 			if (!this.checkNames(playersNames)) {
 				AlertFactory.createInformationAlert("Nope", null, "All player need a name!");
 			} else if (playersNames.stream().distinct().count() != playersNames.size()) {
 				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
-				/* check if all player have an avatar */
 			} else if (!this.checkIcon(psbList.stream().map(PlayerSetupBox::getIcons).collect(Collectors.toList()))) {
 				AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
-			} else {
-				/* execute action */
+			} else { /* execute action */				
 				List<String> playersIcon = new ArrayList<String>();
 				psbList.forEach(bBox -> {
 					playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
 				});
-				System.out.println("Ha funzionato dio ***");
 				ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersNames,
 						playersIcon);
 				mainStage.setScene(CommandBridge.get(mainStage));
+				mainStage.centerOnScreen();
 			}
-			
-//			psbList.forEach(pBox -> {
-//				if (pBox.getNameField().getText().equals("Insert player name...")
-//						|| pBox.getNameField().getText().isEmpty()) {
-//					AlertFactory.createInformationAlert("Nope", null, "Use valid name!");
-//					e.consume();
-//				}
-//			});
-//			if (psbList.stream().map(PlayerSetupBox::getNameField).distinct().count() != flowPane.getChildren()
-//					.size() - 1) {
-//				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
-//				e.consume();
-//			}
-//			
-//			/* check if all players have chosen an icon */
-//			psbList.forEach(bBox -> {
-//				if (bBox.getIcons().getSelectionModel().isEmpty()) {
-//					AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
-//					e.consume();
-//					
-//				}
-//			});
-
 		});
 
 		cancel.setOnAction(e -> {
@@ -159,6 +129,7 @@ public class PlayerSetupMenu extends Scene {
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		borderPane.setId("setupPlayer");
 		this.setRoot(borderPane);
+		//mainStage.centerOnScreen();
 	}
 
 	private PlayerSetupBox addPlayerSetupBox(FlowPane flowPane) {
@@ -226,7 +197,6 @@ public class PlayerSetupMenu extends Scene {
 
 	public static PlayerSetupMenu get(Stage stage) {
 		mainStage = stage;
-		mainStage.centerOnScreen();
 		mainStage.setTitle(TITLE);
 		
 		return new PlayerSetupMenu();	

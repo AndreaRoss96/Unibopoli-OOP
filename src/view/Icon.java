@@ -1,8 +1,9 @@
-package model;
+package view;
 
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import model.Location;
 import utilities.enumerations.Direction;
 
 /**

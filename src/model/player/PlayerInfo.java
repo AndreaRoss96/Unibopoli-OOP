@@ -4,9 +4,9 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
-import model.Icon;
 import model.tiles.*;
 import utilities.enumerations.Color;
+import view.Icon;
 
 /**
  * This interface contains all getters and some minimum method for a limited
@@ -107,5 +107,5 @@ public interface PlayerInfo extends Serializable {
 	Map<Color, List<Obtainable>> getPopertiesByColor();
 	
 	
-	Icon getIcon();
+	String getIconPath();
 }

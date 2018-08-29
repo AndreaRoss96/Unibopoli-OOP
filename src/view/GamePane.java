@@ -11,6 +11,7 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import model.Board;
 import model.tiles.Tile;
+import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import view.tiles.LandAbstractFactoryImp;
 
@@ -40,7 +41,7 @@ public class GamePane extends StackPane{
 		this.setMaxWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMaxHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
 		
-		mainPane.getChildren().addAll(background(), boardLayer(), playerLayer());
+		mainPane.getChildren().addAll(background(), playerLayer(), boardLayer());
 
 		this.getChildren().add(mainPane);
 	}
@@ -48,13 +49,13 @@ public class GamePane extends StackPane{
 	private Pane playerLayer() {
 		pane = new Pane();
 		
-		ControllerImpl.getController().getPlayers().stream().map(player -> player.getIcon())
+		ControllerImpl.getController().getPlayers().stream().map(player -> IconLoader.getLoader().getImageFromPath(player.getIconPath()))
 					  .peek(icon -> icon.setScene(mainPane.getScene())).forEach(icon -> {
 						  icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
 						  icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
 					  });
 		
-		pane.getChildren().addAll(ControllerImpl.getController().getPlayers().stream().map(player -> player.getIcon().get()).collect(Collectors.toList()));
+		pane.getChildren().addAll(ControllerImpl.getController().getPlayers().stream().map(player -> IconLoader.getLoader().getImageFromPath(player.getIconPath()).get()).collect(Collectors.toList()));
 		
 		return pane;
 	}
