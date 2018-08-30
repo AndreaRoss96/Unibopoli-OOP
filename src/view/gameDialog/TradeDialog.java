@@ -100,12 +100,12 @@ public class TradeDialog extends Dialog {
 		});
 
 		tradeButton.setOnAction(e -> {
-			if(AlertFactory.createConfirmationAlert("Are you sure?", null, "Do both players agree?")) {
+			if(AlertFactory.createConfirmationAlert("Are you sure?", "Do both players agree?")) {
 				if (playerBox.getValue() != null) {
 				controller.executeTrade(playerBox.getValue(), currListView.getSelected(),
 						allPlayersListView.getSelected(), currMoneyToTrade.getText(), moneyToTrade.getText());
 				} else {
-					AlertFactory.createErrorAlert("???", null, "Choose a player!");
+					AlertFactory.createErrorAlert("???", "Choose a player!");
 					e.consume();
 				}
 			} else {

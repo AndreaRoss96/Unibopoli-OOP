@@ -24,6 +24,7 @@ import javafx.stage.Stage;
 import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
+import utilities.enumerations.ClassicType;
 import view.CommandBridge;
 
 public class PlayerSetupMenu extends Scene {
@@ -61,7 +62,8 @@ public class PlayerSetupMenu extends Scene {
 		borderPane.setBackground(background);*/
 		
 		final FlowPane flowPane = new FlowPane();
-		final Button addPlayer = new Button("", new ImageView(new Image("images/Icons/gear.png"))); //cambia path
+		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getPlusImage()).get());
+		addPlayer.setStyle("-fx-background-radius: 100");
 		flowPane.getChildren().add(addPlayer);
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
@@ -104,11 +106,11 @@ public class PlayerSetupMenu extends Scene {
 					.collect(Collectors.toList());
 			/* check if all names are presents and are all different and all player have an avatar */
 			if (!this.checkNames(playersNames)) {
-				AlertFactory.createInformationAlert("Nope", null, "All player need a name!");
+				AlertFactory.createInformationAlert("Nope", "All player need a name!");
 			} else if (playersNames.stream().distinct().count() != playersNames.size()) {
-				AlertFactory.createInformationAlert("Nope", null, "Use different names!");
+				AlertFactory.createInformationAlert("Nope", "Use different names!");
 			} else if (!this.checkIcon(psbList.stream().map(PlayerSetupBox::getIcons).collect(Collectors.toList()))) {
-				AlertFactory.createInformationAlert("Nope", null, "All players must have an avatar!");
+				AlertFactory.createInformationAlert("Nope", "All players must have an avatar!");
 			} else { /* execute action */				
 				List<String> playersIcon = new ArrayList<String>();
 				psbList.forEach(bBox -> {

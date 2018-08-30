@@ -30,7 +30,7 @@ public class DialogController implements DialogObserver {
 		try {
 			if (passwordList.stream().distinct().count() != passwordList.size()) {
 				AlertFactory
-						.createInformationAlert("Get a plan together", null, "Two or more player have entered the same value");
+						.createInformationAlert("Get a plan together", "Two or more player have entered the same value");
 			} else {
 				int moneyAmount = passwordList.stream().map(Integer::parseInt)
 						.max(Comparator.comparing(Integer::valueOf)).get();
@@ -62,12 +62,10 @@ public class DialogController implements DialogObserver {
 				property.incBuildings(); //deve diminuire i soldi del giocatore
 				((Player) ControllerImpl.getController().getCurruntPlayer()).payments(property.getPriceForBuilding());
 			} else {
-				AlertFactory.createErrorAlert("Oak's words echoed", null,
-						"There's time and place for everything, but not now...");
+				AlertFactory.createErrorAlert("Oak's words echoed", "There's time and place for everything, but not now...");
 			}
 		} else {
-			AlertFactory.createErrorAlert("Nope", "You don't have enought money",
-					"you have only: " + ControllerImpl.getController().getCurruntPlayer().getMoney() +"$");
+			AlertFactory.createErrorAlert("Nope", "You don't have enought money\nyou have only: " + ControllerImpl.getController().getCurruntPlayer().getMoney() +"$");
 		}
 	}
 
@@ -148,18 +146,17 @@ public class DialogController implements DialogObserver {
 			});
 			
 			if (!canPay(firstPlayer, firstMoney) && canPay(secondPlayer, secondMoney)) {
-				AlertFactory.createErrorAlert("He's trying to cheat you!", null,
+				AlertFactory.createErrorAlert("He's trying to cheat you!",
 						firstPlayer.getName() + "Doesn't have enought money!");
 			} else if (!canPay(secondPlayer, secondMoney) && canPay(firstPlayer, firstMoney)) {
-				AlertFactory.createErrorAlert("He's trying to cheat you!", null,
+				AlertFactory.createErrorAlert("He's trying to cheat you!",
 						secondPlayer.getName() + "Doesn't have enought money!");
 			} else if (!canPay(firstPlayer, firstMoney) && !canPay(secondPlayer, secondMoney)) {
-				AlertFactory.createErrorAlert("Nope", null,
+				AlertFactory.createErrorAlert("Nope",
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
 				secondProperties.forEach(e -> {
 					firstPlayer.addProperty(secondPlayer.removeProperty(e));
-					
 				});
 				firstPlayer.gainMoney(secondMoney);
 				firstPlayer.payments(firstMoney);
@@ -171,8 +168,7 @@ public class DialogController implements DialogObserver {
 				secondPlayer.payments(secondMoney);
 			}
 		} catch (NumberFormatException ex) {
-			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!",
-					"Please, use only numbers...");
+			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!\nPlease, use only numbers...");
 		}
 	}
 	

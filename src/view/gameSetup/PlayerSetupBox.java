@@ -37,9 +37,8 @@ public class PlayerSetupBox extends HBox {
 
 		this.getChildren().addAll(nameField, icons, removePlayer);
 		this.setAlignment(Pos.CENTER);
-		this.setStyle("-fx-padding: 10;" + "-fx-border-style: solid inside;" + "-fx-border-width: 2;"
-				+ "-fx-border-insets: 5;" + "-fx-border-radius: 5;" + "-fx-border-color: blue;"
-				+ "-fx-background-color: white;");
+		this.setId("setupBox");
+		this.getStylesheets().add("/style/style.css");
 	}
 
 	/**

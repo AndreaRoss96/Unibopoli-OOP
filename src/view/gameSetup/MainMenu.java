@@ -85,7 +85,7 @@ public final class MainMenu extends Scene{
 		loadGameBtn.addEventFilter(MouseEvent.MOUSE_CLICKED, new HandleFileChooser());
 
 		cancelBtn.setOnAction(e -> {
-			if(AlertFactory.createConfirmationAlert("Confirm exit", null, "Are you sure you want to quit from Unibopoli?")) {
+			if(AlertFactory.createConfirmationAlert("Confirm exit", "Are you sure you want to quit from Unibopoli?")) {
 				mainStage.close();
 			} else {
 				e.consume();
@@ -93,7 +93,7 @@ public final class MainMenu extends Scene{
 		});
 
 		creditsBtn.setOnAction(e -> {
-			AlertFactory.createInformationAlert("Credits", null,
+			AlertFactory.createInformationAlert("Credits",
 					"Alesiani Matteo: Movement and consequences, management of contracts and contingencies/probabilities, game Board graphics and game turn\n" +
 					"Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading of the Game, main menu and initialization of the game.");
 		});

@@ -11,23 +11,23 @@ import javafx.stage.StageStyle;
 
 public class AlertFactory{
 
-	public static void createErrorAlert(String title, String header, String contentText) {
-		buildAlert(AlertType.ERROR, title, header, contentText).showAndWait();
+	public static void createErrorAlert(String title, String contentText) {
+		buildAlert(AlertType.ERROR, title, contentText).showAndWait();
 	}
 	
-	public static void createInformationAlert(String title, String header, String contentText) {
-		buildAlert(AlertType.INFORMATION, title, header, contentText).showAndWait();
+	public static void createInformationAlert(String title, String contentText) {
+		buildAlert(AlertType.INFORMATION, title, contentText).showAndWait();
 	}
 	
-	public static boolean createConfirmationAlert(String title, String header, String contentText) {
-		Optional<ButtonType> choice = buildAlert(AlertType.CONFIRMATION, title, header, contentText).showAndWait();
+	public static boolean createConfirmationAlert(String title, String contentText) {
+		Optional<ButtonType> choice = buildAlert(AlertType.CONFIRMATION, title, contentText).showAndWait();
 		return choice.get() == ButtonType.OK;
 	}
 	
-	private static Alert buildAlert(AlertType type, String title, String header, String contentText) {
+	private static Alert buildAlert(AlertType type, String title,  String contentText) {
 		Alert alert = new Alert(type);
 		alert.setTitle(title);
-		alert.setHeaderText(header);
+		alert.setHeaderText(null);
 		Label content = new Label(contentText);
 		content.setFont(Font.loadFont("file:res/font/kabel.ttf", 13));
 		alert.setGraphic(content);

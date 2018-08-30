@@ -43,7 +43,7 @@ public class Contract extends AnchorPane {
 	private static final double IMAGE_WIDTH = LABEL_WIDTH * 1.5;
 	private static final double LABEL_BIG_WIDTH = 255;
 	private static final Font PROPERTY_FONT = Font.font("Kabel", FontWeight.BOLD, 20);
-	
+
 	private int row;
 
 	public Contract(Obtainable property) {
@@ -54,16 +54,6 @@ public class Contract extends AnchorPane {
 		insidePane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 		insidePane.setAlignment(Pos.TOP_CENTER);
 		insidePane.setStyle("-fx-border-color: black;");
-		insidePane.setGridLinesVisible(false);
-		
-		final Image cardBoard = new Image("/images/cardBoard/white_cardstock.jpg");
-		final BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true,
-				true);
-		final Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.REPEAT,
-				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
-		final DropShadow ds = new DropShadow();
-		ds.setOffsetY(3.0f);
-		ds.setColor(Color.color(0.4f, 0.4f, 0.4f));
 
 		if (property instanceof Buildable) {
 			createContractForBuildable(insidePane, (Buildable) property);
@@ -72,10 +62,9 @@ public class Contract extends AnchorPane {
 		}
 
 		this.getChildren().add(insidePane);
-		this.setBackground(background);
-		this.setStyle("-fx-border-color: black; -fx-border-radius: 10px; ");
-		this.setEffect(ds);
 		this.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+		this.setId("contract");
+		this.getStylesheets().add("/style/style.css");
 		AnchorPane.setTopAnchor(insidePane, WIDTH_ANCHOR);
 		AnchorPane.setLeftAnchor(insidePane, HEIGHT_ANCHOR);
 		AnchorPane.setRightAnchor(insidePane, HEIGHT_ANCHOR);
@@ -83,43 +72,36 @@ public class Contract extends AnchorPane {
 	}
 
 	private void createContractForBuildable(GridPane insidePane, Buildable property) {
-		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 2,
-				insidePane);
+		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 2, insidePane);
 		final Label propertyName = new Label(property.getNameOf());
 		propertyName.setPrefSize(LABEL_BIG_WIDTH, LABEL_HEIGHT * 4.5);
 		propertyName.setAlignment(Pos.CENTER);
 		propertyName.setTextAlignment(TextAlignment.CENTER);
 		propertyName.setFont(PROPERTY_FONT);
-		propertyName.setStyle("-fx-border-color: black;"
-				+ " -fx-background-color: " + property.getColorOf().getPaint().get().toString().replaceAll("0x", "#") + ";");
+		propertyName.setStyle("-fx-border-color: black;" + " -fx-background-color: "
+				+ property.getColorOf().getPaint().get().toString().replaceAll("0x", "#") + ";");
 		propertyName.setWrapText(true);
 		insidePane.add(propertyName, 0, this.row++, 2, 1);
 		GridPane.setMargin(propertyName, new Insets(LABEL_HEIGHT, 0, LABEL_HEIGHT, 0));
-		
+
 		labelCreator("RENT", Optional.of(property.getRent() + " $"), 1, insidePane);
 		for (int i = 1; i <= 5; i++) {
 			labelCreator("With " + (i != 5 ? i + " House" + (i == 1 ? "" : "s") : "HOTEL"),
 					Optional.of(String.valueOf(property.getRent(i)) + " $"), 1, insidePane);
 		}
-		
-		Line line = new Line();
-		line.setStartX(-100);
-		line.setEndX(100);
+
+		Line line = new Line(-100, 0, 100, 0);
 		line.setStrokeType(StrokeType.OUTSIDE);
 		insidePane.add(line, 0, this.row++, 2, 1);
 		GridPane.setHalignment(line, HPos.CENTER);
-		
-		labelCreator("House cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1,
-				insidePane);
-		labelCreator("Hotel cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1,
-				insidePane);
-		labelCreator("Mortgage value", Optional.of(String.valueOf(property.getMortgage()) + " $"), 2,
-				insidePane);
+
+		labelCreator("House cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1, insidePane);
+		labelCreator("Hotel cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1, insidePane);
+		labelCreator("Mortgage value", Optional.of(String.valueOf(property.getMortgage()) + " $"), 2, insidePane);
 	}
 
 	private void createContractForNotBuildable(GridPane insidePane, NotBuildable property) {
-		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1,
-				insidePane);
+		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1, insidePane);
 		ImageView image = property.getImage();
 		image.setFitHeight(IMAGE_HEIGHT);
 		image.setFitWidth(IMAGE_WIDTH);
@@ -136,8 +118,8 @@ public class Contract extends AnchorPane {
 		insidePane.add(propertyName, 0, this.row++, 2, 1);
 
 		for (int i = 1; i <= property.getColorOf().getNumTiles(); i++) {
-			labelCreator(i == 1 ? "RENT" : "if " + i + " are owned: ", Optional.of(property.getRent() * i + " $"),
-					1, insidePane);
+			labelCreator(i == 1 ? "RENT" : "if " + i + " are owned: ", Optional.of(property.getRent() * i + " $"), 1,
+					insidePane);
 		}
 		labelCreator("Mortgage value: " + property.getMortgage() + " $", Optional.empty(), 1, insidePane);
 	}

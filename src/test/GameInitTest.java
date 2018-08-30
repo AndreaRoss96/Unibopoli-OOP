@@ -19,14 +19,15 @@ import view.Icon;
 public class GameInitTest {
 	
 	private static final String SEP = File.separator;
+	private static final String MODE = "CLASSIC";
 	private final GameInitializer gameInit = GameInitializer.getInstance();
-	private Map<String, Icon> players;
+	private Map<String, String> players;
 	
 	private void buildPlayers() {
 		players = new HashMap<>();
-		players.put("Uncle Pennybags", new Icon("mode" + SEP + "classic" + SEP + "avatars" + SEP + "Boot"));
-        players.put("Mr. Pringles", new Icon("mode" + SEP + "classic" + SEP + "avatars" + SEP + "Car"));
-        players.put("Uncle Scrooge", new Icon("mode" + SEP + "classic" + SEP + "avatars" + SEP + "Wine"));
+		players.put("Uncle Pennybags", "mode" + SEP + "classic" + SEP + "avatars" + SEP + "Boot");
+        players.put("Mr. Pringles", "mode" + SEP + "classic" + SEP + "avatars" + SEP + "Car");
+        players.put("Uncle Scrooge", "mode" + SEP + "classic" + SEP + "avatars" + SEP + "Wine");
 		
 	}
 	
@@ -37,8 +38,8 @@ public class GameInitTest {
     public void testAlreadyInitialized() {
         try {
         	buildPlayers();
-            gameInit.newGame(this.players);
-            gameInit.newGame(this.players);
+            gameInit.newGame(MODE, this.players);
+            gameInit.newGame(MODE, this.players);
         } catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -53,7 +54,7 @@ public class GameInitTest {
     @Test
     public void testGameInit() throws IOException {
     	buildPlayers();
-    	final Model model = gameInit.newGame(players);
+    	final Model model = gameInit.newGame(MODE, this.players);
     	
     	// Check that all players are present
     	assertEquals(model.getPlayers().size(), 3);

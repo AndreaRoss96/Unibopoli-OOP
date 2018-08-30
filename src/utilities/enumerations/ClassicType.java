@@ -127,21 +127,23 @@ public class ClassicType {
 	
 	public enum Other{
 		GeneralOthersMap("images/Logo/Mr_Monopoly.png", "images/Icons/Music.png", "images/Icons/Sound.png", "images/Icons/No_Music.png",
-						 "images/Icons/No_sounds.png");
+						 "images/Icons/No_sounds.png", "images/Icons/Plus.png");
 		
 		private final String iconWindows;
 		private final String music;
 		private final String sound;
 		private final String noMusic;
 		private final String noSound;
+		private final String plus;
 		
 		private Other(final String iconWindows, final String music, final String sound, final String noMusic, 
-					  final String noSound) {
+					  final String noSound, final String plus) {
 			this.iconWindows = iconWindows;
 			this.music = music;
 			this.sound = sound;
 			this.noMusic = noMusic;
 			this.noSound = noSound;
+			this.plus = plus;
 		}
 		
 		  
@@ -163,6 +165,10 @@ public class ClassicType {
 		
 		public String getNoSoundImage() {
 			return this.noSound;
+		}
+		
+		public String getPlusImage() {
+			return this.plus;
 		}
 	}
 }

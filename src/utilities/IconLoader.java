@@ -64,12 +64,10 @@ public final class IconLoader {
 			if (listOfFiles[i].isFile()) {
 				String fileName = listOfFiles[i].getName().replaceAll(".png", "");
 				String filePath = listOfFiles[i].getPath().replaceAll("res", "");
-//				String filePath = listOfFiles[i].getPath();
 				imageMap.put(fileName, filePath);
 			}
 		}
 		
-//		System.out.println(imageMap.toString());
 		return imageMap;
 	}
 }

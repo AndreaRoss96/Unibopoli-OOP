@@ -97,7 +97,7 @@ public class AuctionDialog extends Dialog {
 		
 		stage.setOnCloseRequest(e -> {
 			if (!AlertFactory.createConfirmationAlert("Are you sure?",
-					"If you exit you will no longer be able to participate in this auction", "Confirm?")) {
+					"If you exit you will no longer be able to participate in this auction\nConfirm?")) {
 				e.consume();
 			}
 		});

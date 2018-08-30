@@ -17,14 +17,14 @@
 #RightInformationPane{
 	-fx-font-size: 10pt;
     -fx-font-family: "Kabel";
-    -fx-base: rgb(132, 145, 47);
- 	-fx-background: rgb(225, 228, 203);
+    -fx-base: #84912F;
+ 	-fx-background: #E1E4CB;
 }
 
 #mainMenu{
-    -fx-font-size: 14pt;
+    -fx-font-size: 15pt;
     -fx-font-family: "Kabel";
-	-fx-base: rgb(51, 51, 204);
+	-fx-base: #3333CC;
     -fx-background-image: url("/images/Logo/unibopoli-logo.jpg");
     -fx-background-size: 100% 100%;
    -fx-background-repeat: stretch;
@@ -34,9 +34,28 @@
 #setupPlayer{
     -fx-font-size: 10pt;
     -fx-font-family: "Kabel";
-    -fx-base: rgb(132, 145, 47);
+    -fx-base: #84912F;
  	-fx-background-image: url("/images/backgrounds/monopoli_cfu.png");
     -fx-background-repeat: stretch;   
     -fx-background-position: center center;
 }
 
+#setupBox {
+	-fx-padding: 10;
+	-fx-border-style: solid inside;
+	/*-fx-border-width: 2;
+	-fx-border-insets: 5;*/
+	-fx-border-radius: 5;
+	-fx-border-color: blue;
+	-fx-background-color: white;
+	-fx-background-radius: 5;
+}
+
+#contract{
+	-fx-border-color: black;
+	-fx-border-radius: 10;
+	-fx-border-style: solid inside;
+	-fx-background-radius: 10;
+	-fx-background-image: url("/images/cardBoard/white_cardstock.jpg");
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 1);
+}
