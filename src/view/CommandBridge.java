@@ -1,10 +1,9 @@
 package view;
 
-import controller.ControllerImpl;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import utilities.PaneDimensionSetting;
 
 /**

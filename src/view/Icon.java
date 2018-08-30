@@ -21,11 +21,7 @@ public class Icon {
 	public Icon(final String path) {
 		this(new Image(path));
 	}
-	
-	/**
-	 * TODO: Aggiungere ad IconLoader gli avatar
-	 * 	 
-	 * */
+
 	public Icon(final Image image) {
 		this.image = new ImageView(image);
 		this.direction = Direction.W;

@@ -109,6 +109,9 @@ public class Board implements Serializable{
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
 
+		/**
+		 * Aggiungere Parse anche a questi ultimi due.
+		 * */
 		chances.entrySet().stream().map(entry -> new Chance(entry.getKey(), entry.getValue())).forEach(gameBoard::add);
 
 		Arrays.asList(4, 38).stream().map(t -> new Tax(t)).forEach(gameBoard::add);

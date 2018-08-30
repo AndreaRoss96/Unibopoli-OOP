@@ -9,13 +9,11 @@ import model.player.Player;
 import model.player.RealPlayer;
 import model.tiles.Obtainable;
 import utilities.enumerations.InitialDistribution;
-import view.Icon;
 
 public final class GameInitializer {
 
 	private static final GameInitializer SINGLETON = new GameInitializer();
 	private boolean alreadyCalled;
-	private List<Obtainable> propertiesList;
 	private List<Player> playerList;
 
 	public GameInitializer() {
@@ -51,6 +49,8 @@ public final class GameInitializer {
 		Board board = new Board(mode);
 		
 		this.playerList = new ArrayList<>();
+		
+		
 		for (InitialDistribution v : InitialDistribution.values()) {
 			if (v.getPlayerNumber() == playersMap.size()) {
 				playersMap.keySet().forEach(e -> {
@@ -58,7 +58,7 @@ public final class GameInitializer {
 					/* for each properties diceded by the rules (enum - InitialDistribution) a
 					 * player buy a determinated number of any property
 					 */
-					for (int i = 0; i <= v.getContractNumber(); i++) {
+					for (int i = 0; i < v.getContractNumber(); i++) {
 						player.buyProperty(board.getTiles(t -> t instanceof Obtainable).stream().map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
 								.findAny().get()); //addProperties invece di buy, per mettere buy nel model
 					}

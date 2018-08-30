@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -14,11 +15,12 @@ import model.ResourceManager;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
+import model.tiles.Tile;
 import utilities.Pair;
 import utilities.enumerations.ModeGame;
-import view.Icon;
 import view.RightInormationPane;
 import view.View;
+import view.ViewImpl;
 import view.gameDialog.AuctionDialog;
 import view.gameDialog.CardDialog;
 import view.gameDialog.MortgageDialog;
@@ -38,6 +40,7 @@ public class ControllerImpl implements Controller {
 	private ControllerImpl() {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
 		this.sound.play(true);
+		this.view = new ViewImpl();
 		setBackgroundMusic();
 	}
 
@@ -113,8 +116,8 @@ public class ControllerImpl implements Controller {
 		new SoundController("/music/Dice-roll.wav").play(false);
 		Pair<Integer> result = model.exitDice();
 		RightInormationPane.updateDiceLabel(result.getFirst(), result.getSecond());
-		model.movement(result.getFirst() + result.getSecond()); // se il giocatore finisce in carcere non si muove ed il turno
-														// finisce automaticamente
+		this.exitDice(result.getFirst() + result.getSecond());
+		
 		/*
 		 * if the two dice have same result the player have to roll dices again, even if
 		 * you are going out of jail
@@ -127,6 +130,13 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
+	private void exitDice(final int value) {
+		view.movement(value);
+		
+		model.movement(value); // se il giocatore finisce in carcere non si muove ed il turno
+						// finisce automaticamente		
+	}
+	
 	@Override
 	public void settingsClick() {
 		// TODO Auto-generated method stub
@@ -175,5 +185,10 @@ public class ControllerImpl implements Controller {
 	
 	public List<String> getGameMode() {
 		return Arrays.asList(ModeGame.values()).stream().map(t -> String.valueOf(t)).collect(Collectors.toList());
+	}
+
+	@Override
+	public Set<Tile> getGameBoard() {
+		return this.model.getBoard();
 	}
 }

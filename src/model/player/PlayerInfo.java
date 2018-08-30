@@ -6,7 +6,6 @@ import java.util.Map;
 
 import model.tiles.*;
 import utilities.enumerations.Color;
-import view.Icon;
 
 /**
  * This interface contains all getters and some minimum method for a limited

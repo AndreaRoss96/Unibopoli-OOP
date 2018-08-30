@@ -1,5 +1,6 @@
 package utilities.enumerations;
 
+import controller.GameLoop;
 import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -22,13 +23,13 @@ public enum Direction {
 	W(0) {
 		@Override
 		public void moveLocation(Scene scene, Node player, int position) {
-		
 			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
             transition.setToX(player.getTranslateX() - (STEP_SIZE*position));
             transition.setToY(player.getTranslateY());
-            transition.playFromStart();			
+            transition.playFromStart();	
+//            GameLoop.get().stop();
 		}
 	},
 	/**
@@ -37,13 +38,13 @@ public enum Direction {
 	N(1) {
 		@Override
 		public void moveLocation(Scene scene, Node player, int position) {
-			
 			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
             transition.setToX(player.getTranslateX());
             transition.setToY(player.getTranslateY() - (STEP_SIZE*position));
             transition.playFromStart();
+//            GameLoop.get().stop();
 		}
 	},
     /**
@@ -52,14 +53,13 @@ public enum Direction {
 	E(2) {
 		@Override
 		public void moveLocation(Scene scene, Node player, int position) {
-			
 			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
             transition.setToX(player.getTranslateX() + (STEP_SIZE*position));
             transition.setToY(player.getTranslateY());
             transition.playFromStart();
-
+//            GameLoop.get().stop();
 		}
 	},
 	 /**
@@ -68,14 +68,13 @@ public enum Direction {
 	S(3) {
 		@Override
 		public void moveLocation(Scene scene, Node player, int position) {
-			
 			transition.setNode(player);
 			transition.setFromX(player.getTranslateX());
             transition.setFromY(player.getTranslateY());
             transition.setToX(player.getTranslateX());
             transition.setToY(player.getTranslateY() + (STEP_SIZE*position));
             transition.playFromStart();
-
+//            GameLoop.get().stop();
 		}
 	};
 	
@@ -119,4 +118,3 @@ public enum Direction {
 		return Direction.values()[(this.getIndex() + 1) % Direction.values().length];
 	}
 }
-

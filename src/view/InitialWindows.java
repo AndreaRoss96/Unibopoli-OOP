@@ -1,8 +1,9 @@
 package view;
 
-import controller.ControllerImpl;
 import javafx.application.Application;
 import javafx.stage.Stage;
+
+import controller.ControllerImpl;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 import view.gameSetup.MainMenu;

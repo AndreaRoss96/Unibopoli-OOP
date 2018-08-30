@@ -1,17 +1,19 @@
 package view;
 
 import java.util.Comparator;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
+import controller.GameLoop;
+import controller.MovementController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
-import model.Board;
 import model.tiles.Tile;
-import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import view.tiles.LandAbstractFactoryImp;
 
@@ -27,13 +29,18 @@ public class GamePane extends StackPane{
 	private static final double FIXRIGHT = 17.0;
 	
 	private static GamePane GAMEPANE = null;
-	
-	private Board board = new Board("CLASSIC");
 	private StackPane mainPane = new StackPane();
-	private Pane pane;
+	
+	/**
+	 * Ricordarsi di gestire l'eliminazione del giocatore
+	 * */
+	private Map<String, Icon> iconMap;
 	
 	private GamePane() {
 		super(new StackPane());
+		this.iconMap = new HashMap<>();
+		ControllerImpl.getController().getPlayers().stream()
+									  .forEach(player -> iconMap.put(player.getName(), new Icon(player.getIconPath())));
 		
 		this.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMinHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
@@ -47,15 +54,14 @@ public class GamePane extends StackPane{
 	}
 	
 	private Pane playerLayer() {
-		pane = new Pane();
+		Pane pane = new Pane();
 		
-		ControllerImpl.getController().getPlayers().stream().map(player -> IconLoader.getLoader().getImageFromPath(player.getIconPath()))
-					  .peek(icon -> icon.setScene(mainPane.getScene())).forEach(icon -> {
-						  icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
-						  icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
-					  });
+		this.iconMap.values().stream().peek(icon -> icon.setScene(mainPane.getScene()))
+							 .forEach(icon -> { icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
+							 					icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
+							 });
 		
-		pane.getChildren().addAll(ControllerImpl.getController().getPlayers().stream().map(player -> IconLoader.getLoader().getImageFromPath(player.getIconPath()).get()).collect(Collectors.toList()));
+		pane.getChildren().addAll(this.iconMap.values().stream().map(icon -> icon.get()).collect(Collectors.toList()));
 		
 		return pane;
 	}
@@ -91,7 +97,7 @@ public class GamePane extends StackPane{
 	private GridPane builder(long skip, long limit, Pos position) {
 		GridPane pane = new GridPane();
 		
-		board.getTiles(t -> true).stream().sorted(orderCre()).skip(skip).limit(limit)
+		ControllerImpl.getController().getGameBoard().stream().sorted(orderCre()).skip(skip).limit(limit)
 			 .map(tile -> new LandAbstractFactoryImp().createLand(tile))
 			 .forEach(land -> pane.addRow(0, land));
 		
@@ -129,6 +135,33 @@ public class GamePane extends StackPane{
 	
 	private GridPane getBottomNode() {
 		return this.builder(0, 11, Pos.BOTTOM_CENTER);
+	}
+	
+	public void movement(int movement) {
+		Icon tempIcon = this.iconMap.get(ControllerImpl.getController().getCurruntPlayer().getName());
+		int position = ControllerImpl.getController().getCurruntPlayer().getPosition();
+		int corner = this.getNextCorner(position);
+		
+		if(position + movement > corner) {
+			MovementController control = new MovementController().setIcon(tempIcon).setMovement(corner-position);
+			control.start();
+			
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			tempIcon.rotate();		
+			movement = movement - (corner-position);
+		}
+		
+		MovementController control = new MovementController().setIcon(tempIcon).setMovement(movement);
+		control.start();
+	}
+	
+	private int getNextCorner(int pos) {
+		return (((int) pos / 10) + 1) * 10;
 	}
 	
 	public static GamePane get() {

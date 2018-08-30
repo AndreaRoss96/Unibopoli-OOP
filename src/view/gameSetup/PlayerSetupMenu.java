@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import controller.ControllerImpl;
 import javafx.collections.ListChangeListener;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -15,12 +13,12 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import controller.ControllerImpl;
 import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
@@ -116,6 +114,7 @@ public class PlayerSetupMenu extends Scene {
 				psbList.forEach(bBox -> {
 					playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
 				});
+				
 				ControllerImpl.getController().newGameInit(mapBox.getSelectionModel().getSelectedItem(), playersNames,
 						playersIcon);
 				mainStage.setScene(CommandBridge.get(mainStage));
