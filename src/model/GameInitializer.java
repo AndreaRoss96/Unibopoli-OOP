@@ -11,13 +11,11 @@ import model.player.Player;
 import model.player.RealPlayer;
 import model.tiles.Obtainable;
 import utilities.enumerations.InitialDistribution;
-import view.Icon;
 
 public final class GameInitializer {
 
 	private static final GameInitializer SINGLETON = new GameInitializer();
 	private boolean alreadyCalled;
-	private List<Obtainable> propertiesList;
 	private List<Player> playerList;
 
 	public GameInitializer() {
@@ -53,6 +51,8 @@ public final class GameInitializer {
 		Board board = new Board(mode);
 		
 		this.playerList = new ArrayList<>();
+		
+		
 		for (InitialDistribution v : InitialDistribution.values()) {
 			if (v.getPlayerNumber() == playersMap.size()) {
 				playersMap.keySet().forEach(e -> {

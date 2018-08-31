@@ -1,6 +1,6 @@
 package view.gameSetup;
 
-import controller.SoundController;
+
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -8,6 +8,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import controller.SoundController;
 import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;

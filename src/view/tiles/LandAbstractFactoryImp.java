@@ -65,7 +65,6 @@ public class LandAbstractFactoryImp{
 		
 		this.getNotBuildables(landPane, notBuildableTile);
 		
-		//deve passare prima per il controller
 		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(notBuildableTile, false));
 		
 		return landPane;

@@ -2,9 +2,11 @@ package controller;
 
 import java.io.File;
 import java.util.List;
+import java.util.Set;
 
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
+import model.tiles.Tile;
 
 public interface Controller {
 
@@ -82,5 +84,8 @@ public interface Controller {
 	List<PlayerInfo> getPlayers();
 	
 	 List<String> getGameMode();
+	 
 	 List<Obtainable> getProperties();
+	 
+	 Set<Tile> getGameBoard();
 }

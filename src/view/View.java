@@ -7,4 +7,5 @@ public interface View {
      */
 	void startView();
 	
+	void movement(final int exitDice);
 }

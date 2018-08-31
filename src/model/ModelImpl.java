@@ -3,7 +3,6 @@ package model;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
@@ -111,7 +110,6 @@ public class ModelImpl implements Model{
 	public void goToJail() {
 		this.setNewPosition(JAIL);
 		((Player) this.getCurrentPlayer()).goToJail();
-		//this.endTurn();
 	}
 	
 	@Override

@@ -15,7 +15,6 @@ import model.tiles.Obtainable;
 import controller.DialogController;
 
 import utilities.enumerations.Color;
-import view.Icon;
 
 public class RealPlayer implements Player {
 
