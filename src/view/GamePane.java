@@ -6,13 +6,14 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
-import controller.GameLoop;
 import controller.MovementController;
 import javafx.geometry.Pos;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
 import view.tiles.LandAbstractFactoryImp;
@@ -57,7 +58,7 @@ public class GamePane extends StackPane{
 		Pane pane = new Pane();
 		
 		this.iconMap.values().stream().peek(icon -> icon.setScene(mainPane.getScene()))
-							 .forEach(icon -> { icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
+							 .forEach(icon -> { icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 80);
 							 					icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
 							 });
 		
@@ -141,23 +142,29 @@ public class GamePane extends StackPane{
 		Icon tempIcon = this.iconMap.get(ControllerImpl.getController().getCurruntPlayer().getName());
 		int position = ControllerImpl.getController().getCurruntPlayer().getPosition();
 		int corner = this.getNextCorner(position);
+		Path path = new Path();
+		path.getElements().add(new MoveTo(tempIcon.get().getLayoutX(), tempIcon.get().getLayoutY()));
 		
 		if(position + movement > corner) {
-			MovementController control = new MovementController().setIcon(tempIcon).setMovement(corner-position);
-			control.start();
 			
-			try {
-				Thread.sleep(1500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			tempIcon.rotate();		
+			path.getElements().add(tempIcon.move(corner-position));
+			
+			
+			
+			tempIcon.rotate();
+			/*SequentialTransition sequential = new SequentialTransition(tempIcon.move(2), tempIcon.move(4));
+			sequential.getChildren().get(1).play();
+			tempIcon.rotate();
+			sequential.getChildren().get(0).play();*/
 			movement = movement - (corner-position);
-		}
+			
+		}	
+			
+		path.getElements().add(tempIcon.move(movement));
 		
-		MovementController control = new MovementController().setIcon(tempIcon).setMovement(movement);
-		control.start();
+		MovementController control = new MovementController().setMovement(path);
+			control.start();
+		
 	}
 	
 	private int getNextCorner(int pos) {
