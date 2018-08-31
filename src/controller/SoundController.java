@@ -17,6 +17,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 public final class SoundController {
 	private static final float VOLUME_REDUCE = -18f;
 	private Clip clip;
+	private Clip soundClip;
 	private boolean musicMute;
 	private boolean soundsMute;
 
@@ -38,6 +39,15 @@ public final class SoundController {
 		} catch (UnsupportedAudioFileException e) {
 			e.printStackTrace();
 		}
+		
+		new Thread() {
+			public void run() {
+				final FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+				volume.setValue(VOLUME_REDUCE);
+				clip.loop(Clip.LOOP_CONTINUOUSLY);
+			}
+		}.start();
+		
 	}
 
 	/**
@@ -46,15 +56,24 @@ public final class SoundController {
 	 * @param loop
 	 *            flag to determine if music should be played in loop
 	 */
-	public void play(final boolean loop) {
+	public void playSound(final String soundPath) {
+		try {
+			final AudioInputStream ais = AudioSystem.getAudioInputStream(SoundController.class.getResource(soundPath));
+			soundClip = AudioSystem.getClip();
+			soundClip.open(ais);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (LineUnavailableException e) {
+			e.printStackTrace();
+		} catch (UnsupportedAudioFileException e) {
+			e.printStackTrace();
+		}
 		new Thread() {
 			public void run() {
-				if (loop) {
+				if (!isSoundMute()) {
 					final FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
 					volume.setValue(VOLUME_REDUCE);
-					clip.loop(Clip.LOOP_CONTINUOUSLY);
-				} else if (isSoundMute()) {
-					clip.start();
+					soundClip.start();
 				}
 			}
 		}.start();
@@ -73,7 +92,7 @@ public final class SoundController {
 	}
 
 	/**
-	 * Set sounds mute if there's volume, set volume otherwise.
+	 * Set sounds mute if there's sounds, set sounds otherwise.
 	 */
 	public void changeSoundsMute() {
 		this.soundsMute = !this.soundsMute;

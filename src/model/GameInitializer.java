@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import model.player.Player;
 import model.player.RealPlayer;
 import model.tiles.Obtainable;
@@ -58,16 +60,16 @@ public final class GameInitializer {
 					/* for each properties diceded by the rules (enum - InitialDistribution) a
 					 * player buy a determinated number of any property
 					 */
-					for (int i = 0; i <= v.getContractNumber(); i++) {
+					for (int i = 0; i < v.getContractNumber(); i++) {
 						player.buyProperty(board.getTiles(t -> t instanceof Obtainable).stream().map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
-								.findAny().get()); //addProperties invece di buy, per mettere buy nel model
+								.findFirst().get()); //addProperties invece di buy, per mettere buy nel model
 					}
 //					player.decMoney(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
 					this.playerList.add(player);
 				});
 			}
 		}
-		return new ModelImpl(board, new TurnImpl(playerList)); // mi serve la board
+		return new ModelImpl(board, new TurnImpl(playerList));
 	}
 
 	/**

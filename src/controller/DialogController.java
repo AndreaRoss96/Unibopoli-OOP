@@ -1,11 +1,9 @@
 package controller;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
-import model.Model;
 import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
@@ -41,16 +39,14 @@ public class DialogController implements DialogObserver {
 							((Player) playerList.get(passwordList.indexOf(e))).addProperty(property);
 							((Player) playerList.get(passwordList.indexOf(e))).payments(moneyAmount);
 						} else {
-							AlertFactory.createInformationAlert("Ehi", null,
-									playerList.get(passwordList.indexOf(e)).getName()
-											+ ", you don't have all those money.");
+							AlertFactory.createInformationAlert("Ehi", playerList.get(passwordList.indexOf(e)).getName()
+							f				+ ", you don't have all those money.");
 						}
 					}
 				});
 			}
 		} catch (NumberFormatException ex) {
-			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!",
-					"Please, use only numbers...");
+			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!\nPlease, use only numbers...");
 		}
 	}
 
@@ -58,7 +54,8 @@ public class DialogController implements DialogObserver {
 	public void incHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
 		if (canPay(ControllerImpl.getController().getCurruntPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
-				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
+//				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
+				
 				property.incBuildings(); //deve diminuire i soldi del giocatore
 				((Player) ControllerImpl.getController().getCurruntPlayer()).payments(property.getPriceForBuilding());
 			} else {
@@ -72,7 +69,7 @@ public class DialogController implements DialogObserver {
 	@Override
 	public void decHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
 			if (property.getBuildingNumber() != 0) {
-				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
+//				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
 				decHouse(property);
 				((Player) ControllerImpl.getController().getCurruntPlayer()).gainMoney(property.getPriceForBuilding()/2); // searchPlayerByName, oppure currentPlayer torna Player
 			}

@@ -16,7 +16,6 @@ import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import utilities.Pair;
 import utilities.enumerations.ModeGame;
-import view.Icon;
 import view.RightInormationPane;
 import view.View;
 import view.gameDialog.AuctionDialog;
@@ -37,7 +36,6 @@ public class ControllerImpl implements Controller {
 
 	private ControllerImpl() {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
-		this.sound.play(true);
 		setBackgroundMusic();
 	}
 
@@ -110,7 +108,8 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void diceClick() {
-		new SoundController("/music/Dice-roll.wav").play(false);
+//		new SoundController("/music/Dice-roll.wav").play(false);
+		this.sound.playSound("/music/Dice-roll.wav");
 		Pair<Integer> result = model.exitDice();
 		RightInormationPane.updateDiceLabel(result.getFirst(), result.getSecond());
 		model.movement(result.getFirst() + result.getSecond()); // se il giocatore finisce in carcere non si muove ed il turno
@@ -121,7 +120,8 @@ public class ControllerImpl implements Controller {
 		 */
 		RightInormationPane.updateButton(!(result.areSame()));
 		if (model.getCurrentPlayer().isInJail()) {
-			new SoundController("/music/Jail_Door_sound_effect.wav").play(false);
+//			new SoundController("/music/Jail_Door_sound_effect.wav").play(false);
+			this.sound.playSound("/music/Jail_Door_sound_effect.wav");
 			model.endTurn();
 			this.updateButtons();
 		}

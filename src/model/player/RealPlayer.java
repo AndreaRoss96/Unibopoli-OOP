@@ -39,6 +39,8 @@ public class RealPlayer implements Player {
 	 *            player's name
 	 * @param money
 	 *            initial player's money
+	 * @param iconPath
+	 * 			  the path where is located the icon's image of the player
 	 */
 	public RealPlayer(final String name, int money, final String iconPath) {
 		this.name = name;
