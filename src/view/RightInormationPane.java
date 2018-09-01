@@ -8,6 +8,7 @@ import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
 import model.player.PlayerInfo;
 import utilities.PaneDimensionSetting;
 
@@ -77,7 +78,7 @@ public class RightInormationPane extends VBox {
 		netWorthLabel.setWrapText(true);
 		prisonLabel = new Label();
 		prisonLabel.setWrapText(true);
-		this.getChildren().addAll(playerLabel, cashLabel, netWorthLabel, prisonLabel);
+		this.getChildren().addAll(playerLabel, new Line(), cashLabel, new Line(), netWorthLabel, new Line(), prisonLabel);
 
 		endTurn = new Button("", new ImageView(END_TURN_PATH));
 		endTurn.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 52px; " + "-fx-min-height: 52px; "
@@ -106,6 +107,7 @@ public class RightInormationPane extends VBox {
 		});
 		
 		this.setId("RightInformationPane");
+		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 	}
 
 	/**

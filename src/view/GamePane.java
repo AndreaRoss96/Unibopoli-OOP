@@ -143,8 +143,8 @@ public class GamePane extends StackPane{
 		int corner = this.getNextCorner(position);
 		
 		if(position + movement > corner) {
-			MovementController control = new MovementController().setIcon(tempIcon).setMovement(corner-position);
-			control.start();
+//			MovementController control = new MovementController().setIcon(tempIcon).setMovement(corner-position);
+//			control.start();
 			
 			try {
 				Thread.sleep(1500);
@@ -156,8 +156,8 @@ public class GamePane extends StackPane{
 			movement = movement - (corner-position);
 		}
 		
-		MovementController control = new MovementController().setIcon(tempIcon).setMovement(movement);
-		control.start();
+//		MovementController control = new MovementController().setIcon(tempIcon).setMovement(movement);
+//		control.start();
 	}
 	
 	private int getNextCorner(int pos) {
