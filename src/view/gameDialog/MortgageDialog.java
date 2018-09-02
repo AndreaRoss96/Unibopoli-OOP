@@ -6,8 +6,6 @@ import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
 
@@ -23,8 +21,7 @@ public class MortgageDialog extends Dialog {
 	private static final MortgageDialog SINGLETON = new MortgageDialog();
 
 	private static final double SPACING = 10;
-	private static final Font INFORMATION_FONT = Font.font("Arial", FontPosture.ITALIC, 18);
-
+	
 	/**
 	 * Instance of MortgageDialog.
 	 * 
@@ -47,7 +44,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setBackground(getBackground());
 
 		//attenzione, non vuole solo il current player, ma qualsiasi giocatore può andare in bancarotta, o meglio, bisognerebbe vedere gli imprevisti
-		//comunque sarebbe bene passargli in ingresso il current player per mantenere l'incapulamento
+		//comunque sarebbe bene passargli in ingresso il current player per mantenere l'incapsulamento
 		final PlayersContractListView playerListView = new PlayersContractListView(player);
 		rootPane.setLeft(playerListView);
 
@@ -74,7 +71,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setBottom(bottomPane);
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			obtainedMoney.setText(String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected())));
+			obtainedMoney.setText(obtainedMoney.getText().replaceAll("0", String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected()))));
 			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
 		});
 

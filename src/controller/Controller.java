@@ -88,4 +88,8 @@ public interface Controller {
 	 List<Obtainable> getProperties();
 	 
 	 Set<Tile> getGameBoard();
+
+	void updateView();
+
+	SoundController getSound();
 }

@@ -39,7 +39,7 @@ public class ResourceManager {
 			} catch (IOException e) {
 				e.printStackTrace();
 				AlertFactory
-						.createErrorAlert("ERROR", "There's been an error during the creation of save directory!", null);
+						.createErrorAlert("ERROR", "There's been an error during the creation of save directory!");
 			}
 		}
 	}
@@ -65,7 +65,7 @@ public class ResourceManager {
 			fileOutput.close();
 		} catch (IOException ioEx) {
 			ioEx.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file saving!", null);
+			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file saving!");
 		}
 	}
 
@@ -85,10 +85,10 @@ public class ResourceManager {
 			fileInput.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!", null);
+			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!", null);
+			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!");
 		}
 		return memento;
 	}

@@ -30,11 +30,23 @@
 #mainMenu{
     -fx-font-size: 15pt;
     -fx-font-family: "Kabel";
-	-fx-base: #3333CC;
+	-fx-base: #4949cc; 
     -fx-background-image: url("/images/Logo/unibopoli-logo.jpg");
     -fx-background-size: 100% 100%;
-   -fx-background-repeat: stretch;
+ 	-fx-background-repeat: stretch;
     -fx-background-position: center center;
+}
+
+.mainMenuButton{
+	-fx-border-color: #FFFFFF;
+	-fx-text-fill:#FFFFFF;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 5, 0, 0, 1);
+}
+
+.mainMenuButton:hover{
+	-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 5, 0, 0, 1);
+	-fx-text-fill:#000000;
+	-fx-border-color:#000000;
 }
 
 #setupPlayer{
@@ -61,7 +73,36 @@
 	-fx-border-color: black;
 	-fx-border-radius: 10;
 	-fx-border-style: solid inside;
-	-fx-background-radius: 10;
 	-fx-background-image: url("/images/cardBoard/white_cardstock.jpg");
+	-fx-background-radius: 10;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 1);
+}
+
+.contractLabel{
+	-fx-font-family: Kabel;
+	-fx-border-radius: 10;
+	-fx-border-color: black;
+	-fx-background-radius: 10;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 4, 0, 0, 1);
+}
+
+.settingButton{
+	-fx-background-radius: 5em;
+	-fx-min-width: 40px;
+	-fx-min-height: 40px;
+	-fx-max-width: 40px;
+	-fx-max-height: 40px;
+}
+
+.roundButton{
+	-fx-background-color: white;
+	-fx-background-radius: 5em;
+	-fx-min-width: 52px;
+	-fx-min-height: 52px;
+	-fx-max-width: 52px;
+	-fx-max-height: 52px;
+}
+
+.roundButton:hover{
+	-fx-background-color: grey;
 }

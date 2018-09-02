@@ -53,15 +53,16 @@ public class Contract extends AnchorPane {
 		} else {
 			createContractForNotBuildable(insidePane, (NotBuildable) property);
 		}
+		
+		AnchorPane.setTopAnchor(insidePane, WIDTH_ANCHOR);
+		AnchorPane.setLeftAnchor(insidePane, HEIGHT_ANCHOR);
+		AnchorPane.setRightAnchor(insidePane, HEIGHT_ANCHOR);
+		AnchorPane.setBottomAnchor(insidePane, WIDTH_ANCHOR);
 
 		this.getChildren().add(insidePane);
 		this.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 		this.setId("contract");
 		this.getStylesheets().add("/style/style.css");
-		AnchorPane.setTopAnchor(insidePane, WIDTH_ANCHOR);
-		AnchorPane.setLeftAnchor(insidePane, HEIGHT_ANCHOR);
-		AnchorPane.setRightAnchor(insidePane, HEIGHT_ANCHOR);
-		AnchorPane.setBottomAnchor(insidePane, WIDTH_ANCHOR);
 	}
 
 	private void createContractForBuildable(GridPane insidePane, Buildable property) {
@@ -83,8 +84,7 @@ public class Contract extends AnchorPane {
 					Optional.of(String.valueOf(property.getRent(i)) + " $"), 1, insidePane);
 		}
 
-		Line line = new Line(-100, 0, 100, 0);
-		line.setStrokeType(StrokeType.OUTSIDE);
+		final Line line = new Line(-100, 0, 100, 0);
 		insidePane.add(line, 0, this.row++, 2, 1);
 		GridPane.setHalignment(line, HPos.CENTER);
 
@@ -95,7 +95,7 @@ public class Contract extends AnchorPane {
 
 	private void createContractForNotBuildable(GridPane insidePane, NotBuildable property) {
 		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1, insidePane);
-		ImageView image = property.getImage();
+		final ImageView image = property.getImage();
 		image.setFitHeight(IMAGE_HEIGHT);
 		image.setFitWidth(IMAGE_WIDTH);
 		insidePane.add(image, 0, this.row++, 2, 1);
@@ -118,7 +118,7 @@ public class Contract extends AnchorPane {
 	}
 
 	private void labelCreator(String leftLabel, Optional<String> rightLabel, int colspan, GridPane insidePane) {
-		Label left = new Label(leftLabel);
+		final Label left = new Label(leftLabel);
 		left.setWrapText(true);
 		insidePane.add(left, 0, this.row, colspan, 1);
 		if (rightLabel.isPresent()) {

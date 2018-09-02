@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.gameDialog;
 
 import controller.DialogController;
@@ -37,12 +34,13 @@ public class CardDialog extends Dialog {
 	private static final CardDialog SINGLETON = new CardDialog();
 	
 	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
-	private static final Font VALUE_FONT = Font.font("Arial", FontPosture.ITALIC, 18); //da modificare in setStyle(-fx-font-family: kabel)
+	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); //da modificare in setStyle(-fx-font-family: kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
 
 	private Stage stage;
 	private Obtainable property;
+	private Label buildingNumer;
 
 	/**
 	 * Instance of CardDialog.
@@ -62,15 +60,18 @@ public class CardDialog extends Dialog {
 	 */
 	public void createCardDialog(Obtainable property, boolean canAct) {
 		this.stage = setStage();
-		final BorderPane root = new BorderPane();
 		this.property = property;
+		this.buildingNumer = new Label();
+		this.buildingNumer.setFont(VALUE_FONT);
+		
+		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox());
-		// root.setLeft(DialogController.getController().getContract(property));
 		root.setLeft(new Contract(this.property));
 		root.setBottom(addBottom(canAct));
-		final Scene scene = new Scene(root);
+		root.setBackground(getBackground());	
 		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, BOTTOM_MARGIN, LEFT_MARGIN));
-		root.setBackground(getBackground());		
+		
+		final Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 		
@@ -88,40 +89,38 @@ public class CardDialog extends Dialog {
 	 * @return AnchorPane
 	 */
 	private AnchorPane addRightBox() {
-		AnchorPane anchor = new AnchorPane();
-		GridPane grid = new GridPane();
+		final AnchorPane anchor = new AnchorPane();
+		final GridPane grid = new GridPane();
 		Integer column = 1;
 
-		Label title = new Label("Contract Infos:\n\n");
+		final Label title = new Label("Contract Infos:\n\n");
 		title.setFont(TITLE_FONT);
 		title.setTextFill(property.getColorOf().getPaint().orElse(Color.BLACK));
 		
-		Label labelOwner = new Label("Owner: ");
+		final Label labelOwner = new Label("Owner: ");
 		labelOwner.setFont(getPrincipalFont());
-		Label effectiveOwner = new Label(property.getOwner().orElse(" - "));
+		final Label effectiveOwner = new Label(property.getOwner().orElse(" - "));
 		effectiveOwner.setFont(VALUE_FONT);
 		
-		Label propertyStatus = new Label("Status: ");
+		final Label propertyStatus = new Label("Status: ");
 		propertyStatus.setFont(getPrincipalFont());
-		Label effectivePropertyStatus = new Label(property.hasMortgage() ? Obtainable.StatusTile.MORTGAGE.toString() : Obtainable.StatusTile.NOT_MORTGAGE.toString());
+		final Label effectivePropertyStatus = new Label(property.hasMortgage() ? Obtainable.StatusTile.MORTGAGE.toString() : Obtainable.StatusTile.NOT_MORTGAGE.toString());
 		effectivePropertyStatus.setFont(VALUE_FONT);
 		
-		// insertion in the gridPAne
+		/* insertion in the gridPAne */
 		grid.add(title, 0, 0, 2, 2);
 		grid.add(labelOwner, 0, ++column);
 		grid.add(effectiveOwner, 1, column);
 		grid.add(propertyStatus, 0, ++column);
 		grid.add(effectivePropertyStatus, 1, column);
 		
-		// if the property is buildable the dialog will show the number of houses/HOTEL
+		/* if the property is buildable the dialog will show the number of houses/HOTEL */
 		if (property instanceof Buildable) {
-			Label building = new Label((((Buildable) this.property).getBuildingNumber() == 5 ? "HOTEL"
-					: "Building" + (((Buildable) this.property).getBuildingNumber() != 0 ? "s" : "")) + ": ");
+			final Label building = new Label("Buildings: ");
 			building.setFont(getPrincipalFont());
-			Label buildingNumer = new Label(Integer.toString(((Buildable) property).getBuildingNumber()));
-			buildingNumer.setFont(VALUE_FONT);
+			updateBuildingLabel();
 			grid.add(building, 0, ++column);
-			grid.add(buildingNumer, 1, column);
+			grid.add(this.buildingNumer, 1, column);
 		}
 
 		anchor.getChildren().add(grid);
@@ -132,7 +131,7 @@ public class CardDialog extends Dialog {
 	}
 
 	private GridPane addBottom(boolean canAct) {
-		GridPane grid = new GridPane();
+		final GridPane grid = new GridPane();
 		grid.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		grid.setHgap(Dialog.getScreenH() * 0.1);
 		if (!this.property.getOwner().isPresent()) {
@@ -151,8 +150,8 @@ public class CardDialog extends Dialog {
 	 * @param grid
 	 */
 	private void gridWithNoOwner(GridPane grid, boolean canBuy) {
-		ImageView cashImage = new ImageView(new Image("/images/dialogButton/cash-in-hand-50.png"));
-		Button buyProperty = new Button("", cashImage);
+		final ImageView cashImage = new ImageView(new Image("/images/dialogButton/cash-in-hand-50.png"));
+		final Button buyProperty = new Button("", cashImage);
 		buyProperty.setDisable(!canBuy);
 		Tooltip tooltip = new Tooltip(
 				(buyProperty.isDisable()) ? "You can't buy this property!" : "Buy this property!");
@@ -160,8 +159,7 @@ public class CardDialog extends Dialog {
 		buyProperty.setTooltip(tooltip);
 		buyProperty.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		buyProperty.setOnAction(e -> {
-			// Controller.BuyProperty(property) da implementare
-			//bisogna disabilitare il bottone se il giocatore non è nella stessa casella della carta
+			DialogController.getDialogController().buyPropertyClick();
 			this.stage.close();
 		});
 		grid.add(buyProperty, 0, 0);
@@ -185,24 +183,38 @@ public class CardDialog extends Dialog {
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
 	
 		if(!(this.property instanceof Buildable) || !canBuild) {
-			addHouseButton.setDisable(false);
-			removeHouseButton.setDisable(false);
+			addHouseButton.setDisable(true);
+			removeHouseButton.setDisable(true);
+		} else {
+			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= 5));
+			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));			
 		}
 		
 		addHouseButton.setOnAction(e -> {
-			DialogController.getDialogController().incHouse((Buildable) this.property);
+			addHouseButton.setDisable(DialogController.getDialogController().incHouse());
+			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));
 		});
 		
 		removeHouseButton.setOnAction(e -> {
-			DialogController.getDialogController().decHouse((Buildable) this.property);
+			removeHouseButton.setDisable(DialogController.getDialogController().decHouse());
+			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= 5));
 		});
 		
 		mortgageProperty.setOnAction(e -> {
-			DialogController.getDialogController().mortgageDialogClick(property);
+			DialogController.getDialogController().mortgageDialogClick();
+			this.stage.close();
 		});
 		
 		grid.add(removeHouseButton, 0, 0);
 		grid.add(addHouseButton, 1, 0);
 		grid.add(mortgageProperty, 2, 0);
+	}
+	
+	public Buildable getProperty() {
+		return (Buildable) this.property;
+	}
+	
+	public void updateBuildingLabel() {
+		this.buildingNumer.setText(((Buildable) this.property).getBuildingNumber() >= 5 ? "HOTEL" : String.valueOf(((Buildable) this.property).getBuildingNumber()));
 	}
 }

@@ -127,7 +127,7 @@ public class ClassicType {
 	
 	public enum Other{
 		GeneralOthersMap("images/Logo/Mr_Monopoly.png", "images/Icons/Music.png", "images/Icons/Sound.png", "images/Icons/No_Music.png",
-						 "images/Icons/No_sounds.png", "images/Icons/Plus.png");
+						 "images/Icons/No_sounds.png", "images/Icons/Plus.png", "images/Icons/dices.png", "images/Icons/gear.png");
 		
 		private final String iconWindows;
 		private final String music;
@@ -135,15 +135,19 @@ public class ClassicType {
 		private final String noMusic;
 		private final String noSound;
 		private final String plus;
+		private final String dice;
+		private final String gear;		
 		
 		private Other(final String iconWindows, final String music, final String sound, final String noMusic, 
-					  final String noSound, final String plus) {
+					  final String noSound, final String plus, final String dice, final String gear) {
 			this.iconWindows = iconWindows;
 			this.music = music;
 			this.sound = sound;
 			this.noMusic = noMusic;
 			this.noSound = noSound;
 			this.plus = plus;
+			this.dice = dice;
+			this.gear = gear;
 		}
 		
 		  
@@ -169,6 +173,14 @@ public class ClassicType {
 		
 		public String getPlusImage() {
 			return this.plus;
+		}
+		
+		public String getDiceImage() {
+			return this.dice;
+		}
+		
+		public String getGearImage() {
+			return this.gear;
 		}
 	}
 }

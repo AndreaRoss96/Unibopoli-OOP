@@ -47,7 +47,7 @@ public class BuildableImpl extends ObtainableImpl implements Buildable{
 
 	@Override
 	public void decBuildings() {
-		// TODO Auto-generated method stub
+		this.buildingsNr--;
 		
 	}
 }

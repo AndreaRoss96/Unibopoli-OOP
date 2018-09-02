@@ -1,9 +1,11 @@
 package utilities.enumerations;
 
-import controller.GameLoop;
-import javafx.animation.TranslateTransition;
+import javafx.animation.PathTransition;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
 import javafx.util.Duration;
 import view.tiles.ComponentFactory;
 
@@ -22,14 +24,15 @@ public enum Direction {
      */
 	W(0) {
 		@Override
-		public void moveLocation(Scene scene, Node player, int position) {
-			transition.setNode(player);
-			transition.setFromX(player.getTranslateX());
-            transition.setFromY(player.getTranslateY());
-            transition.setToX(player.getTranslateX() - (STEP_SIZE*position));
-            transition.setToY(player.getTranslateY());
-            transition.playFromStart();	
-//            GameLoop.get().stop();
+		public LineTo moveLocation(Scene scene, Node player, int position) {
+				return new LineTo(player.getLayoutX() - (STEP_SIZE*position), player.getLayoutY() +20.0);			
+//			
+//			return path;
+////			transition.setNode(player);
+////			transition.setDuration(DURATION);
+//			transition.setPath(path);
+//			transition.play();
+//            transition.playFromStart();	
 		}
 	},
 	/**
@@ -37,14 +40,20 @@ public enum Direction {
      */
 	N(1) {
 		@Override
-		public void moveLocation(Scene scene, Node player, int position) {
-			transition.setNode(player);
-			transition.setFromX(player.getTranslateX());
-            transition.setFromY(player.getTranslateY());
-            transition.setToX(player.getTranslateX());
-            transition.setToY(player.getTranslateY() - (STEP_SIZE*position));
-            transition.playFromStart();
-//            GameLoop.get().stop();
+		public LineTo moveLocation(Scene scene, Node player, int position) {
+			return new LineTo(player.getLayoutX()+ 20.0, player.getLayoutY()  - (STEP_SIZE*position));			
+//			
+//			return path;
+//			
+////			transition.setNode(player);
+////			transition.setDuration(DURATION);
+//			transition.setPath(path);
+//			
+//			transition.setFromX(player.getTranslateX());
+//            transition.setFromY(player.getTranslateY());
+//            transition.setToX(player.getTranslateX());
+//            transition.setToY(player.getTranslateY() - (STEP_SIZE*position));
+//            transition.playFromStart();
 		}
 	},
     /**
@@ -52,14 +61,18 @@ public enum Direction {
      */
 	E(2) {
 		@Override
-		public void moveLocation(Scene scene, Node player, int position) {
-			transition.setNode(player);
-			transition.setFromX(player.getTranslateX());
-            transition.setFromY(player.getTranslateY());
-            transition.setToX(player.getTranslateX() + (STEP_SIZE*position));
-            transition.setToY(player.getTranslateY());
-            transition.playFromStart();
-//            GameLoop.get().stop();
+		public LineTo moveLocation(Scene scene, Node player, int position) {
+		return new LineTo(player.getLayoutX()+ (STEP_SIZE*position), player.getLayoutY());			
+//			
+//			return path;
+//			
+////			transition.setNode(player);
+////			transition.setDelay(DURATION);
+////			transition.setFromX(player.getTranslateX());
+////            transition.setFromY(player.getTranslateY());
+////            transition.setToX(player.getTranslateX() + (STEP_SIZE*position));
+////            transition.setToY(player.getTranslateY());
+//            transition.playFromStart();            
 		}
 	},
 	 /**
@@ -67,21 +80,26 @@ public enum Direction {
      */
 	S(3) {
 		@Override
-		public void moveLocation(Scene scene, Node player, int position) {
-			transition.setNode(player);
-			transition.setFromX(player.getTranslateX());
-            transition.setFromY(player.getTranslateY());
-            transition.setToX(player.getTranslateX());
-            transition.setToY(player.getTranslateY() + (STEP_SIZE*position));
-            transition.playFromStart();
-//            GameLoop.get().stop();
+		public LineTo moveLocation(Scene scene, Node player, int position) {
+			return new LineTo(player.getLayoutX(), player.getLayoutY() + (STEP_SIZE*position));			
+			
+//			return path;
+//			
+////			transition.setNode(player);
+////			transition.setDelay(DURATION);
+////			transition.setFromX(player.getTranslateX());
+////            transition.setFromY(player.getTranslateY());
+////            
+////            transition.setToX(player.getTranslateX());
+////            transition.setToY(player.getTranslateY() + (STEP_SIZE*position));
+//            transition.playFromStart();
 		}
 	};
 	
 	private static final double STEP_SIZE = ComponentFactory.LandSimpleWIDTH;
-	private static final Duration DURATION = Duration.millis(500);
-	
-	protected static TranslateTransition transition = new TranslateTransition(DURATION);
+//private static final Duration DURATION = Duration.millis(1000);
+//	
+//	private static PathTransition  transition = new PathTransition();
     
     //internal index
     private int index; 
@@ -100,8 +118,8 @@ public enum Direction {
 	 * @param loc Location to move
 	 * @param d Velocity of the movement
 	 */
-	public abstract void moveLocation(Scene scene, Node player, int position);
-
+	public abstract LineTo moveLocation(Scene scene, Node player, int position);
+	
 	/**
 	 * Get the index of the direction
 	 * @return index the index of the direction
@@ -112,7 +130,7 @@ public enum Direction {
 
 	/**
 	 * 
-	 * @return 
+	 * @return Direction
 	 */
 	public Direction rotation() {
 		return Direction.values()[(this.getIndex() + 1) % Direction.values().length];

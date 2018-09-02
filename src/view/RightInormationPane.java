@@ -1,5 +1,6 @@
 package view;
 
+
 import controller.ControllerImpl;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -9,16 +10,21 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.scene.text.TextAlignment;
 import model.player.PlayerInfo;
+import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
+import utilities.enumerations.ClassicType;
 
 public class RightInormationPane extends VBox {
 
+	private static final RightInormationPane SINGLETON = new RightInormationPane();
+	
 	private static final double H_DISTANCE = 0.43;
 	private static final double V_DISTANCE = 0.21;
 	private static final double SETTINGS_DISTANCE = 14;
-	private static final double PANE_WIDTH = PaneDimensionSetting.getInstance().getLateralPaneWidth();
-	private static final double PANE_HEIGHT = PaneDimensionSetting.getInstance().getLateralPaneHeight();
+//	private static final double PANE_WIDTH = PaneDimensionSetting.getInstance().getLateralPaneWidth();
+//	private static final double PANE_HEIGHT = PaneDimensionSetting.getInstance().getLateralPaneHeight();
 	private static final String END_TURN_PATH = "/images/Icons/next_player.png";
 	private static final String EXIT_JAIL_PATH = "/images/Icons/hammer_law.png";
 
@@ -30,67 +36,74 @@ public class RightInormationPane extends VBox {
 	private static Label prisonLabel;
 	private static Button diceBtn;
 	private static Button endTurn;
+	
+	public static RightInormationPane getRinghtInformationPane() {
+		return SINGLETON;
+	}
 
-	public RightInormationPane() {
+	private RightInormationPane() {
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setStyle("-fx-border-color: black");
 		final AnchorPane topAnchorPane = new AnchorPane();
-		topAnchorPane.setPrefWidth(PANE_WIDTH);
-		topAnchorPane.setPrefHeight(PANE_WIDTH / 2); // sicuro ?
+		topAnchorPane.setPrefWidth(PaneDimensionSetting.getInstance().getLateralPaneWidth());
+		topAnchorPane.setPrefHeight(PaneDimensionSetting.getInstance().getLateralPaneWidth() / 2); // sicuro ?
 
 		leftDiceResult = new Label("0");
-		AnchorPane.setLeftAnchor(leftDiceResult, PANE_WIDTH * V_DISTANCE);
-		AnchorPane.setBottomAnchor(leftDiceResult, PANE_WIDTH * V_DISTANCE);
-		AnchorPane.setTopAnchor(leftDiceResult, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setLeftAnchor(leftDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setBottomAnchor(leftDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setTopAnchor(leftDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
 		topAnchorPane.getChildren().add(leftDiceResult);
 
 		rightDiceResult = new Label("0");
-		AnchorPane.setRightAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
-		AnchorPane.setBottomAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
-		AnchorPane.setTopAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setRightAnchor(rightDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setBottomAnchor(rightDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setTopAnchor(rightDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
 		topAnchorPane.getChildren().add(rightDiceResult);
 
-		diceBtn = new Button("", new ImageView("/images/Icons/dices.png"));
-		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
-		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
-		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
-		AnchorPane.setTopAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
+		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getDiceImage()).get());
+		AnchorPane.setRightAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * H_DISTANCE);
+		AnchorPane.setLeftAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * H_DISTANCE);
+		AnchorPane.setBottomAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setTopAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
 		topAnchorPane.getChildren().add(diceBtn);
 
-		final Button setting = new Button("", new ImageView("/images/Icons/gear.png"));
-		setting.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 40px; " + "-fx-min-height: 40px; "
-				       + "-fx-max-width: 40px; " + "-fx-max-height: 40px;");
+		final Button setting = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getGearImage()).get());
+		setting.getStyleClass().add("settingButton");
 		AnchorPane.setRightAnchor(setting, SETTINGS_DISTANCE * 1.5);
 		AnchorPane.setTopAnchor(setting, SETTINGS_DISTANCE);
 		topAnchorPane.getChildren().add(setting);
 
 		this.getChildren().add(topAnchorPane);
 
-		final Button tradeBtn = new Button("Trade");
-		tradeBtn.setPrefWidth(PANE_WIDTH);
+		final Button tradeBtn = new Button("TRADE");
+		tradeBtn.setPrefWidth(PaneDimensionSetting.getInstance().getLateralPaneWidth());
 		this.getChildren().add(tradeBtn);
 
 		playerLabel = new Label();
 		playerLabel.setWrapText(true);
+		playerLabel.setTextAlignment(TextAlignment.CENTER);
 		cashLabel = new Label();
 		cashLabel.setWrapText(true);
+		cashLabel.setTextAlignment(TextAlignment.CENTER);
 		netWorthLabel = new Label();
 		netWorthLabel.setWrapText(true);
+		netWorthLabel.setTextAlignment(TextAlignment.CENTER);
 		prisonLabel = new Label();
 		prisonLabel.setWrapText(true);
-		this.getChildren().addAll(playerLabel, new Line(), cashLabel, new Line(), netWorthLabel, new Line(), prisonLabel);
+		prisonLabel.setTextAlignment(TextAlignment.CENTER);
+		
+		this.getChildren().addAll(playerLabel, new Line(-100, 0, 100, 0), cashLabel, new Line(-100, 0, 100, 0), netWorthLabel, new Line(-100, 0, 100, 0), prisonLabel);
 
 		endTurn = new Button("", new ImageView(END_TURN_PATH));
-		endTurn.setStyle("-fx-background-radius: 5em; " + "-fx-min-width: 52px; " + "-fx-min-height: 52px; "
-				       + "-fx-max-width: 52px; " + "-fx-max-height: 52px;");
+		endTurn.getStyleClass().add("roundButton");
 		endTurn.setTooltip(new Tooltip("Next Player"));
 		endTurn.setDisable(true);
 
 		AnchorPane.setBottomAnchor(endTurn, SETTINGS_DISTANCE);
 		AnchorPane.setRightAnchor(endTurn, SETTINGS_DISTANCE * 2.5);
 		final AnchorPane bottomAnchorPane = new AnchorPane(endTurn);
-		bottomAnchorPane.setPrefHeight(PANE_HEIGHT);
-		bottomAnchorPane.setPrefWidth(PANE_WIDTH);
+		bottomAnchorPane.setPrefHeight(PaneDimensionSetting.getInstance().getLateralPaneHeight() / 3);
+		bottomAnchorPane.setPrefWidth(PaneDimensionSetting.getInstance().getLateralPaneWidth());
 
 		this.getChildren().add(bottomAnchorPane);
 
@@ -108,6 +121,7 @@ public class RightInormationPane extends VBox {
 		
 		this.setId("RightInformationPane");
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
+		updateLabels();
 	}
 
 	/**
@@ -118,7 +132,7 @@ public class RightInormationPane extends VBox {
 	 * @param rightResult
 	 *            the result of second dice
 	 */
-	public static void updateDiceLabel(int leftResult, int rightResult) {
+	public void updateDiceLabel(int leftResult, int rightResult) {
 		leftDiceResult.setText(String.valueOf(leftResult));
 		rightDiceResult.setText(String.valueOf(rightResult));
 	}
@@ -129,10 +143,11 @@ public class RightInormationPane extends VBox {
 	 * @param player
 	 *            current player in turn
 	 */
-	public static void updateLabels(PlayerInfo player) {
-		playerLabel.setText("Player: " + player.getName());
-		cashLabel.setText("Cash: " + player.getMoney());
-		netWorthLabel.setText("Net Worth: " + player.totalAssets());
+	public void updateLabels() {
+		PlayerInfo player = ControllerImpl.getController().getCurrentPlayer();
+		playerLabel.setText("Player:\n" + player.getName());
+		cashLabel.setText("Cash:\n" + player.getMoney());
+		netWorthLabel.setText("Net Worth:\n" + player.totalAssets());
 		prisonLabel.setText("da gestire");
 	}
 
@@ -144,7 +159,7 @@ public class RightInormationPane extends VBox {
 	 * @param done
 	 *            true if player has thrown dices this turn
 	 */
-	public static void updateButton(boolean done) {
+	public void updateButton(boolean done) {
 		diceBtn.setDisable(done);
 		endTurn.setDisable(!done);
 	}
@@ -154,9 +169,9 @@ public class RightInormationPane extends VBox {
 	 * 
 	 * @param isJail
 	 */
-	public static void updateJailButton(boolean isJail) {
+	public void updateJailButton(boolean isJail) {
 		endTurn.setGraphic(new ImageView(isJail ? EXIT_JAIL_PATH : END_TURN_PATH));
-		endTurn.setTooltip(isJail ? new Tooltip("jail fee: 125 $") : null);
+		endTurn.setTooltip(isJail ? new Tooltip("jail fee: 125 $") : new Tooltip("Next Player"));
 		endTurn.setDisable(!isJail);
 	}
 

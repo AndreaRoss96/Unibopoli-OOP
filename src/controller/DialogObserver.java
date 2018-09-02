@@ -3,8 +3,6 @@ package controller;
 import java.util.List;
 
 import model.player.PlayerInfo;
-import model.tiles.Buildable;
-import model.tiles.Obtainable;
 
 /**
  * This interface contains all method used by Dialog's classes.
@@ -18,7 +16,8 @@ public interface DialogObserver {
 	/**
 	 * metodi per AuctionDialog 
 	 */
-	void executeAuction(List<PlayerInfo> playerList, List<String> passwordList, Obtainable property);
+//	void executeAuction(List<PlayerInfo> playerList, List<String> passwordList, Obtainable property);
+	void executeAuction();
 			
 	/**
 	 * metodi per cardDialog
@@ -27,23 +26,29 @@ public interface DialogObserver {
 	 * Increseases
 	 * @param property
 	 */
-	void incHouse(Buildable property); 
-	void decHouse(Buildable property);
-	void setMortgage(List<String> propertyList); //se la proprietà non è ipotecata la ipoteca, il contrario altirmenti --> chiedi conferma
-	void buyPropertyClick(Obtainable property); //compra la proprietà interessata, solo se il giocatore è nella stessa posizione del tile --> altrimenti dialog esplicativo
+//	void incHouse(Buildable property);
+	boolean incHouse();
+//	void decHouse(Buildable property);
+	boolean decHouse();
+	void mortgageDialogClick();
+//	void buyPropertyClick(Obtainable property); //compra la proprietà interessata, solo se il giocatore è nella stessa posizione del tile --> altrimenti dialog esplicativo
+	void buyPropertyClick();
 	
 	/**
 	 * metodi per mortgageDialog
 	 */
 	int accumulatedMoney(List<String> propertiesList); //altrimenti una lista di stringhe
-	
+	void setMortgage(List<String> propertyList); //se la proprietà non è ipotecata la ipoteca, il contrario altirmenti --> chiedi conferma
+
 	
 	/**
 	 * metodi per TradeDialog
 	 */
 //	void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, List<Obtainable> secondProperties, int firstMoney, int secondMoney);
-	void executeTrade(String secondPlayerName, List<String> firstPropertiesNames, List<String> secondPropertiesNames, String firstMoney, String secondMoney);
-	
+//	void executeTrade(String secondPlayerName, List<String> firstPropertiesNames, List<String> secondPropertiesNames, String firstMoney, String secondMoney);
+	void executeTrade();
 	
 	PlayerInfo getPlayerByName(String playerName);
+
+	
 }

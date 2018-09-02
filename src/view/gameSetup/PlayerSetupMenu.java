@@ -61,7 +61,7 @@ public class PlayerSetupMenu extends Scene {
 		
 		final FlowPane flowPane = new FlowPane();
 		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getPlusImage()).get());
-		addPlayer.setStyle("-fx-background-radius: 100");
+		addPlayer.getStyleClass().add("roundButton");
 		flowPane.getChildren().add(addPlayer);
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));

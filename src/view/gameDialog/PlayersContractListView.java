@@ -41,6 +41,11 @@ public class PlayersContractListView extends ListView<Text> {
 		}
 	}
 	
+	/**
+	 * Getter for the selected items.
+	 * 
+	 * @return a list of selected items
+	 */
 	public List<String> getSelected(){
 		return this.map.keySet().stream().map(Text::getText).collect(Collectors.toList());
 	}

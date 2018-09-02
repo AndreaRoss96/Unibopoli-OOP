@@ -75,10 +75,10 @@ public class ControllerImpl implements Controller {
 		if (model.getCurrentPlayer().isInJail()) {
 			((Player) model.getCurrentPlayer()).payments(JAIL_FEE);
 			model.exitFromJail();
-			this.updateButtons();
+			this.updateView();
 		} else {
 			this.model.endTurn();
-			this.updateButtons();
+			this.updateView();
 		}
 	}
 
@@ -91,14 +91,17 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void showContract(Obtainable property) {
 		/* If the current player is the same owner of the selected property and he/she have all the property of that color he will be able to build */
-		if(property.getOwner().isPresent() || property.getOwner().get() == model.getCurrentPlayer().getName()) {
-			int numProperties = model.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).size();
+		if(property.getOwner().isPresent() && property.getOwner().get() == this.getCurrentPlayer().getName()) {
+			int numProperties = this.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).size();
+//			System.out.println("1 - prop own: " + property.getOwner().get() + " Curr: " + this.getCurrentPlayer().getName() + " family size: " + property.getColorOf().getNumTiles() + " num prop: " + numProperties);
 			CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
-		/* If the current player is in the dame position of the property without any owner he/she will be able to buy that property */
-		} else if(!property.getOwner().isPresent() && property.getPosition() == model.getCurrentPlayer().getPosition()) {
-			CardDialog.getCardDialog().createCardDialog(property,  property.getPrice() <= model.getCurrentPlayer().getMoney());
+		/* If the current player is in the same position of the property without any owner he/she will be able to buy that property */
+		} else if(!property.getOwner().isPresent() && property.getPosition() == this.getCurrentPlayer().getPosition()) {
+			CardDialog.getCardDialog().createCardDialog(property,  property.getPrice() <= this.getCurrentPlayer().getMoney());
+//			System.out.println("2 - prop pos: " + property.getPosition() + " Curr pos: " + this.getCurrentPlayer().getPosition() + "setDis: " + ((property.getPrice() <= this.getCurrentPlayer().getMoney()) ? true : false));
 		} else {
 			CardDialog.getCardDialog().createCardDialog(property, false);
+//			System.out.println("3 - ");
 		}
 
 	}
@@ -106,28 +109,29 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void tradeClick() {
 		List<PlayerInfo> treadePlayerList = model.getPlayers();
-		TradeDialog.getTradeDialog()
-		.createTradeDialog(treadePlayerList.remove(treadePlayerList.indexOf(model.getCurrentPlayer())), treadePlayerList); //non so se così funziona, in caso contrario basta passare al primo attributo il currentPlayer
+		treadePlayerList.remove(this.getCurrentPlayer());
+		TradeDialog.getTradeDialog().createTradeDialog(treadePlayerList);
 	}
 
 	@Override
 	public void diceClick() {
-//		new SoundController("/music/Dice-roll.wav").play(false);
+		final boolean doJailSound = !model.getCurrentPlayer().isInJail();
 		this.sound.playSound("/music/Dice-roll.wav");
 		Pair<Integer> result = model.exitDice();
-		RightInormationPane.updateDiceLabel(result.getFirst(), result.getSecond());
+		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
 		this.exitDice(result.getFirst() + result.getSecond());
 		
 		/*
 		 * if the two dice have same result the player have to roll dices again, even if
 		 * you are going out of jail
 		 */
-		RightInormationPane.updateButton(!(result.areSame()));
+		RightInormationPane.getRinghtInformationPane().updateButton(!(result.areSame()));
 		if (model.getCurrentPlayer().isInJail()) {
-//			new SoundController("/music/Jail_Door_sound_effect.wav").play(false);
-			this.sound.playSound("/music/Jail_Door_sound_effect.wav");
+			if(doJailSound) {
+				this.sound.playSound("/music/Jail_Door_sound_effect.wav");
+			}
 			model.endTurn();
-			this.updateButtons();
+			this.updateView();
 		}
 	}
 
@@ -148,11 +152,9 @@ public class ControllerImpl implements Controller {
 	 * 
 	 * Platform.runLater();
 	 * */
-	private void updateButtons() {
-		
-		RightInormationPane.updateButton(false);
-		RightInormationPane.updateLabels(model.getCurrentPlayer());
-		RightInormationPane.updateJailButton(model.getCurrentPlayer().isInJail());
+	@Override
+	public void updateView() {
+		this.view.updateLabels();
 	}
 
 	@Override
@@ -161,14 +163,14 @@ public class ControllerImpl implements Controller {
 	}
 	
 	public void startAuciton(Obtainable property) {
-		AuctionDialog.getAuctionDialog().createAuctionDialog(property, model.getPlayers());
+		AuctionDialog.getAuctionDialog().createAuctionDialog(property);
 	}
 	
 	public void startMortgage (int minimumExpense, PlayerInfo player) {
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 	}
 	
-	public PlayerInfo getCurruntPlayer() {
+	public PlayerInfo getCurrentPlayer() {
 		return this.model.getCurrentPlayer();
 	}
 	
@@ -191,5 +193,10 @@ public class ControllerImpl implements Controller {
 	@Override
 	public Set<Tile> getGameBoard() {
 		return this.model.getBoard();
+	}
+	
+	@Override
+	public SoundController getSound() {
+		return this.sound;
 	}
 }

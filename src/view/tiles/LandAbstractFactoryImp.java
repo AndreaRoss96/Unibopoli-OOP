@@ -3,6 +3,8 @@ package view.tiles;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import controller.ControllerImpl;
 import javafx.geometry.Orientation;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -40,7 +42,7 @@ public class LandAbstractFactoryImp{
 		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		
 		this.getBuildables(landPane, buildableTile); 
-		landPane.setOnMouseClicked(value -> CardDialog.getCardDialog().createCardDialog(buildableTile, false));
+		landPane.setOnMouseClicked(value -> ControllerImpl.getController().showContract(buildableTile));
 		
 		return landPane;
 	}

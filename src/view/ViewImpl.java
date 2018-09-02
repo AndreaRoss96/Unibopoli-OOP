@@ -1,9 +1,10 @@
 package view;
 
+import controller.ControllerImpl;
 import javafx.application.Application;
 
 public class ViewImpl implements View{
-
+	
 	public ViewImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -16,5 +17,14 @@ public class ViewImpl implements View{
 	@Override
 	public void movement(int exitDice) {
 		GamePane.get().movement(exitDice);
+	}
+	
+	@Override
+	public void updateLabels() {
+		RightInormationPane.getRinghtInformationPane().updateButton(false);
+		RightInormationPane.getRinghtInformationPane().updateLabels();
+		RightInormationPane.getRinghtInformationPane().updateJailButton(ControllerImpl.getController().getCurrentPlayer().isInJail());
+		LeftPlayersPane.getLeftPlayersPane().updatePane();
+		GamePane.get().updateContractPane();
 	}
 }

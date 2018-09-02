@@ -3,6 +3,8 @@ package view;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.shape.LineTo;
+import javafx.scene.shape.Path;
 import model.Location;
 import utilities.enumerations.Direction;
 
@@ -43,8 +45,8 @@ public class Icon {
 		this.direction = this.direction.rotation();
 	}
 	
-	public void move(int position) {
-		this.direction.moveLocation(this.scene, this.image, position);
+	public LineTo move(int position) {
+		return this.direction.moveLocation(this.scene, this.image, position);
 	}
 	
 	public Direction getDirection() {

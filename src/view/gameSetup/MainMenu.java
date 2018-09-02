@@ -18,7 +18,7 @@ import view.handlers.HandleFileChooser;
 
 /**
  * Principal menu, here you can choose whether to start a new play or upload
- * one
+ * an old one.
  * 
  * @author Rossolini Andrea
  *
@@ -42,9 +42,11 @@ public final class MainMenu extends Scene{
 		final VBox leftButtonBox = new VBox();
 		leftButtonBox.setPrefSize(BUTTON_BOX_WIDTH, MAIN_MENU_HEIGHT / 4);
 		final Button newGameBtn = new Button("New game");
+		newGameBtn.getStyleClass().add("mainMenuButton");
 		newGameBtn.setPrefWidth(BUTTON_BOX_WIDTH);
 		newGameBtn.setPrefHeight(leftButtonBox.getPrefHeight() / 2);
 		final Button creditsBtn = new Button("Credits");
+		creditsBtn.getStyleClass().add("mainMenuButton");
 		creditsBtn.setPrefWidth(BUTTON_BOX_WIDTH);
 		creditsBtn.setPrefHeight(leftButtonBox.getPrefHeight() / 2);
 		leftButtonBox.getChildren().addAll(newGameBtn, creditsBtn);
@@ -56,9 +58,11 @@ public final class MainMenu extends Scene{
 		final Button loadGameBtn = new Button("Load game");
 		loadGameBtn.setPrefWidth(BUTTON_BOX_WIDTH);
 		loadGameBtn.setPrefHeight(rightButtonBox.getPrefHeight() / 2);
+		loadGameBtn.getStyleClass().add("mainMenuButton");
 		final Button cancelBtn = new Button("Cancel");
 		cancelBtn.setPrefWidth(BUTTON_BOX_WIDTH);
 		cancelBtn.setPrefHeight(rightButtonBox.getPrefHeight() / 2);
+		cancelBtn.getStyleClass().add("mainMenuButton");
 		rightButtonBox.getChildren().addAll(loadGameBtn, cancelBtn);
 		AnchorPane.setRightAnchor(rightButtonBox, STANDARD_ANCHOR);
 		AnchorPane.setBottomAnchor(rightButtonBox, STANDARD_ANCHOR);

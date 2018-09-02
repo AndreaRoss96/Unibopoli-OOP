@@ -1,6 +1,5 @@
 package controller;
 
-import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,37 +9,46 @@ import model.player.PlayerInfo;
 import model.tiles.Buildable;
 import model.tiles.Obtainable;
 import utilities.AlertFactory;
+import view.gameDialog.AuctionDialog;
+import view.gameDialog.CardDialog;
+import view.gameDialog.TradeDialog;
 
 public class DialogController implements DialogObserver {
 
 	private static final DialogController SINGLETON = new DialogController();
 	private static final int NUM_BUILD_MAX = 5; // sarebbe utile un getter di questo valore nelle buildable?
 	
+	private final ControllerImpl controller;
+	
 	public static DialogController getDialogController() {
 		return SINGLETON;
 	}
 
 	private DialogController() {
+		this.controller = ControllerImpl.getController();
 	}
 
 	@Override
-	public void executeAuction(List<PlayerInfo> playerList, List<String> passwordList, Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+	public void executeAuction() {
+		final List<String> betsList = AuctionDialog.getAuctionDialog().getBetsList();
+		final Obtainable property = AuctionDialog.getAuctionDialog().getAuctionedProperty();
+		final List<PlayerInfo> playerList = ControllerImpl.getController().getPlayers();
 		try {
-			if (passwordList.stream().distinct().count() != passwordList.size()) {
+			if (betsList.stream().distinct().count() != betsList.size()) {
 				AlertFactory
 						.createInformationAlert("Get a plan together", "Two or more player have entered the same value");
 			} else {
-				int moneyAmount = passwordList.stream().map(Integer::parseInt)
+				int moneyAmount = betsList.stream().map(Integer::parseInt)
 						.max(Comparator.comparing(Integer::valueOf)).get();
-				passwordList.forEach(e -> {
-					if (Integer.parseInt(e) == moneyAmount) {
+				betsList.forEach(bet -> {
+					if (Integer.parseInt(bet) == moneyAmount) {
 						/*Si itera tutta la lista dei giocatori, dato che per ogni giocatore esiste un solo passwordFiled determino l'inidce della lista che mi interessa e faccio get nella list adei giocatori*/
-						if (canPay(playerList.get(passwordList.indexOf(e)), moneyAmount)) { 
-							((Player) playerList.get(passwordList.indexOf(e))).addProperty(property);
-							((Player) playerList.get(passwordList.indexOf(e))).payments(moneyAmount);
+						if (canPay(playerList.get(betsList.indexOf(bet)), moneyAmount)) { 
+							((Player) playerList.get(betsList.indexOf(bet))).addProperty(property);
+							((Player) playerList.get(betsList.indexOf(bet))).payments(moneyAmount);
 						} else {
-							AlertFactory.createInformationAlert("Ehi", playerList.get(passwordList.indexOf(e)).getName()
-							f				+ ", you don't have all those money.");
+							AlertFactory.createInformationAlert("Ehi", playerList.get(betsList.indexOf(bet)).getName()
+											+ ", you don't have all those money.");
 						}
 					}
 				});
@@ -48,49 +56,59 @@ public class DialogController implements DialogObserver {
 		} catch (NumberFormatException ex) {
 			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!\nPlease, use only numbers...");
 		}
+		this.controller.updateView();
 	}
 
 	@Override
-	public void incHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
-		if (canPay(ControllerImpl.getController().getCurruntPlayer(), property.getPriceForBuilding())) {
+	public boolean incHouse() {
+		final Buildable property = CardDialog.getCardDialog().getProperty();
+		if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
-//				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
-				
+				controller.getSound().playSound(("/music/plastic_house_or_hotel_drop_on_playing_board.wav"));
 				property.incBuildings(); //deve diminuire i soldi del giocatore
-				((Player) ControllerImpl.getController().getCurruntPlayer()).payments(property.getPriceForBuilding());
-			} else {
-				AlertFactory.createErrorAlert("Oak's words echoed", "There's time and place for everything, but not now...");
+				((Player) this.controller.getCurrentPlayer()).payments(property.getPriceForBuilding());
 			}
 		} else {
-			AlertFactory.createErrorAlert("Nope", "You don't have enought money\nyou have only: " + ControllerImpl.getController().getCurruntPlayer().getMoney() +"$");
+			AlertFactory.createErrorAlert("Nope", "You don't have enought money\nyou have only: " + this.controller.getCurrentPlayer().getMoney() +"$");
 		}
+		this.controller.updateView();
+		CardDialog.getCardDialog().updateBuildingLabel();
+		return property.getBuildingNumber() >= NUM_BUILD_MAX;
 	}
 
 	@Override
-	public void decHouse(Buildable property) { //dato che si tratta di un metodo che modifica la proprietà bisogna metterlo nel model
-			if (property.getBuildingNumber() != 0) {
-//				new SoundController("/music/plastic_house_or_hotel_drop_on_playing_board.wav").play(false);
-				decHouse(property);
-				((Player) ControllerImpl.getController().getCurruntPlayer()).gainMoney(property.getPriceForBuilding()/2); // searchPlayerByName, oppure currentPlayer torna Player
-			}
+	public boolean decHouse() { 
+		final Buildable property = CardDialog.getCardDialog().getProperty();
+		System.out.println(property.getNameOf());
+		if (property.getBuildingNumber() != 0) {
+			controller.getSound().playSound("/music/plastic_house_or_hotel_drop_on_playing_board.wav");
+			property.decBuildings();
+			((Player) this.controller.getCurrentPlayer()).gainMoney(property.getPriceForBuilding() / 2); 
+		}
+		this.controller.updateView();
+		CardDialog.getCardDialog().updateBuildingLabel();
+		return property.getBuildingNumber() == 0;
 	}
 
 	@Override
 	public void setMortgage(List<String> propertiesList) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
 		propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).forEach(e -> {
 //			e.setMortgage();
-			((Player) ControllerImpl.getController().getCurruntPlayer()).gainMoney(e.getMortgage());
+			((Player) this.controller.getCurrentPlayer()).gainMoney(e.getMortgage());
 			e.hasMortgage(); //non so come si imposti una proprietà ipotecata
 		});
+		this.controller.updateView();
 	}
 	
-	public void mortgageDialogClick(Obtainable property) {
-//		if(property.getOwner().get().equals(ControllerImpl.getController().getCurruntPlayer().getName())) {
+	@Override
+	public void mortgageDialogClick() {
+		Obtainable property = CardDialog.getCardDialog().getProperty();
+//		if(property.getOwner().get().equals(this.controller.getCurruntPlayer().getName())) {
 //			if(property.isMortgage()) {
 //				setMortgage(Arrays.asList(property.getNameOf()));
 //			} else {
-//				if (canPay(ControllerImpl.getController().getCurruntPlayer(), property.getMortgage() * 10 / 100)) {
-//					((Player) ControllerImpl.getController().getCurruntPlayer()).unmortgageProperty(property);
+//				if (canPay(this.controller.getCurruntPlayer(), property.getMortgage() * 10 / 100)) {
+//					((Player) this.controller.getCurruntPlayer()).unmortgageProperty(property);
 //				}
 //			}
 //		} else {
@@ -99,13 +117,16 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void buyPropertyClick(Obtainable property) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+	public void buyPropertyClick() { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
+		Obtainable property = CardDialog.getCardDialog().getProperty();
 		try {
-			((Player) ControllerImpl.getController().getCurruntPlayer()).buyProperty(property);
+			((Player) this.controller.getCurrentPlayer()).buyProperty(property);
+			this.controller.getSound().playSound("/music/CashRegister.wav");
 		} catch (NotEnoughMoneyException e) {
 			//Auction Dialog
 			//bisogna vedere come viene gestito l'acquisto
 		}
+		this.controller.updateView();
 	}
 
 	@Override
@@ -116,39 +137,24 @@ public class DialogController implements DialogObserver {
 						.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum();
 	}
 
-	//NON CREDO SERVA
-//	@Override
-//	public void executeMortgage(List<String> propertiesList) {
-//		((Player) model.getCurrentPlayer()).mortgageProperties(propertiesList.stream().map(propertyName -> getPropertyByName(propertyName)).collect(Collectors.toList())); //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model														// player fosse un "Player"
-//		setMortgage(propertiesList);
-//	}
-
-//	public void executeTrade(Player firstPlayer, Player secondPlayer, List<Obtainable> firstProperties, 
-//			List<Obtainable> secondProperties, int firstMoney, int secondMoney) { //dato che si tratta di un metodo che modifica il giocatore bisogna metterlo nel model
-	public void executeTrade(String secondPlayerName, List<String> firstPropertiesNames, 
-			List<String> secondPropertiesNames, String firstMoneyInput, String secondMoneyInput) { 
+	public void executeTrade() {
+		final TradeDialog tradeDialog = TradeDialog.getTradeDialog();
 		try {
-			int firstMoney = Integer.parseInt(firstMoneyInput);
-			int secondMoney = Integer.parseInt(secondMoneyInput);
+			int firstMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getFirst());
+			int secondMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getSecond());
 		
-			Player firstPlayer = (Player) ControllerImpl.getController().getCurruntPlayer();
-			Player secondPlayer = (Player) getPlayerByName(secondPlayerName);
-			List<Obtainable> firstProperties = new ArrayList<>();
-			List<Obtainable> secondProperties = new ArrayList<>();
-			firstPropertiesNames.forEach(e -> {
-				firstProperties.add(getPropertyByName(e));
-			});
-			secondPropertiesNames.forEach(e -> {
-				secondProperties.add(getPropertyByName(e));
-			});
+			final Player firstPlayer = (Player) this.controller.getCurrentPlayer();
+			final Player secondPlayer = (Player) getPlayerByName(tradeDialog.getSecondPlayer());
+			final List<Obtainable> firstProperties = tradeDialog.getSelectedProperties().getFirst().stream().map(p -> this.getPropertyByName(p)).collect(Collectors.toList());
+			final List<Obtainable> secondProperties = tradeDialog.getSelectedProperties().getSecond().stream().map(p -> this.getPropertyByName(p)).collect(Collectors.toList());
 			
-			if (!canPay(firstPlayer, firstMoney) && canPay(secondPlayer, secondMoney)) {
+			if (!this.canPay(firstPlayer, firstMoney) && this.canPay(secondPlayer, secondMoney)) {
 				AlertFactory.createErrorAlert("He's trying to cheat you!",
 						firstPlayer.getName() + "Doesn't have enought money!");
-			} else if (!canPay(secondPlayer, secondMoney) && canPay(firstPlayer, firstMoney)) {
+			} else if (!this.canPay(secondPlayer, secondMoney) && this.canPay(firstPlayer, firstMoney)) {
 				AlertFactory.createErrorAlert("He's trying to cheat you!",
 						secondPlayer.getName() + "Doesn't have enought money!");
-			} else if (!canPay(firstPlayer, firstMoney) && !canPay(secondPlayer, secondMoney)) {
+			} else if (!this.canPay(firstPlayer, firstMoney) && !this.canPay(secondPlayer, secondMoney)) {
 				AlertFactory.createErrorAlert("Nope",
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
@@ -167,10 +173,11 @@ public class DialogController implements DialogObserver {
 		} catch (NumberFormatException ex) {
 			AlertFactory.createErrorAlert("Speak (type) as you eat", "Someone did not enter a number!\nPlease, use only numbers...");
 		}
+		this.controller.updateView();
 	}
 	
 	private Obtainable getPropertyByName(String propertyName) {
-		return ControllerImpl.getController().getProperties().stream().filter(property -> property.getNameOf().equals(propertyName)).findFirst().get();
+		return this.controller.getProperties().stream().filter(property -> property.getNameOf().equals(propertyName)).findFirst().get();
 	}
 
 	private boolean canPay(PlayerInfo player, int moneyAmount) {
@@ -178,6 +185,6 @@ public class DialogController implements DialogObserver {
 	}
 	
 	public PlayerInfo getPlayerByName(String playerName) {
-		return ControllerImpl.getController().getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
+		return this.controller.getPlayers().stream().filter(player -> player.getName().equals(playerName)).findFirst().get();
 	}
 }

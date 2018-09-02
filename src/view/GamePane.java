@@ -2,19 +2,26 @@ package view;
 
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
-import controller.GameLoop;
-import controller.MovementController;
 import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.MoveTo;
+import javafx.scene.shape.Path;
+import javafx.scene.text.TextAlignment;
+import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
+import view.gameDialog.CardDialog;
 import view.tiles.LandAbstractFactoryImp;
 
 /**
@@ -27,9 +34,12 @@ public class GamePane extends StackPane{
 	private static final double ROTATE_RIGHT = -90.0;
 	private static final double FIXLEFT = 10.6;
 	private static final double FIXRIGHT = 17.0;
+	private static final double LABEL_WIDTH = 190;
 	
 	private static GamePane GAMEPANE = null;
+	private FlowPane contractPane = new FlowPane(FIXLEFT, FIXLEFT);
 	private StackPane mainPane = new StackPane();
+	
 	
 	/**
 	 * Ricordarsi di gestire l'eliminazione del giocatore
@@ -51,13 +61,15 @@ public class GamePane extends StackPane{
 		mainPane.getChildren().addAll(background(), playerLayer(), boardLayer());
 
 		this.getChildren().add(mainPane);
+		
+		contractPane.setPrefSize(PaneDimensionSetting.getInstance().getGamePaneWidth() * 0.5, PaneDimensionSetting.getInstance().getGamePaneHeight() * 0.5);
 	}
 	
 	private Pane playerLayer() {
 		Pane pane = new Pane();
 		
 		this.iconMap.values().stream().peek(icon -> icon.setScene(mainPane.getScene()))
-							 .forEach(icon -> { icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 100);
+							 .forEach(icon -> { icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 80);
 							 					icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
 							 });
 		
@@ -68,6 +80,13 @@ public class GamePane extends StackPane{
 	
 	private AnchorPane background() {
 		AnchorPane backGround = new AnchorPane();
+		updateContractPane();
+		
+		AnchorPane.setBottomAnchor(this.contractPane, PaneDimensionSetting.getInstance().getGamePaneHeight() / 15);
+		AnchorPane.setLeftAnchor(this.contractPane, PaneDimensionSetting.getInstance().getGamePaneHeight() / 12 * 2);
+		AnchorPane.setRightAnchor(this.contractPane, PaneDimensionSetting.getInstance().getGamePaneHeight() / 12 * 2);
+		backGround.getChildren().add(contractPane);
+		
 		backGround.setId("backgroudBoard");
 		
 		return backGround;
@@ -138,26 +157,32 @@ public class GamePane extends StackPane{
 	}
 	
 	public void movement(int movement) {
-		Icon tempIcon = this.iconMap.get(ControllerImpl.getController().getCurruntPlayer().getName());
-		int position = ControllerImpl.getController().getCurruntPlayer().getPosition();
+		Icon tempIcon = this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
+		int position = ControllerImpl.getController().getCurrentPlayer().getPosition();
 		int corner = this.getNextCorner(position);
+		Path path = new Path();
+		path.getElements().add(new MoveTo(tempIcon.get().getLayoutX(), tempIcon.get().getLayoutY()));
 		
 		if(position + movement > corner) {
-//			MovementController control = new MovementController().setIcon(tempIcon).setMovement(corner-position);
-//			control.start();
 			
-			try {
-				Thread.sleep(1500);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			tempIcon.rotate();		
+			path.getElements().add(tempIcon.move(corner-position));
+			
+			
+			
+			tempIcon.rotate();
+			/*SequentialTransition sequential = new SequentialTransition(tempIcon.move(2), tempIcon.move(4));
+			sequential.getChildren().get(1).play();
+			tempIcon.rotate();
+			sequential.getChildren().get(0).play();*/
 			movement = movement - (corner-position);
-		}
+			
+		}	
+			
+		path.getElements().add(tempIcon.move(movement));
 		
-//		MovementController control = new MovementController().setIcon(tempIcon).setMovement(movement);
-//		control.start();
+//		MovementController control = new MovementController().setMovement(path);
+//			control.start();
+		
 	}
 	
 	private int getNextCorner(int pos) {
@@ -170,5 +195,22 @@ public class GamePane extends StackPane{
 		}
 			
 		return GAMEPANE;
+	}
+	
+	public void updateContractPane() {
+		this.contractPane.getChildren().clear();
+		List<Obtainable> contractList = ControllerImpl.getController().getCurrentPlayer().getProperties();
+		contractList.forEach(prop -> {
+			Label propertyName = new Label(prop.getNameOf());
+			propertyName.setPrefSize(LABEL_WIDTH, PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.05);
+			propertyName.setAlignment(Pos.CENTER);
+			propertyName.setTextAlignment(TextAlignment.CENTER);
+			propertyName.setStyle("-fx-background-color: "
+				+ prop.getColorOf().getPaint().orElse(Color.GREY).toString().replaceAll("0x", "#") + ";");
+			propertyName.getStyleClass().add("contractLabel");
+			propertyName.setWrapText(true);
+			propertyName.setOnMouseClicked(e -> CardDialog.getCardDialog().createCardDialog(prop, false)); //non funziona perché background sta sotto gli altri pane
+			this.contractPane.getChildren().add(propertyName);
+		});
 	}
 }
