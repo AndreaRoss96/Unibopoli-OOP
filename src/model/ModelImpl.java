@@ -29,7 +29,6 @@ public class ModelImpl implements Model{
 		return this.turnPlayer.getPlayers();
 	}
 
-	
 	@Override
 	public void saveGame() {
 		CareMementoTaker.getMementoInstance().setMemento(new ModelMemento(this.board, turnPlayer));

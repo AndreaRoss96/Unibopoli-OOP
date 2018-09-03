@@ -3,7 +3,7 @@ package view;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.LineTo;
-import model.Location;
+
 import utilities.enumerations.Direction;
 
 /**
@@ -15,7 +15,6 @@ public class Icon {
 	
 	private ImageView image;
 	private Direction direction;
-	private Location location;
 	
 	public Icon(final String path) {
 		this(new Image(path));
@@ -44,9 +43,5 @@ public class Icon {
 	
 	public Direction getDirection() {
 		return this.direction;
-	}
-	
-	public Location getLocation() {
-		return this.location;
 	}
 }

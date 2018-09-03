@@ -102,18 +102,10 @@ public class Board implements Serializable{
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 			
 		}catch (IOException e) {
-			System.out.println("IOExce");
-		} catch (Exception e) { 
-			System.out.println(e.getCause()); 
-		}
+		} catch (Exception e) {}
 		
 		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
-
-		/**
-		 * Aggiungere Parse anche a questi ultimi due.
-		 * */
-		chances.entrySet().stream().map(entry -> new Chance(entry.getKey(), entry.getValue())).forEach(gameBoard::add);
-
-		Arrays.asList(4, 38).stream().map(t -> new Tax(t)).forEach(gameBoard::add);
+		chances.entrySet().stream().map(Parse.PARSING_CHANCE::apply).forEach(gameBoard::add);
+		Arrays.asList(4, 38).stream().map(Parse.PARSING_TAX::apply).forEach(gameBoard::add);
 	}
 }

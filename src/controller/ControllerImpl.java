@@ -32,7 +32,6 @@ public class ControllerImpl implements Controller {
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
 	private static final int JAIL_FEE = 125;
 	
-	
 	private Model model;
 	private View view;
 	private final SoundController sound;
@@ -135,25 +134,18 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
-	private void exitDice(final int value) {
+	public void exitDice(final int value) {
 		view.movement(value);
 		
 		model.movement(value); // se il giocatore finisce in carcere non si muove ed il turno
 						// finisce automaticamente		
-		
-		System.out.println("Dopo il model: " + ControllerImpl.getController().getCurrentPlayer().getPosition());
 	}
 	
 	@Override
 	public void settingsClick() {
 		// TODO Auto-generated method stub
-
 	}
 	
-	/**
-	 * 
-	 * Platform.runLater();
-	 * */
 	@Override
 	public void updateView() {
 		this.view.updateLabels();
