@@ -140,6 +140,8 @@ public class ControllerImpl implements Controller {
 		
 		model.movement(value); // se il giocatore finisce in carcere non si muove ed il turno
 						// finisce automaticamente		
+		
+		System.out.println("Dopo il model: " + ControllerImpl.getController().getCurrentPlayer().getPosition());
 	}
 	
 	@Override

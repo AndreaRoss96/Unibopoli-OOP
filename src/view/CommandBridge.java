@@ -1,6 +1,5 @@
 package view;
 
-import controller.ControllerImpl;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;

@@ -1,12 +1,7 @@
 package utilities.enumerations;
 
-import javafx.animation.PathTransition;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
-import javafx.util.Duration;
 import view.tiles.ComponentFactory;
 
 /**
@@ -24,84 +19,75 @@ public enum Direction {
      */
 	W(0) {
 		@Override
-		public LineTo moveLocation(Scene scene, Node player, int position) {
-				return new LineTo(player.getLayoutX() - (STEP_SIZE*position), player.getLayoutY() +20.0);			
-//			
-//			return path;
-////			transition.setNode(player);
-////			transition.setDuration(DURATION);
-//			transition.setPath(path);
-//			transition.play();
-//            transition.playFromStart();	
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX() - (STEP_SIZE*position) , player.getTranslateY());			
 		}
+	},
+	WN(1){
+
+		@Override
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX() - (STEP_SIZE*(second + 0.75)), player.getTranslateY()  - (STEP_SIZE*(position + 0.50)));
+		}
+		
 	},
 	/**
-     * North.
-     */
-	N(1) {
+	 * North.
+	 */
+	N(2) {
 		@Override
-		public LineTo moveLocation(Scene scene, Node player, int position) {
-			return new LineTo(player.getLayoutX()+ 20.0, player.getLayoutY()  - (STEP_SIZE*position));			
-//			
-//			return path;
-//			
-////			transition.setNode(player);
-////			transition.setDuration(DURATION);
-//			transition.setPath(path);
-//			
-//			transition.setFromX(player.getTranslateX());
-//            transition.setFromY(player.getTranslateY());
-//            transition.setToX(player.getTranslateX());
-//            transition.setToY(player.getTranslateY() - (STEP_SIZE*position));
-//            transition.playFromStart();
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX(), player.getTranslateY()  - (STEP_SIZE*position));			
 		}
 	},
+	NE(3){
+
+		@Override
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX() + (STEP_SIZE*(position +0.75)), player.getTranslateY()  - (STEP_SIZE*(second+0.75)));
+		}
+		
+	},
+	
     /**
      * East.
      */
-	E(2) {
+	E(4) {
 		@Override
-		public LineTo moveLocation(Scene scene, Node player, int position) {
-		return new LineTo(player.getLayoutX()+ (STEP_SIZE*position), player.getLayoutY());			
-//			
-//			return path;
-//			
-////			transition.setNode(player);
-////			transition.setDelay(DURATION);
-////			transition.setFromX(player.getTranslateX());
-////            transition.setFromY(player.getTranslateY());
-////            transition.setToX(player.getTranslateX() + (STEP_SIZE*position));
-////            transition.setToY(player.getTranslateY());
-//            transition.playFromStart();            
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX()+ (STEP_SIZE*position), player.getTranslateY());			      
 		}
 	},
+	ES(5){
+
+		@Override
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX() + (STEP_SIZE*(second+0.75)), player.getTranslateY() + (STEP_SIZE*(position+0.75)));
+		
+		}
+		
+	},	
 	 /**
      * South.
      */
-	S(3) {
+	S(6) {
 		@Override
-		public LineTo moveLocation(Scene scene, Node player, int position) {
-			return new LineTo(player.getLayoutX(), player.getLayoutY() + (STEP_SIZE*position));			
-			
-//			return path;
-//			
-////			transition.setNode(player);
-////			transition.setDelay(DURATION);
-////			transition.setFromX(player.getTranslateX());
-////            transition.setFromY(player.getTranslateY());
-////            
-////            transition.setToX(player.getTranslateX());
-////            transition.setToY(player.getTranslateY() + (STEP_SIZE*position));
-//            transition.playFromStart();
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX(), player.getTranslateY() + (STEP_SIZE*position));			
 		}
+	},
+	SW(7){
+
+		@Override
+		public LineTo moveLocation(Node player, int position, int second) {
+			return new LineTo(player.getTranslateX() - (STEP_SIZE*(position+0.75)), player.getTranslateY()  + (STEP_SIZE*(second+0.75)));
+		}
+		
 	};
 	
 	private static final double STEP_SIZE = ComponentFactory.LandSimpleWIDTH;
-//private static final Duration DURATION = Duration.millis(1000);
-//	
-//	private static PathTransition  transition = new PathTransition();
-    
-    //internal index
+
+	//internal index
     private int index; 
     
 	/**
@@ -118,7 +104,7 @@ public enum Direction {
 	 * @param loc Location to move
 	 * @param d Velocity of the movement
 	 */
-	public abstract LineTo moveLocation(Scene scene, Node player, int position);
+	public abstract LineTo moveLocation(Node player, int position, int second);
 	
 	/**
 	 * Get the index of the direction

@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
+import controller.MovementController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -22,6 +23,7 @@ import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
 import view.gameDialog.CardDialog;
+import view.tiles.ComponentFactory;
 import view.tiles.LandAbstractFactoryImp;
 
 /**
@@ -68,9 +70,11 @@ public class GamePane extends StackPane{
 	private Pane playerLayer() {
 		Pane pane = new Pane();
 		
-		this.iconMap.values().stream().peek(icon -> icon.setScene(mainPane.getScene()))
-							 .forEach(icon -> { icon.get().setLayoutX(PaneDimensionSetting.getInstance().getGamePaneWidth() - 80);
-							 					icon.get().setLayoutY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 60);
+		this.iconMap.values().stream()
+							 .forEach(icon -> { icon.get().setTranslateX(PaneDimensionSetting.getInstance().getGamePaneWidth() - ComponentFactory.LandSimpleWIDTH*1.5);
+							 					icon.get().setTranslateY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 50);
+							 					icon.get().setX(-20);
+							 					icon.get().setY(-20);
 							 });
 		
 		pane.getChildren().addAll(this.iconMap.values().stream().map(icon -> icon.get()).collect(Collectors.toList()));
@@ -101,14 +105,14 @@ public class GamePane extends StackPane{
 		GridPane rightNode = this.getRightNode();
 		GridPane bottomNode = this.getBottomNode();
 		lowerLayer.getChildren().addAll(topNode, leftNode, centreNode, rightNode, bottomNode);
-		AnchorPane.setTopAnchor(topNode, -1.0);
+		AnchorPane.setTopAnchor(topNode, 0.0);
 		AnchorPane.setTopAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
 		AnchorPane.setLeftAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXRIGHT);
 		AnchorPane.setBottomAnchor(leftNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
 		AnchorPane.setTopAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
 		AnchorPane.setRightAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXRIGHT);
 		AnchorPane.setBottomAnchor(rightNode, PaneDimensionSetting.getInstance().getGamePaneHeight() / FIXLEFT);
-		AnchorPane.setBottomAnchor(bottomNode, -1.0);
+		AnchorPane.setBottomAnchor(bottomNode, 0.0);
 		
 		return lowerLayer;
 	}
@@ -161,28 +165,24 @@ public class GamePane extends StackPane{
 		int position = ControllerImpl.getController().getCurrentPlayer().getPosition();
 		int corner = this.getNextCorner(position);
 		Path path = new Path();
-		path.getElements().add(new MoveTo(tempIcon.get().getLayoutX(), tempIcon.get().getLayoutY()));
 		
-		if(position + movement > corner) {
-			
-			path.getElements().add(tempIcon.move(corner-position));
-			
-			
-			
+		path.getElements().add(new MoveTo(tempIcon.get().getTranslateX(), tempIcon.get().getTranslateY()));
+		
+		System.out.println("Prima di Movement" + tempIcon.get().getTranslateX() + " " + tempIcon.get().getTranslateY() + " " + position);
+		
+		if(position + movement >= corner) {			
+			path.getElements().add(tempIcon.move(corner-position, 0));
 			tempIcon.rotate();
-			/*SequentialTransition sequential = new SequentialTransition(tempIcon.move(2), tempIcon.move(4));
-			sequential.getChildren().get(1).play();
-			tempIcon.rotate();
-			sequential.getChildren().get(0).play();*/
 			movement = movement - (corner-position);
+			path.getElements().add(tempIcon.move(movement,corner-position ));
+			tempIcon.rotate();
 			
-		}	
-			
-		path.getElements().add(tempIcon.move(movement));
+		}else {
+			path.getElements().add(tempIcon.move(movement, 0));
+		}
 		
-//		MovementController control = new MovementController().setMovement(path);
-//			control.start();
-		
+		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
+		control.start();	
 	}
 	
 	private int getNextCorner(int pos) {
