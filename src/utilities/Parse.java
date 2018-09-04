@@ -2,6 +2,7 @@ package utilities;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
 import java.util.stream.Collectors;
@@ -53,7 +54,11 @@ public class Parse {
 						
 						return new Corner(value*10, String.valueOf(cornerType).toLowerCase(), cornerType);
 					};
-					
+	
+	public static final Function<Integer, Tax> PARSING_TAX = value -> new Tax(value);
+	
+	public static final Function<Entry<Integer, Boolean>, Chance> PARSING_CHANCE = value -> new Chance(value.getKey(), value.getValue());
+	
 	public static final BiConsumer<String, Stream<Tile>> PARSING_LOAD_MODEGAME = (record, stream) -> 
 					stream.filter(t -> t.getPosition() == Integer.parseInt(getPlittingList(record).get(0)))
 					.findFirst().get().setNameOf(getPlittingList(record).get(1));

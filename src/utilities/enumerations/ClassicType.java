@@ -39,7 +39,6 @@ public class ClassicType {
 	    }
 	}
 	
-	
 	public enum Board{
 		GeneralImagesMap("images/Icons/Via.png", "images/Icons/Prigione.png", "images/Icons/Poliziotto.png", "images/Icons/Treno.png",
 						 "images/Icons/Anello.png", "images/Icons/Train.png", "images/Icons/Lampadina.png", "images/Icons/Rubinetto.png", 
@@ -152,7 +151,6 @@ public class ClassicType {
 			this.save = save;
 		}
 		
-		  
 	    public String getIconWindows() {
 	    	return this.iconWindows;
 	    }
@@ -214,5 +212,9 @@ public class ClassicType {
 		public String getTradeImage() {
 			return this.trade;
 		}
+	}
+	
+	public enum Music{
+		
 	}
 }
