@@ -10,6 +10,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
+import utilities.IconLoader;
+import utilities.enumerations.ClassicType;
 
 /**
  * This dialog allows the current player to mortgage it's properties to pay a
@@ -23,11 +25,11 @@ public class MortgageDialog extends Dialog {
 	private static final MortgageDialog SINGLETON = new MortgageDialog();
 
 	private static final double SPACING = 10;
-	
+
 	private MortgageDialog() {
-		
+
 	}
-	
+
 	/**
 	 * Instance of MortgageDialog.
 	 * 
@@ -43,14 +45,12 @@ public class MortgageDialog extends Dialog {
 	 * @param minimumExpense
 	 *            the minimum amount of money that the player have to pay.
 	 */
-	public void createMortgageDialog(int minimumExpense, PlayerInfo player) {
+	public void createMortgageDialog(final int minimumExpense, final PlayerInfo player) {
 		final Stage stage = setStage();
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 
-		//attenzione, non vuole solo il current player, ma qualsiasi giocatore può andare in bancarotta, o meglio, bisognerebbe vedere gli imprevisti
-		//comunque sarebbe bene passargli in ingresso il current player per mantenere l'incapsulamento
 		final PlayersContractListView playerListView = new PlayersContractListView(player);
 		rootPane.setLeft(playerListView);
 
@@ -69,7 +69,8 @@ public class MortgageDialog extends Dialog {
 		vBox.getChildren().add(obtainedMoney);
 		rootPane.setCenter(vBox);
 
-		final BorderPane bottomPane = addButtonBox(stage, "Red", "/images/Icons/dialog/ruined_house.png");
+		final BorderPane bottomPane = addButtonBox(stage, "Red",
+				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getMortgageImage()).get());
 		final Button mortgageButton = new Button("Mortgage");
 		mortgageButton.setFont(getPrincipalFont());
 		mortgageButton.setDisable(true);
@@ -77,7 +78,9 @@ public class MortgageDialog extends Dialog {
 		rootPane.setBottom(bottomPane);
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			obtainedMoney.setText(obtainedMoney.getText().replaceAll("0", String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected().stream().map(value -> value.get()).collect(Collectors.toList())))));
+			obtainedMoney.setText(obtainedMoney.getText().replaceAll("0",
+					String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected()
+							.stream().map(value -> value.get()).collect(Collectors.toList())))));
 			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
 		});
 

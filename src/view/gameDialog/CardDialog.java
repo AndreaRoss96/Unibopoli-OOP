@@ -31,11 +31,13 @@ import view.Contract;
  *
  */
 public class CardDialog extends Dialog {
-	
+
 	private static final CardDialog SINGLETON = new CardDialog();
-	
+
 	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
-	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); //da modificare in setStyle(-fx-font-family: kabel)
+	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); // da modificare in
+																						// setStyle(-fx-font-family:
+																						// kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
 
@@ -44,9 +46,9 @@ public class CardDialog extends Dialog {
 	private Label buildingNumer;
 
 	private CardDialog() {
-		
+
 	}
-	
+
 	/**
 	 * Instance of CardDialog.
 	 * 
@@ -63,26 +65,26 @@ public class CardDialog extends Dialog {
 	 *            the property that have to be shown.
 	 * 
 	 */
-	public void createCardDialog(Obtainable property, boolean canAct) {
+	public void createCardDialog(final Obtainable property, final boolean canAct) {
 		this.stage = setStage();
 		this.stage.initModality(Modality.WINDOW_MODAL);
 		this.property = property;
 		this.buildingNumer = new Label();
 		this.buildingNumer.setFont(VALUE_FONT);
-		
+
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox());
 		root.setLeft(new Contract(this.property));
 		root.setBottom(addBottom(canAct));
-		root.setBackground(getBackground());	
+		root.setBackground(getBackground());
 		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, BOTTOM_MARGIN, LEFT_MARGIN));
-		
+
 		final Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		
+
 		stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
-			if(!isNowFocused) {
+			if (!isNowFocused) {
 				stage.close();
 			}
 		});
@@ -102,25 +104,29 @@ public class CardDialog extends Dialog {
 		final Label title = new Label("Contract Infos:\n\n");
 		title.setFont(TITLE_FONT);
 		title.setTextFill(property.getColorOf().getPaint().orElse(Color.BLACK));
-		
+
 		final Label labelOwner = new Label("Owner: ");
 		labelOwner.setFont(getPrincipalFont());
 		final Label effectiveOwner = new Label(property.getOwner().or(" - "));
 		effectiveOwner.setFont(VALUE_FONT);
-		
+
 		final Label propertyStatus = new Label("Status: ");
 		propertyStatus.setFont(getPrincipalFont());
-		final Label effectivePropertyStatus = new Label(property.hasMortgage() ? Obtainable.StatusTile.MORTGAGE.toString() : Obtainable.StatusTile.NOT_MORTGAGE.toString());
+		final Label effectivePropertyStatus = new Label(
+				property.hasMortgage() ? Obtainable.StatusTile.MORTGAGE.toString()
+						: Obtainable.StatusTile.NOT_MORTGAGE.toString());
 		effectivePropertyStatus.setFont(VALUE_FONT);
-		
+
 		/* insertion in the gridPAne */
 		grid.add(title, 0, 0, 2, 2);
 		grid.add(labelOwner, 0, ++column);
 		grid.add(effectiveOwner, 1, column);
 		grid.add(propertyStatus, 0, ++column);
 		grid.add(effectivePropertyStatus, 1, column);
-		
-		/* if the property is buildable the dialog will show the number of houses/HOTEL */
+
+		/*
+		 * if the property is buildable the dialog will show the number of houses/HOTEL
+		 */
 		if (property instanceof Buildable) {
 			final Label building = new Label("Buildings: ");
 			building.setFont(getPrincipalFont());
@@ -136,7 +142,7 @@ public class CardDialog extends Dialog {
 		return anchor;
 	}
 
-	private GridPane addBottom(boolean canAct) {
+	private GridPane addBottom(final boolean canAct) {
 		final GridPane grid = new GridPane();
 		grid.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		grid.setHgap(Dialog.getScreenH() * 0.1);
@@ -155,7 +161,7 @@ public class CardDialog extends Dialog {
 	 * 
 	 * @param grid
 	 */
-	private void gridWithNoOwner(GridPane grid, boolean canBuy) {
+	private void gridWithNoOwner(final GridPane grid, final boolean canBuy) {
 		final ImageView cashImage = new ImageView(new Image("/images/dialogButton/cash-in-hand-50.png"));
 		final Button buyProperty = new Button("", cashImage);
 		buyProperty.setDisable(!canBuy);
@@ -174,53 +180,62 @@ public class CardDialog extends Dialog {
 	/**
 	 * update the gridPane with the necessary button to interact with a contract
 	 * without owner. Allows the current player to add or remove houses from his
-	 * property, or to mortgage a determinated property.
+	 * property, or to mortgage a determined property.
 	 * 
 	 * @param grid
 	 * 
 	 * @param property
 	 *            the interested property
 	 * @param disableButton
-	 *            if the property is unbuildable is setted false
+	 *            if the property is unBuildable is set false
 	 */
 	private void gridWithOwner(GridPane grid, Boolean canBuild) {
 		final Button addHouseButton = new Button("", new ImageView("/images/dialogButton/aggiungi_casa.png"));
 		final Button removeHouseButton = new Button("", new ImageView("/images/dialogButton/rimuovi_casa.png"));
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
-	
-		if(!(this.property instanceof Buildable) || !canBuild) {
+
+		if (!(this.property instanceof Buildable) || !canBuild) {
 			addHouseButton.setDisable(true);
 			removeHouseButton.setDisable(true);
 		} else {
 			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= 5));
-			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));			
+			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));
 		}
-		
+
 		addHouseButton.setOnAction(e -> {
 			addHouseButton.setDisable(DialogController.getDialogController().incHouse());
 			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));
 		});
-		
+
 		removeHouseButton.setOnAction(e -> {
 			removeHouseButton.setDisable(DialogController.getDialogController().decHouse());
 			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= 5));
 		});
-		
+
 		mortgageProperty.setOnAction(e -> {
 			DialogController.getDialogController().mortgageDialogClick();
 			this.stage.close();
 		});
-		
+
 		grid.add(removeHouseButton, 0, 0);
 		grid.add(addHouseButton, 1, 0);
 		grid.add(mortgageProperty, 2, 0);
 	}
-	
+
+	/**
+	 * Getter for the interested property.
+	 * 
+	 * @return the interested property
+	 */
 	public Buildable getProperty() {
 		return (Buildable) this.property;
 	}
-	
+
+	/**
+	 * Update the state of the label of the buildings in this properly property.
+	 */
 	public void updateBuildingLabel() {
-		this.buildingNumer.setText(((Buildable) this.property).getBuildingNumber() >= 5 ? "HOTEL" : String.valueOf(((Buildable) this.property).getBuildingNumber()));
+		this.buildingNumer.setText(((Buildable) this.property).getBuildingNumber() >= 5 ? "HOTEL"
+				: String.valueOf(((Buildable) this.property).getBuildingNumber()));
 	}
 }

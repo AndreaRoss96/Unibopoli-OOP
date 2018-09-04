@@ -189,4 +189,30 @@ public class ClassicType {
 			return this.save;
 		}
 	}
+	
+	public enum Dialog {
+		GeneralDialogMap("images/Icons/dialog/Auction.png", "images/Icons/dialog/ruined_house.png", "images/Icons/dialog/shopping_cart.png");
+		
+		private final String auction;
+		private final String mortgage;
+		private final String trade;
+		
+		private Dialog (final String auction, final String mortgage, final String trade) {
+			this.auction = auction;
+			this.mortgage = mortgage;
+			this.trade = trade;
+		}
+		
+		public String getAuctionImage() {
+			return this.auction;
+		}
+		
+		public String getMortgageImage() {
+			return this.mortgage;
+		}
+		
+		public String getTradeImage() {
+			return this.trade;
+		}
+	}
 }

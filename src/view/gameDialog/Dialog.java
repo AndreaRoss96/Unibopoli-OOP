@@ -158,7 +158,7 @@ public class Dialog {
 
 	/**
 	 * This method allows to align the most of dialog under a unique and
-	 * characteristical box of button.
+	 * characteristic box of button.
 	 * 
 	 * @param Stage
 	 *            the stage to be close (cancel button).
@@ -171,9 +171,9 @@ public class Dialog {
 	 * 
 	 * @return BorderPane
 	 */
-	protected BorderPane addButtonBox(Stage stage, String color, String ImagePath) {
+	protected BorderPane addButtonBox(final Stage stage, final String color, final ImageView image) {
 		final BorderPane buttonBox = new BorderPane();
-		
+
 		buttonBox.setPadding(BUTTON_INSETS);
 		buttonBox.setStyle("-fx-background-color: " + color);
 
@@ -181,7 +181,7 @@ public class Dialog {
 		cancel.setPrefWidth(BUTTON_WIDTH);
 		buttonBox.setRight(cancel);
 
-		final ImageView centerView = new ImageView(new Image(ImagePath));
+		final ImageView centerView = image;
 		buttonBox.setCenter(centerView);
 
 		cancel.setOnAction(e -> {

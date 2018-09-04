@@ -19,6 +19,8 @@ import javafx.stage.Stage;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import utilities.AlertFactory;
+import utilities.IconLoader;
+import utilities.enumerations.ClassicType;
 
 /**
  * This dialog allows the not purchased contracts to be auctioned.
@@ -35,9 +37,9 @@ public class AuctionDialog extends Dialog {
 
 	private ObservableList<PasswordField> passwordList;
 	private Obtainable auctionedProperty;
-	
+
 	private AuctionDialog() {
-		
+
 	}
 
 	/**
@@ -55,7 +57,7 @@ public class AuctionDialog extends Dialog {
 	 * @param Property
 	 *            the property to be auctioned.
 	 */
-	public void createAuctionDialog(Obtainable property) {
+	public void createAuctionDialog(final Obtainable property) {
 		final Stage stage = setStage();
 
 		this.auctionedProperty = property;
@@ -93,14 +95,11 @@ public class AuctionDialog extends Dialog {
 		beatButton.setFont(getPrincipalFont());
 		beatButton.setPrefHeight(getButtonWidth());
 
-		final BorderPane bottomPane = addButtonBox(stage, "Yellow", "/images/Icons/dialog/Auction.png");
+		final BorderPane bottomPane = addButtonBox(stage, "Yellow", IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getAuctionImage()).get());
 		bottomPane.setLeft(beatButton);
 		rootPane.setBottom(bottomPane);
 
 		beatButton.setOnAction(e -> {
-			// DialogController.getDialogController().executeAuction(playerList,
-			// passwordList.stream().map(PasswordField::getText).collect(Collectors.toList()),
-			// property);
 			DialogController.getDialogController().executeAuction();
 			this.passwordList.forEach(p -> {
 				p.clear();

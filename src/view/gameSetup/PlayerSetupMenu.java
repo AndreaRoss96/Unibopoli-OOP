@@ -42,7 +42,7 @@ public class PlayerSetupMenu extends Scene {
 	private PlayerSetupMenu() {
 		super(new BorderPane(), STANDARD_WIDTH, STANDARD_HEIGHT);
 		
-		BorderPane borderPane = new BorderPane();
+		final BorderPane borderPane = new BorderPane();
 		
 		this.imageMap = IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
 		
@@ -50,14 +50,6 @@ public class PlayerSetupMenu extends Scene {
 		chosenList = new ArrayList<>();
 		
 		iconList.addAll(imageMap.keySet());
-		
-		
-		/*Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
-		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
-		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
-				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
-		
-		borderPane.setBackground(background);*/
 		
 		final FlowPane flowPane = new FlowPane();
 		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getPlusImage()).get());

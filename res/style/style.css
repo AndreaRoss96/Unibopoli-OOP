@@ -54,15 +54,14 @@
     -fx-font-family: "Kabel";
     -fx-base: #84912F;
  	-fx-background-image: url("/images/backgrounds/monopoli_cfu.png");
-    -fx-background-repeat: stretch;   
+    -fx-background-color: white;   
+    -fx-background-repeat: stretch;
     -fx-background-position: center center;
 }
 
 #setupBox {
 	-fx-padding: 10;
 	-fx-border-style: solid inside;
-	/*-fx-border-width: 2;
-	-fx-border-insets: 5;*/
 	-fx-border-radius: 5;
 	-fx-border-color: blue;
 	-fx-background-color: white;

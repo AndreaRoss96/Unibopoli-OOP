@@ -44,7 +44,6 @@ public class MementoTest {
 		
 		CareMementoTaker.getMementoInstance().setMemento(new ModelMemento(board, players));
 		final ModelMemento memento1 = CareMementoTaker.getMementoInstance().getMemento();
-		
 		assertNotNull(memento1.getGameBoard());
 		assertNotNull(memento1.getPlayers());
 		assertEquals(3, memento1.getPlayers().getPlayers().size());

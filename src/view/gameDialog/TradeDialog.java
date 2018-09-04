@@ -17,7 +17,9 @@ import controller.ControllerImpl;
 import controller.DialogController;
 import model.player.PlayerInfo;
 import utilities.AlertFactory;
+import utilities.IconLoader;
 import utilities.Pair;
+import utilities.enumerations.ClassicType;
 
 /**
  * This dialog allows the current player and the other players to make
@@ -54,10 +56,9 @@ public class TradeDialog extends Dialog {
 	/**
 	 * Creation of the pane for the dialog.
 	 */
-	public void createTradeDialog(List<PlayerInfo> playerList) {
+	public void createTradeDialog(final List<PlayerInfo> playerList) {
 		final Stage stage = setStage();
 		final DialogController controller = DialogController.getDialogController();
-
 		final PlayerInfo currentPlayer = ControllerImpl.getController().getCurrentPlayer();
 
 		final BorderPane rootPane = new BorderPane();
@@ -97,7 +98,8 @@ public class TradeDialog extends Dialog {
 		gridB.add(new PlayersContractListView(), 0, 2, 4, 1);
 		rootPane.setRight(gridB);
 
-		final BorderPane bottomPane = addButtonBox(stage, "Green", "/images/Icons/dialog/shopping_cart.png");
+		final BorderPane bottomPane = addButtonBox(stage, "Green",
+				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getTradeImage()).get());
 		final Button tradeButton = new Button("<==TRADE==>");
 		tradeButton.setFont(getPrincipalFont());
 		bottomPane.setLeft(tradeButton);
