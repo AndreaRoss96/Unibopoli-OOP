@@ -15,6 +15,7 @@ import model.player.PlayerInfo;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
+import view.gameDialog.SettingsDialog;
 
 public class RightInormationPane extends VBox {
 
@@ -117,6 +118,10 @@ public class RightInormationPane extends VBox {
 
 		tradeBtn.setOnAction(e -> {
 			ControllerImpl.getController().tradeClick();
+		});
+		
+		setting.setOnAction(e -> {
+			SettingsDialog.getSettingsDialog().createSettingDialog(); //chiama il controller
 		});
 		
 		this.setId("RightInformationPane");

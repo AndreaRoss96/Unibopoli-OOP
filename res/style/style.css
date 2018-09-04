@@ -72,9 +72,10 @@
 #contract{
 	-fx-border-color: black;
 	-fx-border-radius: 10;
-	-fx-border-style: solid inside;
+	-fx-border-style: solid inside;	
 	-fx-background-image: url("/images/cardBoard/white_cardstock.jpg");
 	-fx-background-radius: 10;
+	-fx-background-color: transparent;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 1);
 }
 

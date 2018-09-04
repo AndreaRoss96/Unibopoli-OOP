@@ -5,6 +5,8 @@ import utilities.enumerations.ClassicType;
 
 public class Tax extends NotObtainableImpl{
 
+	private static final long serialVersionUID = -6613719362154058827L;
+
 	public Tax(final int positionTile) {
 		super(positionTile, initName(positionTile));
 		

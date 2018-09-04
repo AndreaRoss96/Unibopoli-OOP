@@ -8,39 +8,22 @@ import java.io.Serializable;
  */
 public class ModelMemento implements Serializable {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2066419006358603603L;
-
+	private static final long serialVersionUID = 5814591792686123738L;
+	
 	private final Board gameBoard;
 	private final Turn players;
-	//private final Set<Obtainable> properties; //attenzione non sono serializzabili
-	// private final Set<Imprevisti> imprevistis;
-	// private final Set<Probabilità> probabilitàs;
 
 	/**
 	 * It creates an instance of ModelMemento.
 	 * 
 	 * @param gameBoard
 	 *            the game board.
-	 * @param players
+	 * @param Turn
 	 *            the players of the game.
-	 * @param currentPlayer
-	 *            the current player.
-	 * @param properties
-	 *            the properties of the game.
-	 * -- imprevisti e probabilità --
 	 */
 	public ModelMemento(final Board gameBoard, final Turn players) {
-			 /*final Set<Obtainable> properties
-												 * final Set<Imprevisti> imprevistis, final Set<Probabilità>
-												 * probabilitàs
-												 */
 		this.gameBoard = gameBoard;
 		this.players = players;
-//		this.properties = properties;
-		// imprevisti e probabilità
 	}
 
 	/**
@@ -51,16 +34,9 @@ public class ModelMemento implements Serializable {
 	}
 
 	/**
-	 * @return a list of all players in game.
+	 * @return the CiruclarList of all players in game.
 	 */
 	public Turn getPlayers() {
 		return this.players;
 	}
-
-	/**
-	 * @return the all the properties.
-	 */
-//	public Set<Obtainable> getProperties() {
-//		return this.properties;
-//	}
 }

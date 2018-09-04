@@ -1,13 +1,15 @@
 package model.player;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import com.google.common.base.Optional;
 
 import model.exceptions.NotEnoughMoneyException;
 import model.tiles.Buildable;
@@ -22,12 +24,12 @@ public class RealPlayer implements Player {
 
 	private static final double UNMORTGAGE_FEE = 10 / 100;
 
-	private int position;
 	private final String name;
+	private Integer position;
 	private Map<Color, List<Obtainable>> playersProperties;
-	private int money;
-	private int housesNumber; // togli
-	private int hotelsNumber;
+	private Integer money;
+	private Integer housesNumber; // togli
+	private Integer hotelsNumber;
 	private String iconPath;
 	private Prison status = Prison.NOT_PRISON;
 
@@ -153,7 +155,7 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void addProperty(Obtainable property) {
-		this.playersProperties.merge(property.getColorOf(), Arrays.asList(property),
+		this.playersProperties.merge(property.getColorOf(), new ArrayList<Obtainable>(Arrays.asList(property)),
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
 		property.setOwner(Optional.of(this.getName()));
 	}
@@ -162,13 +164,6 @@ public class RealPlayer implements Player {
 	public void mortgageProperties(List<Obtainable> mortgaged) {
 		DialogController.getDialogController()
 				.accumulatedMoney(mortgaged.stream().map(Obtainable::getNameOf).collect(Collectors.toList()));
-		// gainMoney(mortgaged.stream().mapToInt(Obtainable::getMortgage).sum());
-		// DialogController.getController().getTotalSpend(mortgaged)
-	}
-
-	public void unmortgageProperty(Obtainable property) {
-		this.payments((int) (property.getMortgage() * UNMORTGAGE_FEE));
-		// property.setMortgage();
 	}
 
 	public boolean canPay(Integer moneyAmount) {
@@ -207,7 +202,8 @@ public class RealPlayer implements Player {
 	
 	@Override
 	public Obtainable removeProperty(Obtainable property) {
-		this.playersProperties.remove(property.getColorOf(), property);
+		property.setOwner(Optional.absent());
+		this.getPopertiesByColor().get(property.getColorOf()).remove(property);
 		return property;
 	}
 

@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.tiles.Buildable;
 import model.tiles.Obtainable;
@@ -42,6 +43,10 @@ public class CardDialog extends Dialog {
 	private Obtainable property;
 	private Label buildingNumer;
 
+	private CardDialog() {
+		
+	}
+	
 	/**
 	 * Instance of CardDialog.
 	 * 
@@ -60,6 +65,7 @@ public class CardDialog extends Dialog {
 	 */
 	public void createCardDialog(Obtainable property, boolean canAct) {
 		this.stage = setStage();
+		this.stage.initModality(Modality.WINDOW_MODAL);
 		this.property = property;
 		this.buildingNumer = new Label();
 		this.buildingNumer.setFont(VALUE_FONT);
@@ -99,7 +105,7 @@ public class CardDialog extends Dialog {
 		
 		final Label labelOwner = new Label("Owner: ");
 		labelOwner.setFont(getPrincipalFont());
-		final Label effectiveOwner = new Label(property.getOwner().orElse(" - "));
+		final Label effectiveOwner = new Label(property.getOwner().or(" - "));
 		effectiveOwner.setFont(VALUE_FONT);
 		
 		final Label propertyStatus = new Label("Status: ");

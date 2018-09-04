@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.google.common.base.Optional;
+
 import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
@@ -22,6 +24,7 @@ public class PlayersContractListView extends ListView<Text> {
 	public PlayersContractListView(PlayerInfo player) {
 		player.getProperties().forEach(c -> {
 			Text property = new Text(c.getNameOf());
+			property.setStyle("-fx-font-family: kabel;");
 			property.setFill(c.getColorOf().getPaint().orElse(Color.BLACK));
 			this.getItems().add(property);
 		});
@@ -46,8 +49,8 @@ public class PlayersContractListView extends ListView<Text> {
 	 * 
 	 * @return a list of selected items
 	 */
-	public List<String> getSelected(){
-		return this.map.keySet().stream().map(Text::getText).collect(Collectors.toList());
+	public List<Optional<String>> getSelected(){
+		return this.map.keySet().stream().map(Text::getText).map(value -> Optional.of(value)).collect(Collectors.toList());
 	}
 	
 

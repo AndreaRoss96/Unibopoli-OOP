@@ -5,6 +5,8 @@ import utilities.enumerations.ClassicType;
 
 public class Corner extends NotObtainableImpl {
 
+	private static final long serialVersionUID = -6125765763701977563L;
+
 	public enum CornerTile{
 		GO(ClassicType.Board.GeneralImagesMap.getGoImagePath(), "COLLECT $200\nAS YOU PASS"),
 		FREE_TRANSIT(ClassicType.Board.GeneralImagesMap.getTransitJailPath(), "IN\nJAIL"),

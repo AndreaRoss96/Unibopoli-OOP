@@ -1,6 +1,8 @@
 package model.tiles;
 
-import java.util.Optional;
+
+import com.google.common.base.Optional;
+
 import utilities.enumerations.Color;
 
 /**

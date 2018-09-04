@@ -1,12 +1,14 @@
 package model.tiles;
 
+import java.io.Serializable;
+
 /**
  * This interface is the root of the Tile hierarchy. 
  * 
  * @author Matteo Alesiani
  */
 
-public interface Tile {
+public interface Tile extends Serializable {
 	/**
 	 * Simple Factory per Tile controllare relazione risiko
 	 * 

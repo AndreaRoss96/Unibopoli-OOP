@@ -4,8 +4,10 @@ import view.Icon;
 
 public abstract class NotObtainableImpl implements NotObtainable{
 
-	protected Icon image;
-	private int positionTile;
+	private static final long serialVersionUID = 6004220435515803475L;
+	
+	transient protected Icon image;
+	private Integer positionTile;
 	private String nameTile;
 	
 	public NotObtainableImpl(final int positionTile, final String nameTile) {

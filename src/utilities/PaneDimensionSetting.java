@@ -8,7 +8,7 @@ public class PaneDimensionSetting {
 	private static final double CommandBridgeWIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() - OFFSET;
     private static final double CommandBridgeHEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - OFFSET;
     private static final double GamePaneDIMENSION = CommandBridgeHEIGHT;
-    private static final double LateralPaneWIDTH = (CommandBridgeWIDTH - GamePaneDIMENSION)/2;
+    private static final double LateralPaneWIDTH = (CommandBridgeWIDTH - GamePaneDIMENSION)/2 - OFFSET;
     private static final double LateralPaneHEIGHT = CommandBridgeHEIGHT;
     
 	private static PaneDimensionSetting PANEDIMENSION;

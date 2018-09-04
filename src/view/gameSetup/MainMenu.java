@@ -14,6 +14,7 @@ import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
+import view.CommandBridge;
 import view.handlers.HandleFileChooser;
 
 /**
@@ -89,7 +90,11 @@ public final class MainMenu extends Scene{
 		});
 
 		loadGameBtn.addEventFilter(MouseEvent.MOUSE_CLICKED, new HandleFileChooser());
-
+		loadGameBtn.setOnMouseClicked(e -> {
+			mainStage.setScene(CommandBridge.get(mainStage));
+			mainStage.centerOnScreen();
+		});
+		
 		cancelBtn.setOnAction(e -> {
 			if(AlertFactory.createConfirmationAlert("Confirm exit", "Are you sure you want to quit from Unibopoli?")) {
 				mainStage.close();

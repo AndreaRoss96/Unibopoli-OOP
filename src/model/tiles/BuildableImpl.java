@@ -8,9 +8,11 @@ import utilities.enumerations.Color;
 
 public class BuildableImpl extends ObtainableImpl implements Buildable{
 	
+	private static final long serialVersionUID = 7806152148586048326L;
+	
 	private Rents rents;
-	private int buildingsNr;
-	private int priceBuilding;
+	private Integer buildingsNr;
+	private Integer priceBuilding;
 	
 	public BuildableImpl(final int positionTile, final int price, final int mortgage, 
 			final Rents rents, final Color colorTile, final int priceBuilding) {

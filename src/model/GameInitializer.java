@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 import model.player.Player;
 import model.player.RealPlayer;
@@ -48,7 +47,7 @@ public final class GameInitializer {
 		
 		this.alreadyCalled = true;
 		
-		Board board = new Board(mode);
+		final Board board = new BoardImpl(mode);
 		
 		this.playerList = new ArrayList<>();
 		
@@ -56,7 +55,7 @@ public final class GameInitializer {
 		for (InitialDistribution v : InitialDistribution.values()) {
 			if (v.getPlayerNumber() == playersMap.size()) {
 				playersMap.keySet().forEach(e -> {
-					Player player = new RealPlayer(e, v.getMoneyAmount(), playersMap.get(e));
+					final Player player = new RealPlayer(e, v.getMoneyAmount(), playersMap.get(e));
 					/* for each properties diceded by the rules (enum - InitialDistribution) a
 					 * player buy a determinated number of any property
 					 */

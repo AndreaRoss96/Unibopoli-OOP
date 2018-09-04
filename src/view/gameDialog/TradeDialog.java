@@ -2,6 +2,8 @@ package view.gameDialog;
 
 import java.util.List;
 
+import com.google.common.base.Optional;
+
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -36,8 +38,12 @@ public class TradeDialog extends Dialog {
 	private TextField currMoneyToTrade;
 	private TextField secPlayersMoneyToTrade;
 
+	private TradeDialog() {
+
+	}
+
 	/**
-	 * Istance of TradeDialog.
+	 * Instance of TradeDialog.
 	 * 
 	 * @return the instance.
 	 */
@@ -109,6 +115,7 @@ public class TradeDialog extends Dialog {
 			if (AlertFactory.createConfirmationAlert("Are you sure?", "Do both players agree?")) {
 				if (this.playerBox.getValue() != null) {
 					controller.executeTrade();
+					stage.close();
 				} else {
 					AlertFactory.createErrorAlert("???", "Choose a player!");
 					e.consume();
@@ -123,15 +130,31 @@ public class TradeDialog extends Dialog {
 		stage.show();
 	}
 
+	/**
+	 * return the second player chose by the user.
+	 * 
+	 * @return the chose player
+	 */
 	public String getSecondPlayer() {
 		return this.playerBox.getValue();
 	}
 
+	/**
+	 * Return the quantity of money to trade within the players.
+	 * 
+	 * @return a pair with in the first value the money of the first player and in
+	 *         the second value the money of the second one
+	 */
 	public Pair<String> getPlayersMoneyToTrade() {
 		return new Pair<String>(this.currMoneyToTrade.getText(), this.secPlayersMoneyToTrade.getText());
 	}
 
-	public Pair<List<String>> getSelectedProperties() {
-		return new Pair<List<String>>(this.currListView.getSelected(), this.allPlayersListView.getSelected());
+	/**
+	 * Return the selected property by both player.
+	 * 
+	 * @return a list of the names of all properties
+	 */
+	public Pair<List<Optional<String>>> getSelectedProperties() {
+		return new Pair<List<Optional<String>>>(this.currListView.getSelected(), this.allPlayersListView.getSelected());
 	}
 }

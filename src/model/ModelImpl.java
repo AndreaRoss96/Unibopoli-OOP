@@ -1,9 +1,10 @@
 package model;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import com.google.common.base.Optional;
 
 import controller.ControllerImpl;
 import model.player.Player;
@@ -16,8 +17,8 @@ public class ModelImpl implements Model{
 	
 	private static final int JAIL = 30;
 
-	private Board board;
-	private Turn turnPlayer;
+	private final Board board;
+	private final Turn turnPlayer;
 	
 	public ModelImpl(final Board board, final Turn players) {
 		this.board = board;
@@ -32,14 +33,11 @@ public class ModelImpl implements Model{
 	
 	@Override
 	public void saveGame() {
-		CareMementoTaker.getMementoInstance().setMemento(new ModelMemento(this.board, turnPlayer));
+		CareMementoTaker.getMementoInstance().setMemento(new ModelMemento(this.board, this.turnPlayer));
 		ResourceManager.getInstance().saveOnFile(CareMementoTaker.getMementoInstance().getMemento());
 	}
 
-	/**
-	 * Ricordarsi che solo i giocatori non in JAIL possono muoversi.
-	 * 
-	 * */
+
 	@Override
 	public Pair<Integer> exitDice() {
 		Pair<Integer> temp = Dice.getInstance().getDice();
@@ -57,9 +55,6 @@ public class ModelImpl implements Model{
 		}else {
 			this.goToJail();
 			return temp;
-			//si può far comunque ritornare il risultato,
-			//poiché se il giocatore finisce in carcere prima di muoversi non si muove,
-			//ma in questo modo è comunque possibile mostrare il risultato
 		}
 	}	
 	
@@ -84,7 +79,7 @@ public class ModelImpl implements Model{
 		this.turnPlayer.remove(player);
 		this.getProperties().stream().forEach(tile -> {
 			if(tile.getOwner().get().equals(player.getName())) {
-				tile.setOwner(Optional.empty());
+				tile.setOwner(Optional.absent());
 				ControllerImpl.getController().startAuciton(tile);
 			}
 		});

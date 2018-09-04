@@ -1,14 +1,15 @@
 package model;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import java.io.OutputStream;
 import java.time.Instant;
 
 import utilities.AlertFactory;
@@ -22,8 +23,8 @@ public class ResourceManager {
 
 	private static final ResourceManager SINGLETON = new ResourceManager();
 
-	private static final Path SAVE_DIRECTORY_PATH = Paths.get(System.getProperty("user.home"), File.separator,
-			".unibopoli");
+	private final String SAVE_DIRECTORY_PATH = System.getProperty("user.home") + System.getProperty("file.separator")
+			+ ".unibopoli" + System.getProperty("file.separator");
 
 	/**
 	 * @return Instance of resource manager
@@ -33,13 +34,12 @@ public class ResourceManager {
 	}
 
 	private ResourceManager() {
-		if (!Files.exists(SAVE_DIRECTORY_PATH)) {
-			try {
-				Files.createDirectory(SAVE_DIRECTORY_PATH);
-			} catch (IOException e) {
-				e.printStackTrace();
-				AlertFactory
-						.createErrorAlert("ERROR", "There's been an error during the creation of save directory!");
+		System.out.println(SAVE_DIRECTORY_PATH);
+		final File dir = new File(SAVE_DIRECTORY_PATH);
+		if (!dir.exists()) {
+			final boolean success = dir.mkdir();
+			if (!success) {
+				AlertFactory.createErrorAlert("ERROR", "There's been an error during the creation of save directory!");
 			}
 		}
 	}
@@ -55,15 +55,13 @@ public class ResourceManager {
 		fileName = fileName.trim();
 		fileName = fileName.replace(':', '-');
 		fileName = fileName.substring(0, fileName.lastIndexOf('.'));
-		File file = new File(fileName);
 		try {
-			final FileOutputStream fileOutput = new FileOutputStream(
-					SAVE_DIRECTORY_PATH.toString() + File.separator + file + ".ubp");
-			final ObjectOutputStream objectOutput = new ObjectOutputStream(fileOutput);
+			final OutputStream fileStream = new FileOutputStream(SAVE_DIRECTORY_PATH + fileName + ".ubp");
+			final OutputStream outputStream = new BufferedOutputStream(fileStream);
+			final ObjectOutputStream objectOutput = new ObjectOutputStream(outputStream);
 			objectOutput.writeObject(memento);
 			objectOutput.close();
-			fileOutput.close();
-		} catch (IOException ioEx) {
+		} catch (Exception ioEx) {
 			ioEx.printStackTrace();
 			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file saving!");
 		}
@@ -78,11 +76,11 @@ public class ResourceManager {
 	public ModelMemento loadGameFromFile(final File file) {
 		ModelMemento memento = null;
 		try {
-			final FileInputStream fileInput = new FileInputStream(file);
-			final ObjectInputStream objectInput = new ObjectInputStream(fileInput);
+			final InputStream fileStream = new FileInputStream(file);
+			final InputStream inputStream = new BufferedInputStream(fileStream);
+			final ObjectInputStream objectInput = new ObjectInputStream(inputStream);
 			memento = (ModelMemento) objectInput.readObject();
 			objectInput.close();
-			fileInput.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!");
@@ -91,9 +89,5 @@ public class ResourceManager {
 			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!");
 		}
 		return memento;
-	}
-
-	public String getSaveDirectory() {
-		return SAVE_DIRECTORY_PATH.toString();
 	}
 }

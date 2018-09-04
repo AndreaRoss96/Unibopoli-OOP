@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,19 +16,13 @@ import utilities.CircularListImpl;
  */
 public class TurnImpl implements Turn {
 
-	/**
-	 * 
-	 * Controllare metodo clear();
-	 * 
-	 * Aggiungi loserList alla classe e toglierla da ModelImpl.
-	 * **/
 	private static final long serialVersionUID = -754218580225904481L;
 	private static final int TURN_IN_JAIL = 3;
 	
 	private CircularListImpl<Player> turnManagement;
 	private List<PlayerInfo> loserPlayer;
 	private Map<PlayerInfo, Integer> jailMap;
-	private int rolls;
+	private Integer rolls;
 	
 	public TurnImpl(List<Player> players) {
 		this.turnManagement = new CircularListImpl<>(players);

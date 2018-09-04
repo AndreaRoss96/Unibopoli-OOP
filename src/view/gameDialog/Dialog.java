@@ -135,9 +135,9 @@ public class Dialog {
 	protected Stage setStage() {
 		final Stage stage = new Stage();
 		stage.initStyle(StageStyle.UNDECORATED);
+		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.centerOnScreen();
 		stage.setResizable(false);
-		stage.initModality(Modality.WINDOW_MODAL);
 		stage.setWidth(PREF_W_SIZE);
 		stage.setHeight(PREF_H_SIZE);
 		return stage;

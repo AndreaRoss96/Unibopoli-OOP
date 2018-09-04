@@ -11,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Line;
-import javafx.scene.shape.StrokeType;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
@@ -37,21 +36,22 @@ public class Contract extends AnchorPane {
 	private static final double LABEL_BIG_WIDTH = 255;
 	private static final Font PROPERTY_FONT = Font.font("Kabel", FontWeight.BOLD, 20);
 
+	private final GridPane insidePane;
 	private int row;
-
+	
 	public Contract(Obtainable property) {
-		final GridPane insidePane = new GridPane();
-		insidePane.setPadding(new Insets(0, V_PADDING, 0, V_PADDING));
-		insidePane.setVgap(V_GAP);
-		insidePane.setPrefSize(PREF_WIDTH, PREF_HEIGHT);
-		insidePane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
-		insidePane.setAlignment(Pos.TOP_CENTER);
-		insidePane.setStyle("-fx-border-color: black;");
+		this.insidePane = new GridPane();
+		this.insidePane.setPadding(new Insets(0, V_PADDING, 0, V_PADDING));
+		this.insidePane.setVgap(V_GAP);
+		this.insidePane.setPrefSize(PREF_WIDTH, PREF_HEIGHT);
+		this.insidePane.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
+		this.insidePane.setAlignment(Pos.TOP_CENTER);
+		this.insidePane.setStyle("-fx-border-color: black;");
 
 		if (property instanceof Buildable) {
-			createContractForBuildable(insidePane, (Buildable) property);
+			createContractForBuildable((Buildable) property);
 		} else {
-			createContractForNotBuildable(insidePane, (NotBuildable) property);
+			createContractForNotBuildable((NotBuildable) property);
 		}
 		
 		AnchorPane.setTopAnchor(insidePane, WIDTH_ANCHOR);
@@ -65,8 +65,8 @@ public class Contract extends AnchorPane {
 		this.getStylesheets().add("/style/style.css");
 	}
 
-	private void createContractForBuildable(GridPane insidePane, Buildable property) {
-		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 2, insidePane);
+	private void createContractForBuildable(Buildable property) {
+		this.labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 2, insidePane);
 		final Label propertyName = new Label(property.getNameOf());
 		propertyName.setPrefSize(LABEL_BIG_WIDTH, LABEL_HEIGHT * 4.5);
 		propertyName.setAlignment(Pos.CENTER);
@@ -78,23 +78,23 @@ public class Contract extends AnchorPane {
 		insidePane.add(propertyName, 0, this.row++, 2, 1);
 		GridPane.setMargin(propertyName, new Insets(LABEL_HEIGHT, 0, LABEL_HEIGHT, 0));
 
-		labelCreator("RENT", Optional.of(property.getRent() + " $"), 1, insidePane);
+		this.labelCreator("RENT", Optional.of(property.getRent() + " $"), 1, insidePane);
 		for (int i = 1; i <= 5; i++) {
 			labelCreator("With " + (i != 5 ? i + " House" + (i == 1 ? "" : "s") : "HOTEL"),
 					Optional.of(String.valueOf(property.getRent(i)) + " $"), 1, insidePane);
 		}
 
 		final Line line = new Line(-100, 0, 100, 0);
-		insidePane.add(line, 0, this.row++, 2, 1);
+		this.insidePane.add(line, 0, this.row++, 2, 1);
 		GridPane.setHalignment(line, HPos.CENTER);
 
-		labelCreator("House cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1, insidePane);
-		labelCreator("Hotel cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1, insidePane);
-		labelCreator("Mortgage value", Optional.of(String.valueOf(property.getMortgage()) + " $"), 2, insidePane);
+		this.labelCreator("House cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1, insidePane);
+		this.labelCreator("Hotel cost", Optional.of(String.valueOf(property.getPriceForBuilding()) + " $"), 1, insidePane);
+		this.labelCreator("Mortgage value", Optional.of(String.valueOf(property.getMortgage()) + " $"), 2, insidePane);
 	}
 
-	private void createContractForNotBuildable(GridPane insidePane, NotBuildable property) {
-		labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1, insidePane);
+	private void createContractForNotBuildable(NotBuildable property) {
+		this.labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1, insidePane);
 		final ImageView image = property.getImage();
 		image.setFitHeight(IMAGE_HEIGHT);
 		image.setFitWidth(IMAGE_WIDTH);
@@ -108,7 +108,7 @@ public class Contract extends AnchorPane {
 		propertyName.setTextAlignment(TextAlignment.CENTER);
 		propertyName.setFont(PROPERTY_FONT);
 		propertyName.setWrapText(true);
-		insidePane.add(propertyName, 0, this.row++, 2, 1);
+		this.insidePane.add(propertyName, 0, this.row++, 2, 1);
 
 		for (int i = 1; i <= property.getColorOf().getNumTiles(); i++) {
 			labelCreator(i == 1 ? "RENT" : "if " + i + " are owned: ", Optional.of(property.getRent() * i + " $"), 1,
@@ -120,10 +120,11 @@ public class Contract extends AnchorPane {
 	private void labelCreator(String leftLabel, Optional<String> rightLabel, int colspan, GridPane insidePane) {
 		final Label left = new Label(leftLabel);
 		left.setWrapText(true);
-		insidePane.add(left, 0, this.row, colspan, 1);
+		this.insidePane.add(left, 0, this.row, colspan, 1);
+		
 		if (rightLabel.isPresent()) {
-			Label right = new Label(rightLabel.get());
-			insidePane.add(right, 1, this.row);
+			final Label right = new Label(rightLabel.get());
+			this.insidePane.add(right, 1, this.row);
 			GridPane.setHalignment(right, HPos.RIGHT);
 		}
 		this.row++;

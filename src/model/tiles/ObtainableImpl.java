@@ -1,20 +1,23 @@
 package model.tiles;
 
+
+
 /**
  * @author Matteo Alesiani 
  */
-
-import java.util.Optional;
+import com.google.common.base.Optional;
 
 import utilities.enumerations.Color;
 
 public abstract class ObtainableImpl implements Obtainable{
+
+	private static final long serialVersionUID = -2712555186344805312L;
 	
-	private int positionTile;
+	private Integer positionTile;
 	private String nameTile;
-	private int price;	
+	private Integer price;	
 	// mortgage è sempre la metà ?? in tal caso potremmo inserire un bool 
-	private int mortgage;
+	private Integer mortgage;
 	/**
 	 * TODO: aggiunto ora. Check con Rosso. finire di gestire l'attributo.
 	 * */
@@ -28,7 +31,7 @@ public abstract class ObtainableImpl implements Obtainable{
 		this.price = price;
 		this.mortgage = mortgage;
 		this.hasMortgage = StatusTile.NOT_MORTGAGE;
-		this.owner = Optional.empty();
+		this.owner = Optional.absent();
 		this.colorTile = colorTile;
 	}
 	

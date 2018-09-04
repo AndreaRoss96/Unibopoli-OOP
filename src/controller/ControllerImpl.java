@@ -67,7 +67,7 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void saveGame() {
-		model.saveGame();
+		this.model.saveGame();
 	}
 
 	@Override

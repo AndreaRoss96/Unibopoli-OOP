@@ -1,6 +1,3 @@
-/**
- * 
- */
 package view.gameDialog;
 
 import java.util.List;
@@ -38,6 +35,10 @@ public class AuctionDialog extends Dialog {
 
 	private ObservableList<PasswordField> passwordList;
 	private Obtainable auctionedProperty;
+	
+	private AuctionDialog() {
+		
+	}
 
 	/**
 	 * Instance of AuctionDialog.

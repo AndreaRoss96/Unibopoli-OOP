@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 
 import controller.ControllerImpl;
 import javafx.event.EventHandler;
+import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.stage.FileChooser.ExtensionFilter;
@@ -32,8 +33,9 @@ public class HandleFileChooser implements EventHandler<MouseEvent> {
 		final FileChooser.ExtensionFilter ubpFilter = new ExtensionFilter("UBP files (*.ubp)", "*.ubp");
 		fileChooser.getExtensionFilters().add(ubpFilter);
 
-		final File file = fileChooser.showOpenDialog(null);
+		final File file = fileChooser.showOpenDialog(((Button) e.getSource()).getScene().getWindow());
 		if (file != null) {
+			System.out.println("Sto caricando il file: " + file.toString());
 			ControllerImpl.getController().loadGameFromFile(file);
 		}
 	}

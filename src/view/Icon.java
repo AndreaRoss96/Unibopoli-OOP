@@ -4,7 +4,6 @@ import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.LineTo;
-import javafx.scene.shape.Path;
 import model.Location;
 import utilities.enumerations.Direction;
 

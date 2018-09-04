@@ -13,12 +13,14 @@ import view.Icon;
 
 public class NotBuildableImpl extends ObtainableImpl implements NotBuildable{
 
+	private static final long serialVersionUID = 4892673225735533821L;
+	
 	private static final String TRAIN = ClassicType.Board.GeneralImagesMap.getTrainImagePath();
 	private static final String AZIENDA_ELETTRICA = ClassicType.Board.GeneralImagesMap.getBulbImagePath();
 	private static final String AZIENDA_ACQUA = ClassicType.Board.GeneralImagesMap.getWaterImagePath();
-	private static final int RENT = 25;
+	private static final Integer RENT = 25;
 	
-	private Icon image;
+	transient private Icon image;
 	
 	public NotBuildableImpl(final int positionTile, final int price, 
 			  final int mortgage, final Color colorTile) {

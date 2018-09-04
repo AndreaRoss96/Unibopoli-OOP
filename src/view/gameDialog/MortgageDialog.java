@@ -1,5 +1,7 @@
 package view.gameDialog;
 
+import java.util.stream.Collectors;
+
 import controller.DialogController;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -21,6 +23,10 @@ public class MortgageDialog extends Dialog {
 	private static final MortgageDialog SINGLETON = new MortgageDialog();
 
 	private static final double SPACING = 10;
+	
+	private MortgageDialog() {
+		
+	}
 	
 	/**
 	 * Instance of MortgageDialog.
@@ -71,7 +77,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setBottom(bottomPane);
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			obtainedMoney.setText(obtainedMoney.getText().replaceAll("0", String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected()))));
+			obtainedMoney.setText(obtainedMoney.getText().replaceAll("0", String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected().stream().map(value -> value.get()).collect(Collectors.toList())))));
 			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
 		});
 

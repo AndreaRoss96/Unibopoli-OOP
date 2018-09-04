@@ -1,5 +1,6 @@
 package model.tiles;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -12,9 +13,11 @@ import java.util.stream.IntStream;
  * @author Matteo Alesiani 
  */
 
-public class Rents {
+public class Rents implements Serializable {
 
-	private static final int MAX_HOUSE = 5;
+	private static final long serialVersionUID = -644559450026866488L;
+
+	private static final Integer MAX_HOUSE = 5;
 	
 	private Map<Integer, Integer> rentsManagement;
 	
