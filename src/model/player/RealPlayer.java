@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 import com.google.common.base.Optional;
 
 import model.exceptions.NotEnoughMoneyException;
-import model.tiles.Buildable;
+import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import controller.DialogController;
 
@@ -128,8 +128,8 @@ public class RealPlayer implements Player {
 
 	public Integer totalAssets() {
 		// mi servirebbe anche il valore di case/alberghi
-		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().filter(value -> value instanceof Buildable)
-				.map(value -> (Buildable) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money;
+		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().filter(value -> value instanceof AdapterBuildable)
+				.map(value -> (AdapterBuildable) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money;
 	}
 
 	private void bankroupt(Integer moneyAmount) {

@@ -1,55 +1,57 @@
 package model.tiles;
 
 import utilities.enumerations.Color;
+import utilities.enumerations.TiteTypes;
 
 /**
  * @author Matteo Alesiani 
  */
 
-public class BuildableImpl extends ObtainableImpl implements Buildable{
+public class BuildableImpl extends ObtainableImpl implements AdapterBuildable{
 	
 	private static final long serialVersionUID = 7806152148586048326L;
 	
 	private Rents rents;
-	private Integer buildingsNr;
-	private Integer priceBuilding;
+	private Color colorTile;
 	
 	public BuildableImpl(final int positionTile, final int price, final int mortgage, 
-			final Rents rents, final Color colorTile, final int priceBuilding) {
-		super(positionTile, price, mortgage, colorTile);
+			final Rents rents, final Color colorTile, final TiteTypes titeType) {
+		super(positionTile, price, mortgage, titeType);
 		this.rents = rents;
-		this.buildingsNr = 0;
-		this.priceBuilding = priceBuilding;
+		this.colorTile = colorTile;
 	}
 
 	@Override
-	public int getRent(int buildingsNr) {
-		return this.rents.getRent(buildingsNr);
-	}
-
-	@Override
-	public int getRent() {
-		return this.rents.getRent(this.buildingsNr);
+	protected int rentValue() {
+		return this.rents.getRent();
 	}
 
 	@Override
 	public int getBuildingNumber() {
-		return this.buildingsNr;
+		return this.rents.getBuildingNumber();
 	}
 	
 	@Override
 	public void incBuildings() {
-		this.buildingsNr++;
+		this.rents.incBuildings();
 	}
 	
 	@Override
 	public int getPriceForBuilding() {
-		return this.priceBuilding;
+		return this.rents.getPriceForBuilding();
 	}
 
 	@Override
 	public void decBuildings() {
-		this.buildingsNr--;
-		
+		this.rents.decBuildings();
+	}
+	
+	/**
+	 * Returns the type of the Color enum, that specific the family of belonging inside the board. 
+	 * 
+	 * @return <tt>Color</tt> of the family Tile.
+	 */
+	public Color getColorOf() {
+		return this.colorTile;
 	}
 }

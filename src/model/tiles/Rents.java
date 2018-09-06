@@ -20,11 +20,14 @@ public class Rents implements Serializable {
 	private static final Integer MAX_HOUSE = 5;
 	
 	private Map<Integer, Integer> rentsManagement;
+	private Integer buildingsNr;
+	private Integer priceBuilding;
 	
 	public Rents(List<Integer> record) {
 		this.rentsManagement = IntStream.rangeClosed(0, MAX_HOUSE)
 										.mapToObj(t->t)
 										.collect(Collectors.toMap(Integer::new, record::get));
+		this.buildingsNr = 0;
 	}
 	
 	/**
@@ -33,13 +36,33 @@ public class Rents implements Serializable {
 	 * @param int <tt>numHouse</tt> of buildings.
 	 * @return int <tt>rent</tt> of relative numHouse.
 	 */
-	public int getRent(int numHouse) {
+	public int getRent() {
 		
 		
 		/***
 		 * 
 		 * Aggiungere eccezione.
 		 * */
-		return this.rentsManagement.get(numHouse);
+		return this.rentsManagement.get(this.buildingsNr);
+	}
+	
+	public int getBuildingNumber() {
+		return this.buildingsNr;
+	}
+	
+	public void incBuildings() {
+		this.buildingsNr++;
+	}
+	
+	public void setPriceForBuilding(final Integer priceBuilding) {
+		this.priceBuilding = priceBuilding;
+	}
+	
+	public int getPriceForBuilding() {
+		return this.priceBuilding;
+	}
+
+	public void decBuildings() {
+		this.buildingsNr--;
 	}
 }

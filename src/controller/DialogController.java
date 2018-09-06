@@ -10,7 +10,7 @@ import com.google.common.base.Optional;
 import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
-import model.tiles.Buildable;
+import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import utilities.AlertFactory;
 import view.gameDialog.AuctionDialog;
@@ -71,7 +71,7 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public boolean incHouse() {
-		final Buildable property = CardDialog.getCardDialog().getProperty();
+		final AdapterBuildable property = CardDialog.getCardDialog().getProperty();
 		if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
 			if (property.getBuildingNumber() < NUM_BUILD_MAX) {
 				controller.getSound().playSound(("/music/plastic_house_or_hotel_drop_on_playing_board.wav"));
@@ -89,7 +89,7 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public boolean decHouse() {
-		final Buildable property = CardDialog.getCardDialog().getProperty();
+		final AdapterBuildable property = CardDialog.getCardDialog().getProperty();
 		System.out.println(property.getNameOf());
 		if (property.getBuildingNumber() != 0) {
 			controller.getSound().playSound("/music/plastic_house_or_hotel_drop_on_playing_board.wav");
@@ -152,7 +152,7 @@ public class DialogController implements DialogObserver {
 		List<Obtainable> obtainableList = list.stream().map(propertyName -> getPropertyByName(propertyName))
 				.collect(Collectors.toList());
 		return obtainableList.stream().mapToInt(property -> property.getMortgage()).sum() + obtainableList.stream()
-				.filter(property -> property instanceof Buildable).map(property -> (Buildable) property)
+				.filter(property -> property instanceof AdapterBuildable).map(property -> (AdapterBuildable) property)
 				.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum();
 	}
 

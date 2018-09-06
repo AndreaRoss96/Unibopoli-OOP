@@ -7,7 +7,7 @@ package model.tiles;
  * @author Matteo Alesiani 
  */
 
-public interface Buildable extends Obtainable{
+public interface AdapterBuildable{
 	
 	/**
 	 * Return the number of buildings build above the property.
@@ -31,5 +31,8 @@ public interface Buildable extends Obtainable{
 	
 	void decBuildings();
 	
-	int getRent(final int buildingsNr);
+	/**
+	 * TODO: Verificare a cosa serve.
+	 * */
+	//int getRent(final int buildingsNr);
 }
