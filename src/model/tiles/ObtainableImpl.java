@@ -1,13 +1,11 @@
 package model.tiles;
 
-
-
 /**
  * @author Matteo Alesiani 
  */
 import com.google.common.base.Optional;
 
-import utilities.enumerations.Color;
+import utilities.enumerations.TiteTypes;
 
 public abstract class ObtainableImpl implements Obtainable{
 
@@ -16,24 +14,22 @@ public abstract class ObtainableImpl implements Obtainable{
 	private Integer positionTile;
 	private String nameTile;
 	private Integer price;	
-	// mortgage è sempre la metà ?? in tal caso potremmo inserire un bool 
 	private Integer mortgage;
-	/**
-	 * TODO: aggiunto ora. Check con Rosso. finire di gestire l'attributo.
-	 * */
 	private StatusTile hasMortgage;
 	private Optional<String> owner;
-	private Color colorTile;
+	private TiteTypes titeType;
 	
 	public ObtainableImpl(final int positionTile, final int price, 
-					  final int mortgage, final Color colorTile){
+					  final int mortgage, final TiteTypes titeType){
 		this.positionTile = positionTile;
 		this.price = price;
 		this.mortgage = mortgage;
 		this.hasMortgage = StatusTile.NOT_MORTGAGE;
+		this.titeType = titeType;
 		this.owner = Optional.absent();
-		this.colorTile = colorTile;
 	}
+	
+	abstract int rentValue();
 	
 	@Override
 	public int getPosition() {
@@ -41,8 +37,18 @@ public abstract class ObtainableImpl implements Obtainable{
 	}
 	
 	@Override
+	public void setNameOf(String nameTile) {
+		this.nameTile = nameTile;
+	}
+	
+	@Override
 	public String getNameOf() {
 		return this.nameTile;
+	}
+	
+	@Override
+	public int getRent() {
+		return rentValue();
 	}
 	
 	@Override
@@ -53,11 +59,6 @@ public abstract class ObtainableImpl implements Obtainable{
 	@Override
 	public void changeMortgageStatus() {
 		this.hasMortgage = this.hasMortgage() ? StatusTile.NOT_MORTGAGE: StatusTile.MORTGAGE;
-	}
-	
-	@Override
-	public void setNameOf(String nameTile) {
-		this.nameTile = nameTile;
 	}
 	
 	@Override
@@ -79,14 +80,9 @@ public abstract class ObtainableImpl implements Obtainable{
 	public int getPrice() {
 		return this.price;
 	}
-	
-	@Override
-	public Color getColorOf() {
-		return this.colorTile;
-	}
 
 	@Override
-	public String toString() {
-		return "";
+	public TiteTypes getTiteType() {
+		return this.titeType;
 	}
 }

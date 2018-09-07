@@ -10,7 +10,7 @@ import com.google.common.base.Optional;
 import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
-import model.tiles.Buildable;
+import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import utilities.AlertFactory;
 import view.gameDialog.AuctionDialog;
@@ -67,7 +67,7 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void incHouseClick() {
-		final Buildable property = CardDialog.getCardDialog().getProperty();
+		final AdapterBuildable property = CardDialog.getCardDialog().getProperty();
 		List<Boolean> areOtherMortgaged = this.controller.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).stream().map(Obtainable::hasMortgage).collect(Collectors.toList());
 		if (areOtherMortgaged.stream().filter(e -> e.booleanValue()).count() == 0) {
 			if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
@@ -89,7 +89,7 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void decHouseClick() {
-		final Buildable property = CardDialog.getCardDialog().getProperty();
+		final AdapterBuildable property = CardDialog.getCardDialog().getProperty();
 		if (property.getBuildingNumber() != 0) {
 			controller.getSound().playSound("/music/plastic_house_or_hotel_drop_on_playing_board.wav");
 			this.decHouse(property, (Player) this.controller.getCurrentPlayer());
@@ -151,7 +151,7 @@ public class DialogController implements DialogObserver {
 		final List<Obtainable> obtainableList = MortgageDialog.getMortgageDialog().getSelected().stream().map(propertyName -> getPropertyByName(propertyName))
 				.collect(Collectors.toList());
 		MortgageDialog.getMortgageDialog().updateObtainedMoney(obtainableList.stream().mapToInt(property -> property.getMortgage()).sum() + obtainableList.stream()
-				.filter(property -> property instanceof Buildable).map(property -> (Buildable) property)
+				.filter(property -> property instanceof AdapterBuildable).map(property -> (AdapterBuildable) property)
 				.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum());
 	}
 

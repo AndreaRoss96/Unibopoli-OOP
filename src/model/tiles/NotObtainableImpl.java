@@ -1,18 +1,17 @@
 package model.tiles;
 
-import view.Icon;
+import utilities.enumerations.TiteTypes;
 
-public abstract class NotObtainableImpl implements NotObtainable{
+public abstract class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 
 	private static final long serialVersionUID = 6004220435515803475L;
 	
-	transient protected Icon image;
 	private Integer positionTile;
-	private String nameTile;
+	private TiteTypes titeType;
 	
-	public NotObtainableImpl(final int positionTile, final String nameTile) {
+	public NotObtainableImpl(final int positionTile, final TiteTypes titeType) {
 		this.positionTile = positionTile;
-		this.nameTile = nameTile;
+		this.titeType = titeType;
 	}
 	
 	@Override
@@ -22,7 +21,7 @@ public abstract class NotObtainableImpl implements NotObtainable{
 	
 	@Override
 	public String getNameOf() {
-		return this.nameTile;
+		return this.getTiteType().getTypeName();
 	}
 	
 	@Override
@@ -31,15 +30,12 @@ public abstract class NotObtainableImpl implements NotObtainable{
 	}
 	
 	@Override
-	public Icon getImage() {
-		return this.image;
+	public TiteTypes getTiteType() {
+		return this.titeType;
 	}
 	
-	/**
-	 * Rivedere dato che c'è già getNameOf()
-	 * 
-	 * */
-	public String getHeaderText() {
-		return this.getNameOf().toUpperCase();
+	@Override
+	public String getPathImage() {
+		return this.getTiteType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
 	}
 }

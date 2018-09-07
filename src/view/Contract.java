@@ -15,7 +15,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
-import model.tiles.Buildable;
+import model.tiles.AdapterBuildable;
 import model.tiles.NotBuildable;
 import model.tiles.Obtainable;
 import utilities.PaneDimensionSetting;
@@ -48,8 +48,8 @@ public class Contract extends AnchorPane {
 		this.insidePane.setAlignment(Pos.TOP_CENTER);
 		this.insidePane.setStyle("-fx-border-color: black;");
 
-		if (property instanceof Buildable) {
-			createContractForBuildable((Buildable) property);
+		if (property instanceof AdapterBuildable) {
+			createContractForBuildable((AdapterBuildable) property);
 		} else {
 			createContractForNotBuildable((NotBuildable) property);
 		}
@@ -65,7 +65,7 @@ public class Contract extends AnchorPane {
 		this.getStylesheets().add("/style/style.css");
 	}
 
-	private void createContractForBuildable(Buildable property) {
+	private void createContractForBuildable(AdapterBuildable property) {
 		this.labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 2, insidePane);
 		final Label propertyName = new Label(property.getNameOf());
 		propertyName.setPrefSize(LABEL_BIG_WIDTH, LABEL_HEIGHT * 4.5);

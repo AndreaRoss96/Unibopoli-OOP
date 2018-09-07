@@ -18,9 +18,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.TextAlignment;
+import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
+import utilities.enumerations.TiteTypes;
 import view.gameDialog.CardDialog;
 import view.tiles.ComponentFactory;
 import view.tiles.LandAbstractFactoryImp;
@@ -204,8 +206,13 @@ public class GamePane extends StackPane{
 			propertyName.setPrefSize(LABEL_WIDTH, PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.05);
 			propertyName.setAlignment(Pos.CENTER);
 			propertyName.setTextAlignment(TextAlignment.CENTER);
-			propertyName.setStyle("-fx-background-color: "
-				+ prop.getColorOf().getPaint().orElse(Color.GREY).toString().replaceAll("0x", "#") + ";");
+			
+			if(prop.getTiteType() == TiteTypes.BUILDABLE) {
+				propertyName.setStyle("-fx-background-color: " + ((BuildableImpl) prop).getColorOf().getPaintValue() + ";");
+			}else {
+				propertyName.setStyle("-fx-background-color: " + Color.GREY.toString().replaceAll("0x", "#") + ";");
+			}
+			
 			propertyName.getStyleClass().add("contractLabel");
 			propertyName.setWrapText(true);
 			propertyName.setOnMouseClicked(e -> CardDialog.getCardDialog().createCardDialog(prop, false)); //non funziona perché background sta sotto gli altri pane

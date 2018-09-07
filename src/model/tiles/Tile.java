@@ -2,6 +2,8 @@ package model.tiles;
 
 import java.io.Serializable;
 
+import utilities.enumerations.TiteTypes;
+
 /**
  * This interface is the root of the Tile hierarchy. 
  * 
@@ -10,7 +12,7 @@ import java.io.Serializable;
 
 public interface Tile extends Serializable {
 	/**
-	 * Simple Factory per Tile controllare relazione risiko
+	 * TODO: Simple Factory per Tile controllare relazione risiko
 	 * 
 	 * */
 	
@@ -34,4 +36,6 @@ public interface Tile extends Serializable {
 	 * @param The String <tt>nameTile</tt>.
 	 */
 	void setNameOf(final String nameTile);
+	
+	TiteTypes getTiteType();
 }

@@ -15,7 +15,7 @@ import javafx.scene.image.Image;
 import model.ModelImpl;
 import model.player.Player;
 import model.player.RealPlayer;
-import model.tiles.Buildable;
+import model.tiles.AdapterBuildable;
 import model.tiles.BuildableImpl;
 import model.tiles.NotBuildable;
 import model.tiles.NotBuildableImpl;
@@ -40,7 +40,7 @@ public class PlayerTest {
 		player1.gainMoney(500);
 		assertEquals(3000, player1.getMoney());
 
-		Buildable bProperty1 = (Buildable) buildProperty(25, Color.BLUE, true);
+		AdapterBuildable bProperty1 = (AdapterBuildable) buildProperty(25, Color.BLUE, true);
 		NotBuildable nbProperty1 = (NotBuildable) buildProperty(14, Color.STATIONS, false);
 		
 		player1.buyProperty(bProperty1);

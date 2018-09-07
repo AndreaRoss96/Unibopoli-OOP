@@ -10,7 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import model.tiles.Buildable;
+import model.tiles.AdapterBuildable;
 import model.tiles.Corner;
 import model.tiles.NotBuildable;
 import model.tiles.NotObtainable;
@@ -26,8 +26,8 @@ import view.gameDialog.CardDialog;
 public class LandAbstractFactoryImp{
 
 	public Pane createLand(final Tile tile) {
-		if(tile instanceof Buildable) {
-			return this.getBuildable((Buildable) tile);
+		if(tile instanceof AdapterBuildable) {
+			return this.getBuildable((AdapterBuildable) tile);
 		}else if(tile instanceof NotBuildable) {
 			return this.getNotBuildable((NotBuildable) tile);
 		}else if(tile instanceof Corner) {
@@ -38,7 +38,7 @@ public class LandAbstractFactoryImp{
 		throw new IllegalArgumentException();
 	}
 	
-	private AnchorPane getBuildable(final Buildable buildableTile) {
+	private AnchorPane getBuildable(final AdapterBuildable buildableTile) {
 		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		
 		this.getBuildables(landPane, buildableTile); 
@@ -47,7 +47,7 @@ public class LandAbstractFactoryImp{
 		return landPane;
 	}
 	
-	private void getBuildables(final AnchorPane landPane, final Buildable buildableTile)
+	private void getBuildables(final AnchorPane landPane, final AdapterBuildable buildableTile)
 	{
 		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaint().get());
 		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);		

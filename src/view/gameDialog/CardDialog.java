@@ -18,8 +18,7 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import model.tiles.Buildable;
-import model.tiles.BuildableImpl;
+import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import view.Contract;
 
@@ -132,7 +131,7 @@ public class CardDialog extends Dialog {
 		/*
 		 * if the property is buildable the dialog will show the number of houses/HOTEL
 		 */
-		if (property instanceof Buildable) {
+		if (property instanceof AdapterBuildable) {
 			final Label building = new Label("Buildings: ");
 			building.setFont(getPrincipalFont());
 			updateCardDialog();
@@ -197,6 +196,7 @@ public class CardDialog extends Dialog {
 	private void gridWithOwner(GridPane grid, Boolean canBuild) {
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
 
+<<<<<<< HEAD
 		if (!(this.property instanceof Buildable) || !canBuild || this.property.hasMortgage()) {
 			addHouseButton.setDisable(true);
 			removeHouseButton.setDisable(true);
@@ -213,6 +213,24 @@ public class CardDialog extends Dialog {
 		removeHouseButton.setOnAction(e -> {
 			DialogController.getDialogController().decHouseClick();
 			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX));
+=======
+		if (!(this.property instanceof AdapterBuildable) || !canBuild) {
+			addHouseButton.setDisable(true);
+			removeHouseButton.setDisable(true);
+		} else {
+			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= 5));
+			removeHouseButton.setDisable(!(((AdapterBuildable) this.property).getBuildingNumber() != 0));
+		}
+
+		addHouseButton.setOnAction(e -> {
+			addHouseButton.setDisable(DialogController.getDialogController().incHouse());
+			removeHouseButton.setDisable(!(((AdapterBuildable) this.property).getBuildingNumber() != 0));
+		});
+
+		removeHouseButton.setOnAction(e -> {
+			removeHouseButton.setDisable(DialogController.getDialogController().decHouse());
+			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= 5));
+>>>>>>> 974fda99864274de0e5d13e0b7c472027cdbff1d
 		});
 
 		mortgageProperty.setOnAction(e -> {
@@ -230,13 +248,14 @@ public class CardDialog extends Dialog {
 	 * 
 	 * @return the interested property
 	 */
-	public Buildable getProperty() {
-		return (Buildable) this.property;
+	public AdapterBuildable getProperty() {
+		return (AdapterBuildable) this.property;
 	}
 
 	/**
 	 * Update the state of the label of the buildings in this properly property.
 	 */
+<<<<<<< HEAD
 	public void updateCardDialog() {
 		this.buildingNumer.setText(((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX ? "HOTEL"
 				: String.valueOf(((Buildable) this.property).getBuildingNumber()));
@@ -244,5 +263,10 @@ public class CardDialog extends Dialog {
 			this.addHouseButton.setDisable(((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX);
 			this.removeHouseButton.setDisable(((Buildable) this.property).getBuildingNumber() == 0);
 		}
+=======
+	public void updateBuildingLabel() {
+		this.buildingNumer.setText(((AdapterBuildable) this.property).getBuildingNumber() >= 5 ? "HOTEL"
+				: String.valueOf(((AdapterBuildable) this.property).getBuildingNumber()));
+>>>>>>> 974fda99864274de0e5d13e0b7c472027cdbff1d
 	}
 }
