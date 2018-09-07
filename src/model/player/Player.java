@@ -80,7 +80,7 @@ public interface Player extends PlayerInfo {
 	 * @param mortgaged
 	 *            the list of mortgaged properties
 	 */
-	void mortgageProperties(List<Obtainable> mortgaged);
+//	void mortgageProperties(List<Obtainable> mortgaged);
 
 	/**
 	 * Adds a property to player's properties.

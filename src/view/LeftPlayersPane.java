@@ -69,7 +69,7 @@ public class LeftPlayersPane {
 			}
 			
 			final String propertiesName = e.getProperties().stream().map(Obtainable::getNameOf).collect(Collectors.toList()).toString();
-			final Tooltip tooltip = new Tooltip(propertiesName.substring(1, propertiesName.length() - 1).replaceAll(",", "\n"));
+			final Tooltip tooltip = new Tooltip(propertiesName.substring(1, propertiesName.length() - 1).replaceAll(", ", "\n"));
 			
 			playerLabel.setTooltip(tooltip);
 			root.getChildren().add(shadowedPane);

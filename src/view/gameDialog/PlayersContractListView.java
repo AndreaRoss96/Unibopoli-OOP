@@ -11,7 +11,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
-import model.player.PlayerInfo;
+import model.tiles.Obtainable;
 
 public class PlayersContractListView extends ListView<Text> {
 
@@ -32,8 +32,8 @@ public class PlayersContractListView extends ListView<Text> {
 	 * @param player
 	 *            selected
 	 */
-	public PlayersContractListView(final PlayerInfo player) {
-		player.getProperties().forEach(c -> {
+	public PlayersContractListView(final List<Obtainable> propertyList) {
+		propertyList.forEach(c -> {
 			Text property = new Text(c.getNameOf());
 			property.setStyle("-fx-font-family: kabel;");
 			property.setFill(c.getColorOf().getPaint().orElse(Color.BLACK));

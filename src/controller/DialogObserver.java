@@ -23,15 +23,15 @@ public interface DialogObserver {
 	 * Increseases
 	 * @param property
 	 */
-	boolean incHouse();
-	boolean decHouse();
+	void incHouseClick();
+	void decHouseClick();
 	void mortgageDialogClick();
 	void buyPropertyClick();
 	
 	/**
 	 * metodi per mortgageDialog
 	 */
-	int accumulatedMoney(List<String> list);//altrimenti una lista di stringhe
+	void accumulatedMoney();//altrimenti una lista di stringhe
 	void setMortgage(List<Optional<String>> list); //se la proprietà non è ipotecata la ipoteca, il contrario altirmenti --> chiedi conferma
 
 	
@@ -39,8 +39,6 @@ public interface DialogObserver {
 	 * metodi per TradeDialog
 	 */
 	void executeTrade();
-	
-	PlayerInfo getPlayerByName(String playerName);
 
 
 	

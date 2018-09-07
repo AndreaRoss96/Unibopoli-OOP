@@ -1,6 +1,8 @@
 package view.gameDialog;
 
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import com.google.common.base.Optional;
 
@@ -16,6 +18,7 @@ import javafx.stage.Stage;
 import controller.ControllerImpl;
 import controller.DialogController;
 import model.player.PlayerInfo;
+import model.tiles.Obtainable;
 import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.Pair;
@@ -56,7 +59,7 @@ public class TradeDialog extends Dialog {
 	/**
 	 * Creation of the pane for the dialog.
 	 */
-	public void createTradeDialog(final List<PlayerInfo> playerList) {
+	public void createTradeDialog(final Map<String, List<Obtainable>> playerMap) {
 		final Stage stage = setStage();
 		final DialogController controller = DialogController.getDialogController();
 		final PlayerInfo currentPlayer = ControllerImpl.getController().getCurrentPlayer();
@@ -73,7 +76,7 @@ public class TradeDialog extends Dialog {
 		this.currMoneyToTrade = new TextField("0");
 		currMoneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
 
-		this.currListView = new PlayersContractListView(currentPlayer);
+		this.currListView = new PlayersContractListView(currentPlayer.getProperties());
 		gridA.add(new Label("Player: "), 0, 0);
 		gridA.add(currPlayerLabel, 1, 0, 1, 1);
 		gridA.add(new Label("Trade: "), 0, 1, 2, 1);
@@ -84,7 +87,7 @@ public class TradeDialog extends Dialog {
 
 		this.playerBox = new ComboBox<>();
 		this.playerBox.setStyle("-fx-font-family: Kabel");
-		playerList.forEach(e -> this.playerBox.getItems().add(e.getName()));
+		this.playerBox.getItems().addAll(playerMap.keySet());
 
 		this.secPlayersMoneyToTrade = new TextField("0");
 		this.secPlayersMoneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
@@ -107,7 +110,7 @@ public class TradeDialog extends Dialog {
 
 		this.playerBox.setOnAction(e -> {
 			if (this.playerBox.getValue() != null) {
-				this.allPlayersListView = new PlayersContractListView(controller.getPlayerByName(playerBox.getValue()));
+				this.allPlayersListView = new PlayersContractListView(playerMap.get(this.playerBox.getValue()));
 				gridB.add(this.allPlayersListView, 0, 2, 4, 1);
 				this.secPlayersMoneyToTrade.setText("0");
 			}

@@ -111,26 +111,28 @@ public class ModelImpl implements Model{
 		this.turnPlayer.getCurrentPlayer().exitFromJail();
 	}
 
-	/*
-	public void payment(PlayerInfo player, int moneyAmount) {
-		if(!this.getCurrentPlayer().canPay(moneyAmount)) {
-			if(moneyAmount > this.getCurrentPlayer().totalAssets()) {
+	
+	/*******************************************************************************/
+	/*public void payment(PlayerInfo player, int moneyAmount) {
+		if(!player.canPay(moneyAmount)) {
+			if(moneyAmount > player.totalAssets()) {
 				this.removePlayer(player);
 			}
+			AlertFactory.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 			ControllerImpl.getController().startMortgage(moneyAmount, player);
 		} else {
-			//((Player) player).decMoney(moneyAmount);
+			((Player) player).payments(moneyAmount);
 		}
 	}
 	
-	public void buyProperty(Obtainable property) {
-		if(this.getCurrentPlayer().canPay(property.getPrice())) {
-			this.payments(getCurrentPlayer(), property.getPrice());
-			((Player) this.getCurrentPlayer()).addProperty(property);
-		} else {
-			ControllerImpl.getController().startAuciton(property);
-		}
-	} */
+	public void addProperty(PlayerInfo player, Obtainable property) {
+		((Player) player).addProperty(property);
+	}
+	
+	public void buyProperty(PlayerInfo player, Obtainable property) {
+			this.payment(player, property.getPrice());
+			this.addProperty(player, property);
+	}*/
 	
 
 	/**

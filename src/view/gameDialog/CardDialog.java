@@ -19,6 +19,7 @@ import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.tiles.Buildable;
+import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import view.Contract;
 
@@ -36,7 +37,7 @@ public class CardDialog extends Dialog {
 
 	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
 	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); // da modificare in
-																						// setStyle(-fx-font-family:
+	private static final int NUM_BUILD_MAX = 5;																					// setStyle(-fx-font-family:
 																						// kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
@@ -44,6 +45,8 @@ public class CardDialog extends Dialog {
 	private Stage stage;
 	private Obtainable property;
 	private Label buildingNumer;
+	private Button addHouseButton;
+	private Button removeHouseButton;
 
 	private CardDialog() {
 
@@ -71,6 +74,8 @@ public class CardDialog extends Dialog {
 		this.property = property;
 		this.buildingNumer = new Label();
 		this.buildingNumer.setFont(VALUE_FONT);
+		this.addHouseButton = new Button("", new ImageView("/images/dialogButton/aggiungi_casa.png"));
+		this.removeHouseButton = new Button("", new ImageView("/images/dialogButton/rimuovi_casa.png"));
 
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox());
@@ -130,7 +135,7 @@ public class CardDialog extends Dialog {
 		if (property instanceof Buildable) {
 			final Label building = new Label("Buildings: ");
 			building.setFont(getPrincipalFont());
-			updateBuildingLabel();
+			updateCardDialog();
 			grid.add(building, 0, ++column);
 			grid.add(this.buildingNumer, 1, column);
 		}
@@ -190,26 +195,24 @@ public class CardDialog extends Dialog {
 	 *            if the property is unBuildable is set false
 	 */
 	private void gridWithOwner(GridPane grid, Boolean canBuild) {
-		final Button addHouseButton = new Button("", new ImageView("/images/dialogButton/aggiungi_casa.png"));
-		final Button removeHouseButton = new Button("", new ImageView("/images/dialogButton/rimuovi_casa.png"));
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
 
-		if (!(this.property instanceof Buildable) || !canBuild) {
+		if (!(this.property instanceof Buildable) || !canBuild || this.property.hasMortgage()) {
 			addHouseButton.setDisable(true);
 			removeHouseButton.setDisable(true);
 		} else {
-			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= 5));
+			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX));
 			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));
 		}
 
 		addHouseButton.setOnAction(e -> {
-			addHouseButton.setDisable(DialogController.getDialogController().incHouse());
+			DialogController.getDialogController().incHouseClick();
 			removeHouseButton.setDisable(!(((Buildable) this.property).getBuildingNumber() != 0));
 		});
 
 		removeHouseButton.setOnAction(e -> {
-			removeHouseButton.setDisable(DialogController.getDialogController().decHouse());
-			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= 5));
+			DialogController.getDialogController().decHouseClick();
+			addHouseButton.setDisable((((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX));
 		});
 
 		mortgageProperty.setOnAction(e -> {
@@ -234,8 +237,12 @@ public class CardDialog extends Dialog {
 	/**
 	 * Update the state of the label of the buildings in this properly property.
 	 */
-	public void updateBuildingLabel() {
-		this.buildingNumer.setText(((Buildable) this.property).getBuildingNumber() >= 5 ? "HOTEL"
+	public void updateCardDialog() {
+		this.buildingNumer.setText(((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX ? "HOTEL"
 				: String.valueOf(((Buildable) this.property).getBuildingNumber()));
+		if(this.property instanceof Buildable) {
+			this.addHouseButton.setDisable(((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX);
+			this.removeHouseButton.setDisable(((Buildable) this.property).getBuildingNumber() == 0);
+		}
 	}
 }
