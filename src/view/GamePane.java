@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
+import controller.MovementController;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
@@ -22,7 +23,7 @@ import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
 import view.tiles.ComponentFactory;
 import view.tiles.LandAbstractFactoryImp;
@@ -121,9 +122,9 @@ public class GamePane extends StackPane{
 	private GridPane builder(long skip, long limit, Pos position) {
 		GridPane pane = new GridPane();
 		
-		ControllerImpl.getController().getGameBoard().stream().sorted(orderCre()).skip(skip).limit(limit)
+		ControllerImpl.getController().getProperties().stream().sorted(orderCre()).skip(skip).limit(limit)
 			 .map(tile -> new LandAbstractFactoryImp().createLand(tile))
-			 .forEach(land -> pane.addRow(0, land));
+			 .forEach(land -> {}/*pane.addRow(0, land)*/);
 		
 		 if(position == Pos.BOTTOM_CENTER) {
 			 pane.setRotate(ROTATE_LEFT * 2);
@@ -207,7 +208,7 @@ public class GamePane extends StackPane{
 			propertyName.setAlignment(Pos.CENTER);
 			propertyName.setTextAlignment(TextAlignment.CENTER);
 			
-			if(prop.getTiteType() == TiteTypes.BUILDABLE) {
+			if(prop.getTiteType() == TileTypes.BUILDABLE) {
 				propertyName.setStyle("-fx-background-color: " + ((BuildableImpl) prop).getColorOf().getPaintValue() + ";");
 			}else {
 				propertyName.setStyle("-fx-background-color: " + Color.GREY.toString().replaceAll("0x", "#") + ";");

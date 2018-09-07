@@ -65,4 +65,8 @@ public class Rents implements Serializable {
 	public void decBuildings() {
 		this.buildingsNr--;
 	}
+	
+	public int getRent(int buildingsNr) {
+		return this.rentsManagement.get(buildingsNr);
+	}
 }

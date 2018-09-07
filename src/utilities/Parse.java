@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import model.tiles.*;
 import utilities.enumerations.Color;
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.TileTypes;
 
 /**
  * This utility class provide same Function to parse the record read from file.
@@ -35,7 +35,7 @@ public class Parse {
 						rents.setPriceForBuilding(new Integer(record.get(9)));
 						
 						return new BuildableImpl(positionTile, price, mortgage, rents, Color.valueOf(Color.class, record.get(10)), 
-												TiteTypes.BUILDABLE);
+												TileTypes.BUILDABLE);
 					};
 						
 	public static final Function<String, NotBuildableImpl> PARSING_NOTBUILDABLE_TILE_BOARD = value -> {
@@ -47,11 +47,11 @@ public class Parse {
 						
 						if(record.get(4).isEmpty()) {
 							return new NotBuildableImpl(positionTile, price, mortgage, 
-														TiteTypes.valueOf(TiteTypes.class, record.get(4)));
+														TileTypes.valueOf(TileTypes.class, record.get(3)), Color.SOCIETY);
 						}
 						else {
 							return new Station(positionTile, price, mortgage, 
-											   TiteTypes.valueOf(TiteTypes.class, record.get(4)), record.get(5));
+											   TileTypes.valueOf(TileTypes.class, record.get(3)), record.get(4), Color.STATION);
 						}
 					};
 					

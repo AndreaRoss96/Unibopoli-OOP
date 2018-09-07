@@ -1,5 +1,7 @@
 package utilities.enumerations;
 
+import com.google.common.base.Optional;
+
 /**
  * Enumeration that contains the possible colors of the tiles.
  */
@@ -8,47 +10,51 @@ public enum Color {
 	/**
      * Brown color.
      */
-	BROWN("#800000", "Brown"),
+	BROWN(Optional.of("#800000"), "Brown"),
 	
 	/**
      * Light Blue color.
      */
-	LIGHT_BLUE("#b0e0e6", "Light Blue"),
+	LIGHT_BLUE(Optional.of("#b0e0e6"), "Light Blue"),
 
 	/**
      * Purple color.
      */
-    PURPLE("#B01653", "Purple"),
+    PURPLE(Optional.of("#B01653"), "Purple"),
 
     /**
      * Orange color.
      */
-    ORANGE("#F04100", "Orange"),
+    ORANGE(Optional.of("#F04100"), "Orange"),
     
     /**
      * Red color.
      */
-    RED("#D90000", "Red"),
+    RED(Optional.of("#D90000"), "Red"),
     
 	/**
      * Yellow color.
      */
-    YELLOW("#FFF710", "Yellow"),
+    YELLOW(Optional.of("#FFF710"), "Yellow"),
 
     /**
      * Green color.
      */
-    GREEN("#075E10", "Green"),
+    GREEN(Optional.of("#075E10"), "Green"),
 
     /**
      * Blue color.
      */
-    BLUE("#00008A", "Blue");
+    BLUE(Optional.of("#00008A"), "Blue"),
+	
+	STATION(Optional.absent(), "Station"),
+
+	SOCIETY(Optional.absent(), "Society");
     
-    private final String value;
+    private final Optional<String> value;
     private final String name;
   
-    Color(final String value, final String name) {
+    Color(final Optional<String> value, final String name) {
         this.value = value;
         this.name = name;
     }
@@ -56,7 +62,7 @@ public enum Color {
     /**
      * @return String value of a determined Color.
      */
-    public String getPaintValue() {
+    public Optional<String> getPaintValue() {
         return this.value;
     }
 

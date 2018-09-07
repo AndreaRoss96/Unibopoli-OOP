@@ -14,7 +14,6 @@ import com.google.common.base.Optional;
 import model.exceptions.NotEnoughMoneyException;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
-import controller.DialogController;
 
 import utilities.enumerations.Color;
 

@@ -57,4 +57,6 @@ public interface Obtainable extends Tile{
 	 * @param The Optional<String> <tt>owner</tt>.
 	 */
 	void setOwner(final Optional<String> owner);
+	
+	Color getColorOf();
 }

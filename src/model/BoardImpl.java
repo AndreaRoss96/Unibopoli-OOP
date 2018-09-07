@@ -1,15 +1,12 @@
 package model;
 
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
-
 import utilities.Parse;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;

@@ -5,28 +5,31 @@ package model.tiles;
  */
 import com.google.common.base.Optional;
 
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.Color;
+import utilities.enumerations.TileTypes;
 
 public abstract class ObtainableImpl implements Obtainable{
 
 	private static final long serialVersionUID = -2712555186344805312L;
 	
+	private final Color color;
 	private Integer positionTile;
 	private String nameTile;
 	private Integer price;	
 	private Integer mortgage;
 	private StatusTile hasMortgage;
 	private Optional<String> owner;
-	private TiteTypes titeType;
+	private TileTypes titeType;
 	
 	public ObtainableImpl(final int positionTile, final int price, 
-					  final int mortgage, final TiteTypes titeType){
+					  final int mortgage, final TileTypes titeType, final Color color){
 		this.positionTile = positionTile;
 		this.price = price;
 		this.mortgage = mortgage;
 		this.hasMortgage = StatusTile.NOT_MORTGAGE;
 		this.titeType = titeType;
 		this.owner = Optional.absent();
+		this.color = color;
 	}
 	
 	abstract int rentValue();
@@ -82,7 +85,12 @@ public abstract class ObtainableImpl implements Obtainable{
 	}
 
 	@Override
-	public TiteTypes getTiteType() {
+	public TileTypes getTiteType() {
 		return this.titeType;
+	}
+	
+	@Override
+	public Color getColorOf() {
+		return this.color;
 	}
 }
