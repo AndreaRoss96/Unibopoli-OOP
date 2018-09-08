@@ -22,10 +22,7 @@ public class NotBuildableImpl extends ObtainableImpl implements AdaprterPathImag
 	
 	@Override
 	int rentValue() {
-		/**
-		 *Controllare se Mortgage va bene oppure inserire RENT. 
-		 */
-		return this.getMortgage();
+		return RENT;
 	}
 	
 	@Override

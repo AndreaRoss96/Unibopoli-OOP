@@ -48,10 +48,4 @@ public class BuildableImpl extends ObtainableImpl implements AdapterBuildable{
 	public int getRent(int buildingsNr) {
 		return this.rents.getRent(buildingsNr);
 	}
-	
-	/**
-	 * Returns the type of the Color enum, that specific the family of belonging inside the board. 
-	 * 
-	 * @return <tt>Color</tt> of the family Tile.
-	 */
 }

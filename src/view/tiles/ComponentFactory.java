@@ -70,12 +70,13 @@ public class ComponentFactory {
 	public static Label getLabelImage(final String pathImageView) {
 		Label image = new Label();
 		ImageView imageView = IconLoader.getLoader().getImageFromPath(pathImageView).get();
-		imageView.setFitWidth(LandSimpleWIDTH * 0.7);
-		imageView.setFitHeight(LandSimpleWIDTH * 0.7);
+		imageView.setFitWidth(LandSimpleWIDTH * 0.75);
+		imageView.setFitHeight(LandSimpleWIDTH * 0.75);
+		imageView.setRotate(180.0);
 		image.setGraphic(imageView);
-		
 		setAlignmentNode(image);
 		
+		image.setAlignment(javafx.geometry.Pos.CENTER);
 		return image;
 	}
 

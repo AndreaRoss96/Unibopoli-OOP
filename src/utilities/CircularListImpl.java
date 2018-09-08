@@ -23,20 +23,7 @@ public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E>
     public E getHead() {
         return super.get(head);
     }
-
-    /**
-     * TODO: Metodo non utilizzato. Controllare se necessario.
-     * 
-     * */
-    @Override
-    public E get(final int index) {
-        if (index < super.size()) {
-            return super.get(index);
-        }
-        
-        return null;
-    }
-
+    
     @Override
     public boolean remove(final Object elem) {
         if (super.contains(elem)) {

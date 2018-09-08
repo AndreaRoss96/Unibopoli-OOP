@@ -16,7 +16,6 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
-import model.tiles.AdapterBuildable;
 import model.tiles.BuildableImpl;
 import model.tiles.NotBuildableImpl;
 import model.tiles.Obtainable;

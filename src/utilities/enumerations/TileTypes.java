@@ -8,9 +8,9 @@ public enum TileTypes {
 	
 	STATION(Optional.ofNullable(ClassicType.Board.GeneralImagesMap.getTrainImagePath()), "STAZIONE "),
 	
-	WATER_AGENCY(Optional.ofNullable(ClassicType.Board.GeneralImagesMap.getWaterImagePath()), "Societa' Acqua"),
+	WATER_AGENCY(Optional.ofNullable(ClassicType.Board.GeneralImagesMap.getWaterImagePath()), "SOCIETA' ACQUA POTABILE"),
 	
-	LIGHT_AGENCY(Optional.ofNullable(ClassicType.Board.GeneralImagesMap.getBulbImagePath()), "Societa' Elettrica Potabile"),
+	LIGHT_AGENCY(Optional.ofNullable(ClassicType.Board.GeneralImagesMap.getBulbImagePath()), "SOCIETA' ELETTRICA"),
 	
 	INCOME_TAX(Optional.ofNullable(ClassicType.Board.GeneralImagesMap.getRingImagePath()), "Income Tax\nPAY $200"),
 	

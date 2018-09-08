@@ -1,9 +1,7 @@
 package model;
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -22,16 +20,6 @@ public class BoardImpl implements Board {
 	
 	private static final long serialVersionUID = 1L;
 	private static final int MAXINDEXBOARD = 40;
-	
-	private static Map<Integer, Boolean> chances = new HashMap<>();
-	static {
-		chances.put(2, false);
-		chances.put(17, false);
-		chances.put(33, false);
-		chances.put(7, true);
-		chances.put(22, true);
-		chances.put(36, true);
-	}
 	
 	private Set<Tile> gameBoard;
 	private String mode;
@@ -101,21 +89,14 @@ public class BoardImpl implements Board {
 			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getModeGame(this.getModeGame()))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 			
+			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticNotObtainableValuesInitFile())
+					.map(Parse.PARSING_NOTOBTAINABLE_TILE_BOARD::apply)
+					.forEach(gameBoard::add);
+			
 		}catch (IOException e) {
 			System.out.println("IOExce");
 		} catch (Exception e) { 
-			System.out.println(e.getCause()); 
+			System.out.println(e.toString()); 
 		}
-		
-		
-		/**
-		 * 
-		 * Sostituire con un nuove PARSE.
-		 * 
-		IntStream.range(0, 4).mapToObj(t->t).map(Parse.PARSING_CORNER::apply).forEach(gameBoard::add);
-
-		chances.entrySet().stream().map(entry -> new Chance(entry.getKey(), entry.getValue())).forEach(gameBoard::add);
-
-		Arrays.asList(4, 38).stream().map(t -> new Tax(t)).forEach(gameBoard::add);*/
 	}
 }
