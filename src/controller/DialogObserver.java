@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.google.common.base.Optional;
 
-import model.player.PlayerInfo;
+import model.Model;
 
 /**
  * This interface contains all method used by Dialog's classes.
@@ -38,7 +38,9 @@ public interface DialogObserver {
 	/**
 	 * metodi per TradeDialog
 	 */
-	void executeTrade();
+	void dialogTradeClick();
+
+	void setModel(Model model);
 
 
 	

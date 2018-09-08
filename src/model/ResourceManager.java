@@ -12,7 +12,7 @@ import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.time.Instant;
 
-import utilities.AlertFactory;
+import view.AlertFactory;
 
 /**
  * Singleton class used to save and load game.

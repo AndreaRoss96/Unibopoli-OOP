@@ -18,9 +18,9 @@ import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
-import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
+import view.AlertFactory;
 import view.Contract;
 
 /**

@@ -34,7 +34,7 @@ public class Parse {
 																.map(Integer::new).collect(Collectors.toList()));
 						rents.setPriceForBuilding(new Integer(record.get(9)));
 						
-						return new BuildableImpl(positionTile, price, mortgage, rents, Color.valueOf(Color.class, record.get(10)), 
+						return new BuildableImpl(positionTile.intValue(), price.intValue(), mortgage.intValue(), rents, Color.valueOf(Color.class, record.get(10)), 
 												TileTypes.BUILDABLE);
 					};
 						

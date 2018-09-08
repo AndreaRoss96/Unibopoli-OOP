@@ -7,12 +7,14 @@ import java.util.stream.Collectors;
 
 import com.google.common.base.Optional;
 
+import model.Model;
 import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.AdapterBuildable;
+import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
-import utilities.AlertFactory;
+import view.AlertFactory;
 import view.gameDialog.AuctionDialog;
 import view.gameDialog.CardDialog;
 import view.gameDialog.MortgageDialog;
@@ -25,6 +27,7 @@ public class DialogController implements DialogObserver {
 	private static final double UNMORTGAGE_FEE = 10 / 100.0;
 
 	private final ControllerImpl controller;
+	private Model model;
 
 	public static DialogController getDialogController() {
 		return SINGLETON;
@@ -32,6 +35,13 @@ public class DialogController implements DialogObserver {
 
 	private DialogController() {
 		this.controller = ControllerImpl.getController();
+	}
+	
+	@Override
+	public void setModel(Model model) {
+		if(this.model == null) {
+			this.model = model;
+		}
 	}
 
 	@Override
@@ -49,8 +59,10 @@ public class DialogController implements DialogObserver {
 				betsList.forEach(bet -> {
 					if (Integer.parseInt(bet) == moneyAmount) {
 						if (canPay(playerList.get(betsList.indexOf(bet)), moneyAmount)) {
-							((Player) playerList.get(betsList.indexOf(bet))).addProperty(property);
-							((Player) playerList.get(betsList.indexOf(bet))).payments(moneyAmount);
+							this.model.playerAddProperty(playerList.get(betsList.indexOf(bet)), property);
+							this.model.playerPayment(playerList.get(betsList.indexOf(bet)), moneyAmount);
+//							((Player) playerList.get(betsList.indexOf(bet))).addProperty(property);
+//							((Player) playerList.get(betsList.indexOf(bet))).payments(moneyAmount);
 						} else {
 							AlertFactory.createInformationAlert("Ehi", playerList.get(betsList.indexOf(bet)).getName()
 									+ ", you don't have all those money.");
@@ -67,14 +79,14 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void incHouseClick() {
-		final AdapterBuildable property = CardDialog.getCardDialog().getProperty();
-		List<Boolean> areOtherMortgaged = this.controller.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).stream().map(Obtainable::hasMortgage).collect(Collectors.toList());
+		final BuildableImpl property = (BuildableImpl) CardDialog.getCardDialog().getProperty();
+		final List<Boolean> areOtherMortgaged = this.controller.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).stream().map(Obtainable::hasMortgage).collect(Collectors.toList());
 		if (areOtherMortgaged.stream().filter(e -> e.booleanValue()).count() == 0) {
 			if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
 				if (property.getBuildingNumber() < NUM_BUILD_MAX) {
 					controller.getSound().playSound(("/music/plastic_house_or_hotel_drop_on_playing_board.wav"));
 					property.incBuildings();
-					((Player) this.controller.getCurrentPlayer()).payments(property.getPriceForBuilding());
+					this.model.playerPayment(this.controller.getCurrentPlayer(), property.getPriceForBuilding());
 				}
 			} else {
 				AlertFactory.createErrorAlert("Nope", "You don't have enought money\nyou have only: "
@@ -89,10 +101,12 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void decHouseClick() {
-		final AdapterBuildable property = CardDialog.getCardDialog().getProperty();
+		final AdapterBuildable property = (AdapterBuildable) CardDialog.getCardDialog().getProperty();
 		if (property.getBuildingNumber() != 0) {
 			controller.getSound().playSound("/music/plastic_house_or_hotel_drop_on_playing_board.wav");
-			this.decHouse(property, (Player) this.controller.getCurrentPlayer());
+//			this.decHouse(property, (Player) this.controller.getCurrentPlayer());
+			property.decBuildings();
+			this.model.playerGainMoney(this.controller.getCurrentPlayer(), property.getPriceForBuilding() / 2);
 		}
 		this.controller.updateView();
 		CardDialog.getCardDialog().updateCardDialog();
@@ -103,11 +117,13 @@ public class DialogController implements DialogObserver {
 		list.stream().map(property -> property.get()).map(propertyName -> getPropertyByName(propertyName))
 				.forEach(property -> {
 					if (!property.hasMortgage()) {
-						((Player) this.controller.getCurrentPlayer()).gainMoney(property.getMortgage());
-						this.unbuild(property, (Player) this.controller.getCurrentPlayer());
+//						((Player) this.controller.getCurrentPlayer()).gainMoney(property.getMortgage());
+						this.model.playerGainMoney(this.controller.getCurrentPlayer(), property.getMortgage());
+						this.model.unbuild(property, (Player) this.controller.getCurrentPlayer());
 					} else {
-						((Player) this.controller.getCurrentPlayer()).payments(
-								(int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
+//						((Player) this.controller.getCurrentPlayer()).payments(
+//								(int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
+						this.model.playerPayment(this.controller.getCurrentPlayer(), (int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
 					}
 					property.changeMortgageStatus();
 				});
@@ -135,13 +151,14 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void buyPropertyClick() { 
-		Obtainable property = CardDialog.getCardDialog().getProperty();
+		final Obtainable property = CardDialog.getCardDialog().getProperty();
 		try {
-			((Player) this.controller.getCurrentPlayer()).buyProperty(property);
+//			((Player) this.controller.getCurrentPlayer()).buyProperty(property);
+			//model
+			this.model.buyProperty(this.controller.getCurrentPlayer(), property);
 			this.controller.getSound().playSound("/music/CashRegister.wav");
 		} catch (NotEnoughMoneyException e) {
 			// Auction Dialog
-			// bisogna vedere come viene gestito l'acquisto
 		}
 		this.controller.updateView();
 	}
@@ -156,14 +173,14 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void executeTrade() { // se la mettessi nel model?
+	public void dialogTradeClick() { // se la mettessi nel model?
 		final TradeDialog tradeDialog = TradeDialog.getTradeDialog();
 		try {
 			int firstMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getFirst());
 			int secondMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getSecond());
 
-			final Player firstPlayer = (Player) this.controller.getCurrentPlayer();
-			final Player secondPlayer = (Player) getPlayerByName(tradeDialog.getSecondPlayer());
+			final PlayerInfo firstPlayer = this.controller.getCurrentPlayer();
+			final PlayerInfo secondPlayer = getPlayerByName(tradeDialog.getSecondPlayer());
 			final List<Obtainable> firstProperties = tradeDialog.getSelectedProperties().getFirst().stream()
 					.map(p -> p.get()).map(p -> this.getPropertyByName(p)).collect(Collectors.toList());
 			final List<Obtainable> secondProperties = tradeDialog.getSelectedProperties().getSecond().stream()
@@ -179,20 +196,21 @@ public class DialogController implements DialogObserver {
 				AlertFactory.createErrorAlert("Nope",
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
+				this.model.executeTrade((Player) secondPlayer, firstMoney, secondMoney, firstProperties, secondProperties);
 				//tipo se mettessi nel model sto pezzo
-				secondProperties.forEach(prop -> {
-					this.unbuild(prop, secondPlayer);
-					firstPlayer.addProperty(secondPlayer.removeProperty(prop));
-				});
-				firstPlayer.gainMoney(secondMoney);
-				firstPlayer.payments(firstMoney);
-
-				firstProperties.forEach(prop -> {
-					this.unbuild(prop, firstPlayer);
-					secondPlayer.addProperty(firstPlayer.removeProperty(prop));
-				});
-				secondPlayer.gainMoney(firstMoney);
-				secondPlayer.payments(secondMoney);
+//				secondProperties.forEach(prop -> {
+//					this.unbuild(prop, secondPlayer);
+//					firstPlayer.addProperty(secondPlayer.removeProperty(prop));
+//				});
+//				firstPlayer.gainMoney(secondMoney);
+//				firstPlayer.payments(firstMoney);
+//
+//				firstProperties.forEach(prop -> {
+//					this.unbuild(prop, firstPlayer);
+//					secondPlayer.addProperty(firstPlayer.removeProperty(prop));
+//				});
+//				secondPlayer.gainMoney(firstMoney);
+//				secondPlayer.payments(secondMoney);
 			}
 		} catch (NumberFormatException ex) {
 			AlertFactory.createErrorAlert("Speak (type) as you eat",
@@ -215,19 +233,19 @@ public class DialogController implements DialogObserver {
 		return player.canPay(moneyAmount);
 	}
 
-	private void unbuild(final Obtainable property, final Player player) {
-		if (property instanceof Buildable) {
-			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (Buildable) prop)
-					.forEach(p -> {
-						while (p.getBuildingNumber() != 0) {
-							this.decHouse(p, player);
-						}
-					});
-		}
-	}
+//	private void unbuild(final Obtainable property, final Player player) {
+//		if (property instanceof AdapterBuildable) {
+//			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (AdapterBuildable) prop)
+//					.forEach(p -> {
+//						while (p.getBuildingNumber() != 0) {
+//							this.decHouse(p, player);
+//						}
+//					});
+//		}
+//	}
 
-	private void decHouse(final Buildable property, final Player player) {
-		property.decBuildings();
-		player.gainMoney(property.getPriceForBuilding() / 2);
-	}
+//	private void decHouse(final AdapterBuildable property, final Player player) {
+//		property.decBuildings();
+//		player.gainMoney(property.getPriceForBuilding() / 2);
+//	}
 }

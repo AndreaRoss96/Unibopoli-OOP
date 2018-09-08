@@ -123,7 +123,7 @@ public class RightInormationPane extends VBox {
 		});
 
 		tradeBtn.setOnAction(e -> {
-			ControllerImpl.getController().tradeClick();
+			ControllerImpl.getController().startTrade();
 		});
 		
 		setting.setOnAction(e -> {

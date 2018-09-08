@@ -21,6 +21,7 @@ import model.tiles.Tile;
 import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ModeGame;
+import view.AlertFactory;
 import view.RightInormationPane;
 import view.View;
 import view.ViewImpl;
@@ -34,7 +35,7 @@ import view.gameSetup.MainMenu;
 public class ControllerImpl implements Controller {
 
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
-	private static final int JAIL_FEE = 125;
+	
 	
 	private Model model;
 	private View view;
@@ -44,6 +45,7 @@ public class ControllerImpl implements Controller {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
 		this.view = new ViewImpl();
 		setBackgroundMusic();
+		DialogController.getDialogController().setModel(model);
 	}
 
 	/**
@@ -63,6 +65,7 @@ public class ControllerImpl implements Controller {
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
 			this.model = GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
+			DialogController.getDialogController().setModel(model);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
@@ -75,9 +78,8 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void endTurnClick() {
-		if (model.getCurrentPlayer().isInJail()) {
-			((Player) model.getCurrentPlayer()).payments(JAIL_FEE);
-			model.exitFromJail();
+		if (this.getCurrentPlayer().isInJail()) {
+			model.exitFromJail(true);
 			this.updateView();
 		} else {
 			this.model.endTurn();
@@ -88,8 +90,9 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
-		 IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
+		IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
+		DialogController.getDialogController().setModel(model);
 	}
 
 	@Override
@@ -108,7 +111,7 @@ public class ControllerImpl implements Controller {
 	}
 
 	@Override
-	public void tradeClick() {
+	public void startTrade() {
 		final Map<String, List<Obtainable>> playerObtainableMap = new HashMap<>();
 		this.model.getPlayers().stream().filter(player -> !player.getName().equals(this.getCurrentPlayer().getName())).forEach(player -> {
 			playerObtainableMap.put(player.getName(), player.getProperties());
@@ -164,6 +167,7 @@ public class ControllerImpl implements Controller {
 	}
 	
 	public void startMortgage (int minimumExpense, PlayerInfo player) {
+		AlertFactory.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 	}
 	
@@ -173,10 +177,6 @@ public class ControllerImpl implements Controller {
 	
 	public List<PlayerInfo> getPlayers(){
 		return this.model.getPlayers();
-	}
-	
-	public DialogController getDialogController() {
-		return DialogController.getDialogController();
 	}
 	
 	public List<Obtainable> getProperties(){

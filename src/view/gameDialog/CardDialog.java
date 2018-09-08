@@ -229,8 +229,8 @@ public class CardDialog extends Dialog {
 	 * 
 	 * @return the interested property
 	 */
-	public AdapterBuildable getProperty() {
-		return (AdapterBuildable) this.property;
+	public Obtainable getProperty() {
+		return this.property;
 	}
 
 	/**
@@ -239,8 +239,9 @@ public class CardDialog extends Dialog {
 	public void updateCardDialog() {
 		this.buildingNumer.setText(((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX ? "HOTEL"
 				: String.valueOf(((AdapterBuildable) this.property).getBuildingNumber()));
-		if(this.property instanceof Buildable) {
-			this.addHouseButton.setDisable(((Buildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX);
-			this.removeHouseButton.setDisable(((Buildable) this.property).getBuildingNumber() == 0);
+		if(this.property instanceof AdapterBuildable) {
+			this.addHouseButton.setDisable(((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX);
+			this.removeHouseButton.setDisable(((AdapterBuildable) this.property).getBuildingNumber() == 0);
 		}
+	}
 }

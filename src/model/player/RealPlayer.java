@@ -21,8 +21,6 @@ public class RealPlayer implements Player {
 
 	private static final long serialVersionUID = 7360356929546552980L;
 
-	private static final double UNMORTGAGE_FEE = 10 / 100;
-
 	private final String name;
 	private Integer position;
 	private Map<Color, List<Obtainable>> playersProperties;
@@ -113,16 +111,16 @@ public class RealPlayer implements Player {
 	public void payments(final Integer moneyAmount) {// per evitare di fare dei thread sposterei il richiamp del toMortgage
 												// nel metodo can pay, in modo che, una volta guadagnati i soldi possa
 												// comunquecontinuare con il pagamento
-		if (!this.canPay(moneyAmount)) {
-			if (moneyAmount > totalAssets()) {//in questo caso il giocatore va in bancarotta e deve essere eliminato
-				throw new NotEnoughMoneyException(moneyAmount);
-			}
-			toMortgage(moneyAmount - this.money);
-			// in questo caso il giocatore non è in grado di pagare con i liquidi
-			// ed è quindi costretto ad ipotecare qualche proprietà
-		} else {
+//		if (!this.canPay(moneyAmount)) {
+//			if (moneyAmount > totalAssets()) {//in questo caso il giocatore va in bancarotta e deve essere eliminato
+//				throw new NotEnoughMoneyException(moneyAmount);
+//			}
+//			toMortgage(moneyAmount - this.money);
+//			// in questo caso il giocatore non è in grado di pagare con i liquidi
+//			// ed è quindi costretto ad ipotecare qualche proprietà
+//		} else {
 			this.money -= moneyAmount;
-		}
+//		}
 	}
 
 	public Integer totalAssets() {
@@ -136,17 +134,16 @@ public class RealPlayer implements Player {
 		this.money += moneyAmount;
 	}
 
-	@Override
-	public void buyProperty(final Obtainable property) {
-		if (canPay(property.getPrice())) {
-			payments(property.getPrice());
-			this.addProperty(property);
-		} else {
-			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
-			throw new NotEnoughMoneyException(property.getMortgage());
-		}
-
-	}
+//	@Override
+//	public void buyProperty(final Obtainable property) {
+//		if (canPay(property.getPrice())) {
+//			payments(property.getPrice());
+//			this.addProperty(property);
+//		} else {
+//			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
+//			throw new NotEnoughMoneyException(property.getMortgage());
+//		}
+//	}
 
 	@Override
 	public void addProperty(final Obtainable property) {

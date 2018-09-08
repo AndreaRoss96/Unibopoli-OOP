@@ -19,10 +19,10 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import controller.ControllerImpl;
-import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
+import view.AlertFactory;
 import view.CommandBridge;
 
 public class PlayerSetupMenu extends Scene {

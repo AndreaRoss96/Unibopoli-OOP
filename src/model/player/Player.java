@@ -37,7 +37,7 @@ public interface Player extends PlayerInfo {
 	 * @param Obtainable
 	 *            the interested property
 	 */
-	void buyProperty(Obtainable property);
+//	void buyProperty(Obtainable property);
 
 	/**
 	 * this method is for the movement of the player.

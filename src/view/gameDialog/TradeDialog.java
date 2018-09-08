@@ -19,10 +19,10 @@ import controller.ControllerImpl;
 import controller.DialogController;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
-import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ClassicType;
+import view.AlertFactory;
 
 /**
  * This dialog allows the current player and the other players to make
@@ -119,7 +119,7 @@ public class TradeDialog extends Dialog {
 		tradeButton.setOnAction(e -> {
 			if (AlertFactory.createConfirmationAlert("Are you sure?", "Do both players agree?")) {
 				if (this.playerBox.getValue() != null) {
-					controller.executeTrade();
+					controller.dialogTradeClick();
 					stage.close();
 				} else {
 					AlertFactory.createErrorAlert("???", "Choose a player!");
