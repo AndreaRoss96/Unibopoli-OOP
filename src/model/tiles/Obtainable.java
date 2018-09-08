@@ -1,9 +1,6 @@
 package model.tiles;
 
-
 import com.google.common.base.Optional;
-
-import utilities.enumerations.Color;
 
 /**
  * This interface extends Tile and shape the Obtainable Tile in the board.  

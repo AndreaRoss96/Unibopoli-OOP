@@ -13,7 +13,7 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
-
+import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 
 public class ComponentFactory {
@@ -40,9 +40,9 @@ public class ComponentFactory {
 		return landPane;
 	}
 	
-	public static Label getLabelColor(final Paint paint) {
+	public static Label getLabelColor(final String paint) {
 		Label colorFamily = new Label();
-		colorFamily.setBackground(new Background(new BackgroundFill(paint, CornerRadii.EMPTY, Insets.EMPTY)));
+		colorFamily.setBackground(new Background(new BackgroundFill(Paint.valueOf(paint), CornerRadii.EMPTY, Insets.EMPTY)));
 		setAlignmentNode(colorFamily);
 		
 		return colorFamily;
@@ -67,12 +67,12 @@ public class ComponentFactory {
 	 * Migliorare la dimensione dell'immagine
 	 * 
 	 * */
-	public static Label getLabelImage(final ImageView ImageView) {
+	public static Label getLabelImage(final String pathImageView) {
 		Label image = new Label();
-		ImageView imageView = ImageView;
+		ImageView imageView = IconLoader.getLoader().getImageFromPath(pathImageView).get();
 		imageView.setFitWidth(LandSimpleWIDTH * 0.7);
 		imageView.setFitHeight(LandSimpleWIDTH * 0.7);
-
+		image.setGraphic(imageView);
 		setAlignmentNode(image);
 		
 		return image;

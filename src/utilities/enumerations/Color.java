@@ -47,10 +47,12 @@ public enum Color {
     
     private final String value;
     private final String name;
-  
-    Color(final String value, final String name) {
+    private final int numTileFamily;
+    
+    Color(final String value, final String name, final int numTileFamily) {
         this.value = value;
         this.name = name;
+        this.numTileFamily = numTileFamily;
     }
 
     /**
@@ -66,4 +68,11 @@ public enum Color {
     public String getName() {
         return this.name;
     }
+    
+    /**
+    -     * @return a integer represents the numbers of tiles in the family color.
+    -     */
+    public int getNumTiles() {
+    	return this.numTileFamily;
+    } 
 }

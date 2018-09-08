@@ -2,7 +2,7 @@ package model.tiles;
 
 import utilities.enumerations.TiteTypes;
 
-public abstract class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
+public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 
 	private static final long serialVersionUID = 6004220435515803475L;
 	
