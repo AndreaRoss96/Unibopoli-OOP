@@ -2,6 +2,8 @@ package model.tiles;
 
 import com.google.common.base.Optional;
 
+import utilities.enumerations.Color;
+
 /**
  * This interface extends Tile and shape the Obtainable Tile in the board.  
  * 
@@ -54,4 +56,12 @@ public interface Obtainable extends Tile{
 	 * @param The Optional<String> <tt>owner</tt>.
 	 */
 	void setOwner(final Optional<String> owner);
+	
+	
+	/**
+	 * Returns the type of the Color enum, that specific the family of belonging inside the board. 
+	 * 
+	 * @return <tt>Color</tt> of the family Tile.
+	 */
+	Color getColorOf();
 }

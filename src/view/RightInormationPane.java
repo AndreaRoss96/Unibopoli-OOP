@@ -15,8 +15,13 @@ import model.player.PlayerInfo;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
-import view.gameDialog.SettingsDialog;
 
+/**
+ * Right lateral pane, with useful information for the current player
+ * 
+ * @author Rossolini Andrea
+ *
+ */
 public class RightInormationPane extends VBox {
 
 	private static final RightInormationPane SINGLETON = new RightInormationPane();
@@ -24,10 +29,11 @@ public class RightInormationPane extends VBox {
 	private static final double H_DISTANCE = 0.43;
 	private static final double V_DISTANCE = 0.21;
 	private static final double SETTINGS_DISTANCE = 14;
-//	private static final double PANE_WIDTH = PaneDimensionSetting.getInstance().getLateralPaneWidth();
-//	private static final double PANE_HEIGHT = PaneDimensionSetting.getInstance().getLateralPaneHeight();
 	private static final String END_TURN_PATH = "/images/Icons/next_player.png";
 	private static final String EXIT_JAIL_PATH = "/images/Icons/hammer_law.png";
+	
+	private final double PANE_WIDTH = PaneDimensionSetting.getInstance().getLateralPaneWidth();
+	private final double PANE_HEIGHT = PaneDimensionSetting.getInstance().getLateralPaneHeight();
 
 	private static Label leftDiceResult;
 	private static Label rightDiceResult;
@@ -46,26 +52,26 @@ public class RightInormationPane extends VBox {
 		this.setAlignment(Pos.TOP_CENTER);
 		this.setStyle("-fx-border-color: black");
 		final AnchorPane topAnchorPane = new AnchorPane();
-		topAnchorPane.setPrefWidth(PaneDimensionSetting.getInstance().getLateralPaneWidth());
-		topAnchorPane.setPrefHeight(PaneDimensionSetting.getInstance().getLateralPaneWidth() / 2); // sicuro ?
+		topAnchorPane.setPrefWidth(PANE_WIDTH);
+		topAnchorPane.setPrefHeight(PANE_WIDTH / 2);
 
 		leftDiceResult = new Label("0");
-		AnchorPane.setLeftAnchor(leftDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
-		AnchorPane.setBottomAnchor(leftDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
-		AnchorPane.setTopAnchor(leftDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setLeftAnchor(leftDiceResult, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setBottomAnchor(leftDiceResult, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setTopAnchor(leftDiceResult, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(leftDiceResult);
 
 		rightDiceResult = new Label("0");
-		AnchorPane.setRightAnchor(rightDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
-		AnchorPane.setBottomAnchor(rightDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
-		AnchorPane.setTopAnchor(rightDiceResult, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setRightAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setBottomAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setTopAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(rightDiceResult);
 
 		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getDiceImage()).get());
-		AnchorPane.setRightAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * H_DISTANCE);
-		AnchorPane.setLeftAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * H_DISTANCE);
-		AnchorPane.setBottomAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
-		AnchorPane.setTopAnchor(diceBtn, PaneDimensionSetting.getInstance().getLateralPaneWidth() * V_DISTANCE);
+		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
+		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
+		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
+		AnchorPane.setTopAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(diceBtn);
 
 		final Button setting = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getGearImage()).get());
@@ -77,7 +83,7 @@ public class RightInormationPane extends VBox {
 		this.getChildren().add(topAnchorPane);
 
 		final Button tradeBtn = new Button("TRADE");
-		tradeBtn.setPrefWidth(PaneDimensionSetting.getInstance().getLateralPaneWidth());
+		tradeBtn.setPrefWidth(PANE_WIDTH);
 		this.getChildren().add(tradeBtn);
 
 		playerLabel = new Label();
@@ -103,8 +109,8 @@ public class RightInormationPane extends VBox {
 		AnchorPane.setBottomAnchor(endTurn, SETTINGS_DISTANCE);
 		AnchorPane.setRightAnchor(endTurn, SETTINGS_DISTANCE * 2.5);
 		final AnchorPane bottomAnchorPane = new AnchorPane(endTurn);
-		bottomAnchorPane.setPrefHeight(PaneDimensionSetting.getInstance().getLateralPaneHeight() / 3);
-		bottomAnchorPane.setPrefWidth(PaneDimensionSetting.getInstance().getLateralPaneWidth());
+		bottomAnchorPane.setPrefHeight(PANE_HEIGHT / 3);
+		bottomAnchorPane.setPrefWidth(PANE_WIDTH);
 
 		this.getChildren().add(bottomAnchorPane);
 
@@ -117,11 +123,11 @@ public class RightInormationPane extends VBox {
 		});
 
 		tradeBtn.setOnAction(e -> {
-			ControllerImpl.getController().tradeClick();
+			ControllerImpl.getController().startTrade();
 		});
 		
 		setting.setOnAction(e -> {
-			SettingsDialog.getSettingsDialog().createSettingDialog(); //chiama il controller
+			ControllerImpl.getController().settingsClick();
 		});
 		
 		this.setId("RightInformationPane");
@@ -153,7 +159,7 @@ public class RightInormationPane extends VBox {
 		playerLabel.setText("Player:\n" + player.getName());
 		cashLabel.setText("Cash:\n" + player.getMoney());
 		netWorthLabel.setText("Net Worth:\n" + player.totalAssets());
-		prisonLabel.setText("da gestire");
+		prisonLabel.setText(player.isInJail() ? "In jail" : "Free");
 	}
 
 	/**

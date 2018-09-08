@@ -1,8 +1,12 @@
 package view.gameDialog;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
+
 import controller.DialogController;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
@@ -10,6 +14,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
+import model.tiles.Obtainable;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 
@@ -26,6 +31,9 @@ public class MortgageDialog extends Dialog {
 
 	private static final double SPACING = 10;
 
+	private PlayersContractListView playerListView;
+	private Label obtainedMoney;
+	
 	private MortgageDialog() {
 
 	}
@@ -51,7 +59,8 @@ public class MortgageDialog extends Dialog {
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 
-		final PlayersContractListView playerListView = new PlayersContractListView(player);
+		final List<Obtainable> propertiesList = player.getProperties().stream().filter(p -> !p.hasMortgage()).collect(Collectors.toList());
+		this.playerListView = new PlayersContractListView(propertiesList);
 		rootPane.setLeft(playerListView);
 
 		final VBox vBox = new VBox();
@@ -61,11 +70,12 @@ public class MortgageDialog extends Dialog {
 		final Label title = new Label(player.getName());
 
 		title.setFont(getPrincipalFont());
-		final Label obtainedMoney = new Label("Accumulated money:\n0");
+		this.obtainedMoney = new Label("0$");
 		vBox.getChildren().add(title);
-		vBox.getChildren().add(new Label(String.valueOf(player.getMoney())));
-		vBox.getChildren().add(new Label(String.valueOf(player.totalAssets())));
+		vBox.getChildren().add(new Label("Player's money:\n" + String.valueOf(player.getMoney() + "$")));
+		vBox.getChildren().add(new Label("Player's net worth:\n" + String.valueOf(player.totalAssets() + "$")));
 		vBox.getChildren().add(new Label("Minimum expense:\n" + minimumExpense + "$"));
+		vBox.getChildren().add(new Label("Accumulated money:"));
 		vBox.getChildren().add(obtainedMoney);
 		rootPane.setCenter(vBox);
 
@@ -75,12 +85,11 @@ public class MortgageDialog extends Dialog {
 		mortgageButton.setFont(getPrincipalFont());
 		mortgageButton.setDisable(true);
 		bottomPane.setLeft(mortgageButton);
+		bottomPane.getRight().setDisable(true);
 		rootPane.setBottom(bottomPane);
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
-			obtainedMoney.setText(obtainedMoney.getText().replaceAll("0",
-					String.valueOf(DialogController.getDialogController().accumulatedMoney(playerListView.getSelected()
-							.stream().map(value -> value.get()).collect(Collectors.toList())))));
+			DialogController.getDialogController().accumulatedMoney();
 			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
 		});
 
@@ -88,5 +97,18 @@ public class MortgageDialog extends Dialog {
 			DialogController.getDialogController().setMortgage(playerListView.getSelected());
 			stage.close();
 		});
+		
+		final Scene scene = new Scene(rootPane);
+		stage.setScene(scene);
+		stage.showAndWait();
+	}
+	
+	public List<String> getSelected(){
+		return playerListView.getSelected()
+		.stream().map(value -> value.get()).collect(Collectors.toList());
+	}
+	
+	public void updateObtainedMoney(int obtainedMoney) {
+		this.obtainedMoney.setText(String.valueOf(obtainedMoney) + "$");
 	}
 }

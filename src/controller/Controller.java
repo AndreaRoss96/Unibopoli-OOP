@@ -47,7 +47,7 @@ public interface Controller {
 	/**
 	 * Shows the "trade dialog" that allows the player to make trading
 	 */
-	void tradeClick();
+	void startTrade();
 
 	/**
 	 * The player throws dices.

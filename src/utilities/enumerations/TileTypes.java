@@ -2,7 +2,7 @@ package utilities.enumerations;
 
 import java.util.Optional;
 
-public enum TiteTypes {
+public enum TileTypes {
 	
 	BUILDABLE(Optional.empty(), "Buildable"), 
 	
@@ -31,7 +31,7 @@ public enum TiteTypes {
 	private final Optional<String> pathImage;
 	private final String typeName;
 	
-	private TiteTypes(final Optional<String> pathImage, final String typeName) {
+	private TileTypes(final Optional<String> pathImage, final String typeName) {
 		this.pathImage = pathImage;
 		this.typeName = typeName;
 	}

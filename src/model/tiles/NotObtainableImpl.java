@@ -1,15 +1,15 @@
 package model.tiles;
 
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.TileTypes;
 
 public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 
 	private static final long serialVersionUID = 6004220435515803475L;
 	
 	private Integer positionTile;
-	private TiteTypes titeType;
+	private TileTypes titeType;
 	
-	public NotObtainableImpl(final int positionTile, final TiteTypes titeType) {
+	public NotObtainableImpl(final int positionTile, final TileTypes titeType) {
 		this.positionTile = positionTile;
 		this.titeType = titeType;
 	}
@@ -30,7 +30,7 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	}
 	
 	@Override
-	public TiteTypes getTiteType() {
+	public TileTypes getTiteType() {
 		return this.titeType;
 	}
 	

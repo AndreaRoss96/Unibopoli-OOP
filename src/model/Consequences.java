@@ -46,7 +46,7 @@ public enum Consequences {
 		this.consumer = consumer;
 	}
 	
-	public void exec(List<String> values) {
+	public void exec(List<String> values) { //passargli il model per eseguire il pagamento
 		this.consumer.accept(((Player) ControllerImpl.getController().getCurrentPlayer()), values);
 	}
 }

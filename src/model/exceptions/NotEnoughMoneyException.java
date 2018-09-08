@@ -1,6 +1,6 @@
 package model.exceptions;
 
-import utilities.AlertFactory;
+import view.AlertFactory;
 
 public class NotEnoughMoneyException extends RuntimeException {
 

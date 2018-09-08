@@ -3,6 +3,7 @@ package model;
 import java.util.List;
 import java.util.Set;
 
+import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
@@ -70,11 +71,27 @@ public interface Model {
 
 	/**
 	 * Allows the current player to exit from jail.
+	 * 
+	 * @param true if the player have to pay a fee, false instead
 	 */
-	void exitFromJail();
+	void exitFromJail(boolean withFee);
 
 	/**
 	 * Allows the current player to go to jail.
 	 */
 	void goToJail();
+
+	void executeTrade(Player secondPlayer, int firstMoney, int secondMoney, List<Obtainable> firstProperties,
+			List<Obtainable> secondProperties);
+
+	void unbuild(Obtainable property, Player player);
+
+	void playerPayment(PlayerInfo player, int moneyAmount);
+
+	void playerGainMoney(PlayerInfo player, int moneyAmount);
+
+	void buyProperty(PlayerInfo player, Obtainable property);
+
+	void playerAddProperty(PlayerInfo player, Obtainable property);
+
 }

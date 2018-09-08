@@ -9,7 +9,7 @@ import java.util.stream.Stream;
 
 import model.tiles.*;
 import utilities.enumerations.Color;
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.TileTypes;
 
 /**
  * This utility class provide same Function to parse the record read from file.
@@ -34,8 +34,8 @@ public class Parse {
 																.map(Integer::new).collect(Collectors.toList()));
 						rents.setPriceForBuilding(new Integer(record.get(9)));
 						
-						return new BuildableImpl(positionTile, price, mortgage, rents, Color.valueOf(Color.class, record.get(10)), 
-												TiteTypes.BUILDABLE);
+						return new BuildableImpl(positionTile.intValue(), price.intValue(), mortgage.intValue(), rents, Color.valueOf(Color.class, record.get(10)), 
+												TileTypes.BUILDABLE);
 					};
 						
 	public static final Function<String, NotBuildableImpl> PARSING_NOTBUILDABLE_TILE_BOARD = value -> {
@@ -47,14 +47,19 @@ public class Parse {
 						
 						if(record.get(4).isEmpty()) {
 							return new NotBuildableImpl(positionTile, price, mortgage, 
-														TiteTypes.valueOf(TiteTypes.class, record.get(4)));
+														TileTypes.valueOf(TileTypes.class, record.get(3)), Color.SOCIETY);
 						}
 						else {
 							return new Station(positionTile, price, mortgage, 
-											   TiteTypes.valueOf(TiteTypes.class, record.get(4)), record.get(5));
+											   TileTypes.valueOf(TileTypes.class, record.get(3)), record.get(4), Color.STATION);
 						}
 					};
 					
+	public static final Function<String, NotObtainableImpl> PARSING_NOTOBTAINABLE_TILE_BOARD = value -> {
+						List<String> record = getPlittingList(value);
+						
+						return new NotObtainableImpl(new Integer(record.get(0)), TileTypes.valueOf(TileTypes.class, record.get(1)));
+			};
 	public static final BiConsumer<String, Stream<Tile>> PARSING_LOAD_MODEGAME = (record, stream) -> 
 					stream.filter(t -> t.getPosition() == Integer.parseInt(getPlittingList(record).get(0)))
 					.findFirst().get().setNameOf(getPlittingList(record).get(1));

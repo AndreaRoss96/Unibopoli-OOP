@@ -27,4 +27,5 @@ public class ViewImpl implements View{
 		LeftPlayersPane.getLeftPlayersPane().updatePane();
 		GamePane.get().updateContractPane();
 	}
+	
 }

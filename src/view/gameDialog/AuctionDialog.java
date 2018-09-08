@@ -18,9 +18,10 @@ import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
-import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
+import view.AlertFactory;
+import view.Contract;
 
 /**
  * This dialog allows the not purchased contracts to be auctioned.
@@ -66,7 +67,6 @@ public class AuctionDialog extends Dialog {
 
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
-		rootPane.getStylesheets().add("style.css");
 
 		final GridPane grid = new GridPane();
 		grid.setPadding(getPrefInsets());
@@ -85,7 +85,7 @@ public class AuctionDialog extends Dialog {
 			passwordList.add(pw);
 			grid.add(passwordList.get(counter), 1, counter);
 		}
-
+		
 		final Label commentLabel = new Label("(after typed, press enter)");
 		commentLabel.setFont(COMMENT_FONT);
 		grid.add(commentLabel, 0, counter, 2, 1);
@@ -93,11 +93,13 @@ public class AuctionDialog extends Dialog {
 
 		final Button beatButton = new Button("Beat");
 		beatButton.setFont(getPrincipalFont());
-		beatButton.setPrefHeight(getButtonWidth());
+		beatButton.setPrefWidth(getButtonWidth());
 
 		final BorderPane bottomPane = addButtonBox(stage, "Yellow", IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getAuctionImage()).get());
 		bottomPane.setLeft(beatButton);
 		rootPane.setBottom(bottomPane);
+
+		rootPane.setLeft(new Contract(property));
 
 		beatButton.setOnAction(e -> {
 			DialogController.getDialogController().executeAuction();

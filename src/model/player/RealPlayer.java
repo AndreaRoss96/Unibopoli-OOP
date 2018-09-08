@@ -14,15 +14,12 @@ import com.google.common.base.Optional;
 import model.exceptions.NotEnoughMoneyException;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
-import controller.DialogController;
 
 import utilities.enumerations.Color;
 
 public class RealPlayer implements Player {
 
 	private static final long serialVersionUID = 7360356929546552980L;
-
-	private static final double UNMORTGAGE_FEE = 10 / 100;
 
 	private final String name;
 	private Integer position;
@@ -92,7 +89,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void setPosition(int newPosition) {
+	public void setPosition(final int newPosition) {
 		this.position = newPosition;
 	}
 
@@ -106,24 +103,24 @@ public class RealPlayer implements Player {
 		return this.status == Prison.PRISON;
 	}
 	
-	public void decMoney(int moneyAmount) {
+	public void decMoney(final int moneyAmount) {
 		this.money -= moneyAmount;
 	}
 
 	@Override
-	public void payments(Integer moneyAmount) {// per evitare di fare dei thread sposterei il richiamp del toMortgage
+	public void payments(final Integer moneyAmount) {// per evitare di fare dei thread sposterei il richiamp del toMortgage
 												// nel metodo can pay, in modo che, una volta guadagnati i soldi possa
 												// comunquecontinuare con il pagamento
-		if (!this.canPay(moneyAmount)) {
-			if (moneyAmount > totalAssets()) {//in questo caso il giocatore va in bancarotta e deve essere eliminato
-				throw new NotEnoughMoneyException(moneyAmount);
-			}
-			toMortgage(moneyAmount - this.money);
-			// in questo caso il giocatore non è in grado di pagare con i liquidi
-			// ed è quindi costretto ad ipotecare qualche proprietà
-		} else {
+//		if (!this.canPay(moneyAmount)) {
+//			if (moneyAmount > totalAssets()) {//in questo caso il giocatore va in bancarotta e deve essere eliminato
+//				throw new NotEnoughMoneyException(moneyAmount);
+//			}
+//			toMortgage(moneyAmount - this.money);
+//			// in questo caso il giocatore non è in grado di pagare con i liquidi
+//			// ed è quindi costretto ad ipotecare qualche proprietà
+//		} else {
 			this.money -= moneyAmount;
-		}
+//		}
 	}
 
 	public Integer totalAssets() {
@@ -132,46 +129,41 @@ public class RealPlayer implements Player {
 				.map(value -> (AdapterBuildable) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money;
 	}
 
-	private void bankroupt(Integer moneyAmount) {
-		// rimuovere il giocatore dalla lista tutti i suoi possedimenti all'asta
-	}
-
 	@Override
 	public void gainMoney(Integer moneyAmount) {
 		this.money += moneyAmount;
 	}
 
-	@Override
-	public void buyProperty(Obtainable property) {
-		if (canPay(property.getPrice())) {
-			payments(property.getPrice());
-			this.addProperty(property);
-		} else {
-			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
-			throw new NotEnoughMoneyException(property.getMortgage());
-		}
+//	@Override
+//	public void buyProperty(final Obtainable property) {
+//		if (canPay(property.getPrice())) {
+//			payments(property.getPrice());
+//			this.addProperty(property);
+//		} else {
+//			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
+//			throw new NotEnoughMoneyException(property.getMortgage());
+//		}
+//	}
 
-	}
-
 	@Override
-	public void addProperty(Obtainable property) {
+	public void addProperty(final Obtainable property) {
 		this.playersProperties.merge(property.getColorOf(), new ArrayList<Obtainable>(Arrays.asList(property)),
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
 		property.setOwner(Optional.of(this.getName()));
 	}
 
 	@Override
-	public void mortgageProperties(List<Obtainable> mortgaged) {
-		DialogController.getDialogController()
-				.accumulatedMoney(mortgaged.stream().map(Obtainable::getNameOf).collect(Collectors.toList()));
-	}
+//	public void mortgageProperties(List<Obtainable> mortgaged) {
+//		DialogController.getDialogController()
+//				.accumulatedMoney(mortgaged.stream().map(Obtainable::getNameOf).collect(Collectors.toList()));
+//	}
 
-	public boolean canPay(Integer moneyAmount) {
+	public boolean canPay(final Integer moneyAmount) {
 		return this.money >= moneyAmount;
 	}
 
 	@Override
-	public void toMortgage(Integer minimumAmount) {
+	public void toMortgage(final Integer minimumAmount) {
 
 	}
 
@@ -201,7 +193,7 @@ public class RealPlayer implements Player {
 	}
 	
 	@Override
-	public Obtainable removeProperty(Obtainable property) {
+	public Obtainable removeProperty(final Obtainable property) {
 		property.setOwner(Optional.absent());
 		this.getPopertiesByColor().get(property.getColorOf()).remove(property);
 		return property;

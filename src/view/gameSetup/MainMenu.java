@@ -10,10 +10,10 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import controller.SoundController;
-import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
+import view.AlertFactory;
 import view.CommandBridge;
 import view.handlers.HandleFileChooser;
 

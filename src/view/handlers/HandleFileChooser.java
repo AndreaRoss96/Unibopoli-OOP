@@ -37,6 +37,8 @@ public class HandleFileChooser implements EventHandler<MouseEvent> {
 		if (file != null) {
 			System.out.println("Sto caricando il file: " + file.toString());
 			ControllerImpl.getController().loadGameFromFile(file);
+		} else {
+			e.consume();
 		}
 	}
 }

@@ -13,6 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
@@ -36,7 +37,7 @@ public class CardDialog extends Dialog {
 
 	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
 	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); // da modificare in
-																						// setStyle(-fx-font-family:
+	private static final int NUM_BUILD_MAX = 5;																					// setStyle(-fx-font-family:
 																						// kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
@@ -44,6 +45,8 @@ public class CardDialog extends Dialog {
 	private Stage stage;
 	private Obtainable property;
 	private Label buildingNumer;
+	private Button addHouseButton;
+	private Button removeHouseButton;
 
 	private CardDialog() {
 
@@ -71,6 +74,8 @@ public class CardDialog extends Dialog {
 		this.property = property;
 		this.buildingNumer = new Label();
 		this.buildingNumer.setFont(VALUE_FONT);
+		this.addHouseButton = new Button("", new ImageView("/images/dialogButton/aggiungi_casa.png"));
+		this.removeHouseButton = new Button("", new ImageView("/images/dialogButton/rimuovi_casa.png"));
 
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox());
@@ -103,7 +108,7 @@ public class CardDialog extends Dialog {
 
 		final Label title = new Label("Contract Infos:\n\n");
 		title.setFont(TITLE_FONT);
-		title.setTextFill(property.getColorOf().getPaint().orElse(Color.BLACK));
+		title.setTextFill(Paint.valueOf(property.getColorOf().getPaint().orElse(Color.BLACK)));
 
 		final Label labelOwner = new Label("Owner: ");
 		labelOwner.setFont(getPrincipalFont());
@@ -130,7 +135,7 @@ public class CardDialog extends Dialog {
 		if (property instanceof AdapterBuildable) {
 			final Label building = new Label("Buildings: ");
 			building.setFont(getPrincipalFont());
-			updateBuildingLabel();
+			updateCardDialog();
 			grid.add(building, 0, ++column);
 			grid.add(this.buildingNumer, 1, column);
 		}
@@ -190,27 +195,24 @@ public class CardDialog extends Dialog {
 	 *            if the property is unBuildable is set false
 	 */
 	private void gridWithOwner(GridPane grid, Boolean canBuild) {
-		final Button addHouseButton = new Button("", new ImageView("/images/dialogButton/aggiungi_casa.png"));
-		final Button removeHouseButton = new Button("", new ImageView("/images/dialogButton/rimuovi_casa.png"));
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
 
-		if (!(this.property instanceof AdapterBuildable) || !canBuild) {
+		if (!(this.property instanceof AdapterBuildable) || !canBuild || this.property.hasMortgage()) {
 			addHouseButton.setDisable(true);
 			removeHouseButton.setDisable(true);
 		} else {
-			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= 5));
+			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX));
 			removeHouseButton.setDisable(!(((AdapterBuildable) this.property).getBuildingNumber() != 0));
 		}
 
 		addHouseButton.setOnAction(e -> {
-			addHouseButton.setDisable(DialogController.getDialogController().incHouse());
+			DialogController.getDialogController().incHouseClick();
 			removeHouseButton.setDisable(!(((AdapterBuildable) this.property).getBuildingNumber() != 0));
 		});
 
 		removeHouseButton.setOnAction(e -> {
-			removeHouseButton.setDisable(DialogController.getDialogController().decHouse());
-			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= 5));
-		});
+			DialogController.getDialogController().decHouseClick();
+			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX));
 
 		mortgageProperty.setOnAction(e -> {
 			DialogController.getDialogController().mortgageDialogClick();
@@ -227,15 +229,19 @@ public class CardDialog extends Dialog {
 	 * 
 	 * @return the interested property
 	 */
-	public AdapterBuildable getProperty() {
-		return (AdapterBuildable) this.property;
+	public Obtainable getProperty() {
+		return this.property;
 	}
 
 	/**
 	 * Update the state of the label of the buildings in this properly property.
 	 */
-	public void updateBuildingLabel() {
-		this.buildingNumer.setText(((AdapterBuildable) this.property).getBuildingNumber() >= 5 ? "HOTEL"
+	public void updateCardDialog() {
+		this.buildingNumer.setText(((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX ? "HOTEL"
 				: String.valueOf(((AdapterBuildable) this.property).getBuildingNumber()));
+		if(this.property instanceof AdapterBuildable) {
+			this.addHouseButton.setDisable(((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX);
+			this.removeHouseButton.setDisable(((AdapterBuildable) this.property).getBuildingNumber() == 0);
+		}
 	}
 }

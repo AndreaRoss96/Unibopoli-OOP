@@ -19,10 +19,10 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 import controller.ControllerImpl;
-import utilities.AlertFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
+import view.AlertFactory;
 import view.CommandBridge;
 
 public class PlayerSetupMenu extends Scene {
@@ -102,7 +102,7 @@ public class PlayerSetupMenu extends Scene {
 			} else if (!this.checkIcon(psbList.stream().map(PlayerSetupBox::getIcons).collect(Collectors.toList()))) {
 				AlertFactory.createInformationAlert("Nope", "All players must have an avatar!");
 			} else { /* execute action */				
-				List<String> playersIcon = new ArrayList<String>();
+				final List<String> playersIcon = new ArrayList<String>();
 				psbList.forEach(bBox -> {
 					playersIcon.add(imageMap.get(bBox.getIcons().getSelectionModel().getSelectedItem()));
 				});
@@ -165,7 +165,6 @@ public class PlayerSetupMenu extends Scene {
 				}
 			}
 		});
-
 		return pBox;
 	}
 	

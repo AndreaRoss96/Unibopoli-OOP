@@ -10,14 +10,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.TextAlignment;
 
-import model.tiles.AdapterBuildable;
-import model.tiles.NotBuildable;
+import model.tiles.BuildableImpl;
+import model.tiles.NotBuildableImpl;
 import model.tiles.Obtainable;
+import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 
 public class Contract extends AnchorPane {
@@ -48,10 +50,10 @@ public class Contract extends AnchorPane {
 		this.insidePane.setAlignment(Pos.TOP_CENTER);
 		this.insidePane.setStyle("-fx-border-color: black;");
 
-		if (property instanceof AdapterBuildable) {
-			createContractForBuildable((AdapterBuildable) property);
+		if (property instanceof BuildableImpl) {
+			createContractForBuildable((BuildableImpl) property);
 		} else {
-			createContractForNotBuildable((NotBuildable) property);
+			createContractForNotBuildable((NotBuildableImpl) property);
 		}
 		
 		AnchorPane.setTopAnchor(insidePane, WIDTH_ANCHOR);
@@ -65,7 +67,7 @@ public class Contract extends AnchorPane {
 		this.getStylesheets().add("/style/style.css");
 	}
 
-	private void createContractForBuildable(AdapterBuildable property) {
+	private void createContractForBuildable(BuildableImpl property) {
 		this.labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 2, insidePane);
 		final Label propertyName = new Label(property.getNameOf());
 		propertyName.setPrefSize(LABEL_BIG_WIDTH, LABEL_HEIGHT * 4.5);
@@ -73,7 +75,7 @@ public class Contract extends AnchorPane {
 		propertyName.setTextAlignment(TextAlignment.CENTER);
 		propertyName.setFont(PROPERTY_FONT);
 		propertyName.setStyle("-fx-border-color: black;" + " -fx-background-color: "
-				+ property.getColorOf().getPaint().get().toString().replaceAll("0x", "#") + ";");
+				+ Paint.valueOf(property.getColorOf().getPaintValue().get()) + ";");
 		propertyName.setWrapText(true);
 		insidePane.add(propertyName, 0, this.row++, 2, 1);
 		GridPane.setMargin(propertyName, new Insets(LABEL_HEIGHT, 0, LABEL_HEIGHT, 0));
@@ -93,9 +95,9 @@ public class Contract extends AnchorPane {
 		this.labelCreator("Mortgage value", Optional.of(String.valueOf(property.getMortgage()) + " $"), 2, insidePane);
 	}
 
-	private void createContractForNotBuildable(NotBuildable property) {
+	private void createContractForNotBuildable(NotBuildableImpl property) {
 		this.labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1, insidePane);
-		final ImageView image = property.getImage();
+		final ImageView image = IconLoader.getLoader().getImageFromPath(property.getPathImage()).get();
 		image.setFitHeight(IMAGE_HEIGHT);
 		image.setFitWidth(IMAGE_WIDTH);
 		insidePane.add(image, 0, this.row++, 2, 1);

@@ -3,7 +3,9 @@ package controller;
 import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -16,21 +18,24 @@ import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
+import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ModeGame;
+import view.AlertFactory;
 import view.RightInormationPane;
 import view.View;
 import view.ViewImpl;
 import view.gameDialog.AuctionDialog;
 import view.gameDialog.CardDialog;
 import view.gameDialog.MortgageDialog;
+import view.gameDialog.SettingsDialog;
 import view.gameDialog.TradeDialog;
 import view.gameSetup.MainMenu;
 
 public class ControllerImpl implements Controller {
 
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
-	private static final int JAIL_FEE = 125;
+	
 	
 	private Model model;
 	private View view;
@@ -40,6 +45,7 @@ public class ControllerImpl implements Controller {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
 		this.view = new ViewImpl();
 		setBackgroundMusic();
+		DialogController.getDialogController().setModel(model);
 	}
 
 	/**
@@ -59,6 +65,7 @@ public class ControllerImpl implements Controller {
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
 			this.model = GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
+			DialogController.getDialogController().setModel(model);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
@@ -71,9 +78,8 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void endTurnClick() {
-		if (model.getCurrentPlayer().isInJail()) {
-			((Player) model.getCurrentPlayer()).payments(JAIL_FEE);
-			model.exitFromJail();
+		if (this.getCurrentPlayer().isInJail()) {
+			model.exitFromJail(true);
 			this.updateView();
 		} else {
 			this.model.endTurn();
@@ -84,7 +90,9 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
+		IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
+		DialogController.getDialogController().setModel(model);
 	}
 
 	@Override
@@ -92,24 +100,23 @@ public class ControllerImpl implements Controller {
 		/* If the current player is the same owner of the selected property and he/she have all the property of that color he will be able to build */
 		if(property.getOwner().isPresent() && property.getOwner().get() == this.getCurrentPlayer().getName()) {
 			int numProperties = this.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).size();
-//			System.out.println("1 - prop own: " + property.getOwner().get() + " Curr: " + this.getCurrentPlayer().getName() + " family size: " + property.getColorOf().getNumTiles() + " num prop: " + numProperties);
-			CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
+			//CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
 		/* If the current player is in the same position of the property without any owner he/she will be able to buy that property */
 		} else if(!property.getOwner().isPresent() && property.getPosition() == this.getCurrentPlayer().getPosition()) {
 			CardDialog.getCardDialog().createCardDialog(property,  property.getPrice() <= this.getCurrentPlayer().getMoney());
-//			System.out.println("2 - prop pos: " + property.getPosition() + " Curr pos: " + this.getCurrentPlayer().getPosition() + "setDis: " + ((property.getPrice() <= this.getCurrentPlayer().getMoney()) ? true : false));
 		} else {
 			CardDialog.getCardDialog().createCardDialog(property, false);
-//			System.out.println("3 - ");
 		}
 
 	}
 
 	@Override
-	public void tradeClick() {
-		List<PlayerInfo> treadePlayerList = model.getPlayers();
-		treadePlayerList.remove(this.getCurrentPlayer());
-		TradeDialog.getTradeDialog().createTradeDialog(treadePlayerList);
+	public void startTrade() {
+		final Map<String, List<Obtainable>> playerObtainableMap = new HashMap<>();
+		this.model.getPlayers().stream().filter(player -> !player.getName().equals(this.getCurrentPlayer().getName())).forEach(player -> {
+			playerObtainableMap.put(player.getName(), player.getProperties());
+		});
+		TradeDialog.getTradeDialog().createTradeDialog(playerObtainableMap);
 	}
 
 	@Override
@@ -119,7 +126,6 @@ public class ControllerImpl implements Controller {
 		Pair<Integer> result = model.exitDice();
 		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
 		this.exitDice(result.getFirst() + result.getSecond());
-		
 		/*
 		 * if the two dice have same result the player have to roll dices again, even if
 		 * you are going out of jail
@@ -143,7 +149,7 @@ public class ControllerImpl implements Controller {
 	
 	@Override
 	public void settingsClick() {
-		// TODO Auto-generated method stub
+		SettingsDialog.getSettingsDialog().createSettingDialog();
 	}
 	
 	@Override
@@ -161,6 +167,7 @@ public class ControllerImpl implements Controller {
 	}
 	
 	public void startMortgage (int minimumExpense, PlayerInfo player) {
+		AlertFactory.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 	}
 	
@@ -170,10 +177,6 @@ public class ControllerImpl implements Controller {
 	
 	public List<PlayerInfo> getPlayers(){
 		return this.model.getPlayers();
-	}
-	
-	public DialogController getDialogController() {
-		return DialogController.getDialogController();
 	}
 	
 	public List<Obtainable> getProperties(){

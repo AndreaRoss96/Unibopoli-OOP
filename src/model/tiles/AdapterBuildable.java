@@ -34,5 +34,5 @@ public interface AdapterBuildable{
 	/**
 	 * TODO: Verificare a cosa serve.
 	 * */
-	//int getRent(final int buildingsNr);
+	int getRent(final int buildingsNr);
 }

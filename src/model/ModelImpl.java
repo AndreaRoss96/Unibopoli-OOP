@@ -3,12 +3,12 @@ package model;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import com.google.common.base.Optional;
 
 import controller.ControllerImpl;
 import model.player.Player;
 import model.player.PlayerInfo;
+import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
@@ -16,7 +16,8 @@ import utilities.Pair;
 public class ModelImpl implements Model{
 	
 	private static final int JAIL = 30;
-
+	private static final int JAIL_FEE = 125;
+	
 	private final Board board;
 	private final Turn turnPlayer;
 	
@@ -46,7 +47,7 @@ public class ModelImpl implements Model{
 				this.turnPlayer.turnInJail();
 				
 				if(temp.areSame() || this.turnPlayer.exitFromJail()) {
-					this.exitFromJail();
+					this.exitFromJail(true);
 				}
 			}
 	
@@ -63,7 +64,7 @@ public class ModelImpl implements Model{
 	}
 
 	@Override
-	public PlayerInfo getCurrentPlayer() {
+	public Player getCurrentPlayer() {
 		return this.turnPlayer.getCurrentPlayer();
 	}
 	
@@ -97,40 +98,83 @@ public class ModelImpl implements Model{
 	}	
 	
 	private void setNewPosition(int value) {
-		this.turnPlayer.getCurrentPlayer().setPosition(value);
+		this.getCurrentPlayer().setPosition(value);
 	}
 	
 	@Override
 	public void goToJail() {
 		this.setNewPosition(JAIL);
-		((Player) this.getCurrentPlayer()).goToJail();
+		this.getCurrentPlayer().goToJail();
 	}
 	
 	@Override
-	public void exitFromJail() {
-		this.turnPlayer.getCurrentPlayer().exitFromJail();
+	public void exitFromJail(boolean withFee) {
+		if(withFee) {
+			this.getCurrentPlayer().payments(JAIL_FEE);
+		}
+		this.getCurrentPlayer().exitFromJail();
 	}
 
-	/*
-	public void payment(PlayerInfo player, int moneyAmount) {
-		if(!this.getCurrentPlayer().canPay(moneyAmount)) {
-			if(moneyAmount > this.getCurrentPlayer().totalAssets()) {
+	
+	/*******************************************************************************/
+	@Override
+	public void playerPayment(final PlayerInfo player, final int moneyAmount) {
+		if(!player.canPay(moneyAmount)) {
+			if(moneyAmount > player.totalAssets()) {
 				this.removePlayer(player);
 			}
 			ControllerImpl.getController().startMortgage(moneyAmount, player);
 		} else {
-			//((Player) player).decMoney(moneyAmount);
+			((Player) player).payments(moneyAmount);
 		}
 	}
 	
-	public void buyProperty(Obtainable property) {
-		if(this.getCurrentPlayer().canPay(property.getPrice())) {
-			this.payments(getCurrentPlayer(), property.getPrice());
-			((Player) this.getCurrentPlayer()).addProperty(property);
-		} else {
-			ControllerImpl.getController().startAuciton(property);
+	@Override
+	public void buyProperty(PlayerInfo player, Obtainable property) {
+			this.playerPayment(player, property.getPrice());
+			this.playerAddProperty(player, property);
+	}
+	
+	@Override
+	public void executeTrade(final Player secondPlayer,final int firstMoney,final int secondMoney, final List<Obtainable> firstProperties, final List<Obtainable> secondProperties) {
+		Player firstPlayer = this.getCurrentPlayer();
+		secondProperties.forEach(prop -> {
+			this.unbuild(prop, secondPlayer);
+			firstPlayer.addProperty(secondPlayer.removeProperty(prop));
+		});
+		firstPlayer.gainMoney(secondMoney);
+		firstPlayer.payments(firstMoney);
+
+		firstProperties.forEach(prop -> {
+			this.unbuild(prop, firstPlayer);
+			secondPlayer.addProperty(firstPlayer.removeProperty(prop));
+		});
+		secondPlayer.gainMoney(firstMoney);
+		secondPlayer.payments(secondMoney);
+	}
+	
+	@Override
+	public void unbuild(final Obtainable property, final Player player) {
+		if (property instanceof AdapterBuildable) {
+			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (AdapterBuildable) prop)
+					.forEach(p -> {
+						while (p.getBuildingNumber() != 0) {
+							p.decBuildings();
+							player.gainMoney(p.getPriceForBuilding() / 2);
+						}
+					});
 		}
-	} */
+	}
+	
+	@Override
+	public void playerGainMoney(final PlayerInfo player, final int moneyAmount) {
+		((Player) player).gainMoney(moneyAmount);
+	}
+	
+	@Override
+	public void playerAddProperty(final PlayerInfo player, final Obtainable property) {
+		((Player) player).addProperty(property);
+	}
 	
 
 	/**

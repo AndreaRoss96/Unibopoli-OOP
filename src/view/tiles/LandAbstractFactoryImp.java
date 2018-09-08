@@ -14,7 +14,7 @@ import model.tiles.BuildableImpl;
 import model.tiles.NotBuildableImpl;
 import model.tiles.NotObtainableImpl;
 import model.tiles.Tile;
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
 
 /**
@@ -25,9 +25,10 @@ import view.gameDialog.CardDialog;
 public class LandAbstractFactoryImp{
 
 	public Pane createLand(final Tile tile) {
-		if(tile.getTiteType() == TiteTypes.BUILDABLE) {
+
+		if(tile.getTiteType() == TileTypes.BUILDABLE) {
 			return this.getBuildable((BuildableImpl) tile);
-		}else if(tile.getTiteType() == TiteTypes.STATION || tile.getTiteType() == TiteTypes.LIGHT_AGENCY || tile.getTiteType() == TiteTypes.WATER_AGENCY ){
+		}else if(tile.getTiteType() == TileTypes.STATION || tile.getTiteType() == TileTypes.LIGHT_AGENCY || tile.getTiteType() == TileTypes.WATER_AGENCY ){
 			return this.getNotBuildable((NotBuildableImpl) tile);
 		}else {
 			return this.getNotObtainables((NotObtainableImpl) tile);
@@ -45,8 +46,9 @@ public class LandAbstractFactoryImp{
 	
 	private void getBuildables(final AnchorPane landPane, final BuildableImpl buildableTile)
 	{
-		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaintValue());
-		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);		
+		Label colorFamily = ComponentFactory.getLabelColor(buildableTile.getColorOf().getPaintValue().get());
+		Separator seperator = ComponentFactory.getSeparator(Orientation.HORIZONTAL);
+
 		Label textHeader = ComponentFactory.getLabelString(buildableTile.getNameOf().replace(' ', '\n'));
 		Label textRent = ComponentFactory.getLabelString("$" + buildableTile.getPrice());
 
@@ -81,19 +83,15 @@ public class LandAbstractFactoryImp{
 	}
 
 	private boolean isCorner(final Tile tile) {
-		return tile.getTiteType() == TiteTypes.GO || tile.getTiteType() ==  TiteTypes.GO_JAIL || 
-			   tile.getTiteType() == TiteTypes.FREE_PARKING || tile.getTiteType() == TiteTypes.FREE_TRANSIT;
+		return tile.getTiteType() == TileTypes.GO || tile.getTiteType() ==  TileTypes.GO_JAIL || 
+			   tile.getTiteType() == TileTypes.FREE_PARKING || tile.getTiteType() == TileTypes.FREE_TRANSIT;
 	}
 	
 	private AnchorPane getNotObtainables(final NotObtainableImpl notObtainableTile) {
 		AnchorPane landPane;
 		
-		if(this.isCorner(notObtainableTile)) {
-			landPane = ComponentFactory.getAnchorPane(true);
-		}else {
-			landPane = ComponentFactory.getAnchorPane(false);
-		}
-		
+		landPane = ComponentFactory.getAnchorPane(this.isCorner(notObtainableTile));
+
 		List<String> temp = Arrays.stream(notObtainableTile.getNameOf().split("\n")).collect(Collectors.toList());
 		
 		Label top = ComponentFactory.getLabelString(temp.get(0));
@@ -108,13 +106,21 @@ public class LandAbstractFactoryImp{
 			landPane.getChildren().add(bottom);
 		}
 		
-		AnchorPane.setBottomAnchor(image, 40.0);
+		/**
+		 * 
+		 * oppure questi
+		 *
+		AnchorPane.setTopAnchor(top, 10.0);
+		AnchorPane.setBottomAnchor(bottom, 10.0);
+		*/
+		
+		AnchorPane.setTopAnchor(image, 40.0);
 		
 		/**
 		 * Modificare eventualmtne con setBottom
 		 * */
 		AnchorPane.setTopAnchor(top, 10.0);
-		
+
 		landPane.getChildren().addAll(top, image);
 		return landPane;
 	}

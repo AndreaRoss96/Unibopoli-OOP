@@ -37,7 +37,7 @@ public interface Player extends PlayerInfo {
 	 * @param Obtainable
 	 *            the interested property
 	 */
-	void buyProperty(Obtainable property);
+//	void buyProperty(Obtainable property);
 
 	/**
 	 * this method is for the movement of the player.
@@ -80,7 +80,7 @@ public interface Player extends PlayerInfo {
 	 * @param mortgaged
 	 *            the list of mortgaged properties
 	 */
-	void mortgageProperties(List<Obtainable> mortgaged);
+//	void mortgageProperties(List<Obtainable> mortgaged);
 
 	/**
 	 * Adds a property to player's properties.

@@ -6,15 +6,18 @@
  */
 public class ClassicType {
 	public enum Files{
-	    GeneralFilesMap("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/staticValuesTile/NotBuildableValues.txt"); 
+	    GeneralFilesMap("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/staticValuesTile/NotBuildableValues.txt",
+	    				"res/mode/staticValuesTile/NotObtainableValues.txt"); 
 	 
 	    private final String staticBuildableValuesInitFile;
 	    private final String staticNotBuildableValuesInitFile;
+	    private final String staticNotObtainableValuesInitFile;
 	    
-	    
-	    private Files(final String staticBuildableValuesInitFile, final String staticNotBuildableValuesInitFile) {
+	    private Files(final String staticBuildableValuesInitFile, final String staticNotBuildableValuesInitFile,
+	    			  final String staticNotObtainableValuesInitFile) {
 	        this.staticBuildableValuesInitFile = staticBuildableValuesInitFile;
 	        this.staticNotBuildableValuesInitFile = staticNotBuildableValuesInitFile;
+	        this.staticNotObtainableValuesInitFile = staticNotObtainableValuesInitFile;
 	    }
 	
 	    /**
@@ -32,10 +35,16 @@ public class ClassicType {
 	    }
 	    
 	    /**
-	     * @return TODO: da fare. Ricordarsi di cambiare il nome della cartella
+	     * @return TODO: da fare. 
 	     */
 	    public String getModeGame(String mode) {
 	    	return "res/mode/" + mode + "/ClassicMode.txt";
+	    }
+	    /**
+	     * 
+	     */
+	    public String getStaticNotObtainableValuesInitFile(){
+	    	return this.staticNotObtainableValuesInitFile;
 	    }
 	}
 	

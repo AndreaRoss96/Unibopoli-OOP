@@ -2,7 +2,7 @@ package model.tiles;
 
 import java.io.Serializable;
 
-import utilities.enumerations.TiteTypes;
+import utilities.enumerations.TileTypes;
 
 /**
  * This interface is the root of the Tile hierarchy. 
@@ -37,5 +37,5 @@ public interface Tile extends Serializable {
 	 */
 	void setNameOf(final String nameTile);
 	
-	TiteTypes getTiteType();
+	TileTypes getTiteType();
 }
