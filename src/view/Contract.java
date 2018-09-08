@@ -22,16 +22,19 @@ import model.tiles.NotBuildableImpl;
 import model.tiles.Obtainable;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
+import utilities.enumerations.TileTypes;
 
 public class Contract extends AnchorPane {
 
-	private static final double WIDTH_ANCHOR = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.0044;
-	private static final double HEIGHT_ANCHOR = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.007;
-	private static final double H_GAP = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.0032;
-	private static final double V_GAP = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.0047;
-	private static final double V_PADDING = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.009;
-	private static final double PREF_WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.18;
-	private static final double PREF_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.43;
+	private static final double WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth();
+	private static final double HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight();
+	private static final double WIDTH_ANCHOR = WIDTH * 0.0044;
+	private static final double HEIGHT_ANCHOR = HEIGHT * 0.007;
+	private static final double H_GAP = WIDTH * 0.0032;
+	private static final double V_GAP = HEIGHT * 0.0047;
+	private static final double V_PADDING = WIDTH * 0.009;
+	private static final double PREF_WIDTH = WIDTH * 0.18;
+	private static final double PREF_HEIGHT = HEIGHT * 0.43;
 	private static final double LABEL_HEIGHT = PREF_HEIGHT * 0.045;
 	private static final double LABEL_WIDTH = PREF_WIDTH / 2 - H_GAP * 2;
 	private static final double IMAGE_HEIGHT = LABEL_HEIGHT * 10;
@@ -51,7 +54,7 @@ public class Contract extends AnchorPane {
 		this.insidePane.setAlignment(Pos.TOP_CENTER);
 		this.insidePane.setStyle("-fx-border-color: black;");
 
-		if (property instanceof BuildableImpl) {
+		if (property.getTiteType() == TileTypes.BUILDABLE) {
 			createContractForBuildable((BuildableImpl) property);
 		} else {
 			createContractForNotBuildable((NotBuildableImpl) property);

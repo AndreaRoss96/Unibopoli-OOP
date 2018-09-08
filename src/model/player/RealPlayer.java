@@ -11,7 +11,6 @@ import java.util.stream.Stream;
 
 import com.google.common.base.Optional;
 
-import model.exceptions.NotEnoughMoneyException;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 
@@ -101,10 +100,6 @@ public class RealPlayer implements Player {
 	@Override
 	public boolean isInJail() {
 		return this.status == Prison.PRISON;
-	}
-	
-	public void decMoney(final int moneyAmount) {
-		this.money -= moneyAmount;
 	}
 
 	@Override

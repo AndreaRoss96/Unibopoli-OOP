@@ -27,7 +27,7 @@ public class LandAbstractFactoryImp{
 	public Pane createLand(final Tile tile) {
 		if(tile.getTiteType() == TileTypes.BUILDABLE) {
 			return this.getBuildable((BuildableImpl) tile);
-		}else if(tile.getTiteType() == TileTypes.STATION || tile.getTiteType() == TileTypes.LIGHT_AGENCY || tile.getTiteType() == TileTypes.LUXURY_TAX) {
+		}else if(tile.getTiteType() == TileTypes.STATION || tile.getTiteType() == TileTypes.LIGHT_AGENCY || tile.getTiteType() == TileTypes.WATER_AGENCY) {
 			return this.getNotBuildable((NotBuildableImpl) tile);
 		}else {
 			return this.getNotObtainables((NotObtainableImpl) tile);

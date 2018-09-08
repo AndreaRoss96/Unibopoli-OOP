@@ -21,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
+import utilities.enumerations.TileTypes;
 import view.Contract;
 
 /**
@@ -37,7 +38,8 @@ public class CardDialog extends Dialog {
 
 	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
 	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); // da modificare in
-	private static final int NUM_BUILD_MAX = 5;																					// setStyle(-fx-font-family:
+	private static final int NUM_BUILD_MAX = 5;	
+	private static final String BLACK = "#000000";				// setStyle(-fx-font-family:
 																						// kabel)
 	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
 	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
@@ -108,7 +110,7 @@ public class CardDialog extends Dialog {
 
 		final Label title = new Label("Contract Infos:\n\n");
 		title.setFont(TITLE_FONT);
-		title.setTextFill(Paint.valueOf(property.getColorOf().getPaint().orElse(Color.BLACK)));
+		title.setTextFill(Paint.valueOf(property.getColorOf().getPaintValue().or(BLACK)));
 
 		final Label labelOwner = new Label("Owner: ");
 		labelOwner.setFont(getPrincipalFont());
@@ -183,7 +185,7 @@ public class CardDialog extends Dialog {
 	}
 
 	/**
-	 * update the gridPane with the necessary button to interact with a contract
+	 * Update the gridPane with the necessary button to interact with a contract
 	 * without owner. Allows the current player to add or remove houses from his
 	 * property, or to mortgage a determined property.
 	 * 
@@ -197,7 +199,7 @@ public class CardDialog extends Dialog {
 	private void gridWithOwner(GridPane grid, Boolean canBuild) {
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
 
-		if (!(this.property instanceof AdapterBuildable) || !canBuild || this.property.hasMortgage()) {
+		if (this.property.getTiteType() != TileTypes.BUILDABLE || !canBuild || this.property.hasMortgage()) {
 			addHouseButton.setDisable(true);
 			removeHouseButton.setDisable(true);
 		} else {

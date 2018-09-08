@@ -137,7 +137,7 @@ public class ModelImpl implements Model{
 	
 	@Override
 	public void executeTrade(final Player secondPlayer,final int firstMoney,final int secondMoney, final List<Obtainable> firstProperties, final List<Obtainable> secondProperties) {
-		Player firstPlayer = this.getCurrentPlayer();
+		final Player firstPlayer = this.getCurrentPlayer();
 		secondProperties.forEach(prop -> {
 			this.unbuild(prop, secondPlayer);
 			firstPlayer.addProperty(secondPlayer.removeProperty(prop));

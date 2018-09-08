@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
-import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
@@ -100,7 +99,7 @@ public class ControllerImpl implements Controller {
 		/* If the current player is the same owner of the selected property and he/she have all the property of that color he will be able to build */
 		if(property.getOwner().isPresent() && property.getOwner().get() == this.getCurrentPlayer().getName()) {
 			int numProperties = this.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).size();
-			//CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
+			CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
 		/* If the current player is in the same position of the property without any owner he/she will be able to buy that property */
 		} else if(!property.getOwner().isPresent() && property.getPosition() == this.getCurrentPlayer().getPosition()) {
 			CardDialog.getCardDialog().createCardDialog(property,  property.getPrice() <= this.getCurrentPlayer().getMoney());

@@ -59,10 +59,10 @@ public final class GameInitializer {
 					 * player buy a determinated number of any property
 					 */
 					for (int i = 0; i < v.getContractNumber(); i++) {
-						player.buyProperty(board.getTiles(t -> t instanceof Obtainable).stream().map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
-								.findFirst().get()); //addProperties invece di buy, per mettere buy nel model
+						player.addProperty(board.getTiles(t -> t instanceof Obtainable).stream().map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
+								.findFirst().get());
 					}
-//					player.decMoney(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
+					player.payments(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
 					this.playerList.add(player);
 				});
 			}
