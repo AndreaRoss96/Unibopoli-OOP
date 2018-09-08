@@ -77,7 +77,7 @@ public class LandAbstractFactoryImp{
 		
 		AnchorPane.setBottomAnchor(top, 5.0);					
 		AnchorPane.setTopAnchor(bottom, 5.0);
-		AnchorPane.setTopAnchor(image, 40.0);		
+		AnchorPane.setTopAnchor(image, 25.0);		
 		
 		landPane.getChildren().addAll(top, image, bottom);
 	}
@@ -99,27 +99,13 @@ public class LandAbstractFactoryImp{
 		
 		if(temp.size() > 1) {
 			Label bottom = ComponentFactory.getLabelString(temp.get(1));
-			/**
-			 * Modificare eventualmtne con setTop
-			 * */
-			AnchorPane.setBottomAnchor(bottom, 10.0);
+
+			AnchorPane.setTopAnchor(bottom, 10.0);
 			landPane.getChildren().add(bottom);
 		}
 		
-		/**
-		 * 
-		 * oppure questi
-		 *
-		AnchorPane.setTopAnchor(top, 10.0);
-		AnchorPane.setBottomAnchor(bottom, 10.0);
-		*/
-		
-		AnchorPane.setTopAnchor(image, 40.0);
-		
-		/**
-		 * Modificare eventualmtne con setBottom
-		 * */
-		AnchorPane.setTopAnchor(top, 10.0);
+		AnchorPane.setTopAnchor(image, 30.0);
+		AnchorPane.setBottomAnchor(top, 10.0);
 
 		landPane.getChildren().addAll(top, image);
 		return landPane;

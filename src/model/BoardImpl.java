@@ -92,10 +92,11 @@ public class BoardImpl implements Board {
 			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticNotObtainableValuesInitFile())
 					.map(Parse.PARSING_NOTOBTAINABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
+			
 		}catch (IOException e) {
 			System.out.println("IOExce");
 		} catch (Exception e) { 
-			System.out.println(e.getCause()); 
+			System.out.println(e.toString()); 
 		}
 	}
 }

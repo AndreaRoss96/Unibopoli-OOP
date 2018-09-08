@@ -122,7 +122,7 @@ public class GamePane extends StackPane{
 	private GridPane builder(long skip, long limit, Pos position) {
 		GridPane pane = new GridPane();
 		
-		ControllerImpl.getController().getProperties().stream().sorted(orderCre()).skip(skip).limit(limit)
+		ControllerImpl.getController().getGameBoard().stream().sorted(orderCre()).skip(skip).limit(limit)
 			 .map(tile -> new LandAbstractFactoryImp().createLand(tile))
 			 .forEach(land -> pane.addRow(0, land));
 		
@@ -209,7 +209,7 @@ public class GamePane extends StackPane{
 			propertyName.setTextAlignment(TextAlignment.CENTER);
 			
 			if(prop.getTiteType() == TileTypes.BUILDABLE) {
-				propertyName.setStyle("-fx-background-color: " + ((BuildableImpl) prop).getColorOf().getPaintValue() + ";");
+				propertyName.setStyle("-fx-background-color: " + ((BuildableImpl) prop).getColorOf().getPaintValue().get() + ";");
 			}else {
 				propertyName.setStyle("-fx-background-color: " + Color.GREY.toString().replaceAll("0x", "#") + ";");
 			}

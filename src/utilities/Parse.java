@@ -45,7 +45,7 @@ public class Parse {
 						Integer price = new Integer(record.get(1));
 						Integer mortgage = new Integer(record.get(2));
 						
-						if(record.get(4).isEmpty()) {
+						if(record.size() <= 4) {
 							return new NotBuildableImpl(positionTile, price, mortgage, 
 														TileTypes.valueOf(TileTypes.class, record.get(3)), Color.SOCIETY);
 						}
