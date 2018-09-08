@@ -14,6 +14,8 @@ import javafx.scene.text.Text;
 import model.tiles.Obtainable;
 
 public class PlayersContractListView extends ListView<Text> {
+	
+	private static final String BLACK = "#000000";
 
 	private final Map<Text, Paint> map = new HashMap<>();
 
@@ -36,7 +38,7 @@ public class PlayersContractListView extends ListView<Text> {
 		propertyList.forEach(c -> {
 			Text property = new Text(c.getNameOf());
 			property.setStyle("-fx-font-family: kabel;");
-			property.setFill(c.getColorOf().getPaint().orElse(Color.BLACK));
+			property.setFill(Paint.valueOf(c.getColorOf().getPaintValue().or(BLACK)));
 			this.getItems().add(property);
 		});
 		this.getSelectionModel().selectedItemProperty().addListener(l -> {
