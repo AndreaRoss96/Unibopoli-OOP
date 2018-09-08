@@ -19,10 +19,13 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.TextAlignment;
+import model.player.PlayerInfo;
 import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
+import utilities.Pair;
 import utilities.PaneDimensionSetting;
+import utilities.enumerations.Direction;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
 import view.tiles.ComponentFactory;
@@ -69,15 +72,27 @@ public class GamePane extends StackPane{
 		contractPane.setPrefSize(PaneDimensionSetting.getInstance().getGamePaneWidth() * 0.5, PaneDimensionSetting.getInstance().getGamePaneHeight() * 0.5);
 	}
 	
+	private Pair<Double> getX(PlayerInfo player, Icon icon) {
+		if(icon.getDirection() == Direction.N) {
+			return new Pair<>(ComponentFactory.LandSimpleWIDTH*0.5, ComponentFactory.LandSimpleWIDTH*(player.getPosition() % 10));
+		}else (icon.getDirection() == Direction.E){
+			return new 
+		}
+	}
+	
 	private Pane playerLayer() {
 		Pane pane = new Pane();
 		
-		this.iconMap.values().stream()
-							 .forEach(icon -> { icon.get().setTranslateX(PaneDimensionSetting.getInstance().getGamePaneWidth() - ComponentFactory.LandSimpleWIDTH*1.5);
-							 					icon.get().setTranslateY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 50);
-							 					icon.get().setX(-20);
-							 					icon.get().setY(-20);
-							 });
+		ControllerImpl.getController().getPlayers()
+					  .stream().forEach(player -> { 
+						  Icon icon = this.iconMap.get(player.getName());
+						  
+						  icon.get().setTranslateX(PaneDimensionSetting.getInstance().getGamePaneWidth() - ComponentFactory.LandSimpleWIDTH*1.5);
+						  icon.get().setTranslateY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 50);
+						  icon.get().setX(-20);
+						  icon.get().setY(-20);
+						  
+					  });
 		
 		pane.getChildren().addAll(this.iconMap.values().stream().map(icon -> icon.get()).collect(Collectors.toList()));
 		
@@ -169,8 +184,6 @@ public class GamePane extends StackPane{
 		Path path = new Path();
 		
 		path.getElements().add(new MoveTo(tempIcon.get().getTranslateX(), tempIcon.get().getTranslateY()));
-		
-		System.out.println("Prima di Movement" + tempIcon.get().getTranslateX() + " " + tempIcon.get().getTranslateY() + " " + position);
 		
 		if(position + movement >= corner) {			
 			path.getElements().add(tempIcon.move(corner-position, 0));

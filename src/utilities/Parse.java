@@ -7,6 +7,8 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import model.Consequences;
+import model.ConsequencesImpl;
 import model.tiles.*;
 import utilities.enumerations.Color;
 import utilities.enumerations.TileTypes;
@@ -60,6 +62,12 @@ public class Parse {
 						
 						return new NotObtainableImpl(new Integer(record.get(0)), TileTypes.valueOf(TileTypes.class, record.get(1)));
 			};
+			
+	public static final Function<String, ConsequencesImpl> PARSING_CONSEQUENCES = value -> {
+				List<String> record = getPlittingList(value);
+				
+				return new ConsequencesImpl(Consequences.valueOf(Consequences.class, record.get(1)), record.get(0), record.subList(2, record.size()).stream().collect(Collectors.toList()));
+	};
 	public static final BiConsumer<String, Stream<Tile>> PARSING_LOAD_MODEGAME = (record, stream) -> 
 					stream.filter(t -> t.getPosition() == Integer.parseInt(getPlittingList(record).get(0)))
 					.findFirst().get().setNameOf(getPlittingList(record).get(1));

@@ -10,8 +10,4 @@ interface CircularList<E> extends Serializable, Iterable<E> {
     void shift();
 
     E getHead();
-
-    int size();
-    
-    boolean remove(Object elem);
 }

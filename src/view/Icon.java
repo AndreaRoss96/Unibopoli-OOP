@@ -3,6 +3,7 @@ package view;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.LineTo;
+import utilities.Pair;
 import utilities.enumerations.Direction;
 
 /**
@@ -14,6 +15,7 @@ public class Icon {
 	
 	private ImageView image;
 	private Direction direction;
+	private Pair<Double> coordinates;
 	
 	public Icon(final String path) {
 		this(new Image(path));
@@ -22,10 +24,19 @@ public class Icon {
 	public Icon(final Image image) {
 		this.image = new ImageView(image);
 		this.direction = Direction.W;
+		
 	}
 	
 	public ImageView get() {
 		return this.image;
+	}
+	
+	public void setCoordinates(Pair<Double> coordinates) {
+		this.coordinates = coordinates;
+	}
+	
+	public Pair<Double> getCoordinates(){
+		return this.coordinates;
 	}
 	
 	public Image getImage() {
