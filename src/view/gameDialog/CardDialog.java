@@ -12,7 +12,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontPosture;
@@ -215,7 +214,8 @@ public class CardDialog extends Dialog {
 		removeHouseButton.setOnAction(e -> {
 			DialogController.getDialogController().decHouseClick();
 			addHouseButton.setDisable((((AdapterBuildable) this.property).getBuildingNumber() >= NUM_BUILD_MAX));
-
+		});
+		
 		mortgageProperty.setOnAction(e -> {
 			DialogController.getDialogController().mortgageDialogClick();
 			this.stage.close();

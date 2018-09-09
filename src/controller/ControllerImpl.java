@@ -44,7 +44,6 @@ public class ControllerImpl implements Controller {
 		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
 		this.view = new ViewImpl();
 		setBackgroundMusic();
-		DialogController.getDialogController().setModel(model);
 	}
 
 	/**
@@ -56,7 +55,7 @@ public class ControllerImpl implements Controller {
 		return SINGLETON;
 	}
 
-	private void setBackgroundMusic() { //bisogna chiamarlo quando si inizializza la view, in modo da fare poter controllare il thread della musica
+	private void setBackgroundMusic() {
 		MainMenu.setBeckgroundMusic(sound);
 	}
 

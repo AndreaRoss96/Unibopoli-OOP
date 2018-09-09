@@ -1,22 +1,27 @@
 package view.gameDialog;
 
 import controller.ControllerImpl;
+import javafx.animation.Interpolator;
+import javafx.animation.RotateTransition;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
+import javafx.scene.transform.Rotate;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 
 public class SettingsDialog extends Dialog {
 
 	private static final SettingsDialog SINGLETON = new SettingsDialog ();
-	private final double PREF_W = getPrefWSize()/2;
-	private final double PREF_H = PREF_W /3;
-	private final double HGAP = PREF_W / 6;
+	
+	private Button saveGameBtn;
 	
 	private SettingsDialog() {
 		
@@ -41,7 +46,7 @@ public class SettingsDialog extends Dialog {
 		
 		final FlowPane root = new FlowPane();
 		root.setAlignment(Pos.CENTER);
-		root.setHgap(HGAP);
+		root.setHgap(getPrefWSize()/12);
 		
 		final Button musicButton = new Button();
 		musicButton.setGraphic(controller.getSound().isMusicMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getNoMusicImage()).get() : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getMusicImage()).get());
@@ -53,11 +58,11 @@ public class SettingsDialog extends Dialog {
 		soundButton.getStyleClass().add("roundButton");
 		root.getChildren().add(soundButton);
 		
-		final Button saveGameBtn = new Button();
-		saveGameBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getSaveImage()).get());
-		saveGameBtn.getStyleClass().add("roundButton");
-		saveGameBtn.setTooltip(new Tooltip("Save the game!"));
-		root.getChildren().add(saveGameBtn);
+		this.saveGameBtn = new Button();
+		this.saveGameBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getSaveImage()).get());
+		this.saveGameBtn.getStyleClass().add("roundButton");
+		this.saveGameBtn.setTooltip(new Tooltip("Save the game!"));
+		root.getChildren().add(this.saveGameBtn);
 		
 		musicButton.setOnAction(e -> {
 			controller.getSound().changeMusicMute();
@@ -69,8 +74,9 @@ public class SettingsDialog extends Dialog {
 			soundButton.setGraphic(controller.getSound().isSoundMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getNoSoundImage()).get() : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getSoundImage()).get());
 		});
 		
-		saveGameBtn.setOnAction(e -> {
+		this.saveGameBtn.setOnAction(e -> {
 			controller.saveGame();
+			stage.close();
 		});
 		
 		stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
@@ -81,10 +87,14 @@ public class SettingsDialog extends Dialog {
 		
 		final Scene scene = new Scene(root);
 		scene.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
-		stage.setWidth(PREF_W);
-		stage.setHeight(PREF_H);
+		stage.setWidth(getPrefWSize()/2);
+		stage.setHeight(getPrefWSize()/6);
 		stage.setScene(scene);
 		stage.showAndWait();
+	}
+	
+	public void changeSaveButton() {
+		this.saveGameBtn.setDisable(!this.saveGameBtn.isDisable());
 	}
 
 }

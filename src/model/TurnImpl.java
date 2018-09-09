@@ -9,10 +9,6 @@ import model.player.Player;
 import model.player.PlayerInfo;
 import utilities.CircularListImpl;
 
-/**
- * @author Matteo Alesiani
- *
- */
 public class TurnImpl implements Turn {
 
 	private static final long serialVersionUID = -754218580225904481L;
@@ -22,11 +18,13 @@ public class TurnImpl implements Turn {
 	private List<PlayerInfo> loserPlayer;
 	private Map<PlayerInfo, Integer> jailMap;
 	private Integer rolls;
+	private boolean done;
 	
 	public TurnImpl(List<Player> players) {
 		this.turnManagement = new CircularListImpl<>(players);
 		this.jailMap = new HashMap<>();
 		this.nextPlayer();
+		this.done = false;
 	}
 	
 	@Override
@@ -59,6 +57,7 @@ public class TurnImpl implements Turn {
 	public void nextPlayer() {
 		this.clear();
 		this.turnManagement.shift();
+		this.done = false;
 	}
 
 	@Override
@@ -81,4 +80,15 @@ public class TurnImpl implements Turn {
 		this.rolls++;
 		return this.rolls < 3;
 	}
+	
+	@Override
+	public void thrown (boolean areSame) {
+		this.done = !areSame;
+	}
+	
+	@Override
+	public boolean hasDone() {
+		return this.done;
+	}
+	
 }

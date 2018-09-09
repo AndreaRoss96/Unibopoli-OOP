@@ -149,7 +149,7 @@ public class Dialog {
 	 * @return Background
 	 */
 	protected Background getBackground() {// da modificare per rendere moddabile lo sfondo delle dialog
-		Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
+		final Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
 		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
 		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
 				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));

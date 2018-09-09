@@ -78,7 +78,7 @@ public class Contract extends AnchorPane {
 		propertyName.setTextAlignment(TextAlignment.CENTER);
 		propertyName.setFont(PROPERTY_FONT);
 		propertyName.setStyle("-fx-border-color: black;" + " -fx-background-color: "
-				+ Paint.valueOf(property.getColorOf().getPaintValue().get()) + ";");
+				+ property.getColorOf().getPaintValue().get() + ";");
 		propertyName.setWrapText(true);
 		insidePane.add(propertyName, 0, this.row++, 2, 1);
 		GridPane.setMargin(propertyName, new Insets(LABEL_HEIGHT, 0, LABEL_HEIGHT, 0));
