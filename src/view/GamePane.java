@@ -19,16 +19,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.TextAlignment;
-import model.player.PlayerInfo;
 import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
-import utilities.Pair;
 import utilities.PaneDimensionSetting;
-import utilities.enumerations.Direction;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
-import view.tiles.ComponentFactory;
 import view.tiles.LandAbstractFactoryImp;
 
 /**
@@ -57,7 +53,7 @@ public class GamePane extends StackPane{
 		super(new StackPane());
 		this.iconMap = new HashMap<>();
 		ControllerImpl.getController().getPlayers().stream()
-									  .forEach(player -> iconMap.put(player.getName(), new Icon(player.getIconPath())));
+									  .forEach(player -> iconMap.put(player.getName(), new Pawn(player.getIconPath(), player.getPosition())));
 		
 		this.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		this.setMinHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
@@ -72,23 +68,15 @@ public class GamePane extends StackPane{
 		contractPane.setPrefSize(PaneDimensionSetting.getInstance().getGamePaneWidth() * 0.5, PaneDimensionSetting.getInstance().getGamePaneHeight() * 0.5);
 	}
 	
-	private Pair<Double> getX(PlayerInfo player, Icon icon) {
-		if(icon.getDirection() == Direction.N) {
-			return new Pair<>(ComponentFactory.LandSimpleWIDTH*0.5, ComponentFactory.LandSimpleWIDTH*(player.getPosition() % 10));
-		}else (icon.getDirection() == Direction.E){
-			return new 
-		}
-	}
-	
 	private Pane playerLayer() {
 		Pane pane = new Pane();
 		
 		ControllerImpl.getController().getPlayers()
 					  .stream().forEach(player -> { 
-						  Icon icon = this.iconMap.get(player.getName());
+						  Pawn icon = (Pawn) this.iconMap.get(player.getName());
 						  
-						  icon.get().setTranslateX(PaneDimensionSetting.getInstance().getGamePaneWidth() - ComponentFactory.LandSimpleWIDTH*1.5);
-						  icon.get().setTranslateY(PaneDimensionSetting.getInstance().getGamePaneHeight() - 50);
+						  icon.get().setTranslateX(icon.getCoordinates().getFirst());
+						  icon.get().setTranslateY(icon.getCoordinates().getSecond());
 						  icon.get().setX(-20);
 						  icon.get().setY(-20);
 						  
@@ -178,7 +166,7 @@ public class GamePane extends StackPane{
 	}
 	
 	public void movement(int movement) {
-		Icon tempIcon = this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
+		Pawn tempIcon = (Pawn) this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
 		int position = ControllerImpl.getController().getCurrentPlayer().getPosition();
 		int corner = this.getNextCorner(position);
 		Path path = new Path();
@@ -189,7 +177,7 @@ public class GamePane extends StackPane{
 			path.getElements().add(tempIcon.move(corner-position, 0));
 			tempIcon.rotate();
 			movement = movement - (corner-position);
-			path.getElements().add(tempIcon.move(movement,corner-position ));
+			path.getElements().add(tempIcon.move(movement,corner-position));
 			tempIcon.rotate();
 			
 		}else {

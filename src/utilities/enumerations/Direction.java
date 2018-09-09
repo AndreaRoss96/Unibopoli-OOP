@@ -45,7 +45,6 @@ public enum Direction {
 		public LineTo moveLocation(Node player, int position, int second) {
 			return new LineTo(player.getTranslateX() + (STEP_SIZE*(position +0.75)), player.getTranslateY()  - (STEP_SIZE*(second+0.75)));
 		}
-		
 	},
 	
     /**
