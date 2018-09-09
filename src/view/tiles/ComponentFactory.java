@@ -19,8 +19,8 @@ import utilities.PaneDimensionSetting;
 public class ComponentFactory {
 	
 	public static final double LandSimpleWIDTH = PaneDimensionSetting.getInstance().getGamePaneHeight() / 13;
-	public static final double LandHEIGHT = LandSimpleWIDTH * 2;
-	public static final double LandCornerDimension = LandHEIGHT;
+	private static final double LandHEIGHT = LandSimpleWIDTH * 2;
+	private static final double LandCornerDimension = LandHEIGHT;
 	
 	public static AnchorPane getAnchorPane(final boolean isCorner) {
 		AnchorPane landPane = new AnchorPane();
