@@ -157,7 +157,9 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void endGame() {
-
+		this.sound.playSound("/music/game_win.wav");
+		AlertFactory.createInformationAlert("Congratulations", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
+		//chiudere l'applicazione che non so come si fa 
 	}
 	
 	public void startAuciton(Obtainable property) {

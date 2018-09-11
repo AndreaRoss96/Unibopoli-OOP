@@ -40,7 +40,7 @@ public class ModelImpl implements Model {
 	@Override
 	public Pair<Integer> exitDice() {
 		final Pair<Integer> temp = Dice.getInstance().getDice();
-		if(this.turnPlayer.hasDone()) {
+		if (this.turnPlayer.hasDone()) {
 			return new Pair<>(0, 0);
 		}
 		if (this.turnPlayer.isThrows()) {
@@ -77,12 +77,16 @@ public class ModelImpl implements Model {
 	@Override
 	public void removePlayer(PlayerInfo player) {
 		this.turnPlayer.remove(player);
-		this.getProperties().stream().forEach(tile -> {
-			if (tile.getOwner().get().equals(player.getName())) {
-				tile.setOwner(Optional.absent());
-				ControllerImpl.getController().startAuciton(tile);
-			}
-		});
+		if (this.turnPlayer.getPlayers().size() == 1) {
+			ControllerImpl.getController().endGame();
+		} else {
+			this.getProperties().stream().forEach(tile -> {
+				if (tile.getOwner().get().equals(player.getName())) {
+					tile.setOwner(Optional.absent());
+					ControllerImpl.getController().startAuciton(tile);
+				}
+			});
+		}
 	}
 
 	@Override
