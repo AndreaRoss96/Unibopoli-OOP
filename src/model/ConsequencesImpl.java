@@ -3,6 +3,8 @@ package model;
 import java.util.Collections;
 import java.util.List;
 
+import controller.Consequences;
+
 public class ConsequencesImpl {
 	private Consequences consequences;
 	private String textConsequences;
@@ -18,9 +20,6 @@ public class ConsequencesImpl {
 		return this.textConsequences;
 	}
 	
-	/**
-	 * Controllare se i seguenti due metodi sono utili
-	 * */
 	public void addElement(final String element) {
 		this.values.add(element);
 	}

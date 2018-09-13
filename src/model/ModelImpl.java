@@ -176,7 +176,6 @@ public class ModelImpl implements Model{
 		((Player) player).addProperty(property);
 	}
 	
-
 	/**
 	 * OSSERVAZIONI:
 	 * -  LA gestione del turno dei giocatori dove va ?? Si potrebbe sapere il curruntPlayer tramite quella classe. 

@@ -38,4 +38,5 @@ public interface Tile extends Serializable {
 	void setNameOf(final String nameTile);
 	
 	TileTypes getTiteType();
+	
 }

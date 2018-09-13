@@ -31,8 +31,5 @@ public interface AdapterBuildable{
 	
 	void decBuildings();
 	
-	/**
-	 * TODO: Verificare a cosa serve.
-	 * */
 	int getRent(final int buildingsNr);
 }
