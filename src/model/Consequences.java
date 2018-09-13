@@ -1,9 +1,10 @@
-package controller;
+package model;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.function.BiConsumer;
 
+import controller.ControllerImpl;
 import model.player.Player;
 
 public enum Consequences {

@@ -4,5 +4,5 @@ import model.ConsequencesImpl;
 
 public interface StrategyConsequences {
 	
-	ConsequencesImpl provideInfo();
+	ConsequencesImpl getConsequence();
 }

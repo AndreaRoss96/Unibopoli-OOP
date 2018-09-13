@@ -53,7 +53,7 @@ public class Contract extends AnchorPane {
 		this.insidePane.setAlignment(Pos.TOP_CENTER);
 		this.insidePane.setStyle("-fx-border-color: black;");
 
-		if (property.getTiteType() == TileTypes.BUILDABLE) {
+		if (property.getTileType() == TileTypes.BUILDABLE) {
 			createContractForBuildable((BuildableImpl) property);
 		} else {
 			createContractForNotBuildable((NotBuildableImpl) property);

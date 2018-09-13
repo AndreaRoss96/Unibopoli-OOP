@@ -7,7 +7,7 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import controller.Consequences;
+import model.Consequences;
 import model.ConsequencesImpl;
 import model.tiles.*;
 import utilities.enumerations.Color;
@@ -59,7 +59,7 @@ public class Parse {
 					
 	public static final Function<String, NotObtainableImpl> PARSING_NOTOBTAINABLE_TILE_BOARD = value -> {
 						List<String> record = getPlittingList(value);
-						
+						// FIX: classi astratte non si possono istanziare.
 						return new NotObtainableImpl(new Integer(record.get(0)), TileTypes.valueOf(TileTypes.class, record.get(1)));
 			};
 			

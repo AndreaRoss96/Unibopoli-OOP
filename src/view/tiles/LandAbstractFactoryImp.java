@@ -16,6 +16,7 @@ import model.tiles.NotObtainableImpl;
 import model.tiles.Tile;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
+import view.gameDialog.ProbabilityDialog;
 
 /**
 * 
@@ -26,9 +27,9 @@ public class LandAbstractFactoryImp{
 
 	public Pane createLand(final Tile tile) {
 
-		if(tile.getTiteType() == TileTypes.BUILDABLE) {
+		if(tile.getTileType() == TileTypes.BUILDABLE) {
 			return this.getBuildable((BuildableImpl) tile);
-		}else if(tile.getTiteType() == TileTypes.STATION || tile.getTiteType() == TileTypes.LIGHT_AGENCY || tile.getTiteType() == TileTypes.WATER_AGENCY ){
+		}else if(tile.getTileType() == TileTypes.STATION || tile.getTileType() == TileTypes.LIGHT_AGENCY || tile.getTileType() == TileTypes.WATER_AGENCY ){
 			return this.getNotBuildable((NotBuildableImpl) tile);
 		}else {
 			return this.getNotObtainables((NotObtainableImpl) tile);
@@ -39,7 +40,7 @@ public class LandAbstractFactoryImp{
 		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		
 		this.getBuildables(landPane, buildableTile); 
-		landPane.setOnMouseClicked(value -> ControllerImpl.getController().showContract(buildableTile));
+		landPane.setOnMouseClicked(value -> ProbabilityDialog.getProbabilityDialog().createProbabilityDialog("stocazzo"));//ControllerImpl.getController().showContract(buildableTile));
 		
 		return landPane;
 	}
@@ -83,8 +84,8 @@ public class LandAbstractFactoryImp{
 	}
 
 	private boolean isCorner(final Tile tile) {
-		return tile.getTiteType() == TileTypes.GO || tile.getTiteType() ==  TileTypes.GO_JAIL || 
-			   tile.getTiteType() == TileTypes.FREE_PARKING || tile.getTiteType() == TileTypes.FREE_TRANSIT;
+		return tile.getTileType() == TileTypes.GO || tile.getTileType() ==  TileTypes.GO_JAIL || 
+			   tile.getTileType() == TileTypes.FREE_PARKING || tile.getTileType() == TileTypes.FREE_TRANSIT;
 	}
 	
 	private AnchorPane getNotObtainables(final NotObtainableImpl notObtainableTile) {

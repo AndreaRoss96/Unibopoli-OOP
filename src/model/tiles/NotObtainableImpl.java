@@ -1,17 +1,20 @@
 package model.tiles;
 
+import controller.ControllerImpl;
+import model.ConsequencesImpl;
 import utilities.enumerations.TileTypes;
 
-public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
+public abstract class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 
 	private static final long serialVersionUID = 6004220435515803475L;
 	
 	private Integer positionTile;
-	private TileTypes titeType;
+	private TileTypes tileType;
+	protected ConsequencesImpl consequences;
 	
 	public NotObtainableImpl(final int positionTile, final TileTypes titeType) {
 		this.positionTile = positionTile;
-		this.titeType = titeType;
+		this.tileType = titeType;
 	}
 	
 	@Override
@@ -21,7 +24,7 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	
 	@Override
 	public String getNameOf() {
-		return this.getTiteType().getTypeName();
+		return this.getTileType().getTypeName();
 	}
 	
 	@Override
@@ -30,12 +33,25 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	}
 	
 	@Override
-	public TileTypes getTiteType() {
-		return this.titeType;
+	public TileTypes getTileType() {
+		return this.tileType;
 	}
 	
 	@Override
 	public String getPathImage() {
-		return this.getTiteType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
+		return this.getTileType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
+	}
+	
+	protected abstract void setConsequence();
+	
+	@Override
+	public void setConsequence(ConsequencesImpl consequence) {
+		this.consequences = consequence;
+	}
+	
+	@Override
+	public void doConsequence() {
+		this.setConsequence();
+		this.consequences.doConsequences();
 	}
 }

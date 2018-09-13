@@ -3,8 +3,6 @@ package model;
 import java.util.Collections;
 import java.util.List;
 
-import controller.Consequences;
-
 public class ConsequencesImpl {
 	private Consequences consequences;
 	private String textConsequences;

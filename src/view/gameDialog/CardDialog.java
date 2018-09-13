@@ -198,7 +198,7 @@ public class CardDialog extends Dialog {
 	private void gridWithOwner(GridPane grid, Boolean canBuild) {
 		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
 
-		if (this.property.getTiteType() != TileTypes.BUILDABLE || !canBuild || this.property.hasMortgage()) {
+		if (this.property.getTileType() != TileTypes.BUILDABLE || !canBuild || this.property.hasMortgage()) {
 			addHouseButton.setDisable(true);
 			removeHouseButton.setDisable(true);
 		} else {

@@ -1,5 +1,6 @@
 package model.tiles;
 
+import model.ConsequencesImpl;
 import utilities.enumerations.Color;
 import utilities.enumerations.TileTypes;
 

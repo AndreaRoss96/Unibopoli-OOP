@@ -121,7 +121,7 @@ public class ControllerImpl implements Controller {
 	public void diceClick() {
 		final boolean doJailSound = !model.getCurrentPlayer().isInJail();
 		this.sound.playSound("/music/Dice-roll.wav");
-		Pair<Integer> result = model.exitDice();
+		final Pair<Integer> result = model.exitDice();
 		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
 		this.exitDice(result.getFirst() + result.getSecond());
 		/*
@@ -140,9 +140,8 @@ public class ControllerImpl implements Controller {
 
 	public void exitDice(final int value) {
 		view.movement(value);
-		
-		model.movement(value); // se il giocatore finisce in carcere non si muove ed il turno
-						// finisce automaticamente		
+					
+		model.movement(value); 
 	}
 	
 	@Override

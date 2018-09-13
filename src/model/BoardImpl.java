@@ -93,6 +93,9 @@ public class BoardImpl implements Board {
 					.map(Parse.PARSING_NOTOBTAINABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 			
+			ProbUnexSupplier.get(ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getProbabilityFile()).collect(Collectors.toList()), 
+								 ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getUnexpectedFile()).collect(Collectors.toList()));
+			
 		}catch (IOException e) {
 			System.out.println("IOExce");
 		} catch (Exception e) { 

@@ -1,5 +1,8 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -9,9 +12,11 @@ import controller.ControllerImpl;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.AdapterBuildable;
+import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
+import utilities.enumerations.TileTypes;
 
 public class ModelImpl implements Model {
 
@@ -97,11 +102,28 @@ public class ModelImpl implements Model {
 	@Override
 	public void movement(int value) {
 		if (!this.getCurrentPlayer().isInJail()) {
-			this.setNewPosition(
-					(this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
+			this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
+			this.supplierConsequence();
 		}
 	}
 
+	private void supplierConsequence() {
+		final Tile tile = this.board.getTileOf(this.turnPlayer.getCurrentPlayer().getPosition());
+		
+		if(!((Obtainable) tile).getOwner().isPresent()) {
+			ControllerImpl.getController().showContract((Obtainable) tile);
+		}else if(tile.getTileType() == TileTypes.STATION ) {
+			((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", new ArrayList<>(Arrays.asList(((Obtainable) tile).getOwner().get()))));
+		}else if(tile.getTileType() == TileTypes.BUILDABLE || tile.getTileType() == TileTypes.WATER_AGENCY || tile.getTileType() == TileTypes.LIGHT_AGENCY){	
+			if(this.turnPlayer.getCurrentPlayer().getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles()) {
+				((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", new ArrayList<>(Arrays.asList(String.valueOf(2)))));
+			}
+		}
+		
+		tile.doConsequence();
+	}
+
+	
 	private void setNewPosition(int value) {
 		this.getCurrentPlayer().setPosition(value);
 	}
@@ -160,12 +182,13 @@ public class ModelImpl implements Model {
 
 	@Override
 	public void unbuild(final Obtainable property, final Player player) {
-		if (property instanceof AdapterBuildable) {
-			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (AdapterBuildable) prop)
+		if (property.getTileType() == TileTypes.BUILDABLE) {
+			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (BuildableImpl) prop)
 					.forEach(p -> {
 						while (p.getBuildingNumber() != 0) {
 							p.decBuildings();
-							player.gainMoney(p.getPriceForBuilding() / 2);
+//							player.gainMoney(p.getPriceForBuilding() / 2);
+							this.playerGainMoney(player, p.getPriceForBuilding() / 2);
 						}
 					});
 		}

@@ -17,7 +17,7 @@ public class NotBuildableImpl extends ObtainableImpl implements AdaprterPathImag
 			  final int mortgage, final TileTypes titeType, final Color color) {
 		super(positionTile, price, mortgage, titeType, color);
 		
-		this.setNameOf(this.getTiteType().getTypeName());
+		this.setNameOf(this.getTileType().getTypeName());
 	}
 	
 	@Override
@@ -27,6 +27,6 @@ public class NotBuildableImpl extends ObtainableImpl implements AdaprterPathImag
 	
 	@Override
 	public String getPathImage() {
-		return this.getTiteType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
+		return this.getTileType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
 	}
 }

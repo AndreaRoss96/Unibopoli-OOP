@@ -7,17 +7,23 @@
 public class ClassicType {
 	public enum Files{
 	    GeneralFilesMap("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/staticValuesTile/NotBuildableValues.txt",
-	    				"res/mode/staticValuesTile/NotObtainableValues.txt"); 
+	    				"res/mode/staticValuesTile/NotObtainableValues.txt", "res/mode/staticValuesTile/Probability.txt",
+	    				"res/mode/staticValuesTile/Unexpected.txt"); 
 	 
 	    private final String staticBuildableValuesInitFile;
 	    private final String staticNotBuildableValuesInitFile;
 	    private final String staticNotObtainableValuesInitFile;
+	    private final String probabilityFile;
+	    private final String unexpectedFile;
 	    
 	    private Files(final String staticBuildableValuesInitFile, final String staticNotBuildableValuesInitFile,
-	    			  final String staticNotObtainableValuesInitFile) {
+	    			  final String staticNotObtainableValuesInitFile, final String probabilityFile, 
+	    			  final String unexpectedFile) {
 	        this.staticBuildableValuesInitFile = staticBuildableValuesInitFile;
 	        this.staticNotBuildableValuesInitFile = staticNotBuildableValuesInitFile;
 	        this.staticNotObtainableValuesInitFile = staticNotObtainableValuesInitFile;
+	        this.probabilityFile = probabilityFile;
+	        this.unexpectedFile = unexpectedFile;
 	    }
 	
 	    /**
@@ -45,6 +51,14 @@ public class ClassicType {
 	     */
 	    public String getStaticNotObtainableValuesInitFile(){
 	    	return this.staticNotObtainableValuesInitFile;
+	    }
+	    
+	    public String getProbabilityFile() {
+	    	return this.probabilityFile;
+	    }
+	    
+	    public String getUnexpectedFile() {
+	    	return this.unexpectedFile;
 	    }
 	}
 	

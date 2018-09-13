@@ -26,6 +26,7 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
 import view.tiles.LandAbstractFactoryImp;
+import view.Pawn;
 
 /**
 * 
@@ -209,7 +210,7 @@ public class GamePane extends StackPane{
 			propertyName.setAlignment(Pos.CENTER);
 			propertyName.setTextAlignment(TextAlignment.CENTER);
 			
-			if(prop.getTiteType() == TileTypes.BUILDABLE) {
+			if(prop.getTileType() == TileTypes.BUILDABLE) {
 				propertyName.setStyle("-fx-background-color: " + ((BuildableImpl) prop).getColorOf().getPaintValue().get() + ";");
 			}else {
 				propertyName.setStyle("-fx-background-color: " + Color.GREY.toString().replaceAll("0x", "#") + ";");
