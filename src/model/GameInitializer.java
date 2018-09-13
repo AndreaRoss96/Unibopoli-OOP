@@ -16,7 +16,7 @@ public final class GameInitializer {
 	private boolean alreadyCalled;
 	private List<Player> playerList;
 
-	public GameInitializer() {
+	private GameInitializer() {
 	}
 
 	/**

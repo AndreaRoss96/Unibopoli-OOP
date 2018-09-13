@@ -3,6 +3,7 @@ package view;
 
 import controller.ControllerImpl;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -104,7 +105,7 @@ public class RightInormationPane extends VBox {
 		endTurn = new Button("", new ImageView(END_TURN_PATH));
 		endTurn.getStyleClass().add("roundButton");
 		endTurn.setTooltip(new Tooltip("Next Player"));
-		endTurn.setDisable(true);
+		this.updateButton(false);
 
 		AnchorPane.setBottomAnchor(endTurn, SETTINGS_DISTANCE);
 		AnchorPane.setRightAnchor(endTurn, SETTINGS_DISTANCE * 2.5);
@@ -155,7 +156,7 @@ public class RightInormationPane extends VBox {
 	 *            current player in turn
 	 */
 	public void updateLabels() {
-		PlayerInfo player = ControllerImpl.getController().getCurrentPlayer();
+		final PlayerInfo player = ControllerImpl.getController().getCurrentPlayer();
 		playerLabel.setText("Player:\n" + player.getName());
 		cashLabel.setText("Cash:\n" + player.getMoney());
 		netWorthLabel.setText("Net Worth:\n" + player.totalAssets());
@@ -185,5 +186,4 @@ public class RightInormationPane extends VBox {
 		endTurn.setTooltip(isJail ? new Tooltip("jail fee: 125 $") : new Tooltip("Next Player"));
 		endTurn.setDisable(!isJail);
 	}
-
 }

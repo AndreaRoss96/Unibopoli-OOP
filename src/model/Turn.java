@@ -75,4 +75,20 @@ public interface Turn extends Serializable {
 	 */
 	boolean isThrows();
 
+	/**
+	 * It is certified that the current player has actually rolled the dice this
+	 * turn, if the dice have the same value he can roll again.
+	 * 
+	 * @param areSame
+	 *            true if the dice has the same value, false instead
+	 */
+	void thrown(boolean areSame);
+
+	/**
+	 * Returns if the player has done the rolls in this turn.
+	 * 
+	 * @return true if the player has rolled dice, false instead
+	 */
+	boolean hasDone();
+
 }
