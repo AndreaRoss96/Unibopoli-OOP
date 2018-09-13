@@ -11,12 +11,12 @@ public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E>
 
     public CircularListImpl(final List<E> list) {
         super(list);
-        this.head = -1;
+        this.head = 0;
     }
 
     @Override
     public void shift() {
-    	this.head = ++this.head % super.size();
+    	this.head = this.head++ % super.size();
     }
 
     @Override

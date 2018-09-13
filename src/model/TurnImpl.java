@@ -72,9 +72,12 @@ public class TurnImpl implements Turn {
 	}
 	
 	private void clear() {
-		this.rolls = -1;
+		this.rolls = 0;
 	}
 	
+	/**
+	 * TODO: Check!
+	 * */
 	@Override
 	public boolean isThrows() {
 		this.rolls++;
