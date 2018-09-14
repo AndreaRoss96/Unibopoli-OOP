@@ -7,6 +7,10 @@ import java.util.function.BiConsumer;
 import controller.ControllerImpl;
 import model.player.Player;
 
+/**
+ * 
+ *	@author Matteo Alesiani
+ */
 public enum Consequences {
 
 	MOVING((player, values) -> {

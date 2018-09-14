@@ -102,7 +102,7 @@ public class TradeDialog extends Dialog {
 		rootPane.setRight(gridB);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Green",
-				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getTradeImage()).get());
+				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GENERALDIALOGMAP.getTradeImage()).get());
 		final Button tradeButton = new Button("<==TRADE==>");
 		tradeButton.setFont(getPrincipalFont());
 		bottomPane.setLeft(tradeButton);

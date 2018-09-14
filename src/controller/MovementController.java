@@ -6,8 +6,9 @@ import javafx.util.Duration;
 import view.Icon;
 
 /**
+ * @version 2.3
  * 
- * 
+ * @author Matteo Alesiani
  */
 public class MovementController extends Thread {
 

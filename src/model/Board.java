@@ -34,6 +34,8 @@ public interface Board extends Serializable {
 	 */
 	String getModeGame();
 	
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
 	int getTilesNumber();
-
 }

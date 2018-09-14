@@ -19,6 +19,7 @@ import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.IconLoader;
 import utilities.Pair;
+import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
 import view.AlertFactory;
 import view.RightInormationPane;
@@ -41,7 +42,7 @@ public class ControllerImpl implements Controller {
 	private final SoundController sound;
 
 	private ControllerImpl() {
-		this.sound = new SoundController("/music/Monopoly-MainMusic.wav");
+		this.sound = new SoundController( ClassicType.Music.GeneralMusicMap.getMonopolyMainMusic());
 		this.view = new ViewImpl();
 		setBackgroundMusic();
 	}
@@ -120,7 +121,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void diceClick() {
 		final boolean doJailSound = !model.getCurrentPlayer().isInJail();
-		this.sound.playSound("/music/Dice-roll.wav");
+		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getDiceRoll());
 		final Pair<Integer> result = model.exitDice();
 		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
 		this.exitDice(result.getFirst() + result.getSecond());
@@ -131,7 +132,7 @@ public class ControllerImpl implements Controller {
 		RightInormationPane.getRinghtInformationPane().updateButton(!(result.areSame()));
 		if (model.getCurrentPlayer().isInJail()) {
 			if(doJailSound) {
-				this.sound.playSound("/music/Jail_Door_sound_effect.wav");
+				this.sound.playSound(ClassicType.Music.GeneralMusicMap.getJailDoorEffect());
 			}
 			model.endTurn();
 			this.updateView();
@@ -156,7 +157,7 @@ public class ControllerImpl implements Controller {
 
 	@Override
 	public void endGame() {
-		this.sound.playSound("/music/game_win.wav");
+		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getGameWin());
 		AlertFactory.createInformationAlert("Congratulations", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
 		//chiudere l'applicazione che non so come si fa 
 	}

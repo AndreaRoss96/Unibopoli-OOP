@@ -3,6 +3,11 @@ package model;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ *
+ * @author Matteo Alesiani
+ */
+
 public class ConsequencesImpl {
 	private Consequences consequences;
 	private String textConsequences;

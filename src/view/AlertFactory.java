@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 
 public class AlertFactory{
 
-	public static void createErrorAlert(final String title, final String contentText) {
+	public static void createErrorAlert(final String title, final String contentText, String string) {
 		buildAlert(AlertType.ERROR, title, contentText).showAndWait();
 	}
 	

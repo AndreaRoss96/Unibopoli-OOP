@@ -31,7 +31,7 @@ public class InitialWindows extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
     	this.initialWindow.getIcons().add(IconLoader.getLoader()
-    												.getImageFromPath(ClassicType.Other.GeneralOthersMap.getIconWindows())
+    												.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getIconWindows())
     												.get().getImage());
         
         /*

@@ -29,12 +29,12 @@ public class Parse {
 	public static final Function<String, BuildableImpl> PARSING_BUILDABLE_TILE_BOARD = value -> {
 						List<String> record = getPlittingList(value);
 						
-						Integer positionTile = new Integer(record.get(0));
-						Integer price = new Integer(record.get(1));
-						Integer mortgage = new Integer(record.get(2));
+						Integer positionTile = Integer.parseInt(record.get(0));
+						Integer price = Integer.parseInt(record.get(1));
+						Integer mortgage = Integer.parseInt(record.get(2));
 						Rents rents = PARSING_RENTS.apply(record.subList(3, 9).stream()
-																.map(Integer::new).collect(Collectors.toList()));
-						rents.setPriceForBuilding(new Integer(record.get(9)));
+																.map(Integer::parseInt).collect(Collectors.toList()));
+						rents.setPriceForBuilding(Integer.parseInt(record.get(9)));
 						
 						return new BuildableImpl(positionTile.intValue(), price.intValue(), mortgage.intValue(), rents, Color.valueOf(Color.class, record.get(10)), 
 												TileTypes.BUILDABLE);
@@ -43,9 +43,9 @@ public class Parse {
 	public static final Function<String, NotBuildableImpl> PARSING_NOTBUILDABLE_TILE_BOARD = value -> {
 						List<String> record = getPlittingList(value);
 						
-						Integer positionTile = new Integer(record.get(0));
-						Integer price = new Integer(record.get(1));
-						Integer mortgage = new Integer(record.get(2));
+						Integer positionTile = Integer.parseInt(record.get(0));
+						Integer price = Integer.parseInt(record.get(1));
+						Integer mortgage = Integer.parseInt(record.get(2));
 						
 						if(record.size() <= 4) {
 							return new NotBuildableImpl(positionTile, price, mortgage, 
@@ -60,7 +60,7 @@ public class Parse {
 	public static final Function<String, NotObtainableImpl> PARSING_NOTOBTAINABLE_TILE_BOARD = value -> {
 						List<String> record = getPlittingList(value);
 						// FIX: classi astratte non si possono istanziare.
-						return new NotObtainableImpl(new Integer(record.get(0)), TileTypes.valueOf(TileTypes.class, record.get(1)));
+						return new NotObtainableImpl(Integer.parseInt(record.get(0)), TileTypes.valueOf(TileTypes.class, record.get(1)));
 			};
 			
 	public static final Function<String, ConsequencesImpl> PARSING_CONSEQUENCES = value -> {

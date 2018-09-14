@@ -95,7 +95,7 @@ public class AuctionDialog extends Dialog {
 		beatButton.setFont(getPrincipalFont());
 		beatButton.setPrefWidth(getButtonWidth());
 
-		final BorderPane bottomPane = addButtonBox(stage, "Yellow", IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getAuctionImage()).get());
+		final BorderPane bottomPane = addButtonBox(stage, "Yellow", IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GENERALDIALOGMAP.getAuctionImage()).get());
 		bottomPane.setLeft(beatButton);
 		rootPane.setBottom(bottomPane);
 

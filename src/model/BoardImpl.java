@@ -78,23 +78,23 @@ public class BoardImpl implements Board {
 	
 	private void initializationSetTile() {
 		try {
-			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticBuildableValuesInitFile())
+			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getStaticBuildableValuesInitFile())
 					.map(Parse.PARSING_BUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 		
-			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticNotBuildableValuesInitFile())
+			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getStaticNotBuildableValuesInitFile())
 					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 								
-			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getModeGame(this.getModeGame()))
+			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getModeGame(this.getModeGame()))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 			
-			ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getStaticNotObtainableValuesInitFile())
+			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getStaticNotObtainableValuesInitFile())
 					.map(Parse.PARSING_NOTOBTAINABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 			
-			ProbUnexSupplier.get(ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getProbabilityFile()).collect(Collectors.toList()), 
-								 ReadFile.readFile(ClassicType.Files.GeneralFilesMap.getUnexpectedFile()).collect(Collectors.toList()));
+			ProbUnexSupplier.get(ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getProbabilityFile()).collect(Collectors.toList()), 
+								 ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));
 			
 		}catch (IOException e) {
 			System.out.println("IOExce");

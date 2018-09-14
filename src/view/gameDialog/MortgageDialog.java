@@ -80,7 +80,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setCenter(vBox);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Red",
-				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getMortgageImage()).get());
+				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GENERALDIALOGMAP.getMortgageImage()).get());
 		final Button mortgageButton = new Button("Mortgage");
 		mortgageButton.setFont(getPrincipalFont());
 		mortgageButton.setDisable(true);

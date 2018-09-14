@@ -68,14 +68,14 @@ public class RightInormationPane extends VBox {
 		AnchorPane.setTopAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(rightDiceResult);
 
-		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getDiceImage()).get());
+		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getDiceImage()).get());
 		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		AnchorPane.setTopAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(diceBtn);
 
-		final Button setting = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getGearImage()).get());
+		final Button setting = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getGearImage()).get());
 		setting.getStyleClass().add("settingButton");
 		AnchorPane.setRightAnchor(setting, SETTINGS_DISTANCE * 1.5);
 		AnchorPane.setTopAnchor(setting, SETTINGS_DISTANCE);
