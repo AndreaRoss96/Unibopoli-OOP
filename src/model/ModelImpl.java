@@ -2,7 +2,6 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,7 +11,6 @@ import controller.ControllerImpl;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.AdapterBuildable;
-import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
@@ -167,27 +165,26 @@ public class ModelImpl implements Model {
 		final Player firstPlayer = this.getCurrentPlayer();
 		secondProperties.forEach(prop -> {
 			this.unbuild(prop, secondPlayer);
-			firstPlayer.addProperty(secondPlayer.removeProperty(prop));
+			this.playerAddProperty(firstPlayer, secondPlayer.removeProperty(prop));
 		});
-		firstPlayer.gainMoney(secondMoney);
-		firstPlayer.payments(firstMoney);
+		this.playerGainMoney(firstPlayer, secondMoney);
+		this.playerPayment(firstPlayer, firstMoney);
 
 		firstProperties.forEach(prop -> {
 			this.unbuild(prop, firstPlayer);
-			secondPlayer.addProperty(firstPlayer.removeProperty(prop));
+			this.playerAddProperty(secondPlayer, firstPlayer.removeProperty(prop));
 		});
-		secondPlayer.gainMoney(firstMoney);
-		secondPlayer.payments(secondMoney);
+		this.playerGainMoney(secondPlayer, firstMoney);
+		this.playerPayment(secondPlayer, secondMoney);
 	}
 
 	@Override
 	public void unbuild(final Obtainable property, final Player player) {
 		if (property.getTileType() == TileTypes.BUILDABLE) {
-			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (BuildableImpl) prop)
+			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (AdapterBuildable) prop)
 					.forEach(p -> {
 						while (p.getBuildingNumber() != 0) {
 							p.decBuildings();
-//							player.gainMoney(p.getPriceForBuilding() / 2);
 							this.playerGainMoney(player, p.getPriceForBuilding() / 2);
 						}
 					});

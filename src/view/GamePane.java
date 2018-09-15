@@ -25,6 +25,7 @@ import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
+import view.gameDialog.ProbabilityDialog;
 import view.tiles.LandAbstractFactoryImp;
 import view.Pawn;
 
@@ -222,4 +223,8 @@ public class GamePane extends StackPane{
 			this.contractPane.getChildren().add(propertyName);
 		});
 	}
+	
+//	public void playProbUnexAnimation(final String message) {
+//		this.getChildren().add(new ProbabilityDialog(message));
+//	}
 }

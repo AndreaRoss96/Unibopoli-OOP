@@ -93,5 +93,4 @@ public class TurnImpl implements Turn {
 	public boolean hasDone() {
 		return this.done;
 	}
-	
 }
