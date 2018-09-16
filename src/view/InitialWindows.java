@@ -1,7 +1,6 @@
 package view;
 
 import javafx.application.Application;
-import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import controller.ControllerImpl;
@@ -33,7 +32,7 @@ public class InitialWindows extends Application {
     public void start(final Stage primaryStage) throws Exception {
     	this.initialWindow.getIcons().add(IconLoader.getLoader()
     												.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getIconWindows())
-    												.get().getImage());
+    												.getImage());
         
         /*
          * TODO: 

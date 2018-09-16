@@ -45,10 +45,6 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 		return this.getTileType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
 	}
 	
-	protected void setConsequence() {
-		this.setConsequence(this.provideConsequence());
-	}
-	
 	private ConsequencesImpl provideConsequence() {
 		switch (this.getTileType()) {
 		case GO_JAIL: 
@@ -75,7 +71,7 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	
 	@Override
 	public void doConsequence() {
-		this.setConsequence();
+		this.setConsequence(this.provideConsequence());
 		this.consequences.doConsequences();
 	}
 }

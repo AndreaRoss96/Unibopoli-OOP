@@ -24,7 +24,6 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
-import view.gameDialog.ProbabilityDialog;
 
 public class PlayerSetupMenu extends Scene {
 
@@ -53,7 +52,7 @@ public class PlayerSetupMenu extends Scene {
 		iconList.addAll(imageMap.keySet());
 		
 		final FlowPane flowPane = new FlowPane();
-		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getPlusImage()).get());
+		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getPlusImage()));
 		addPlayer.getStyleClass().add("roundButton");
 		flowPane.getChildren().add(addPlayer);
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));

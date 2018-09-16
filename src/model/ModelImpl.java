@@ -121,7 +121,6 @@ public class ModelImpl implements Model {
 		tile.doConsequence();
 	}
 
-	
 	private void setNewPosition(int value) {
 		this.getCurrentPlayer().setPosition(value);
 	}

@@ -16,7 +16,6 @@ import model.tiles.NotObtainableImpl;
 import model.tiles.Tile;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
-import view.gameDialog.ProbabilityDialog;
 
 /**
 * 
@@ -40,7 +39,7 @@ public class LandAbstractFactoryImp{
 		AnchorPane landPane = ComponentFactory.getAnchorPane(false);
 		
 		this.getBuildables(landPane, buildableTile); 
-		landPane.setOnMouseClicked(value -> ProbabilityDialog.getProbabilityDialog().createProbabilityDialog("stocazzo"));//ControllerImpl.getController().showContract(buildableTile));
+		landPane.setOnMouseClicked(value -> ControllerImpl.getController().showContract(buildableTile));
 		
 		return landPane;
 	}

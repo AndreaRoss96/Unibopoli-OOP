@@ -15,7 +15,6 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
-import view.gameDialog.ProbabilityDialog;
 import view.handlers.HandleFileChooser;
 
 /**
@@ -73,11 +72,11 @@ public final class MainMenu extends Scene{
 		AnchorPane.setTopAnchor(helpBtn, STANDARD_ANCHOR);
 		AnchorPane.setRightAnchor(helpBtn, STANDARD_ANCHOR);
 
-		final Button musicBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()).get());
+		final Button musicBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
 		AnchorPane.setTopAnchor(musicBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(musicBtn, STANDARD_ANCHOR);
 
-		final Button soundBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()).get());
+		final Button soundBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
 		AnchorPane.setTopAnchor(soundBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(soundBtn, STANDARD_ANCHOR * 5.5);
 		
@@ -114,18 +113,18 @@ public final class MainMenu extends Scene{
 		musicBtn.setOnAction(e -> {
 			music.changeMusicMute();
 			if (music.isMusicMute()) {
-				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()).get());
+				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()));
 			} else {
-				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()).get());
+				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
 			}
 		});
 
 		soundBtn.setOnAction(e -> {
 			music.changeSoundsMute();
 			if (music.isSoundMute()) {
-				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()).get());
+				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()));
 			} else {
-				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()).get());
+				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
 			}
 		});
 		

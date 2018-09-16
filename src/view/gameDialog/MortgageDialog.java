@@ -3,8 +3,6 @@ package view.gameDialog;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
-
 import controller.DialogController;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -80,7 +78,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setCenter(vBox);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Red",
-				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GENERALDIALOGMAP.getMortgageImage()).get());
+				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GENERALDIALOGMAP.getMortgageImage()));
 		final Button mortgageButton = new Button("Mortgage");
 		mortgageButton.setFont(getPrincipalFont());
 		mortgageButton.setDisable(true);

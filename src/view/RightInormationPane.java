@@ -3,7 +3,6 @@ package view;
 
 import controller.ControllerImpl;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -68,14 +67,14 @@ public class RightInormationPane extends VBox {
 		AnchorPane.setTopAnchor(rightDiceResult, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(rightDiceResult);
 
-		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getDiceImage()).get());
+		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getDiceImage()));
 		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		AnchorPane.setTopAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
 		topAnchorPane.getChildren().add(diceBtn);
 
-		final Button setting = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getGearImage()).get());
+		final Button setting = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getGearImage()));
 		setting.getStyleClass().add("settingButton");
 		AnchorPane.setRightAnchor(setting, SETTINGS_DISTANCE * 1.5);
 		AnchorPane.setTopAnchor(setting, SETTINGS_DISTANCE);

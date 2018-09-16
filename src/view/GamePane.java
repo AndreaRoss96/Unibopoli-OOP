@@ -25,7 +25,6 @@ import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
-import view.gameDialog.ProbabilityDialog;
 import view.tiles.LandAbstractFactoryImp;
 import view.Pawn;
 
