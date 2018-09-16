@@ -43,6 +43,10 @@ public class ControllerImpl implements Controller {
 
 	private ControllerImpl() {
 		this.sound = new SoundController( ClassicType.Music.GeneralMusicMap.getMonopolyMainMusic());
+		/**
+		 *	TODO: settare la view dal main. 
+		 *		  view e controll devono comunicare. 
+		 */
 		this.view = new ViewImpl();
 		setBackgroundMusic();
 	}
@@ -79,11 +83,11 @@ public class ControllerImpl implements Controller {
 	public void endTurnClick() {
 		if (this.getCurrentPlayer().isInJail()) {
 			model.exitFromJail(true);
-			this.updateView();
 		} else {
 			this.model.endTurn();
-			this.updateView();
 		}
+		
+		this.updateView();
 	}
 
 	@Override
@@ -124,6 +128,9 @@ public class ControllerImpl implements Controller {
 		final boolean doJailSound = !model.getCurrentPlayer().isInJail();
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getDiceRoll());
 		final Pair<Integer> result = model.exitDice();
+		/**
+		 *	TODO: passare dalla classe view: Sarà la classe view che eseguirà questo metodo! 
+		 */
 		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
 		this.exitDice(result.getFirst() + result.getSecond());
 		/*
@@ -135,6 +142,7 @@ public class ControllerImpl implements Controller {
 			if(doJailSound) {
 				this.sound.playSound(ClassicType.Music.GeneralMusicMap.getJailDoorEffect());
 			}
+			
 			model.endTurn();
 			this.updateView();
 		}
