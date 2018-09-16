@@ -50,7 +50,6 @@ public final class GameInitializer {
 		
 		this.playerList = new ArrayList<>();
 		
-		
 		for (InitialDistribution v : InitialDistribution.values()) {
 			if (v.getPlayerNumber() == playersMap.size()) {
 				playersMap.keySet().forEach(e -> {

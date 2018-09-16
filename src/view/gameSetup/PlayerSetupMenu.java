@@ -24,6 +24,7 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
+import view.gameDialog.ProbabilityDialog;
 
 public class PlayerSetupMenu extends Scene {
 
@@ -116,6 +117,7 @@ public class PlayerSetupMenu extends Scene {
 
 		cancel.setOnAction(e -> {
 			mainStage.setScene(MainMenu.get(mainStage));
+			mainStage.centerOnScreen();
 		});
 
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());

@@ -97,7 +97,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void showContract(Obtainable property) {
 		/* If the current player is the same owner of the selected property and he/she have all the property of that color he will be able to build */
-		if(property.getOwner().isPresent() && property.getOwner().get() == this.getCurrentPlayer().getName()) {
+		if(property.getOwner().isPresent() && property.getOwner().get().equals(this.getCurrentPlayer().getName())) {
 			int numProperties = this.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).size();
 			CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
 		/* If the current player is in the same position of the property without any owner he/she will be able to buy that property */
@@ -116,6 +116,7 @@ public class ControllerImpl implements Controller {
 			playerObtainableMap.put(player.getName(), player.getProperties());
 		});
 		TradeDialog.getTradeDialog().createTradeDialog(playerObtainableMap);
+//		GamePane.get().playProbUnexAnimation("ZtoCasso");
 	}
 
 	@Override

@@ -15,6 +15,7 @@ import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 
 import utilities.enumerations.Color;
+import utilities.enumerations.TileTypes;
 
 public class RealPlayer implements Player {
 
@@ -24,10 +25,8 @@ public class RealPlayer implements Player {
 	private Integer position;
 	private Map<Color, List<Obtainable>> playersProperties;
 	private Integer money;
-	private Integer housesNumber; // togli
-	private Integer hotelsNumber;
 	private String iconPath;
-	private Prison status = Prison.NOT_PRISON;
+	private Prison status;
 
 	/**
 	 * This constructor is used by GameInitializer class.
@@ -45,24 +44,7 @@ public class RealPlayer implements Player {
 		this.money = money;
 		this.iconPath = iconPath;
 		this.playersProperties = new HashMap<>();
-	}
-
-	/**
-	 * This constructor is used by a load game.
-	 * 
-	 * @param name
-	 * @param money
-	 */
-	public RealPlayer(final String name, final int position, final Map<Color, List<Obtainable>> playersProperties,
-			final int totMoney, final List<Obtainable> mortgagedProperties /* ... */) {
-		this.name = name;
-		this.money = totMoney;
-		this.position = position;
-		this.housesNumber = 0;
-		this.hotelsNumber = 0;
-		this.playersProperties = new HashMap<>();
-		this.playersProperties.putAll(playersProperties);
-
+		this.status = Prison.NOT_PRISON;
 	}
 
 	@Override
@@ -77,14 +59,15 @@ public class RealPlayer implements Player {
 
 	@Override
 	public int getHouseNumber() {
-		// getProperties().stream().filter(property -> property instanceof
-		// Buildable).collect(Collectors.toList());
-		return 0;
+		return this.getProperties().stream().filter(prop -> prop.getTileType() == TileTypes.BUILDABLE)
+					.map(prop -> (AdapterBuildable) prop).filter(prop -> prop.getBuildingNumber() > 0)
+					.filter(prop -> prop.getBuildingNumber() <= 4).mapToInt(AdapterBuildable::getBuildingNumber).sum();
 	}
 
 	@Override
 	public int getHotelNumber() {
-		return this.hotelsNumber;
+		return (int) this.getProperties().stream().filter(prop -> prop.getTileType() == TileTypes.BUILDABLE)
+				.map(prop -> (AdapterBuildable) prop).filter(prop -> prop.getBuildingNumber() == 5).count();
 	}
 
 	@Override
@@ -159,7 +142,7 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void toMortgage(final Integer minimumAmount) {
-
+//TOGLI
 	}
 
 	@Override
@@ -183,7 +166,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public List<Obtainable> getMortgagedProperties() {
+	public List<Obtainable> getMortgagedProperties() { //TOGLI
 		return null;
 	}
 	

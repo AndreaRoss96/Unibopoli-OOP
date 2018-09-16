@@ -15,6 +15,7 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
+import view.gameDialog.ProbabilityDialog;
 import view.handlers.HandleFileChooser;
 
 /**
@@ -82,6 +83,7 @@ public final class MainMenu extends Scene{
 		
 		anchorPane.getChildren().addAll(leftButtonBox, rightButtonBox, helpBtn, musicBtn, soundBtn);
 		root.getChildren().add(anchorPane);
+//		root.getChildren().addAll(anchorPane, new ProbabilityDialog("StoCazzo"));
 
 		newGameBtn.setOnAction(e -> {
 			mainStage.setScene(PlayerSetupMenu.get(mainStage));
