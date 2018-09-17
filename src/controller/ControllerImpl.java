@@ -14,11 +14,13 @@ import java.util.stream.IntStream;
 import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
+import model.exceptions.NotEnoughMoneyException;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.IconLoader;
 import utilities.Pair;
+import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
 import view.AlertFactory;
 import view.RightInormationPane;
@@ -138,6 +140,18 @@ public class ControllerImpl implements Controller {
 			this.updateView();
 		}
 	}
+	
+	public void playerPayments(final PlayerInfo player, final int moneyAmount) {
+		try {
+			if(!model.playerPayment(player, moneyAmount)) {
+				this.startMortgage(moneyAmount, player);
+			}
+		} catch (NotEnoughMoneyException e) {
+			this.model.removePlayer(player);
+			this.sound.playSound(ClassicType.Music.GeneralMusicMap.getLoseGame());
+		}
+			
+	}
 
 	public void exitDice(final int value) {
 		view.movement(value);
@@ -169,6 +183,8 @@ public class ControllerImpl implements Controller {
 	public void startMortgage (int minimumExpense, PlayerInfo player) {
 		AlertFactory.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
+		this.playerPayments(player, minimumExpense);
+		//controlla che showAndWait non faccia proseguire il metodo
 	}
 	
 	public PlayerInfo getCurrentPlayer() {

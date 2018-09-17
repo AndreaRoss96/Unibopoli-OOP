@@ -24,7 +24,6 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
-import view.gameDialog.ProbabilityDialog;
 
 public class PlayerSetupMenu extends Scene {
 

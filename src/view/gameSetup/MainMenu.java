@@ -15,7 +15,7 @@ import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
-import view.gameDialog.ProbabilityDialog;
+import view.gameDialog.ProbabUnexAnimation;
 import view.handlers.HandleFileChooser;
 
 /**
@@ -83,7 +83,6 @@ public final class MainMenu extends Scene{
 		
 		anchorPane.getChildren().addAll(leftButtonBox, rightButtonBox, helpBtn, musicBtn, soundBtn);
 		root.getChildren().add(anchorPane);
-//		root.getChildren().addAll(anchorPane, new ProbabilityDialog("StoCazzo"));
 
 		newGameBtn.setOnAction(e -> {
 			mainStage.setScene(PlayerSetupMenu.get(mainStage));
@@ -127,6 +126,11 @@ public final class MainMenu extends Scene{
 			} else {
 				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getSoundImage()).get());
 			}
+		});
+		
+		helpBtn.setOnAction(e -> {
+			root.getChildren().removeIf(node -> node instanceof ProbabUnexAnimation); //RICHIAMA UN METODO SIMILE NELL'UPDATEVIEW PER CANCELLARE TUTTE LE RIMANENZE
+			root.getChildren().add(ProbabUnexAnimation.getProbabilityDialog().createProbabilityDialog("Ereditate 250 € da un lontano parente."));
 		});
 		
 		root.setId("mainMenu");

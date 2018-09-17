@@ -11,6 +11,7 @@ import java.util.stream.Stream;
 
 import com.google.common.base.Optional;
 
+import model.exceptions.NotEnoughMoneyException;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 
@@ -86,18 +87,15 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void payments(final Integer moneyAmount) {// per evitare di fare dei thread sposterei il richiamp del toMortgage
-												// nel metodo can pay, in modo che, una volta guadagnati i soldi possa
-												// comunquecontinuare con il pagamento
+	public void payments(final Integer moneyAmount) {
 //		if (!this.canPay(moneyAmount)) {
-//			if (moneyAmount > totalAssets()) {//in questo caso il giocatore va in bancarotta e deve essere eliminato
+//			if (moneyAmount > totalAssets()) {
 //				throw new NotEnoughMoneyException(moneyAmount);
 //			}
-//			toMortgage(moneyAmount - this.money);
-//			// in questo caso il giocatore non è in grado di pagare con i liquidi
-//			// ed è quindi costretto ad ipotecare qualche proprietà
+//			return false;
 //		} else {
 			this.money -= moneyAmount;
+//			return true;
 //		}
 	}
 

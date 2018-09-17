@@ -2,7 +2,6 @@ package model.player;
 
 import model.tiles.*;
 
-import java.util.List;
 
 /**
  * This interface contains the logical implementations of the player. It will
