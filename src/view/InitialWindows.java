@@ -31,8 +31,8 @@ public class InitialWindows extends Application {
     @Override
     public void start(final Stage primaryStage) throws Exception {
     	this.initialWindow.getIcons().add(IconLoader.getLoader()
-    												.getImageFromPath(ClassicType.Other.GeneralOthersMap.getIconWindows())
-    												.get().getImage());
+    												.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getIconWindows())
+    												.getImage());
         
         /*
          * TODO: 
@@ -43,6 +43,7 @@ public class InitialWindows extends Application {
             }
             ClosureHandler.closeProgram(this.mainWindow);
         });*/
+    	
         this.initialWindow.setScene(MainMenu.get(this.initialWindow));
         this.initialWindow.setResizable(false);
         this.initialWindow.show();

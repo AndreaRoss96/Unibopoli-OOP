@@ -69,7 +69,7 @@ public class ComponentFactory {
 	 * */
 	public static Label getLabelImage(final String pathImageView) {
 		Label image = new Label();
-		ImageView imageView = IconLoader.getLoader().getImageFromPath(pathImageView).get();
+		ImageView imageView = IconLoader.getLoader().getImageFromPath(pathImageView);
 		imageView.setFitWidth(LandSimpleWIDTH * 0.75);
 		imageView.setFitHeight(LandSimpleWIDTH * 0.75);
 		imageView.setRotate(180.0);

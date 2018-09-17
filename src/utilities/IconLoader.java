@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
 
+import javafx.scene.image.ImageView;
 import view.Icon;
 
 public final class IconLoader {
@@ -31,13 +32,13 @@ public final class IconLoader {
 		return IconLoader.ICONS;
 	}
 
-	public Icon getImageFromPath(final String path) {
+	public ImageView getImageFromPath(final String path) {
 		try {
 			if (!this.iconsMap.containsKey(path)) {
 				this.iconsMap.put(path, new Icon(path));
 			}
 
-			return this.iconsMap.get(path);
+			return new ImageView(this.iconsMap.get(path).get().getImage());
 		} catch (final Exception e) {
 			System.out.println("Path not found");
 		}

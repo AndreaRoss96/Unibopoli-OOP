@@ -60,6 +60,9 @@ public interface Controller {
 	 */
 	void settingsClick(); // da implementare
 
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
 	void endGame();
 
 	/**
@@ -81,15 +84,33 @@ public interface Controller {
 	 */
 	void startMortgage(int minimumExpense, PlayerInfo player);
 	
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
 	List<PlayerInfo> getPlayers();
 	
-	 List<String> getGameMode();
-	 
-	 List<Obtainable> getProperties();
-	 
-	 Set<Tile> getGameBoard();
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
+	List<String> getGameMode();
+	
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
+	List<Obtainable> getProperties();
+	
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
+	Set<Tile> getGameBoard();
 
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
 	void updateView();
 
+	/**
+	 * TODO: aggiungere documetazione 
+	 */
 	SoundController getSound();
 }

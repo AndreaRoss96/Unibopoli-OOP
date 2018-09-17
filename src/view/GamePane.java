@@ -25,7 +25,6 @@ import model.tiles.Tile;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
-import view.gameDialog.ProbabUnexAnimation;
 import view.tiles.LandAbstractFactoryImp;
 import view.Pawn;
 
@@ -47,7 +46,7 @@ public class GamePane extends StackPane{
 	
 	
 	/**
-	 * Ricordarsi di gestire l'eliminazione del giocatore
+	 * TODO: Ricordarsi di gestire l'eliminazione del giocatore
 	 * */
 	private Map<String, Icon> iconMap;
 	
@@ -84,7 +83,7 @@ public class GamePane extends StackPane{
 						  
 					  });
 		
-		pane.getChildren().addAll(this.iconMap.values().stream().map(icon -> icon.get()).collect(Collectors.toList()));
+		pane.getChildren().addAll(this.iconMap.values().stream().map(Icon::get).collect(Collectors.toList()));
 		
 		return pane;
 	}

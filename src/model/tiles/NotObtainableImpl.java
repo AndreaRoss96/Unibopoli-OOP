@@ -1,10 +1,13 @@
 package model.tiles;
 
-import controller.ControllerImpl;
+import java.util.ArrayList;
+
+import model.Consequences;
 import model.ConsequencesImpl;
+import model.ProbUnexSupplier;
 import utilities.enumerations.TileTypes;
 
-public abstract class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
+public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 
 	private static final long serialVersionUID = 6004220435515803475L;
 	
@@ -42,7 +45,24 @@ public abstract class NotObtainableImpl implements NotObtainable, AdaprterPathIm
 		return this.getTileType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
 	}
 	
-	protected abstract void setConsequence();
+	private ConsequencesImpl provideConsequence() {
+		switch (this.getTileType()) {
+		case GO_JAIL: 
+			return new ConsequencesImpl(Consequences.MOVING, "Vai in prigione", new ArrayList<>());
+		case GO: 
+			return new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Passi dal via", new ArrayList<>());
+		case LUXURY_TAX: 
+			return new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa di lusso", new ArrayList<>());
+		case INCOME_TAX: 
+			return new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa da definire", new ArrayList<>());
+		case PROBABILITY: 
+			return ProbUnexSupplier.get().getNextProbability(); 
+		case UNEXPECTED:
+			return ProbUnexSupplier.get().getNextUnexpected();
+		default: 
+			return null; // Inserire NOT_CONSEQUENCE 
+		}
+	}
 	
 	@Override
 	public void setConsequence(ConsequencesImpl consequence) {
@@ -51,7 +71,7 @@ public abstract class NotObtainableImpl implements NotObtainable, AdaprterPathIm
 	
 	@Override
 	public void doConsequence() {
-		this.setConsequence();
+		this.setConsequence(this.provideConsequence());
 		this.consequences.doConsequences();
 	}
 }

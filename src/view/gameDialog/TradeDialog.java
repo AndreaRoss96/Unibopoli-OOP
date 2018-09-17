@@ -2,8 +2,6 @@ package view.gameDialog;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import com.google.common.base.Optional;
 
 import javafx.geometry.Insets;
@@ -102,7 +100,7 @@ public class TradeDialog extends Dialog {
 		rootPane.setRight(gridB);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Green",
-				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GeneralDialogMap.getTradeImage()).get());
+				IconLoader.getLoader().getImageFromPath(ClassicType.Dialog.GENERALDIALOGMAP.getTradeImage()));
 		final Button tradeButton = new Button("<==TRADE==>");
 		tradeButton.setFont(getPrincipalFont());
 		bottomPane.setLeft(tradeButton);
@@ -122,7 +120,7 @@ public class TradeDialog extends Dialog {
 					controller.dialogTradeClick();
 					stage.close();
 				} else {
-					AlertFactory.createErrorAlert("???", "Choose a player!");
+					AlertFactory.createInformationAlert("???", "Choose a player!");
 					e.consume();
 				}
 			} else {

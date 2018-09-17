@@ -26,7 +26,7 @@ public class Rents implements Serializable {
 	public Rents(List<Integer> record) {
 		this.rentsManagement = IntStream.rangeClosed(0, MAX_HOUSE)
 										.mapToObj(t->t)
-										.collect(Collectors.toMap(Integer::new, record::get));
+										.collect(Collectors.toMap(Integer::intValue, record::get));
 		this.buildingsNr = 0;
 	}
 	
@@ -41,8 +41,8 @@ public class Rents implements Serializable {
 		
 		/***
 		 * 
-		 * Aggiungere eccezione.
-		 * */
+		 * TODO: Aggiungere eccezione.
+		 */
 		return this.rentsManagement.get(this.buildingsNr);
 	}
 	

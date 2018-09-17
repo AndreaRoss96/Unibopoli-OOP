@@ -39,7 +39,7 @@ public class ResourceManager {
 		if (!dir.exists()) {
 			final boolean success = dir.mkdir();
 			if (!success) {
-				AlertFactory.createErrorAlert("ERROR", "There's been an error during the creation of save directory!");
+				AlertFactory.createInformationAlert("ERROR", "There's been an error during the creation of save directory!");
 			}
 		}
 	}
@@ -63,7 +63,7 @@ public class ResourceManager {
 			objectOutput.close();
 		} catch (Exception ioEx) {
 			ioEx.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file saving!");
+			AlertFactory.createInformationAlert("ERROR", "There's been an error during the file saving!");
 		}
 	}
 
@@ -83,10 +83,10 @@ public class ResourceManager {
 			objectInput.close();
 		} catch (IOException e) {
 			e.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!");
+			AlertFactory.createInformationAlert("ERROR", "There's been an error during the file loading!");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
-			AlertFactory.createErrorAlert("ERROR", "There's been an error during the file loading!");
+			AlertFactory.createInformationAlert("ERROR", "There's been an error during the file loading!");
 		}
 		return memento;
 	}

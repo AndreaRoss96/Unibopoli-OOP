@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Paint;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -100,7 +99,7 @@ public class Contract extends AnchorPane {
 
 	private void createContractForNotBuildable(NotBuildableImpl property) {
 		this.labelCreator("Contract worth  " + property.getPrice() + "  $", Optional.empty(), 1, insidePane);
-		final ImageView image = IconLoader.getLoader().getImageFromPath(property.getPathImage()).get();
+		final ImageView image = IconLoader.getLoader().getImageFromPath(property.getPathImage());
 		image.setFitHeight(IMAGE_HEIGHT);
 		image.setFitWidth(IMAGE_WIDTH);
 		insidePane.add(image, 0, this.row++, 2, 1);

@@ -1,6 +1,5 @@
 package model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -106,23 +105,32 @@ public class ModelImpl implements Model {
 		}
 	}
 
+	private static List<String> getvalues(final Tile tile, final int mul){
+		if(mul == 0) {
+			return Arrays.asList(((Obtainable) tile).getOwner().get());
+		}
+		
+		return Arrays.asList(((Obtainable) tile).getOwner().get(), String.valueOf(mul));
+	}
+	
 	private void supplierConsequence() {
 		final Tile tile = this.board.getTileOf(this.turnPlayer.getCurrentPlayer().getPosition());
 		
-		if(!((Obtainable) tile).getOwner().isPresent()) {
+		if(tile instanceof Obtainable && !((Obtainable) tile).getOwner().isPresent()) {
 			ControllerImpl.getController().showContract((Obtainable) tile);
-		}else if(tile.getTileType() == TileTypes.STATION ) {
-			((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", new ArrayList<>(Arrays.asList(((Obtainable) tile).getOwner().get()))));
-		}else if(tile.getTileType() == TileTypes.BUILDABLE || tile.getTileType() == TileTypes.WATER_AGENCY || tile.getTileType() == TileTypes.LIGHT_AGENCY){	
-			if(this.turnPlayer.getCurrentPlayer().getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles()) {
-				((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", new ArrayList<>(Arrays.asList(String.valueOf(2)))));
+		}else { 
+			if(tile.getTileType() == TileTypes.STATION ) {
+				((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 0)));
+			}else if(tile.getTileType() == TileTypes.BUILDABLE || tile.getTileType() == TileTypes.WATER_AGENCY || tile.getTileType() == TileTypes.LIGHT_AGENCY){	
+				if(this.turnPlayer.getCurrentPlayer().getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles()) {
+					((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 2)));
+				}
+				
+				tile.doConsequence();
 			}
 		}
-		
-		tile.doConsequence();
 	}
 
-	
 	private void setNewPosition(int value) {
 		this.getCurrentPlayer().setPosition(value);
 	}

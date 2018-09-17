@@ -12,7 +12,7 @@ import javafx.stage.StageStyle;
 
 public class AlertFactory{
 
-	public static void createErrorAlert(final String title, final String contentText) {
+	public static void createErrorAlert(final String title, final String contentText, String string) {
 		buildAlert(AlertType.ERROR, title, contentText).showAndWait();
 	}
 	
@@ -21,6 +21,9 @@ public class AlertFactory{
 		buildAlert(AlertType.INFORMATION, title, contentText).showAndWait();
 	}
 	
+	/**
+	 *	TODO: cambiare Optional utilizzando Guava ?? 
+	 */
 	public static boolean createConfirmationAlert(final String title, final String contentText) {
 		Optional<ButtonType> choice = buildAlert(AlertType.CONFIRMATION, title, contentText).showAndWait();
 		return choice.get() == ButtonType.OK;

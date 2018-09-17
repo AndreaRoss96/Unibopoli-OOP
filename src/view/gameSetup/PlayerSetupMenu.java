@@ -52,7 +52,7 @@ public class PlayerSetupMenu extends Scene {
 		iconList.addAll(imageMap.keySet());
 		
 		final FlowPane flowPane = new FlowPane();
-		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GeneralOthersMap.getPlusImage()).get());
+		final Button addPlayer = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getPlusImage()));
 		addPlayer.getStyleClass().add("roundButton");
 		flowPane.getChildren().add(addPlayer);
 		flowPane.getChildren().add(0, addPlayerSetupBox(flowPane));

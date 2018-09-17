@@ -4,6 +4,7 @@ import java.util.Random;
 import utilities.Pair;
 
 /**
+ * @version 1.6
  * 
  * Ricontrollare tramite singleton VIROLI.
  * @author Matteo Alesiani
