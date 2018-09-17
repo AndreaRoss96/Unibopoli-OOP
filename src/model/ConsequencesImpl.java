@@ -34,4 +34,8 @@ public class ConsequencesImpl {
 	public void doConsequences(){
 		this.consequences.exec(this.getValues());
 	}
+	
+	public static ConsequencesImpl emptyConsequence() {
+		return new ConsequencesImpl(Consequences.NO_CONSEQUENCE, "", Collections.emptyList());
+	}
 }

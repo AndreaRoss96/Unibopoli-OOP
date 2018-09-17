@@ -186,7 +186,13 @@ public class GamePane extends StackPane{
 		}
 		
 		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
-		control.start();	
+		control.start();
+		try {
+			control.join();
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private int getNextCorner(int pos) {

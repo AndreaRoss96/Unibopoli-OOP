@@ -1,15 +1,15 @@
-Ritornate al vicolo corto.-
-E' maturata la cedola delle vostre azioni: ritirate 60 euro.-
-Rimborso tassa sul reddito: ritirate 50 euro dalla banca.-
-Avete vinto il secondo premio in un concorso di bellezza: ritirate 25 euro.-
-Scade il vostro premio di assicurazione: pagate 125 euro.-
-Avete vinto un premio di consolazione alla lotteria di Merano: ritirate 250 euro.-
-Andate fino al via.-
-Pagate una multa di 25 euro, oppure prendete un cartoncino dagli imprevisti.-
-Siete creditori verso la banca di 500 euro, ritirateli.-
-Avete perso una causa: pagate 250 euro.-
-Andate in prigione direttamente e senza passare dal via.-
-E' il vostro compleanno: ogni giocatore vi regala 25 euro.-
-Avete ceduto delle azioni: ricavate 125 euro.-
-Pagate il conto del dottore: 125 euro.-
+Ritornate al vicolo corto.-MOVING-1
+E' maturata la cedola delle vostre azioni: ritirate 60 euro.-RECEIVE-60
+Rimborso tassa sul reddito: ritirate 50 euro dalla banca.-RECEIVE-50
+Avete vinto il secondo premio in un concorso di bellezza: ritirate 25 euro.-RECEIVE-25
+Scade il vostro premio di assicurazione: pagate 125 euro.-SIMPLE_PAYMENT-125
+Avete vinto un premio di consolazione alla lotteria di Merano: ritirate 250 euro.-RECEIVE-250
+Andate fino al via.-MOVING-0
+Pagate una multa di 25 euro.-SIMPLE_PAYMENT-25
+Siete creditori verso la banca di 500 euro, ritirateli.-RECEIVE-500
+Avete perso una causa: pagate 250 euro.-SIMPLE_PAYMENT-250
+Andate in prigione direttamente e senza passare dal via.-MOVING-0
+E' il vostro compleanno: ogni giocatore vi regala 25 euro.-EACH_PLAYER-25
+Avete ceduto delle azioni: ricavate 125 euro.-RECEIVE-125
+Pagate il conto del dottore: 125 euro.-SIMPLE_PAYMENT-125
 Ereditate 250 € da un lontano parente.-RECEIVE-250

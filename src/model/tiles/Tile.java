@@ -2,7 +2,6 @@ package model.tiles;
 
 import java.io.Serializable;
 
-import model.ConsequencesImpl;
 import utilities.enumerations.TileTypes;
 
 /**
@@ -11,7 +10,7 @@ import utilities.enumerations.TileTypes;
  * @author Matteo Alesiani
  */
 
-public interface Tile extends Serializable {
+public interface Tile extends Serializable, StrategyConsequences{
 	/**
 	 * TODO: Simple Factory per Tile controllare relazione risiko
 	 * 
@@ -39,8 +38,4 @@ public interface Tile extends Serializable {
 	void setNameOf(final String nameTile);
 	
 	TileTypes getTileType();
-	
-	void doConsequence();
-	
-	void setConsequence(final ConsequencesImpl consequence);
 }
