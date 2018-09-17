@@ -2,9 +2,12 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Collectors;
+
 import model.player.Player;
 import model.player.RealPlayer;
 import model.tiles.Obtainable;
@@ -58,8 +61,11 @@ public final class GameInitializer {
 					 * player buy a determinated number of any property
 					 */
 					for (int i = 0; i < v.getContractNumber(); i++) {
-						player.addProperty(board.getTiles(t -> t instanceof Obtainable).stream().map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
-								.findFirst().get());
+						final List<Obtainable> propertyList = board.getTiles(t -> t instanceof Obtainable).stream()
+																	.map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
+																	.collect(Collectors.toList());
+						Collections.shuffle(propertyList);
+						player.addProperty(propertyList.get(0));
 					}
 					player.payments(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
 					this.playerList.add(player);

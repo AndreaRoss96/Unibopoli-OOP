@@ -5,6 +5,8 @@ import javafx.application.Application;
 
 public class ViewImpl implements View{
 	
+	private final ControllerImpl controller = ControllerImpl.getController();
+	
 	public ViewImpl() {
 		// TODO Auto-generated constructor stub
 	}
@@ -20,8 +22,12 @@ public class ViewImpl implements View{
 	}
 	
 	@Override
+	public void updateButton(boolean diceThrown) {
+		RightInormationPane.getRinghtInformationPane().updateButton(diceThrown);
+	}
+	
+	@Override
 	public void updateLabels() {
-		RightInormationPane.getRinghtInformationPane().updateButton(false);
 		RightInormationPane.getRinghtInformationPane().updateLabels();
 		RightInormationPane.getRinghtInformationPane().updateJailButton(ControllerImpl.getController().getCurrentPlayer().isInJail());
 		LeftPlayersPane.getLeftPlayersPane().updatePane();

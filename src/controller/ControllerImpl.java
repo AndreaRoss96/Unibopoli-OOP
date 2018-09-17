@@ -43,7 +43,7 @@ public class ControllerImpl implements Controller {
 	private final SoundController sound;
 
 	private ControllerImpl() {
-		this.sound = new SoundController( ClassicType.Music.GeneralMusicMap.getMonopolyMainMusic());
+		this.sound = new SoundController(ClassicType.Music.GeneralMusicMap.getMonopolyMainMusic());
 		/**
 		 *	TODO: settare la view dal main. 
 		 *		  view e controll devono comunicare. 
@@ -88,7 +88,7 @@ public class ControllerImpl implements Controller {
 			this.model.endTurn();
 		}
 		
-		this.updateView();
+		this.updateView(true);
 	}
 
 	@Override
@@ -121,7 +121,6 @@ public class ControllerImpl implements Controller {
 			playerObtainableMap.put(player.getName(), player.getProperties());
 		});
 		TradeDialog.getTradeDialog().createTradeDialog(playerObtainableMap);
-//		GamePane.get().playProbUnexAnimation("ZtoCasso");
 	}
 
 	@Override
@@ -138,14 +137,14 @@ public class ControllerImpl implements Controller {
 		 * if the two dice have same result the player have to roll dices again, even if
 		 * you are going out of jail
 		 */
-		RightInormationPane.getRinghtInformationPane().updateButton(!(result.areSame()));
-		if (model.getCurrentPlayer().isInJail()) {
+		this.view.updateButton(!(result.areSame()));
+		if (this.model.getCurrentPlayer().isInJail()) {
 			if(doJailSound) {
 				this.sound.playSound(ClassicType.Music.GeneralMusicMap.getJailDoorEffect());
 			}
 			
-			model.endTurn();
-			this.updateView();
+			this.model.endTurn();
+			this.updateView(true);
 		}
 	}
 	
@@ -173,7 +172,10 @@ public class ControllerImpl implements Controller {
 	}
 	
 	@Override
-	public void updateView() {
+	public void updateView(boolean isTurnEnded) {
+		if(isTurnEnded) {
+			this.view.updateButton(!isTurnEnded);
+		}
 		this.view.updateLabels();
 	}
 
@@ -181,7 +183,7 @@ public class ControllerImpl implements Controller {
 	public void endGame() {
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getGameWin());
 		AlertFactory.createInformationAlert("Congratulations", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
-		//chiudere l'applicazione che non so come si fa 
+		//chiudere l'applicazione, che non so come si fa
 	}
 	
 	public void startAuciton(Obtainable property) {
@@ -192,7 +194,6 @@ public class ControllerImpl implements Controller {
 		AlertFactory.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 		this.playerPayments(player, minimumExpense);
-		//controlla che showAndWait non faccia proseguire il metodo
 	}
 	
 	public PlayerInfo getCurrentPlayer() {

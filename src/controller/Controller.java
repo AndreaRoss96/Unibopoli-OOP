@@ -105,9 +105,12 @@ public interface Controller {
 	Set<Tile> getGameBoard();
 
 	/**
-	 * TODO: aggiungere documetazione 
+	 * Update the information in the right panel, like money, player, dice ecc...
+	 * 
+	 * @param isTurnEnded
+	 *            True if the update interest dice, false instead.
 	 */
-	void updateView();
+	void updateView(boolean isTurnEnded);
 
 	/**
 	 * TODO: aggiungere documetazione 
