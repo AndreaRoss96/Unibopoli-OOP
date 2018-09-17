@@ -23,8 +23,8 @@ public class TurnImpl implements Turn {
 	public TurnImpl(List<Player> players) {
 		this.turnManagement = new CircularListImpl<>(players);
 		this.jailMap = new HashMap<>();
-		this.nextPlayer();
-		this.done = false;
+		//this.nextPlayer();
+		this.clear();
 	}
 	
 	@Override
@@ -57,7 +57,6 @@ public class TurnImpl implements Turn {
 	public void nextPlayer() {
 		this.clear();
 		this.turnManagement.shift();
-		this.done = false;
 	}
 
 	@Override
@@ -73,6 +72,7 @@ public class TurnImpl implements Turn {
 	
 	private void clear() {
 		this.rolls = 0;
+		this.done = false;
 	}
 	
 	/**
