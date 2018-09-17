@@ -10,6 +10,7 @@ import controller.ControllerImpl;
 import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
+import model.player.RealPlayer;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
@@ -122,7 +123,10 @@ public class ModelImpl implements Model {
 			if(tile.getTileType() == TileTypes.STATION ) {
 				((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 0)));
 			}else if(tile.getTileType() == TileTypes.BUILDABLE || tile.getTileType() == TileTypes.WATER_AGENCY || tile.getTileType() == TileTypes.LIGHT_AGENCY){	
-				if(this.turnPlayer.getCurrentPlayer().getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles()) {
+				final PlayerInfo player = this.turnPlayer.getPlayers().stream()
+																	  .filter(playerV -> playerV.getName().equals(((Obtainable) tile).getOwner().get()))
+																	  .findFirst().get();
+				if(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles()) {
 					((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 2)));
 				}
 				

@@ -17,7 +17,7 @@ public class CircularListImpl<E> extends ArrayList<E> implements CircularList<E>
 
     @Override
     public void shift() {
-    	this.head = this.head++ % super.size();
+    	this.head = ++this.head % super.size();
     }
 
     @Override
