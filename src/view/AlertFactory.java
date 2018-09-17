@@ -16,6 +16,7 @@ public class AlertFactory{
 		buildAlert(AlertType.ERROR, title, contentText).showAndWait();
 	}
 	
+	
 	public static void createInformationAlert(final String title, final String contentText) {
 		buildAlert(AlertType.INFORMATION, title, contentText).showAndWait();
 	}

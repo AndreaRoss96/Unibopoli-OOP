@@ -4,11 +4,12 @@
 
 #backgroudBoard{
 	-fx-background-color: #CDE6D0;
-    
 }
+
 #gridPane{
     -fx-grid-lines-visible: true;
 }
+
 .separator .line{
 	-fx-border-color: grey;
 	-fx-border-width: 1 1 1 1;
@@ -105,4 +106,14 @@
 
 .roundButton:hover{
 	-fx-background-color: grey;
+}
+
+#ProbabUnexAnimation {
+	-fx-font-size: 11pt;
+    -fx-font-family: "Kabel";
+    -fx-base: #84912F;
+	-fx-background-image: url("/images/backgrounds/probab.png");
+	-fx-background-size: 100% 100%;
+ 	-fx-background-repeat: stretch;
+    -fx-background-position: center center;
 }

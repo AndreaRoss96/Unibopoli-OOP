@@ -86,7 +86,7 @@ public interface Model {
 
 	void unbuild(Obtainable property, Player player);
 
-	void playerPayment(PlayerInfo player, int moneyAmount);
+	boolean playerPayment(PlayerInfo player, int moneyAmount);
 
 	void playerGainMoney(PlayerInfo player, int moneyAmount);
 

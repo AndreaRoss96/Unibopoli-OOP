@@ -7,6 +7,7 @@ import java.util.stream.Collectors;
 import com.google.common.base.Optional;
 
 import controller.ControllerImpl;
+import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.player.RealPlayer;
@@ -154,15 +155,16 @@ public class ModelImpl implements Model {
 
 	/*******************************************************************************/
 	@Override
-	public void playerPayment(final PlayerInfo player, final int moneyAmount) {
+	public boolean playerPayment(final PlayerInfo player, final int moneyAmount) {
 		if (!player.canPay(moneyAmount)) {
 			if (moneyAmount > player.totalAssets()) {
-				this.removePlayer(player);
+				throw new NotEnoughMoneyException(moneyAmount);
 			}
-			ControllerImpl.getController().startMortgage(moneyAmount, player);
-		} else {
-			((Player) player).payments(moneyAmount);
+			return false;
 		}
+		
+		((Player) player).payments(moneyAmount);
+		return true;
 	}
 
 	@Override
