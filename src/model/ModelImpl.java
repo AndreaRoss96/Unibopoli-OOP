@@ -10,7 +10,6 @@ import controller.ControllerImpl;
 import model.exceptions.NotEnoughMoneyException;
 import model.player.Player;
 import model.player.PlayerInfo;
-import model.player.RealPlayer;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import model.tiles.Tile;

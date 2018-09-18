@@ -1,6 +1,7 @@
 package utilities;
 
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
@@ -20,7 +21,7 @@ public class ReadFile {
      * @throws IOException if the specified path is  not valid.
 	 * @return <tt>Stream of String</tt> of record inside the file.
 	 */
-	public static Stream<String> readFile(String pathfile) throws IOException {		
-		return Files.lines(Paths.get(pathfile));
+	public static Stream<String> readFile(String pathfile) throws IOException {	
+		return Files.lines(Paths.get(pathfile), Charset.defaultCharset());
 	}
 }

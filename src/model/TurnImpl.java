@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +24,7 @@ public class TurnImpl implements Turn {
 	public TurnImpl(List<Player> players) {
 		this.turnManagement = new CircularListImpl<>(players);
 		this.jailMap = new HashMap<>();
+		this.loserPlayer = new ArrayList<>();
 		//this.nextPlayer();
 		this.clear();
 	}
