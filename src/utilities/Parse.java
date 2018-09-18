@@ -7,10 +7,10 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import model.Consequences;
 import model.ConsequencesImpl;
 import model.tiles.*;
 import utilities.enumerations.Color;
+import utilities.enumerations.Consequences;
 import utilities.enumerations.TileTypes;
 
 /**

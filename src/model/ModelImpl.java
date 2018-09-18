@@ -15,6 +15,7 @@ import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
+import utilities.enumerations.Consequences;
 import utilities.enumerations.TileTypes;
 
 public class ModelImpl implements Model {

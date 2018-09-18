@@ -3,6 +3,8 @@ package model;
 import java.util.Collections;
 import java.util.List;
 
+import utilities.enumerations.Consequences;
+
 /**
  *
  * @author Matteo Alesiani
