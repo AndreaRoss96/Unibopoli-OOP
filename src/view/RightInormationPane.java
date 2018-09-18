@@ -183,6 +183,8 @@ public class RightInormationPane extends VBox {
 	public void updateJailButton(boolean isJail) {
 		endTurn.setGraphic(new ImageView(isJail ? EXIT_JAIL_PATH : END_TURN_PATH));
 		endTurn.setTooltip(isJail ? new Tooltip("jail fee: 125 $") : new Tooltip("Next Player"));
-		endTurn.setDisable(!isJail);
+		if (isJail) {
+			endTurn.setDisable(!isJail);
+		}
 	}
 }

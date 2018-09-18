@@ -8,13 +8,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
 import com.google.common.base.Optional;
-
-import model.exceptions.NotEnoughMoneyException;
 import model.tiles.AdapterBuildable;
+import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
-
 import utilities.enumerations.Color;
 import utilities.enumerations.TileTypes;
 
@@ -88,21 +85,12 @@ public class RealPlayer implements Player {
 
 	@Override
 	public void payments(final Integer moneyAmount) {
-//		if (!this.canPay(moneyAmount)) {
-//			if (moneyAmount > totalAssets()) {
-//				throw new NotEnoughMoneyException(moneyAmount);
-//			}
-//			return false;
-//		} else {
 			this.money -= moneyAmount;
-//			return true;
-//		}
 	}
 
-	public Integer totalAssets() {
-		// mi servirebbe anche il valore di case/alberghi
-		return getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().filter(value -> value instanceof AdapterBuildable)
-				.map(value -> (AdapterBuildable) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money;
+	public int totalAssets() {
+		return (getProperties().stream().mapToInt(Obtainable::getMortgage).sum() + getProperties().stream().filter(value -> value.getTileType().equals(TileTypes.BUILDABLE))
+				.map(value -> (BuildableImpl) value).mapToInt(value -> value.getPriceForBuilding() / 2).sum() + this.money);
 	}
 
 	@Override

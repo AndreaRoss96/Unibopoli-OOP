@@ -88,7 +88,7 @@ public class MortgageDialog extends Dialog {
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			DialogController.getDialogController().accumulatedMoney();
-			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText()));
+			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText().substring(0, obtainedMoney.getText().length()-1)));
 		});
 
 		mortgageButton.setOnAction(e -> {

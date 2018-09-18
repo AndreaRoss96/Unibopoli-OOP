@@ -74,7 +74,7 @@ public class DialogController implements DialogObserver {
 			AlertFactory.createErrorAlert("Speak (type) as you eat",
 					"Someone did not enter a number!\nPlease, use only numbers...");
 		}
-		this.controller.updateView();
+		this.controller.updateView(false);
 	}
 
 	@Override
@@ -95,7 +95,7 @@ public class DialogController implements DialogObserver {
 		} else {
 			AlertFactory.createErrorAlert("Nope", "One or more property of this color are mortgaged!");
 		}
-		this.controller.updateView();
+		this.controller.updateView(false);
 		CardDialog.getCardDialog().updateCardDialog();
 	}
 
@@ -108,7 +108,7 @@ public class DialogController implements DialogObserver {
 			property.decBuildings();
 			this.model.playerGainMoney(this.controller.getCurrentPlayer(), property.getPriceForBuilding() / 2);
 		}
-		this.controller.updateView();
+		this.controller.updateView(false);
 		CardDialog.getCardDialog().updateCardDialog();
 	}
 
@@ -127,7 +127,7 @@ public class DialogController implements DialogObserver {
 					}
 					property.changeMortgageStatus();
 				});
-		this.controller.updateView();
+		this.controller.updateView(false);
 	}
 
 	@Override
@@ -160,7 +160,7 @@ public class DialogController implements DialogObserver {
 		} catch (NotEnoughMoneyException e) {
 			// Auction Dialog
 		}
-		this.controller.updateView();
+		this.controller.updateView(false);
 	}
 
 	@Override
@@ -176,8 +176,8 @@ public class DialogController implements DialogObserver {
 	public void dialogTradeClick() { // se la mettessi nel model?
 		final TradeDialog tradeDialog = TradeDialog.getTradeDialog();
 		try {
-			int firstMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getFirst());
-			int secondMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getSecond());
+			final int firstMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getFirst());
+			final int secondMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getSecond());
 
 			final PlayerInfo firstPlayer = this.controller.getCurrentPlayer();
 			final PlayerInfo secondPlayer = getPlayerByName(tradeDialog.getSecondPlayer());
@@ -197,26 +197,12 @@ public class DialogController implements DialogObserver {
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
 				this.model.executeTrade((Player) secondPlayer, firstMoney, secondMoney, firstProperties, secondProperties);
-				//tipo se mettessi nel model sto pezzo
-//				secondProperties.forEach(prop -> {
-//					this.unbuild(prop, secondPlayer);
-//					firstPlayer.addProperty(secondPlayer.removeProperty(prop));
-//				});
-//				firstPlayer.gainMoney(secondMoney);
-//				firstPlayer.payments(firstMoney);
-//
-//				firstProperties.forEach(prop -> {
-//					this.unbuild(prop, firstPlayer);
-//					secondPlayer.addProperty(firstPlayer.removeProperty(prop));
-//				});
-//				secondPlayer.gainMoney(firstMoney);
-//				secondPlayer.payments(secondMoney);
 			}
 		} catch (NumberFormatException ex) {
 			AlertFactory.createErrorAlert("Speak (type) as you eat",
 					"Someone did not enter a number!\nPlease, use only numbers...");
 		}
-		this.controller.updateView();
+		this.controller.updateView(false);
 	}
 
 	private PlayerInfo getPlayerByName(String playerName) {

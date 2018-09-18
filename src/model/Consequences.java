@@ -17,6 +17,7 @@ public enum Consequences {
 		if(player.getPosition() > Integer.parseInt(values.get(0))) {
 			Consequences.valueOf(Consequences.class, "RECEIVE").exec(Arrays.asList(values.get(1)));
 		}
+
 		ControllerImpl.getController().exitDice(Integer.parseInt(values.get(0)));
 	}),
 	
@@ -36,7 +37,7 @@ public enum Consequences {
 	}),
 	
 	EACH_PLAYER((player, values) -> {
-		ControllerImpl.getController().getPlayers().forEach(playerInfo -> ((Player)playerInfo).payments(Integer.parseInt(values.get(0))));
+		ControllerImpl.getController().getPlayers().stream().filter(playerV -> !playerV.getName().equals(player.getName())).forEach(playerInfo -> ((Player)playerInfo).payments(Integer.parseInt(values.get(0))));
 	}),
 	
 	NO_CONSEQUENCE((player, values) -> {}),

@@ -89,10 +89,10 @@ public class PlayerSetupMenu extends Scene {
 		});
 
 		startGame.setOnAction(e -> {
-			List<PlayerSetupBox> psbList = flowPane.getChildren().stream()
+			final List<PlayerSetupBox> psbList = flowPane.getChildren().stream()
 					.filter(element -> element instanceof PlayerSetupBox).map(pBox -> (PlayerSetupBox) pBox)
 					.collect(Collectors.toList());
-			List<String> playersNames = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText)
+			final List<String> playersNames = psbList.stream().map(PlayerSetupBox::getNameField).map(TextField::getText)
 					.collect(Collectors.toList());
 			/* check if all names are presents and are all different and all player have an avatar */
 			if (!this.checkNames(playersNames)) {
@@ -122,7 +122,6 @@ public class PlayerSetupMenu extends Scene {
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		borderPane.setId("setupPlayer");
 		this.setRoot(borderPane);
-		//mainStage.centerOnScreen();
 	}
 
 	private PlayerSetupBox addPlayerSetupBox(FlowPane flowPane) {

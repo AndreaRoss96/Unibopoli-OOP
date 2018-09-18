@@ -53,7 +53,7 @@ public interface PlayerInfo extends Serializable {
 	 * 
 	 * @return player's total assets
 	 */
-	Integer totalAssets();
+	int totalAssets();
 
 	/**
 	 * Returns the number of all houses of the player.

@@ -10,4 +10,6 @@ public interface View {
 	void movement(final int exitDice);
 
 	void updateLabels();
+
+	void updateButton(boolean diceThrown);
 }
