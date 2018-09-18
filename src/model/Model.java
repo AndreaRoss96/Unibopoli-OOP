@@ -3,6 +3,8 @@ package model;
 import java.util.List;
 import java.util.Set;
 
+import com.google.common.base.Optional;
+
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
@@ -93,5 +95,9 @@ public interface Model {
 	void buyProperty(PlayerInfo player, Obtainable property);
 
 	void playerAddProperty(PlayerInfo player, Obtainable property);
+	
+	Optional<ConsequencesImpl> supplierConsequence();
+	
+	Tile getTileOf(int position);
 
 }

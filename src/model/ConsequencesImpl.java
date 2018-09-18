@@ -3,6 +3,8 @@ package model;
 import java.util.Collections;
 import java.util.List;
 
+import utilities.enumerations.Consequences;
+
 /**
  *
  * @author Matteo Alesiani
@@ -33,5 +35,9 @@ public class ConsequencesImpl {
 	
 	public void doConsequences(){
 		this.consequences.exec(this.getValues());
+	}
+	
+	public static ConsequencesImpl emptyConsequence() {
+		return new ConsequencesImpl(Consequences.NO_CONSEQUENCE, "", Collections.emptyList());
 	}
 }

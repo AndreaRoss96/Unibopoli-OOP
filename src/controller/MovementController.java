@@ -35,10 +35,5 @@ public class MovementController extends Thread {
     public void run() {
 		transition = new PathTransition(DURATION, this.path, this.icon.get());
 		transition.play();
-		try {
-			this.join();
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
     }
 }

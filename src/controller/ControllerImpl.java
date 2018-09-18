@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import model.ConsequencesImpl;
 import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
@@ -161,10 +162,30 @@ public class ControllerImpl implements Controller {
 			
 	}
 
+	private void execconsequence() {
+		if(!this.model.supplierConsequence().isPresent()) {
+			/**
+			 *	TODO: controllare che dopo l'esecuzione della dialog il gioco prosegui regolarmente 
+			 */
+			ControllerImpl.getController().showContract((Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition()));
+		}else {
+			ConsequencesImpl consequence = this.model.supplierConsequence().get();
+			
+			System.out.println("\n" + consequence.getTextConsequence() + "\n");
+			
+			Tile tile = this.model.getTileOf(this.getCurrentPlayer().getPosition());
+			
+			tile.setConsequence(consequence);
+			tile.doConsequence();
+		}
+	}
+	
 	public void exitDice(final int value) {
-		view.movement(value);
+		this.view.movement(value);
 					
-		model.movement(value); 
+		this.model.movement(value); 
+		
+		this.execconsequence();
 	}
 	
 	@Override

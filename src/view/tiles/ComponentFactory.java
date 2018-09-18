@@ -31,8 +31,8 @@ public class ComponentFactory {
 			landPane.setMaxHeight(LandCornerDimension);
 			landPane.setMaxWidth(LandCornerDimension);
 		} else {
-			landPane.setMinHeight(LandHEIGHT);
-			landPane.setMinWidth(LandSimpleWIDTH);
+			landPane.setMinHeight(LandHEIGHT-1);
+			landPane.setMinWidth(LandSimpleWIDTH-1);
 			landPane.setMaxHeight(LandHEIGHT);
 			landPane.setMaxWidth(LandSimpleWIDTH);
 		}

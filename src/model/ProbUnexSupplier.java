@@ -26,10 +26,11 @@ public class ProbUnexSupplier {
 	
 	public static ProbUnexSupplier get(){
 		check(SINGLETONSUPPLIER == null || !done);
+		
 		return SINGLETONSUPPLIER;
 	}
 	
-	public static  ProbUnexSupplier get(List<String> probabilityList, List<String> unexpectedList){
+	public static ProbUnexSupplier get(List<String> probabilityList, List<String> unexpectedList){
 		check(done);
 		if(SINGLETONSUPPLIER == null) {
 			SINGLETONSUPPLIER = new ProbUnexSupplier(probabilityList, unexpectedList);

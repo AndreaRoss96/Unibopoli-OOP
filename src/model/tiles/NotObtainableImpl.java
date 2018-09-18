@@ -1,10 +1,6 @@
 package model.tiles;
 
-import java.util.ArrayList;
-
-import model.Consequences;
 import model.ConsequencesImpl;
-import model.ProbUnexSupplier;
 import utilities.enumerations.TileTypes;
 
 public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
@@ -13,7 +9,7 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	
 	private Integer positionTile;
 	private TileTypes tileType;
-	protected ConsequencesImpl consequences;
+	private ConsequencesImpl consequences;
 	
 	public NotObtainableImpl(final int positionTile, final TileTypes titeType) {
 		this.positionTile = positionTile;
@@ -44,26 +40,7 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	public String getPathImage() {
 		return this.getTileType().getPathImage().orElseThrow(() -> new IllegalArgumentException());
 	}
-	
-	private ConsequencesImpl provideConsequence() {
-		switch (this.getTileType()) {
-		case GO_JAIL: 
-			return new ConsequencesImpl(Consequences.MOVING, "Vai in prigione", new ArrayList<>());
-		case GO: 
-			return new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Passi dal via", new ArrayList<>());
-		case LUXURY_TAX: 
-			return new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa di lusso", new ArrayList<>());
-		case INCOME_TAX: 
-			return new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa da definire", new ArrayList<>());
-		case PROBABILITY: 
-			return ProbUnexSupplier.get().getNextProbability(); 
-		case UNEXPECTED:
-			return ProbUnexSupplier.get().getNextUnexpected();
-		default: 
-			return null; // Inserire NOT_CONSEQUENCE 
-		}
-	}
-	
+
 	@Override
 	public void setConsequence(ConsequencesImpl consequence) {
 		this.consequences = consequence;
@@ -71,7 +48,6 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	
 	@Override
 	public void doConsequence() {
-		this.setConsequence(this.provideConsequence());
 		this.consequences.doConsequences();
 	}
 }

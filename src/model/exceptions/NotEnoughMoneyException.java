@@ -13,4 +13,9 @@ public class NotEnoughMoneyException extends RuntimeException {
 		super();
 		AlertFactory.createErrorAlert("You tried it!", "You don't have enough money!\nYou have only " + moneyAmount);
 	}
+	
+	/**
+	 *	Allert dentro ad un metodo. Può essere interessante ??
+	 * 
+	 */
 }

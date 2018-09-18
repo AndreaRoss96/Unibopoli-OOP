@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
@@ -14,6 +15,7 @@ import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
+import utilities.enumerations.Consequences;
 import utilities.enumerations.TileTypes;
 
 public class ModelImpl implements Model {
@@ -101,37 +103,62 @@ public class ModelImpl implements Model {
 	public void movement(int value) {
 		if (!this.getCurrentPlayer().isInJail()) {
 			this.setNewPosition((this.turnPlayer.getCurrentPlayer().getPosition() + value) % this.board.getTilesNumber());
-			this.supplierConsequence();
 		}
 	}
 
-	private static List<String> getvalues(final Tile tile, final int mul){
+	private List<String> getvalues(final Obtainable tile, final int mul){
 		if(mul == 0) {
-			return Arrays.asList(((Obtainable) tile).getOwner().get());
+			return Arrays.asList(tile.getOwner().get());
 		}
 		
-		return Arrays.asList(((Obtainable) tile).getOwner().get(), String.valueOf(mul));
+		return Arrays.asList(tile.getOwner().get(), String.valueOf(mul));
+	}
+
+	private ConsequencesImpl factory(boolean condition, Obtainable tile, int value){
+		return condition ? new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, value)) : new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 1));
 	}
 	
-	private void supplierConsequence() {
+	@Override
+	public Optional<ConsequencesImpl> supplierConsequence() {
 		final Tile tile = this.board.getTileOf(this.turnPlayer.getCurrentPlayer().getPosition());
+		ConsequencesImpl consequenceRet = ConsequencesImpl.emptyConsequence();
 		
 		if(tile instanceof Obtainable && !((Obtainable) tile).getOwner().isPresent()) {
-			ControllerImpl.getController().showContract((Obtainable) tile);
-		}else { 
-			if(tile.getTileType() == TileTypes.STATION ) {
-				((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 0)));
-			}else if(tile.getTileType() == TileTypes.BUILDABLE || tile.getTileType() == TileTypes.WATER_AGENCY || tile.getTileType() == TileTypes.LIGHT_AGENCY){	
+			return Optional.absent();
+		}else if(tile instanceof Obtainable) {
 				final PlayerInfo player = this.turnPlayer.getPlayers().stream()
 																	  .filter(playerV -> playerV.getName().equals(((Obtainable) tile).getOwner().get()))
-																	  .findFirst().get();
-				if(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles()) {
-					((Obtainable) tile).setConsequence(new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 2)));
-				}
+																	  .findFirst().get(); 
 				
-				tile.doConsequence();
-			}
+				if(!((Obtainable) tile).getOwner().get().equals(player.getName())) {
+					if(tile.getTileType() == TileTypes.STATION) {
+						consequenceRet = new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
+					}else if(tile.getTileType() == TileTypes.BUILDABLE){
+						consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 2);
+					}else {
+						consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 4);
+					}
+				}
+		}else {
+			switch (tile.getTileType()) {
+			case GO_JAIL: 
+				consequenceRet = new ConsequencesImpl(Consequences.MOVING, "Vai in prigione", new ArrayList<>(Arrays.asList(String.valueOf(30)))); break;
+			case GO: 
+				consequenceRet = new ConsequencesImpl(Consequences.RECEIVE, "Passi dal via", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+			case LUXURY_TAX: 
+				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa di lusso", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+			case INCOME_TAX: 
+				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa da definire", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
+			case PROBABILITY: 
+				consequenceRet = ProbUnexSupplier.get().getNextProbability(); break;
+			case UNEXPECTED:
+				consequenceRet = ProbUnexSupplier.get().getNextUnexpected(); break;
+			default: 
+				consequenceRet = ConsequencesImpl.emptyConsequence();
+			}			
 		}
+		
+		return Optional.of(consequenceRet);
 	}
 
 	private void setNewPosition(int value) {
@@ -212,6 +239,11 @@ public class ModelImpl implements Model {
 	@Override
 	public void playerAddProperty(final PlayerInfo player, final Obtainable property) {
 		((Player) player).addProperty(property);
+	}
+
+	@Override
+	public Tile getTileOf(int position) {
+		return this.board.getTileOf(position);
 	}
 	
 	/**
