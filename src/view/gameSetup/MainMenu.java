@@ -106,7 +106,7 @@ public final class MainMenu extends Scene{
 
 		creditsBtn.setOnAction(e -> {
 			AlertFactory.createInformationAlert("Credits",
-					"Alesiani Matteo: Movement and consequences, management of contracts and contingencies/probabilities, game Board graphics and game turn\n" +
+					"Alesiani Matteo: Movement and consequences, management of contracts and unexpected/probabilities, game Board graphics and game turn\n" +
 					"Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading of the Game, main menu and initialization of the game.");
 		});
 

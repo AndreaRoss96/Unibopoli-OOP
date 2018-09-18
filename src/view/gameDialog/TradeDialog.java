@@ -35,8 +35,8 @@ public class TradeDialog extends Dialog {
 
 	private static final Insets INSETS = new Insets(2, 5, 2, 5);
 
-	private PlayersContractListView allPlayersListView;
-	private PlayersContractListView currListView;
+	private PlayerContractsListView allPlayersListView;
+	private PlayerContractsListView currListView;
 	private ComboBox<String> playerBox;
 	private TextField currMoneyToTrade;
 	private TextField secPlayersMoneyToTrade;
@@ -74,7 +74,7 @@ public class TradeDialog extends Dialog {
 		this.currMoneyToTrade = new TextField("0");
 		currMoneyToTrade.setPrefWidth(currPlayerLabel.getWidth());
 
-		this.currListView = new PlayersContractListView(currentPlayer.getProperties());
+		this.currListView = new PlayerContractsListView(currentPlayer.getProperties());
 		gridA.add(new Label("Player: "), 0, 0);
 		gridA.add(currPlayerLabel, 1, 0, 1, 1);
 		gridA.add(new Label("Trade: "), 0, 1, 2, 1);
@@ -96,7 +96,7 @@ public class TradeDialog extends Dialog {
 		gridB.add(new Label("Trade: "), 0, 1, 2, 1);
 		gridB.add(this.secPlayersMoneyToTrade, 1, 1, 2, 1);
 		gridB.add(new Label("$"), 2, 1);
-		gridB.add(new PlayersContractListView(), 0, 2, 4, 1);
+		gridB.add(new PlayerContractsListView(), 0, 2, 4, 1);
 		rootPane.setRight(gridB);
 
 		final BorderPane bottomPane = addButtonBox(stage, "Green",
@@ -108,7 +108,7 @@ public class TradeDialog extends Dialog {
 
 		this.playerBox.setOnAction(e -> {
 			if (this.playerBox.getValue() != null) {
-				this.allPlayersListView = new PlayersContractListView(playerMap.get(this.playerBox.getValue()));
+				this.allPlayersListView = new PlayerContractsListView(playerMap.get(this.playerBox.getValue()));
 				gridB.add(this.allPlayersListView, 0, 2, 4, 1);
 				this.secPlayersMoneyToTrade.setText("0");
 			}

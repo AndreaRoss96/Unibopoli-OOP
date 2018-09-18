@@ -46,8 +46,8 @@ public final class IconLoader {
 		return null;
 	}
 
-	/**IN QUESTO MODO SI PUò FARE CHE IL CONTROLLER RICHAIAM QUESTO METODO E PASSA IN INGRESSO AL PlayerSetupMenu LA MAPPA PER INIZIALIZZARE I GIOCATORIK, IN QUESTO MODO SI RENDONO LE ICONE PERSONALIZZABILI
-	 * Get all the sprite for the players, used by the <i>playerSetupMenu</i>
+	/**
+	 *  Get all the sprite for the players, used by the <i>playerSetupMenu</i>
 	 * initialize the players.
 	 * 
 	 * @param path
@@ -58,8 +58,8 @@ public final class IconLoader {
 	 */
 	public Map<String, String> getAvatarMap(final String path) {
 		Map<String, String> imageMap = new HashMap<>();
-		File folder = new File(path);
-		File[] listOfFiles = folder.listFiles();
+		final File folder = new File(path);
+		final File[] listOfFiles = folder.listFiles();
 
 		for (int i = 0; i < listOfFiles.length; i++) {
 			if (listOfFiles[i].isFile()) {

@@ -5,8 +5,6 @@ import javafx.application.Application;
 
 public class ViewImpl implements View{
 	
-	private final ControllerImpl controller = ControllerImpl.getController();
-	
 	public ViewImpl() {
 		// TODO Auto-generated constructor stub
 	}

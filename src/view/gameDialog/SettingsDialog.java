@@ -1,6 +1,7 @@
 package view.gameDialog;
 
 import controller.ControllerImpl;
+import controller.SoundController;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -33,7 +34,7 @@ public class SettingsDialog extends Dialog {
 	/**
 	 * Creation of the pane for the dialog.
 	 */
-	public void createSettingDialog() {
+	public void createSettingDialog(SoundController sound) {		
 		final Stage stage = setStage();
 		stage.initModality(Modality.WINDOW_MODAL);
 		final ControllerImpl controller = ControllerImpl.getController();
@@ -43,12 +44,12 @@ public class SettingsDialog extends Dialog {
 		root.setHgap(getPrefWSize()/12);
 		
 		final Button musicButton = new Button();
-		musicButton.setGraphic(controller.getSound().isMusicMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
+		musicButton.setGraphic(sound.isMusicMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
 		musicButton.getStyleClass().add("roundButton");
 		root.getChildren().add(musicButton);
 		
 		final Button soundButton = new Button();
-		soundButton.setGraphic(controller.getSound().isSoundMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
+		soundButton.setGraphic(sound.isSoundMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
 		soundButton.getStyleClass().add("roundButton");
 		root.getChildren().add(soundButton);
 		
@@ -59,13 +60,13 @@ public class SettingsDialog extends Dialog {
 		root.getChildren().add(this.saveGameBtn);
 		
 		musicButton.setOnAction(e -> {
-			controller.getSound().changeMusicMute();
-			musicButton.setGraphic(controller.getSound().isMusicMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
+			sound.changeMusicMute();
+			musicButton.setGraphic(sound.isMusicMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
 		});
 		
 		soundButton.setOnAction(e -> {
-			controller.getSound().changeSoundsMute();
-			soundButton.setGraphic(controller.getSound().isSoundMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
+			sound.changeSoundsMute();
+			soundButton.setGraphic(sound.isSoundMute() ? IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()) : IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
 		});
 		
 		this.saveGameBtn.setOnAction(e -> {

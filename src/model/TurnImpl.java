@@ -83,7 +83,7 @@ public class TurnImpl implements Turn {
 	@Override
 	public boolean isThrows() {
 		this.rolls++;
-		return this.rolls < 3;
+		return this.rolls <= 3;
 	}
 	
 	@Override
