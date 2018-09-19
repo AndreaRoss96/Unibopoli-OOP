@@ -7,14 +7,11 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.junit.BeforeClass;
 import org.junit.Test;
 
-import model.Board;
 import model.GameInitializer;
 import model.Model;
 import utilities.enumerations.InitialDistribution;
-import view.Icon;
 
 public class GameInitTest {
 	

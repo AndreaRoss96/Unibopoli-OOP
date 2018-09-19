@@ -13,7 +13,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import model.tiles.Obtainable;
 
-public class PlayersContractListView extends ListView<Text> {
+public class PlayerContractsListView extends ListView<Text> {
 	
 	private static final String BLACK = "#000000";
 
@@ -23,7 +23,7 @@ public class PlayersContractListView extends ListView<Text> {
 	 * Empty constructor for the PlayerContractListView to generate an empty
 	 * ListView.
 	 */
-	public PlayersContractListView() {
+	public PlayerContractsListView() {
 
 	}
 
@@ -34,7 +34,7 @@ public class PlayersContractListView extends ListView<Text> {
 	 * @param player
 	 *            selected
 	 */
-	public PlayersContractListView(final List<Obtainable> propertyList) {
+	public PlayerContractsListView(final List<Obtainable> propertyList) {
 		propertyList.forEach(c -> {
 			Text property = new Text(c.getNameOf());
 			property.setStyle("-fx-font-family: kabel;");

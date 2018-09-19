@@ -13,7 +13,7 @@ import utilities.PaneDimensionSetting;
 
 public class CommandBridge extends Scene{
 
-	private static final String TITLE = "UNIBOPOLY - La versione Universitaria di Monopoli.";
+	private static final String TITLE = "UNIBOPOLI - La versione Universitaria di Monopoli.";
 
 	private static Stage mainStage;
     
@@ -23,7 +23,7 @@ public class CommandBridge extends Scene{
 		final BorderPane commandBridge = new BorderPane();
 		commandBridge.setLeft(LeftPlayersPane.getLeftPlayersPane().get());
 		commandBridge.setCenter(GamePane.get());
-		commandBridge.setRight(RightInormationPane.getRinghtInformationPane());
+		commandBridge.setRight(RightInormationPane.getRinghtInformationPane().get());
 		
 		this.setRoot(commandBridge);
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());

@@ -29,7 +29,7 @@ public class MortgageDialog extends Dialog {
 
 	private static final double SPACING = 10;
 
-	private PlayersContractListView playerListView;
+	private PlayerContractsListView playerListView;
 	private Label obtainedMoney;
 	
 	private MortgageDialog() {
@@ -58,7 +58,7 @@ public class MortgageDialog extends Dialog {
 		rootPane.setBackground(getBackground());
 
 		final List<Obtainable> propertiesList = player.getProperties().stream().filter(p -> !p.hasMortgage()).collect(Collectors.toList());
-		this.playerListView = new PlayersContractListView(propertiesList);
+		this.playerListView = new PlayerContractsListView(propertiesList);
 		rootPane.setLeft(playerListView);
 
 		final VBox vBox = new VBox();

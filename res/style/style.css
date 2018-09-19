@@ -3,6 +3,7 @@
 }
 
 #backgroudBoard{
+	-fx-border-color: black; 
 	-fx-background-color: #CDE6D0;
 }
 
@@ -19,6 +20,7 @@
 	-fx-font-size: 15pt;
     -fx-font-family: "Kabel";
     -fx-base: #84912F;
+    -fx-border-color: black; 
  	-fx-background: #E1E4CB;
 }
 
@@ -31,7 +33,8 @@
 #mainMenu{
     -fx-font-size: 15pt;
     -fx-font-family: "Kabel";
-	-fx-base: #4949cc; 
+	-fx-base: #4949cc;
+	-fx-border-color: black; 
     -fx-background-image: url("/images/Logo/unibopoli-logo.jpg");
     -fx-background-size: 100% 100%;
  	-fx-background-repeat: stretch;

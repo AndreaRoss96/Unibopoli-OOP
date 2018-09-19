@@ -138,7 +138,7 @@ public class ControllerImpl implements Controller {
 		 * if the two dice have same result the player have to roll dices again, even if
 		 * you are going out of jail
 		 */
-		this.view.updateButton(!(result.areSame()));
+		this.view.updateButton(!(result.areSame()) && result.getFirst() != 0);
 		if (this.model.getCurrentPlayer().isInJail()) {
 			if(doJailSound) {
 				this.sound.playSound(ClassicType.Music.GeneralMusicMap.getJailDoorEffect());
@@ -189,7 +189,7 @@ public class ControllerImpl implements Controller {
 	
 	@Override
 	public void settingsClick() {
-		SettingsDialog.getSettingsDialog().createSettingDialog();
+		SettingsDialog.getSettingsDialog().createSettingDialog(this.sound);
 	}
 	
 	@Override
@@ -203,8 +203,8 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void endGame() {
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getGameWin());
-		AlertFactory.createInformationAlert("Congratulations", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
-		//chiudere l'applicazione, che non so come si fa
+		AlertFactory.createInformationAlert("Congratulations!", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
+		System.exit(0);
 	}
 	
 	public void startAuciton(Obtainable property) {
