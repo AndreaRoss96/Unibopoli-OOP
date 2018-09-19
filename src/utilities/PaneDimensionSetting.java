@@ -4,11 +4,12 @@ import java.awt.Toolkit;
 
 public class PaneDimensionSetting {
 
-	private static final double OFFSET = 80.0;
-	private static final double CommandBridgeWIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() - OFFSET;
-    private static final double CommandBridgeHEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - OFFSET;
+	private static final double OFFSET_WIDTH = 0.042 * Toolkit.getDefaultToolkit().getScreenSize().getWidth();
+	private static final double OFFSET_HEIGHT = 0.074 * Toolkit.getDefaultToolkit().getScreenSize().getHeight();
+	private static final double CommandBridgeWIDTH = Toolkit.getDefaultToolkit().getScreenSize().getWidth() - OFFSET_WIDTH;
+    private static final double CommandBridgeHEIGHT = Toolkit.getDefaultToolkit().getScreenSize().getHeight() - OFFSET_HEIGHT;
     private static final double GamePaneDIMENSION = CommandBridgeHEIGHT;
-    private static final double LateralPaneWIDTH = (CommandBridgeWIDTH - GamePaneDIMENSION)/2 - OFFSET;
+    private static final double LateralPaneWIDTH = (CommandBridgeWIDTH - GamePaneDIMENSION)/2 - OFFSET_WIDTH;
     private static final double LateralPaneHEIGHT = CommandBridgeHEIGHT;
     
 	private static PaneDimensionSetting PANEDIMENSION;
@@ -19,7 +20,6 @@ public class PaneDimensionSetting {
 		if(PaneDimensionSetting.PANEDIMENSION == null) {
 			PaneDimensionSetting.PANEDIMENSION = new PaneDimensionSetting();
 		}
-		
 		return PaneDimensionSetting.PANEDIMENSION;
 	}
 	

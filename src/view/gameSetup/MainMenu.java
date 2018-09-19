@@ -8,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import controller.SoundController;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
@@ -37,7 +36,7 @@ public final class MainMenu extends Scene{
 	
 	private MainMenu() {
 		super(new StackPane(), MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
-		StackPane root = new StackPane();
+		final StackPane root = new StackPane();
 	
 		final AnchorPane anchorPane = new AnchorPane();
 		
@@ -87,7 +86,6 @@ public final class MainMenu extends Scene{
 		newGameBtn.setOnAction(e -> {
 			mainStage.setScene(PlayerSetupMenu.get(mainStage));
 			mainStage.centerOnScreen();
-			
 		});
 
 		loadGameBtn.addEventFilter(MouseEvent.MOUSE_CLICKED, new HandleFileChooser());
@@ -144,7 +142,7 @@ public final class MainMenu extends Scene{
 
 	public static MainMenu get(Stage stage) {
 		mainStage = stage;
-		//mainStage.centerOnScreen();
+		
 		return new MainMenu();
 	}
 }

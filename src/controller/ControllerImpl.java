@@ -121,7 +121,6 @@ public class ControllerImpl implements Controller {
 		this.model.getPlayers().stream().filter(player -> !player.getName().equals(this.getCurrentPlayer().getName())).forEach(player -> {
 			playerObtainableMap.put(player.getName(), player.getProperties());
 		});
-		System.out.println("Bye bye");
 		TradeDialog.getTradeDialog().createTradeDialog(playerObtainableMap);
 	}
 

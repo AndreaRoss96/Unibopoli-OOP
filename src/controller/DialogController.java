@@ -64,7 +64,7 @@ public class DialogController implements DialogObserver {
 //							((Player) playerList.get(betsList.indexOf(bet))).addProperty(property);
 //							((Player) playerList.get(betsList.indexOf(bet))).payments(moneyAmount);
 						} else {
-							AlertFactory.createInformationAlert("Ehi", playerList.get(betsList.indexOf(bet)).getName()
+							AlertFactory.createInformationAlert("Ehi ", playerList.get(betsList.indexOf(bet)).getName()
 									+ ", you don't have all those money.");
 						}
 					}
@@ -84,6 +84,7 @@ public class DialogController implements DialogObserver {
 		if (areOtherMortgaged.stream().filter(e -> e.booleanValue()).count() == 0) {
 			if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
 				if (property.getBuildingNumber() < NUM_BUILD_MAX) {
+					//modifica percorso
 					controller.getSound().playSound(("/music/plastic_house_or_hotel_drop_on_playing_board.wav"));
 					property.incBuildings();
 					this.model.playerPayment(this.controller.getCurrentPlayer(), property.getPriceForBuilding());
@@ -103,6 +104,7 @@ public class DialogController implements DialogObserver {
 	public void decHouseClick() {
 		final AdapterBuildable property = (AdapterBuildable) CardDialog.getCardDialog().getProperty();
 		if (property.getBuildingNumber() != 0) {
+			//modifica percorso
 			controller.getSound().playSound("/music/plastic_house_or_hotel_drop_on_playing_board.wav");
 //			this.decHouse(property, (Player) this.controller.getCurrentPlayer());
 			property.decBuildings();
@@ -156,6 +158,7 @@ public class DialogController implements DialogObserver {
 //			((Player) this.controller.getCurrentPlayer()).buyProperty(property);
 			//model
 			this.model.buyProperty(this.controller.getCurrentPlayer(), property);
+			//modifica percorso
 			this.controller.getSound().playSound("/music/CashRegister.wav");
 		} catch (NotEnoughMoneyException e) {
 			// Auction Dialog
@@ -188,12 +191,12 @@ public class DialogController implements DialogObserver {
 
 			if (!this.canPay(firstPlayer, firstMoney) && this.canPay(secondPlayer, secondMoney)) {
 				AlertFactory.createErrorAlert("He's trying to cheat you!",
-						firstPlayer.getName() + "Doesn't have enought money!");
+						firstPlayer.getName() + " doesn't have enought money!");
 			} else if (!this.canPay(secondPlayer, secondMoney) && this.canPay(firstPlayer, firstMoney)) {
 				AlertFactory.createErrorAlert("He's trying to cheat you!",
-						secondPlayer.getName() + "Doesn't have enought money!");
+						secondPlayer.getName() + " doesn't have enought money!");
 			} else if (!this.canPay(firstPlayer, firstMoney) && !this.canPay(secondPlayer, secondMoney)) {
-				AlertFactory.createErrorAlert("Nope",
+				AlertFactory.createErrorAlert("Nope ",
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
 				this.model.executeTrade((Player) secondPlayer, firstMoney, secondMoney, firstProperties, secondProperties);

@@ -7,6 +7,8 @@ import java.util.stream.Collectors;
 
 import controller.ControllerImpl;
 import controller.MovementController;
+import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -33,7 +35,7 @@ import view.Pawn;
 public class GamePane extends StackPane{
 	
 	private static final double ROTATE = +90.0;
-	private static final double FIXLEFT = 10.0;
+	private static final double FIXLEFT = 5.0;
 	private static final double LABEL_WIDTH = 190;
 	
 	private static GamePane GAMEPANE = null;
@@ -60,8 +62,6 @@ public class GamePane extends StackPane{
 		mainPane.getChildren().addAll(background(), playerLayer(), boardLayer());
 
 		this.getChildren().add(mainPane);
-		
-		//contractPane.setPrefSize(PaneDimensionSetting.getInstance().getGamePaneWidth() * 0.5, PaneDimensionSetting.getInstance().getGamePaneHeight() * 0.5);
 	}
 	
 	private Pane playerLayer() {
@@ -86,13 +86,11 @@ public class GamePane extends StackPane{
 	private AnchorPane background() {
 		AnchorPane backGround = new AnchorPane();
 		backGround.setId("backgroudBoard");
-		
 		return backGround;
 	}
 	
 	private BorderPane boardLayer() {
 		BorderPane boardLayer = new BorderPane();
-		
 		boardLayer.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth());
 		boardLayer.setMinHeight(PaneDimensionSetting.getInstance().getGamePaneHeight());
 		
@@ -104,7 +102,6 @@ public class GamePane extends StackPane{
 		boardLayer.setCenter(this.getCenterNode());
 		boardLayer.setRight(this.getRightNode());
 		boardLayer.setTop(this.getTopNode());
-		
 		
 		return boardLayer;
 	}
@@ -133,8 +130,9 @@ public class GamePane extends StackPane{
 	
 	private FlowPane getCenterNode() {
 		this.contractPane = new FlowPane(FIXLEFT, FIXLEFT);
-		
-		this.contractPane.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+		this.contractPane.setAlignment(Pos.CENTER);
+		this.contractPane.setOrientation(Orientation.VERTICAL);
+		this.contractPane.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth() * 0.7);
 		updateContractPane();
 		
 		return this.contractPane;
@@ -187,9 +185,9 @@ public class GamePane extends StackPane{
 		this.contractPane.getChildren().clear();
 		List<Obtainable> contractList = ControllerImpl.getController().getCurrentPlayer().getProperties();
 		contractList.forEach(prop -> {
-			Label propertyName = new Label(prop.getNameOf());
+			final Label propertyName = new Label(prop.getNameOf());
 			propertyName.setPrefSize(LABEL_WIDTH, PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.05);
-			propertyName.setAlignment(javafx.geometry.Pos.CENTER);
+			propertyName.setAlignment(Pos.CENTER);
 			propertyName.setTextAlignment(TextAlignment.CENTER);
 			
 			if(prop.getTileType() == TileTypes.BUILDABLE) {

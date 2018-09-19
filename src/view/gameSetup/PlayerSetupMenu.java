@@ -188,6 +188,7 @@ public class PlayerSetupMenu extends Scene {
 
 	public static PlayerSetupMenu get(Stage stage) {
 		mainStage = stage;
+		
 		mainStage.setTitle(TITLE);
 		
 		return new PlayerSetupMenu();	

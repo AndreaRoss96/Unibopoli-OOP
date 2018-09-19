@@ -30,14 +30,14 @@ public class Contract extends AnchorPane {
 	private static final double HEIGHT_ANCHOR = HEIGHT * 0.007;
 	private static final double H_GAP = WIDTH * 0.0032;
 	private static final double V_GAP = HEIGHT * 0.0047;
-	private static final double V_PADDING = WIDTH * 0.009;
+	private static final double V_PADDING = WIDTH * 0.005;
 	private static final double PREF_WIDTH = WIDTH * 0.18;
 	private static final double PREF_HEIGHT = HEIGHT * 0.43;
 	private static final double LABEL_HEIGHT = PREF_HEIGHT * 0.045;
 	private static final double LABEL_WIDTH = PREF_WIDTH / 2 - H_GAP * 2;
 	private static final double IMAGE_HEIGHT = LABEL_HEIGHT * 10;
 	private static final double IMAGE_WIDTH = LABEL_WIDTH * 1.5;
-	private static final double LABEL_BIG_WIDTH = 255;
+	private static final double LABEL_BIG_WIDTH = WIDTH * 0.156;//255
 	private static final Font PROPERTY_FONT = Font.font("Kabel", FontWeight.BOLD, 20);
 
 	private final GridPane insidePane;

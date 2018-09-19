@@ -8,6 +8,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.scene.text.TextAlignment;
@@ -22,7 +23,7 @@ import utilities.enumerations.ClassicType;
  * @author Rossolini Andrea
  *
  */
-public class RightInormationPane extends VBox {
+public class RightInormationPane {
 
 	private static final RightInormationPane SINGLETON = new RightInormationPane();
 	
@@ -35,6 +36,7 @@ public class RightInormationPane extends VBox {
 	private final double PANE_WIDTH = PaneDimensionSetting.getInstance().getLateralPaneWidth();
 	private final double PANE_HEIGHT = PaneDimensionSetting.getInstance().getLateralPaneHeight();
 
+	private static VBox root;
 	private static Label leftDiceResult;
 	private static Label rightDiceResult;
 	private static Label playerLabel;
@@ -49,8 +51,9 @@ public class RightInormationPane extends VBox {
 	}
 
 	private RightInormationPane() {
-		this.setAlignment(Pos.TOP_CENTER);
-		this.setStyle("-fx-border-color: black");
+		root = new VBox();
+		root.setAlignment(Pos.TOP_CENTER);
+		
 		final AnchorPane topAnchorPane = new AnchorPane();
 		topAnchorPane.setPrefWidth(PANE_WIDTH);
 		topAnchorPane.setPrefHeight(PANE_WIDTH / 2);
@@ -68,6 +71,7 @@ public class RightInormationPane extends VBox {
 		topAnchorPane.getChildren().add(rightDiceResult);
 
 		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getDiceImage()));
+		diceBtn.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
 		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
@@ -80,11 +84,11 @@ public class RightInormationPane extends VBox {
 		AnchorPane.setTopAnchor(setting, SETTINGS_DISTANCE);
 		topAnchorPane.getChildren().add(setting);
 
-		this.getChildren().add(topAnchorPane);
+		root.getChildren().add(topAnchorPane);
 
 		final Button tradeBtn = new Button("TRADE");
 		tradeBtn.setPrefWidth(PANE_WIDTH);
-		this.getChildren().add(tradeBtn);
+		root.getChildren().add(tradeBtn);
 
 		playerLabel = new Label();
 		playerLabel.setWrapText(true);
@@ -99,12 +103,12 @@ public class RightInormationPane extends VBox {
 		prisonLabel.setWrapText(true);
 		prisonLabel.setTextAlignment(TextAlignment.CENTER);
 		
-		this.getChildren().addAll(playerLabel, new Line(-100, 0, 100, 0), cashLabel, new Line(-100, 0, 100, 0), netWorthLabel, new Line(-100, 0, 100, 0), prisonLabel);
+		root.getChildren().addAll(playerLabel, new Line(-100, 0, 100, 0), cashLabel, new Line(-100, 0, 100, 0), netWorthLabel, new Line(-100, 0, 100, 0), prisonLabel);
 
 		endTurn = new Button("", new ImageView(END_TURN_PATH));
 		endTurn.getStyleClass().add("roundButton");
 		endTurn.setTooltip(new Tooltip("Next Player"));
-		this.updateButton(false);
+		updateButton(false);
 
 		AnchorPane.setBottomAnchor(endTurn, SETTINGS_DISTANCE);
 		AnchorPane.setRightAnchor(endTurn, SETTINGS_DISTANCE * 2.5);
@@ -112,7 +116,7 @@ public class RightInormationPane extends VBox {
 		bottomAnchorPane.setPrefHeight(PANE_HEIGHT / 3);
 		bottomAnchorPane.setPrefWidth(PANE_WIDTH);
 
-		this.getChildren().add(bottomAnchorPane);
+		root.getChildren().add(bottomAnchorPane);
 
 		diceBtn.setOnAction(e -> {
 			ControllerImpl.getController().diceClick();
@@ -130,8 +134,8 @@ public class RightInormationPane extends VBox {
 			ControllerImpl.getController().settingsClick();
 		});
 		
-		this.setId("RightInformationPane");
-		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
+		root.setId("RightInformationPane");
+		root.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		updateLabels();
 	}
 
@@ -186,5 +190,14 @@ public class RightInormationPane extends VBox {
 		if (isJail) {
 			endTurn.setDisable(!isJail);
 		}
+	}
+	
+	/**
+	 * Getter for the lateral right information pane
+	 * 
+	 * @return VBox
+	 */
+	public VBox get() {
+		return root;
 	}
 }

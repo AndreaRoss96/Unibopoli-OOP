@@ -2,6 +2,7 @@ package view.tiles;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.geometry.Pos;
 import javafx.scene.control.Control;
 import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
@@ -18,8 +19,9 @@ import utilities.PaneDimensionSetting;
 
 public class ComponentFactory {
 	
-	public static final double LandSimpleWIDTH = PaneDimensionSetting.getInstance().getGamePaneHeight() / 13;
-	private static final double LandHEIGHT = LandSimpleWIDTH * 2;
+	private static final double WIDTH = PaneDimensionSetting.getInstance().getGamePaneWidth();
+	public static final double LandSimpleWIDTH = WIDTH / 13.1;
+	private static final double LandHEIGHT = LandSimpleWIDTH * 2.015;
 	private static final double LandCornerDimension = LandHEIGHT;
 	
 	public static AnchorPane getAnchorPane(final boolean isCorner) {
@@ -31,8 +33,8 @@ public class ComponentFactory {
 			landPane.setMaxHeight(LandCornerDimension);
 			landPane.setMaxWidth(LandCornerDimension);
 		} else {
-			landPane.setMinHeight(LandHEIGHT-1);
-			landPane.setMinWidth(LandSimpleWIDTH-1);
+			landPane.setMinHeight(LandHEIGHT);
+			landPane.setMinWidth(LandSimpleWIDTH);
 			landPane.setMaxHeight(LandHEIGHT);
 			landPane.setMaxWidth(LandSimpleWIDTH);
 		}
@@ -52,7 +54,7 @@ public class ComponentFactory {
 		Label label = new Label(textLabel);
 	
 		label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8));
-		label.setAlignment(javafx.geometry.Pos.CENTER);
+		label.setAlignment(Pos.CENTER);
 		label.setTextAlignment(TextAlignment.CENTER);
 		label.setOnMouseEntered(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 10)));
 		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
@@ -76,7 +78,7 @@ public class ComponentFactory {
 		image.setGraphic(imageView);
 		setAlignmentNode(image);
 		
-		image.setAlignment(javafx.geometry.Pos.CENTER);
+		image.setAlignment(Pos.CENTER);
 		return image;
 	}
 
