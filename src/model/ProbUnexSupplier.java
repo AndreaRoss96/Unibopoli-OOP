@@ -1,5 +1,6 @@
 package model;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,6 +17,9 @@ public class ProbUnexSupplier {
 	private ProbUnexSupplier(List<String> probability, List<String> unexpected) {
 		ProbUnexSupplier.unexpected = new CircularListImpl<>(unexpected.stream().map(Parse.PARSING_CONSEQUENCES::apply).collect(Collectors.toList()));
 		ProbUnexSupplier.probability = new CircularListImpl<>(probability.stream().map(Parse.PARSING_CONSEQUENCES::apply).collect(Collectors.toList()));
+		
+		Collections.shuffle(unexpected);
+		Collections.shuffle(probability);
 	}
 	
 	private static void check(boolean condition) {

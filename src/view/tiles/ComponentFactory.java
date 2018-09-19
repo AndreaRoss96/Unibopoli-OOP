@@ -20,7 +20,7 @@ public class ComponentFactory {
 	
 	public static final double LandSimpleWIDTH = PaneDimensionSetting.getInstance().getGamePaneHeight() / 13;
 	private static final double LandHEIGHT = LandSimpleWIDTH * 2;
-	private static final double LandCornerDimension = LandHEIGHT;
+	public static final double LandCornerDimension = LandHEIGHT;
 	
 	public static AnchorPane getAnchorPane(final boolean isCorner) {
 		AnchorPane landPane = new AnchorPane();
@@ -31,8 +31,8 @@ public class ComponentFactory {
 			landPane.setMaxHeight(LandCornerDimension);
 			landPane.setMaxWidth(LandCornerDimension);
 		} else {
-			landPane.setMinHeight(LandHEIGHT-1);
-			landPane.setMinWidth(LandSimpleWIDTH-1);
+			landPane.setMinHeight(LandHEIGHT);
+			landPane.setMinWidth(LandSimpleWIDTH);
 			landPane.setMaxHeight(LandHEIGHT);
 			landPane.setMaxWidth(LandSimpleWIDTH);
 		}

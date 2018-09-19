@@ -1,7 +1,8 @@
 package utilities.enumerations;
 
-import javafx.scene.Node;
 import javafx.scene.shape.LineTo;
+import utilities.PaneDimensionSetting;
+import view.Pawn;
 import view.tiles.ComponentFactory;
 
 /**
@@ -19,31 +20,33 @@ public enum Direction {
      */
 	W(0) {
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX() - (STEP_SIZE*position) , player.getTranslateY());			
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(player.getCoordinates().getFirst() - (STEP_SIZE*position) , player.getCoordinates().getSecond());			
 		}
 	},
+	
 	WN(1){
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX() - (STEP_SIZE*(second + 0.75)), player.getTranslateY()  - (STEP_SIZE*(position + 0.50)));
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(STEP_SIZE*0.75, PaneDimensionSetting.getInstance().getGamePaneHeight()  - (STEP_SIZE*1.7));
 		}
-		
 	},
+	
 	/**
 	 * North.
 	 */
 	N(2) {
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX(), player.getTranslateY()  - (STEP_SIZE*position));			
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(player.getCoordinates().getFirst(), player.getCoordinates().getSecond()  - (STEP_SIZE*position));			
 		}
 	},
+	
 	NE(3){
 
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX() + (STEP_SIZE*(position +0.75)), player.getTranslateY()  - (STEP_SIZE*(second+0.75)));
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(STEP_SIZE*1.7, STEP_SIZE*0.75);
 		}
 	},
 	
@@ -52,39 +55,40 @@ public enum Direction {
      */
 	E(4) {
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX()+ (STEP_SIZE*position), player.getTranslateY());			      
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(player.getCoordinates().getFirst()+ (STEP_SIZE*position), player.getCoordinates().getSecond());			      
 		}
 	},
+	
 	ES(5){
 
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX() + (STEP_SIZE*(second+0.75)), player.getTranslateY() + (STEP_SIZE*(position+0.75)));
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(PaneDimensionSetting.getInstance().getGamePaneHeight() - (STEP_SIZE*0.75) , STEP_SIZE*1.7);
 		
 		}
-		
-	},	
+	},
+	
 	 /**
      * South.
      */
 	S(6) {
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX(), player.getTranslateY() + (STEP_SIZE*position));			
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(player.getCoordinates().getFirst(), player.getCoordinates().getSecond() + (STEP_SIZE*position));			
 		}
 	},
+	
 	SW(7){
 
 		@Override
-		public LineTo moveLocation(Node player, int position, int second) {
-			return new LineTo(player.getTranslateX() - (STEP_SIZE*(position+0.75)), player.getTranslateY()  + (STEP_SIZE*(second+0.75)));
-		}
-		
+		public LineTo moveLocation(Pawn player, int position) {
+			return new LineTo(PaneDimensionSetting.getInstance().getGamePaneHeight() - (STEP_SIZE*1.7), PaneDimensionSetting.getInstance().getGamePaneHeight()  - (STEP_SIZE*0.75));
+		}		
 	};
 	
-	private static final double STEP_SIZE = ComponentFactory.LandSimpleWIDTH;
-
+	private static final int STEP_SIZE = (int) ComponentFactory.LandSimpleWIDTH;
+	
 	//internal index
     private int index; 
     
@@ -102,7 +106,7 @@ public enum Direction {
 	 * @param loc Location to move
 	 * @param d Velocity of the movement
 	 */
-	public abstract LineTo moveLocation(Node player, int position, int second);
+	public abstract LineTo moveLocation(Pawn player, int position);
 	
 	/**
 	 * Get the index of the direction

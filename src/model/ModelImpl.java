@@ -20,7 +20,7 @@ import utilities.enumerations.TileTypes;
 
 public class ModelImpl implements Model {
 
-	private static final int JAIL = 30;
+	private static final int JAIL = 10;
 	private static final int JAIL_FEE = 125;
 
 	private final Board board;
