@@ -14,7 +14,8 @@ import model.player.PlayerInfo;
 import model.tiles.AdapterBuildable;
 import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
-import view.AlertFactory;
+import utilities.enumerations.ClassicType;
+import view.View;
 import view.gameDialog.AuctionDialog;
 import view.gameDialog.CardDialog;
 import view.gameDialog.MortgageDialog;
@@ -28,6 +29,8 @@ public class DialogController implements DialogObserver {
 
 	private final ControllerImpl controller;
 	private Model model;
+	private SoundController sound;
+	private View view;
 
 	public static DialogController getDialogController() {
 		return SINGLETON;
@@ -38,9 +41,15 @@ public class DialogController implements DialogObserver {
 	}
 	
 	@Override
-	public void setModel(Model model) {
+	public void setDialogController(Model model, SoundController sound, View view) {
 		if(this.model == null) {
 			this.model = model;
+		}
+		if(this.sound == null) {
+			this.sound = sound;
+		}
+		if(this.view == null) {
+			this.view = view;
 		}
 	}
 
@@ -51,7 +60,7 @@ public class DialogController implements DialogObserver {
 		final List<PlayerInfo> playerList = this.controller.getPlayers();
 		try {
 			if (betsList.stream().distinct().count() != betsList.size()) {
-				AlertFactory.createInformationAlert("Get a plan together",
+				this.view.createInformationAlert("Get a plan together",
 						"Two or more player have entered the same value");
 			} else {
 				int moneyAmount = betsList.stream().map(Integer::parseInt).max(Comparator.comparing(Integer::valueOf))
@@ -61,17 +70,15 @@ public class DialogController implements DialogObserver {
 						if (canPay(playerList.get(betsList.indexOf(bet)), moneyAmount)) {
 							this.model.playerAddProperty(playerList.get(betsList.indexOf(bet)), property);
 							this.model.playerPayment(playerList.get(betsList.indexOf(bet)), moneyAmount);
-//							((Player) playerList.get(betsList.indexOf(bet))).addProperty(property);
-//							((Player) playerList.get(betsList.indexOf(bet))).payments(moneyAmount);
 						} else {
-							AlertFactory.createInformationAlert("Ehi ", playerList.get(betsList.indexOf(bet)).getName()
+							this.view.createInformationAlert("Ehi ", playerList.get(betsList.indexOf(bet)).getName()
 									+ ", you don't have all those money.");
 						}
 					}
 				});
 			}
 		} catch (NumberFormatException ex) {
-			AlertFactory.createErrorAlert("Speak (type) as you eat",
+			this.view.createErrorAlert("Speak (type) as you eat",
 					"Someone did not enter a number!\nPlease, use only numbers...");
 		}
 		this.controller.updateView(false);
@@ -84,34 +91,31 @@ public class DialogController implements DialogObserver {
 		if (areOtherMortgaged.stream().filter(e -> e.booleanValue()).count() == 0) {
 			if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
 				if (property.getBuildingNumber() < NUM_BUILD_MAX) {
-					//modifica percorso
-					controller.getSound().playSound(("/music/plastic_house_or_hotel_drop_on_playing_board.wav"));
+					this.sound.playSound(ClassicType.Music.GeneralMusicMap.getPlasticDropOnPlaying());
 					property.incBuildings();
 					this.model.playerPayment(this.controller.getCurrentPlayer(), property.getPriceForBuilding());
 				}
 			} else {
-				AlertFactory.createErrorAlert("Nope", "You don't have enought money\nyou have only: "
+				this.view.createErrorAlert("Nope", "You don't have enought money\nyou have only: "
 						+ this.controller.getCurrentPlayer().getMoney() + "$");
 			}
 		} else {
-			AlertFactory.createErrorAlert("Nope", "One or more property of this color are mortgaged!");
+			this.view.createErrorAlert("Nope", "One or more property of this color are mortgaged!");
 		}
 		this.controller.updateView(false);
-		CardDialog.getCardDialog().updateCardDialog();
+		this.view.updateCardDialog();
 	}
 
 	@Override
 	public void decHouseClick() {
 		final AdapterBuildable property = (AdapterBuildable) CardDialog.getCardDialog().getProperty();
 		if (property.getBuildingNumber() != 0) {
-			//modifica percorso
-			controller.getSound().playSound("/music/plastic_house_or_hotel_drop_on_playing_board.wav");
-//			this.decHouse(property, (Player) this.controller.getCurrentPlayer());
+			this.sound.playSound(ClassicType.Music.GeneralMusicMap.getPlasticDropOnPlaying());
 			property.decBuildings();
 			this.model.playerGainMoney(this.controller.getCurrentPlayer(), property.getPriceForBuilding() / 2);
 		}
 		this.controller.updateView(false);
-		CardDialog.getCardDialog().updateCardDialog();
+		this.view.updateCardDialog();
 	}
 
 	@Override
@@ -119,12 +123,9 @@ public class DialogController implements DialogObserver {
 		list.stream().map(property -> property.get()).map(propertyName -> getPropertyByName(propertyName))
 				.forEach(property -> {
 					if (!property.hasMortgage()) {
-//						((Player) this.controller.getCurrentPlayer()).gainMoney(property.getMortgage());
 						this.model.playerGainMoney(this.controller.getCurrentPlayer(), property.getMortgage());
 						this.model.unbuild(property, (Player) this.controller.getCurrentPlayer());
 					} else {
-//						((Player) this.controller.getCurrentPlayer()).payments(
-//								(int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
 						this.model.playerPayment(this.controller.getCurrentPlayer(), (int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
 					}
 					property.changeMortgageStatus();
@@ -143,11 +144,11 @@ public class DialogController implements DialogObserver {
 						(int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)))) {
 					this.setMortgage(Arrays.asList(Optional.of(property.getNameOf())));
 				} else {
-					AlertFactory.createInformationAlert("I'm sorry", "You don't have enough money...");
+					this.view.createInformationAlert("I'm sorry", "You don't have enough money...");
 				}
 			}
 		} else {
-			AlertFactory.createInformationAlert("Ehi", "Do it in your turn!");
+			this.view.createInformationAlert("Ehi", "Do it in your turn!");
 		}
 	}
 
@@ -155,13 +156,10 @@ public class DialogController implements DialogObserver {
 	public void buyPropertyClick() { 
 		final Obtainable property = CardDialog.getCardDialog().getProperty();
 		try {
-//			((Player) this.controller.getCurrentPlayer()).buyProperty(property);
-			//model
 			this.model.buyProperty(this.controller.getCurrentPlayer(), property);
-			//modifica percorso
-			this.controller.getSound().playSound("/music/CashRegister.wav");
+			this.sound.playSound(ClassicType.Music.GeneralMusicMap.getCashRegister());
 		} catch (NotEnoughMoneyException e) {
-			// Auction Dialog
+			this.controller.startMortgage(property.getPrice(), this.controller.getCurrentPlayer());
 		}
 		this.controller.updateView(false);
 	}
@@ -176,7 +174,7 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void dialogTradeClick() { // se la mettessi nel model?
+	public void dialogTradeClick() {
 		final TradeDialog tradeDialog = TradeDialog.getTradeDialog();
 		try {
 			final int firstMoney = Integer.parseInt(tradeDialog.getPlayersMoneyToTrade().getFirst());
@@ -190,19 +188,19 @@ public class DialogController implements DialogObserver {
 					.map(p -> p.get()).map(p -> this.getPropertyByName(p)).collect(Collectors.toList());
 
 			if (!this.canPay(firstPlayer, firstMoney) && this.canPay(secondPlayer, secondMoney)) {
-				AlertFactory.createErrorAlert("He's trying to cheat you!",
+				this.view.createErrorAlert("He's trying to cheat you!",
 						firstPlayer.getName() + " doesn't have enought money!");
 			} else if (!this.canPay(secondPlayer, secondMoney) && this.canPay(firstPlayer, firstMoney)) {
-				AlertFactory.createErrorAlert("He's trying to cheat you!",
+				this.view.createErrorAlert("He's trying to cheat you!",
 						secondPlayer.getName() + " doesn't have enought money!");
 			} else if (!this.canPay(firstPlayer, firstMoney) && !this.canPay(secondPlayer, secondMoney)) {
-				AlertFactory.createErrorAlert("Nope ",
+				this.view.createErrorAlert("Nope ",
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
 				this.model.executeTrade((Player) secondPlayer, firstMoney, secondMoney, firstProperties, secondProperties);
 			}
 		} catch (NumberFormatException ex) {
-			AlertFactory.createErrorAlert("Speak (type) as you eat",
+			this.view.createErrorAlert("Speak (type) as you eat",
 					"Someone did not enter a number!\nPlease, use only numbers...");
 		}
 		this.controller.updateView(false);
@@ -214,27 +212,11 @@ public class DialogController implements DialogObserver {
 	}
 
 	private Obtainable getPropertyByName(String propertyName) {
-		return this.controller.getProperties().stream().filter(property -> property.getNameOf().equals(propertyName))
+		return this.model.getProperties().stream().filter(property -> property.getNameOf().equals(propertyName))
 				.findFirst().get();
 	}
 
 	private boolean canPay(PlayerInfo player, int moneyAmount) {
 		return player.canPay(moneyAmount);
 	}
-
-//	private void unbuild(final Obtainable property, final Player player) {
-//		if (property instanceof AdapterBuildable) {
-//			player.getPopertiesByColor().get(property.getColorOf()).stream().map(prop -> (AdapterBuildable) prop)
-//					.forEach(p -> {
-//						while (p.getBuildingNumber() != 0) {
-//							this.decHouse(p, player);
-//						}
-//					});
-//		}
-//	}
-
-//	private void decHouse(final AdapterBuildable property, final Player player) {
-//		property.decBuildings();
-//		player.gainMoney(property.getPriceForBuilding() / 2);
-//	}
 }

@@ -21,6 +21,9 @@ public class HandleFileChooser implements EventHandler<MouseEvent> {
 
 	private static final String SAVE_DIRECTORY_PATH = System.getProperty("user.home") + File.separator + ".unibopoli";
 
+	/**
+	 * Open the explorer of the system.
+	 */
 	@Override
 	public void handle(MouseEvent e) {
 		final FileChooser fileChooser = new FileChooser();

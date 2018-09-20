@@ -23,7 +23,6 @@ import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
-import view.AlertFactory;
 import view.RightInormationPane;
 import view.View;
 import view.ViewImpl;
@@ -70,10 +69,22 @@ public class ControllerImpl implements Controller {
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
 			this.model = GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
-			DialogController.getDialogController().setModel(model);
+			this.setDialogContorller();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}		
+	}
+	
+	@Override
+	public void loadGameFromFile(final File file) {
+		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
+		IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
+		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
+		this.setDialogContorller();
+	}
+	
+	private void setDialogContorller() {
+		DialogController.getDialogController().setDialogController(model, sound, view);
 	}
 
 	@Override
@@ -92,13 +103,7 @@ public class ControllerImpl implements Controller {
 		this.updateView(true);
 	}
 
-	@Override
-	public void loadGameFromFile(final File file) {
-		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
-		IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
-		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
-		DialogController.getDialogController().setModel(model);
-	}
+
 
 	@Override
 	public void showContract(Obtainable property) {
@@ -177,6 +182,7 @@ public class ControllerImpl implements Controller {
 			tile.setConsequence(consequence);
 			tile.doConsequence();
 		}
+		this.updateView(false);
 	}
 	
 	public void exitDice(final int value) {
@@ -203,7 +209,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void endGame() {
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getGameWin());
-		AlertFactory.createInformationAlert("Congratulations!", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
+		this.view.createInformationAlert("Congratulations!", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
 		System.exit(0);
 	}
 	
@@ -212,7 +218,7 @@ public class ControllerImpl implements Controller {
 	}
 	
 	public void startMortgage (int minimumExpense, PlayerInfo player) {
-		AlertFactory.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
+		this.view.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 		this.playerPayments(player, minimumExpense);
 	}
@@ -225,10 +231,6 @@ public class ControllerImpl implements Controller {
 		return this.model.getPlayers();
 	}
 	
-	public List<Obtainable> getProperties(){
-		return model.getProperties().stream().collect(Collectors.toList());
-	}
-	
 	public List<String> getGameMode() {
 		return Arrays.asList(ModeGame.values()).stream().map(t -> String.valueOf(t)).collect(Collectors.toList());
 	}
@@ -236,10 +238,5 @@ public class ControllerImpl implements Controller {
 	@Override
 	public Set<Tile> getGameBoard() {
 		return this.model.getBoard();
-	}
-	
-	@Override
-	public SoundController getSound() {
-		return this.sound;
 	}
 }

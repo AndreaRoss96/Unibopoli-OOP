@@ -20,7 +20,7 @@ public interface Player extends PlayerInfo {
 	 * @param Integer
 	 *            sum of money
 	 */
-	void payments(Integer moneyAmount);
+	void payments(int moneyAmount);
 
 	/**
 	 * This method allows the player to earn some money.
@@ -28,32 +28,7 @@ public interface Player extends PlayerInfo {
 	 * @param Integer
 	 *            sum of money.
 	 */
-	void gainMoney(Integer moneyAmount);
-
-	/**
-	 * this method allows the player to buy a property.
-	 * 
-	 * @param Obtainable
-	 *            the interested property
-	 */
-//	void buyProperty(Obtainable property);
-
-	/**
-	 * this method is for the movement of the player.
-	 * 
-	 * @param Tile
-	 *            (?) new position
-	 */
-	// void move(Tile position); ci sarà una classe "tile", in caso affermativo
-	// basterà controllare dove si trova il tile
-
-	/**
-	 * Use this method if the player is forced to pay a rent too big
-	 * 
-	 * @param Integer
-	 *            minimum amount of money to gain to meet any mandatory requests
-	 */
-	void toMortgage(Integer minimumAmount);
+	void gainMoney(int moneyAmount);
 
 	/**
 	 * the player must go to jail
@@ -72,14 +47,6 @@ public interface Player extends PlayerInfo {
 	 *            the new position of the player
 	 */
 	void setPosition(int newPosition);
-
-	/**
-	 * It saves a list of properties owned by the player but mortgaged.
-	 * 
-	 * @param mortgaged
-	 *            the list of mortgaged properties
-	 */
-//	void mortgageProperties(List<Obtainable> mortgaged);
 
 	/**
 	 * Adds a property to player's properties.

@@ -21,9 +21,6 @@ public class AlertFactory{
 		buildAlert(AlertType.INFORMATION, title, contentText).showAndWait();
 	}
 	
-	/**
-	 *	TODO: cambiare Optional utilizzando Guava ?? 
-	 */
 	public static boolean createConfirmationAlert(final String title, final String contentText) {
 		Optional<ButtonType> choice = buildAlert(AlertType.CONFIRMATION, title, contentText).showAndWait();
 		return choice.get() == ButtonType.OK;

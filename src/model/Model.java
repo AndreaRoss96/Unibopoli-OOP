@@ -74,7 +74,8 @@ public interface Model {
 	/**
 	 * Allows the current player to exit from jail.
 	 * 
-	 * @param true if the player have to pay a fee, false instead
+	 * @param true
+	 *            if the player have to pay a fee, false instead
 	 */
 	void exitFromJail(boolean withFee);
 
@@ -83,21 +84,92 @@ public interface Model {
 	 */
 	void goToJail();
 
+	/**
+	 * Execute the trade started by the current player.
+	 * 
+	 * @param secondPlayer
+	 *            the second player in the trade
+	 * @param firstMoney
+	 *            the current's player quantity of money
+	 * @param secondMoney
+	 *            the second's player quantity of money
+	 * @param firstProperties
+	 *            the current'player selected properties
+	 * @param secondProperties
+	 *            the second's player selected properties
+	 */
 	void executeTrade(Player secondPlayer, int firstMoney, int secondMoney, List<Obtainable> firstProperties,
 			List<Obtainable> secondProperties);
 
+	/**
+	 * If a property is mortgaged of it has changed the owner it have to unbuild all
+	 * of his houses and all houses of its color family.
+	 * 
+	 * @param property
+	 *            the interested property
+	 * @param player
+	 *            the player that have to unbuild his property
+	 */
 	void unbuild(Obtainable property, Player player);
 
+	/**
+	 * Allows a player to do a payment.
+	 * 
+	 * @param player
+	 *            the player that have to pay
+	 * @param moneyAmount
+	 *            the amount of money that the player have to pay
+	 * @return true if the payments is go well, false if the player don't have
+	 *         enough money but enough total effort
+	 * 
+	 * @throws NotEnoughtMoneyException
+	 *             if the player cannot pay in any way
+	 */
 	boolean playerPayment(PlayerInfo player, int moneyAmount);
 
+	/**
+	 * Allows a player to gain money.
+	 * 
+	 * @param player
+	 *            the player that have to gain money
+	 * @param moneyAmount
+	 *            the amount of money that the player have to receive
+	 */
 	void playerGainMoney(PlayerInfo player, int moneyAmount);
 
+	/**
+	 * Allows a player to buy a property
+	 * 
+	 * @param player
+	 *            the player that have to buy the property
+	 * @param property
+	 *            the interested property
+	 */
 	void buyProperty(PlayerInfo player, Obtainable property);
 
+	/**
+	 * Add a property to a player
+	 * 
+	 * @param player
+	 *            the player that receive the property
+	 * @param property
+	 *            the interested property
+	 */
 	void playerAddProperty(PlayerInfo player, Obtainable property);
-	
+
+	/**
+	 * 
+	 * @return
+	 */
 	Optional<ConsequencesImpl> supplierConsequence();
-	
+
+	/**
+	 * Get a tile in a determinate position
+	 * 
+	 * @param position
+	 *            the position of the tile
+	 * @return the Tile in the position
+	 */
 	Tile getTileOf(int position);
 
 }

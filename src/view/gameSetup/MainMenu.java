@@ -1,6 +1,5 @@
 package view.gameSetup;
 
-
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.input.MouseEvent;
@@ -18,28 +17,28 @@ import view.gameDialog.ProbabUnexAnimation;
 import view.handlers.HandleFileChooser;
 
 /**
- * Principal menu, here you can choose whether to start a new play or upload
- * an old one.
+ * Principal menu, here you can choose whether to start a new play or upload an
+ * old one.
  * 
  * @author Rossolini Andrea
  *
  */
-public final class MainMenu extends Scene{
+public final class MainMenu extends Scene {
 
 	private static final double MAIN_MENU_WIDTH = PaneDimensionSetting.getInstance().getCommandBridgeWidth() * 0.70;
 	private static final double MAIN_MENU_HEIGHT = PaneDimensionSetting.getInstance().getCommandBridgeHeight() * 0.80;
 	private static final double STANDARD_ANCHOR = 15d;
 	private static final double BUTTON_BOX_WIDTH = MAIN_MENU_WIDTH / 2 - STANDARD_ANCHOR * 2;
-	
+
 	private static SoundController music;
 	private static Stage mainStage;
-	
+
 	private MainMenu() {
 		super(new StackPane(), MAIN_MENU_WIDTH, MAIN_MENU_HEIGHT);
 		final StackPane root = new StackPane();
-	
+
 		final AnchorPane anchorPane = new AnchorPane();
-		
+
 		final VBox leftButtonBox = new VBox();
 		leftButtonBox.setPrefSize(BUTTON_BOX_WIDTH, MAIN_MENU_HEIGHT / 4);
 		final Button newGameBtn = new Button("New game");
@@ -72,14 +71,16 @@ public final class MainMenu extends Scene{
 		AnchorPane.setTopAnchor(helpBtn, STANDARD_ANCHOR);
 		AnchorPane.setRightAnchor(helpBtn, STANDARD_ANCHOR);
 
-		final Button musicBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
+		final Button musicBtn = new Button("",
+				IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
 		AnchorPane.setTopAnchor(musicBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(musicBtn, STANDARD_ANCHOR);
 
-		final Button soundBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
+		final Button soundBtn = new Button("",
+				IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
 		AnchorPane.setTopAnchor(soundBtn, STANDARD_ANCHOR);
 		AnchorPane.setLeftAnchor(soundBtn, STANDARD_ANCHOR * 5.5);
-		
+
 		anchorPane.getChildren().addAll(leftButtonBox, rightButtonBox, helpBtn, musicBtn, soundBtn);
 		root.getChildren().add(anchorPane);
 
@@ -93,9 +94,9 @@ public final class MainMenu extends Scene{
 			mainStage.setScene(CommandBridge.get(mainStage));
 			mainStage.centerOnScreen();
 		});
-		
+
 		cancelBtn.setOnAction(e -> {
-			if(AlertFactory.createConfirmationAlert("Confirm exit", "Are you sure you want to quit from Unibopoli?")) {
+			if (AlertFactory.createConfirmationAlert("Confirm exit", "Are you sure you want to quit from Unibopoli?")) {
 				mainStage.close();
 			} else {
 				e.consume();
@@ -104,45 +105,63 @@ public final class MainMenu extends Scene{
 
 		creditsBtn.setOnAction(e -> {
 			AlertFactory.createInformationAlert("Credits",
-					"Alesiani Matteo: Movement and consequences, management of contracts and unexpected/probabilities, game Board graphics and game turn\n" +
-					"Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading of the Game, main menu and initialization of the game.");
+					"Alesiani Matteo: Movement and consequences, management of contracts and unexpected/probabilities, game Board graphics and game turn\n"
+							+ "Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading of the Game, main menu and initialization of the game.");
 		});
 
 		musicBtn.setOnAction(e -> {
 			music.changeMusicMute();
 			if (music.isMusicMute()) {
-				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()));
+				musicBtn.setGraphic(IconLoader.getLoader()
+						.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoMusicImage()));
 			} else {
-				musicBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
+				musicBtn.setGraphic(IconLoader.getLoader()
+						.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getMusicImage()));
 			}
 		});
 
 		soundBtn.setOnAction(e -> {
-			music.changeSoundsMute();
+			music.changeSoundMute();
 			if (music.isSoundMute()) {
-				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()));
+				soundBtn.setGraphic(IconLoader.getLoader()
+						.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getNoSoundImage()));
 			} else {
-				soundBtn.setGraphic(IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
+				soundBtn.setGraphic(IconLoader.getLoader()
+						.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getSoundImage()));
 			}
 		});
-		
+
 		helpBtn.setOnAction(e -> {
-			root.getChildren().removeIf(node -> node instanceof ProbabUnexAnimation); //RICHIAMA UN METODO SIMILE NELL'UPDATEVIEW PER CANCELLARE TUTTE LE RIMANENZE
-			root.getChildren().add(ProbabUnexAnimation.getProbabilityDialog().createProbabilityDialog("Ereditate 250 € da un lontano parente."));
+			root.getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
+			root.getChildren().add(ProbabUnexAnimation.getProbabilityDialog()
+					.createProbabilityDialog("Ereditate 250 € da un lontano parente."));
 		});
-		
+
 		root.setId("mainMenu");
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		this.setRoot(root);
 	}
 
+	/**
+	 * Set the background music of the game.
+	 * 
+	 * @param backgroundMusic
+	 *            the object that control the muisc and the sound
+	 */
 	public static void setBeckgroundMusic(final SoundController backgroundMusic) {
 		music = backgroundMusic;
 	}
 
+	/**
+	 * Getter for generation of the main menu.
+	 * 
+	 * @param stage
+	 *            the stage of the game
+	 * @return the main menu it self
+	 */
 	public static MainMenu get(Stage stage) {
 		mainStage = stage;
-		
+
 		return new MainMenu();
 	}
 }

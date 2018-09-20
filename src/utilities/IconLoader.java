@@ -3,6 +3,7 @@ package utilities;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import javafx.scene.image.ImageView;
 import view.Icon;
@@ -57,6 +58,7 @@ public final class IconLoader {
 	 *         and as a value its path
 	 */
 	public Map<String, String> getAvatarMap(final String path) {
+		Objects.requireNonNull(path, "NullPointerException: path required non-null.");
 		Map<String, String> imageMap = new HashMap<>();
 		final File folder = new File(path);
 		final File[] listOfFiles = folder.listFiles();

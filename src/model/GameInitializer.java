@@ -46,24 +46,25 @@ public final class GameInitializer {
 		if (this.alreadyCalled) {
 			throw new IllegalStateException("IllegalStateException: game already initialized!");
 		}
-		
+
 		this.alreadyCalled = true;
-		
+
 		final Board board = new BoardImpl(mode);
-		
+
 		this.playerList = new ArrayList<>();
-		
+
 		for (InitialDistribution v : InitialDistribution.values()) {
 			if (v.getPlayerNumber() == playersMap.size()) {
 				playersMap.keySet().forEach(e -> {
 					final Player player = new RealPlayer(e, v.getMoneyAmount(), playersMap.get(e));
-					/* for each properties diceded by the rules (enum - InitialDistribution) a
+					/*
+					 * for each properties diceded by the rules (enum - InitialDistribution) a
 					 * player buy a determinated number of any property
 					 */
 					for (int i = 0; i < v.getContractNumber(); i++) {
 						final List<Obtainable> propertyList = board.getTiles(t -> t instanceof Obtainable).stream()
-																	.map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
-																	.collect(Collectors.toList());
+																   .map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
+																   .collect(Collectors.toList());
 						Collections.shuffle(propertyList);
 						player.addProperty(propertyList.get(0));
 					}

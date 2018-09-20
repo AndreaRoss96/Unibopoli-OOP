@@ -16,9 +16,13 @@ import utilities.enumerations.Color;
  *
  */
 public interface PlayerInfo extends Serializable {
-	
-	enum Prison { PRISON, NOT_PRISON }
-	
+	/**
+	 * Identify the status of the player (if he/she in prison or not) 
+	 */
+	enum Prison {
+		PRISON, NOT_PRISON
+	}
+
 	/**
 	 * Returns player name.
 	 * 
@@ -39,17 +43,10 @@ public interface PlayerInfo extends Serializable {
 	 * @return the properties of the player
 	 */
 	List<Obtainable> getProperties();
-	
+
 	/**
-	 * Returns a set of all player's mortgaged properties.
-	 * 
-	 * @return the mortgaged properties of the player
-	 */
-	List<Obtainable> getMortgagedProperties();
-	
-	/**
-	 * Calculate the total of the player's assets
-	 * (all the properties's mortgages plus his money)
+	 * Calculate the total of the player's assets (all the properties's mortgages
+	 * plus his money)
 	 * 
 	 * @return player's total assets
 	 */
@@ -77,25 +74,18 @@ public interface PlayerInfo extends Serializable {
 	int getPosition();
 
 	/**
-	 * Returns the avatar of the player.
-	 * 
-	 * @return player's avatar
-	 */
-	// icon getSprite();
-
-	/**
 	 * Checks if the player is in jail.
 	 * 
 	 * @return true if player is in jail, false instead
 	 */
 	boolean isInJail();
-	
+
 	/**
 	 * Check if the can pay an amount of money
 	 * 
 	 * @return true if he/she can pay, false instead
 	 */
-	boolean canPay(Integer moneyAmount);
+	boolean canPay(int moneyAmount);
 
 	/**
 	 * Return all the properties of the player collected by their belonging color.
@@ -104,7 +94,11 @@ public interface PlayerInfo extends Serializable {
 	 *         player
 	 */
 	Map<Color, List<Obtainable>> getPopertiesByColor();
-	
-	
+
+	/**
+	 * Getter for the path of the player's icon.
+	 * 
+	 * @return the String of the path where is located the icon's path
+	 */
 	String getIconPath();
 }

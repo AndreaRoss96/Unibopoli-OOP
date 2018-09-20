@@ -94,7 +94,7 @@ public final class SoundController {
 	/**
 	 * Set sounds mute if there's sounds, set sounds otherwise.
 	 */
-	public void changeSoundsMute() {
+	public void changeSoundMute() {
 		this.soundsMute = !this.soundsMute;
 	}
 

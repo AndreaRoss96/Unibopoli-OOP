@@ -1,4 +1,4 @@
-package view;
+package view.gameDialog;
 
 import java.util.Optional;
 

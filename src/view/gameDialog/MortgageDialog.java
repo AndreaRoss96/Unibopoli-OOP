@@ -31,7 +31,7 @@ public class MortgageDialog extends Dialog {
 
 	private PlayerContractsListView playerListView;
 	private Label obtainedMoney;
-	
+
 	private MortgageDialog() {
 
 	}
@@ -57,7 +57,8 @@ public class MortgageDialog extends Dialog {
 		final BorderPane rootPane = new BorderPane();
 		rootPane.setBackground(getBackground());
 
-		final List<Obtainable> propertiesList = player.getProperties().stream().filter(p -> !p.hasMortgage()).collect(Collectors.toList());
+		final List<Obtainable> propertiesList = player.getProperties().stream().filter(p -> !p.hasMortgage())
+				.collect(Collectors.toList());
 		this.playerListView = new PlayerContractsListView(propertiesList);
 		rootPane.setLeft(playerListView);
 
@@ -88,24 +89,35 @@ public class MortgageDialog extends Dialog {
 
 		playerListView.addEventHandler(MouseEvent.MOUSE_CLICKED, event -> {
 			DialogController.getDialogController().accumulatedMoney();
-			mortgageButton.setDisable(minimumExpense > Integer.parseInt(obtainedMoney.getText().substring(0, obtainedMoney.getText().length()-1)));
+			mortgageButton.setDisable(minimumExpense > Integer
+					.parseInt(obtainedMoney.getText().substring(0, obtainedMoney.getText().length() - 1)));
 		});
 
 		mortgageButton.setOnAction(e -> {
 			DialogController.getDialogController().setMortgage(playerListView.getSelected());
 			stage.close();
 		});
-		
+
 		final Scene scene = new Scene(rootPane);
 		stage.setScene(scene);
 		stage.showAndWait();
 	}
-	
-	public List<String> getSelected(){
-		return playerListView.getSelected()
-		.stream().map(value -> value.get()).collect(Collectors.toList());
+
+	/**
+	 * Getter for the selected properties (if there are).
+	 * 
+	 * @return list the list of the name of the selected properties
+	 */
+	public List<String> getSelected() {
+		return playerListView.getSelected().stream().map(value -> value.get()).collect(Collectors.toList());
 	}
-	
+
+	/**
+	 * Show to the player the money obtained
+	 * 
+	 * @param obtainedMoney
+	 *            the obtained money
+	 */
 	public void updateObtainedMoney(int obtainedMoney) {
 		this.obtainedMoney.setText(String.valueOf(obtainedMoney) + "$");
 	}

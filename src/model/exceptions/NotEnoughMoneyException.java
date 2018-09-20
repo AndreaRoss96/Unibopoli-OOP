@@ -1,7 +1,5 @@
 package model.exceptions;
 
-import view.AlertFactory;
-
 public class NotEnoughMoneyException extends RuntimeException {
 
 	/**
@@ -11,11 +9,5 @@ public class NotEnoughMoneyException extends RuntimeException {
 	
 	public NotEnoughMoneyException (Integer moneyAmount) {
 		super();
-		AlertFactory.createErrorAlert("You tried it!", "You don't have enough money!\nYou have only " + moneyAmount);
 	}
-	
-	/**
-	 *	Allert dentro ad un metodo. Può essere interessante ??
-	 * 
-	 */
 }

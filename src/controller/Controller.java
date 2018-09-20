@@ -12,11 +12,15 @@ public interface Controller {
 
 	/**
 	 * Initialization of the game
+	 * 
+	 * @param mode
+	 *            the mode of the game
+	 * @param playersName
+	 *            the name of all players
+	 * @param playersIcon
+	 *            the list of the path of all icon of the players
 	 */
-	void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon); // probabilmente in ingresso vorrà un
-																			// Map<String, Image> -> nome giocatore e
-																			// avatar, tutti devono avere un avatar, i
-																			// nomi devonon essere tutti diversi
+	void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon);
 
 	/**
 	 * allows to save the game.
@@ -32,6 +36,7 @@ public interface Controller {
 	 * Allows to load an old game.
 	 * 
 	 * @param file
+	 *            the file to be load
 	 */
 	void loadGameFromFile(File file);
 
@@ -41,8 +46,7 @@ public interface Controller {
 	 * @param property
 	 *            property selected by the player
 	 */
-	void showContract(Obtainable property); // il cardDialog dovrà controllare che currPl e proprietario siano gli
-											// stessi per utilizzare i bottoni
+	void showContract(Obtainable property);
 
 	/**
 	 * Shows the "trade dialog" that allows the player to make trading
@@ -52,16 +56,15 @@ public interface Controller {
 	/**
 	 * The player throws dices.
 	 */
-	void diceClick(); // andrà ad aggiornare i label presenti nella parte destra della schermata di
-						// gioco
+	void diceClick();
 
 	/**
 	 * Shows settings pane.
 	 */
-	void settingsClick(); // da implementare
+	void settingsClick();
 
 	/**
-	 * TODO: aggiungere documetazione 
+	 * End game and close it.
 	 */
 	void endGame();
 
@@ -83,24 +86,19 @@ public interface Controller {
 	 *            the player that needs money
 	 */
 	void startMortgage(int minimumExpense, PlayerInfo player);
-	
+
 	/**
-	 * TODO: aggiungere documetazione 
+	 * Get all players in game.
 	 */
 	List<PlayerInfo> getPlayers();
-	
+
 	/**
-	 * TODO: aggiungere documetazione 
+	 * Get the game mode.
 	 */
 	List<String> getGameMode();
-	
+
 	/**
-	 * TODO: aggiungere documetazione 
-	 */
-	List<Obtainable> getProperties();
-	
-	/**
-	 * TODO: aggiungere documetazione 
+	 * Get the board of the game.
 	 */
 	Set<Tile> getGameBoard();
 
@@ -111,9 +109,4 @@ public interface Controller {
 	 *            True if the update interest dice, false instead.
 	 */
 	void updateView(boolean isTurnEnded);
-
-	/**
-	 * TODO: aggiungere documetazione 
-	 */
-	SoundController getSound();
 }

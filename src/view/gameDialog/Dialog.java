@@ -42,7 +42,7 @@ public class Dialog {
 	 * 
 	 * @return SCREEN_H.
 	 */
-	protected static double getScreenH() {
+	protected double getScreenH() {
 		return SCREEN_H;
 	}
 
@@ -51,7 +51,7 @@ public class Dialog {
 	 * 
 	 * @return SCREEN_W.
 	 */
-	protected static double getScreenW() {
+	protected double getScreenW() {
 		return SCREEN_W;
 	}
 
@@ -150,8 +150,8 @@ public class Dialog {
 	 */
 	protected Background getBackground() {// da modificare per rendere moddabile lo sfondo delle dialog
 		final Image cardBoard = new Image("/images/backgrounds/monopoli_cfu.png");
-		BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
-		Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
+		final BackgroundSize bSize = new BackgroundSize(BackgroundSize.AUTO, BackgroundSize.AUTO, false, false, true, true);
+		final Background background = new Background(new BackgroundImage(cardBoard, BackgroundRepeat.ROUND,
 				BackgroundRepeat.ROUND, BackgroundPosition.CENTER, bSize));
 		return background;
 	}

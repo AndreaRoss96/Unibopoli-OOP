@@ -20,8 +20,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
+import utilities.enumerations.ClassicType;
 import utilities.enumerations.TileTypes;
-import view.Contract;
 
 /**
  * This dialog allows the players to interact directly with the property of the
@@ -36,12 +36,9 @@ public class CardDialog extends Dialog {
 	private static final CardDialog SINGLETON = new CardDialog();
 
 	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
-	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18); // da modificare in
+	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18);
 	private static final int NUM_BUILD_MAX = 5;	
-	private static final String BLACK = "#000000";				// setStyle(-fx-font-family:
-																						// kabel)
-	private static final double BOTTOM_MARGIN = Dialog.getScreenH() * 0.048;
-	private static final double LEFT_MARGIN = Dialog.getScreenW() * 0.009;
+	private static final String BLACK = "#000000";				
 
 	private Stage stage;
 	private Obtainable property;
@@ -75,15 +72,15 @@ public class CardDialog extends Dialog {
 		this.property = property;
 		this.buildingNumer = new Label();
 		this.buildingNumer.setFont(VALUE_FONT);
-		this.addHouseButton = new Button("", new ImageView("/images/dialogButton/aggiungi_casa.png"));
-		this.removeHouseButton = new Button("", new ImageView("/images/dialogButton/rimuovi_casa.png"));
+		this.addHouseButton = new Button("", new ImageView(ClassicType.Dialog.GENERALDIALOGMAP.getAddHouseImage()));
+		this.removeHouseButton = new Button("", new ImageView(ClassicType.Dialog.GENERALDIALOGMAP.getRemoveHouseImage()));
 
 		final BorderPane root = new BorderPane();
 		root.setRight(addRightBox());
 		root.setLeft(new Contract(this.property));
 		root.setBottom(addBottom(canAct));
 		root.setBackground(getBackground());
-		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, BOTTOM_MARGIN, LEFT_MARGIN));
+		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, getScreenH() * 0.048, getScreenW() * 0.009));
 
 		final Scene scene = new Scene(root);
 		stage.setScene(scene);
@@ -151,7 +148,7 @@ public class CardDialog extends Dialog {
 	private GridPane addBottom(final boolean canAct) {
 		final GridPane grid = new GridPane();
 		grid.setPrefSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
-		grid.setHgap(Dialog.getScreenH() * 0.1);
+		grid.setHgap(getScreenH() * 0.1);
 		if (!this.property.getOwner().isPresent()) {
 			gridWithNoOwner(grid, canAct);
 		} else {
@@ -168,7 +165,7 @@ public class CardDialog extends Dialog {
 	 * @param grid
 	 */
 	private void gridWithNoOwner(final GridPane grid, final boolean canBuy) {
-		final ImageView cashImage = new ImageView(new Image("/images/dialogButton/cash-in-hand-50.png"));
+		final ImageView cashImage = new ImageView(new Image(ClassicType.Dialog.GENERALDIALOGMAP.getCashImage()));
 		final Button buyProperty = new Button("", cashImage);
 		buyProperty.setDisable(!canBuy);
 		Tooltip tooltip = new Tooltip(
@@ -195,8 +192,8 @@ public class CardDialog extends Dialog {
 	 * @param disableButton
 	 *            if the property is unBuildable is set false
 	 */
-	private void gridWithOwner(GridPane grid, Boolean canBuild) {
-		final Button mortgageProperty = new Button("", new ImageView("/images/dialogButton/icons8-contract-50.png"));
+	private void gridWithOwner(final GridPane grid, final boolean canBuild) {
+		final Button mortgageProperty = new Button("", new ImageView(ClassicType.Dialog.GENERALDIALOGMAP.getContractImage()));
 
 		if (this.property.getTileType() != TileTypes.BUILDABLE || !canBuild || this.property.hasMortgage()) {
 			addHouseButton.setDisable(true);

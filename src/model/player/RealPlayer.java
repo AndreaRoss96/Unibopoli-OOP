@@ -84,7 +84,7 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void payments(final Integer moneyAmount) {
+	public void payments(final int moneyAmount) {
 			this.money -= moneyAmount;
 	}
 
@@ -94,20 +94,9 @@ public class RealPlayer implements Player {
 	}
 
 	@Override
-	public void gainMoney(Integer moneyAmount) {
+	public void gainMoney(int moneyAmount) {
 		this.money += moneyAmount;
 	}
-
-//	@Override
-//	public void buyProperty(final Obtainable property) {
-//		if (canPay(property.getPrice())) {
-//			payments(property.getPrice());
-//			this.addProperty(property);
-//		} else {
-//			// dovrebbe aprirsi un'asta -- Controller lunchDialog()
-//			throw new NotEnoughMoneyException(property.getMortgage());
-//		}
-//	}
 
 	@Override
 	public void addProperty(final Obtainable property) {
@@ -115,20 +104,8 @@ public class RealPlayer implements Player {
 				(list1, list2) -> Stream.of(list1, list2).flatMap(Collection::stream).collect(Collectors.toList()));
 		property.setOwner(Optional.of(this.getName()));
 	}
-
-	@Override
-//	public void mortgageProperties(List<Obtainable> mortgaged) {
-//		DialogController.getDialogController()
-//				.accumulatedMoney(mortgaged.stream().map(Obtainable::getNameOf).collect(Collectors.toList()));
-//	}
-
-	public boolean canPay(final Integer moneyAmount) {
+	public boolean canPay(final int moneyAmount) {
 		return this.money >= moneyAmount;
-	}
-
-	@Override
-	public void toMortgage(final Integer minimumAmount) {
-//TOGLI
 	}
 
 	@Override
@@ -149,11 +126,6 @@ public class RealPlayer implements Player {
 	@Override
 	public Map<Color, List<Obtainable>> getPopertiesByColor() {
 		return this.playersProperties;
-	}
-
-	@Override
-	public List<Obtainable> getMortgagedProperties() { //TOGLI
-		return null;
 	}
 	
 	@Override
