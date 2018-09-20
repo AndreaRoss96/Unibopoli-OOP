@@ -53,8 +53,8 @@ public class Pawn extends Icon{
 		this.direction = this.direction.rotation();
 	}
 	
-	public LineTo move(int position, int second) {
-		return this.direction.moveLocation(this.get(), position, second);
+	public LineTo move(int position) {
+		return this.direction.moveLocation(this, position);
 	}
 	
 	public Direction getDirection() {

@@ -1,5 +1,6 @@
 package view;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.TextAlignment;
 import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
+import utilities.Pair;
 import utilities.PaneDimensionSetting;
+import utilities.enumerations.Consequences;
 import utilities.enumerations.TileTypes;
 import view.gameDialog.CardDialog;
 import view.tiles.LandAbstractFactoryImp;
@@ -34,7 +38,7 @@ import view.Pawn;
 */
 public class GamePane extends StackPane{
 	
-	private static final double ROTATE = +90.0;
+	private static final double ROTATE = 90.0;
 	private static final double FIXLEFT = 5.0;
 	private static final double LABEL_WIDTH = 190;
 	
@@ -130,9 +134,11 @@ public class GamePane extends StackPane{
 	
 	private FlowPane getCenterNode() {
 		this.contractPane = new FlowPane(FIXLEFT, FIXLEFT);
+
 		this.contractPane.setAlignment(Pos.CENTER);
 		this.contractPane.setOrientation(Orientation.VERTICAL);
 		this.contractPane.setMinWidth(PaneDimensionSetting.getInstance().getGamePaneWidth() * 0.7);
+
 		updateContractPane();
 		
 		return this.contractPane;
@@ -146,25 +152,34 @@ public class GamePane extends StackPane{
 		return this.builder(0, 11, ROTATE * 2);
 	}
 	
+	private LineTo getElement(final Pawn pawn, final int movement) {
+		final LineTo lineTo = pawn.move(movement);
+		pawn.setCoordinates(new Pair<Double>(lineTo.getX(), lineTo.getY()));
+		
+		return lineTo;
+	}
+	
 	public void movement(int movement) {
 		Pawn tempIcon = (Pawn) this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
 		int position = ControllerImpl.getController().getCurrentPlayer().getPosition();
 		int corner = this.getNextCorner(position);
 		Path path = new Path();
 		
-		path.getElements().add(new MoveTo(tempIcon.get().getTranslateX(), tempIcon.get().getTranslateY()));
+		path.getElements().add(new MoveTo(tempIcon.getCoordinates().getFirst(), tempIcon.getCoordinates().getSecond()));
 		
 		if(position + movement >= corner) {			
-			path.getElements().add(tempIcon.move(corner-position, 0));
+			path.getElements().add(this.getElement(tempIcon, corner-position-1));
+			tempIcon.rotate();
+			path.getElements().add(this.getElement(tempIcon, 0));
 			tempIcon.rotate();
 			movement = movement - (corner-position);
-			path.getElements().add(tempIcon.move(movement,corner-position));
-			tempIcon.rotate();
-			
-		}else {
-			path.getElements().add(tempIcon.move(movement, 0));
+				
+			if(corner == 40) {
+				Consequences.RECEIVE.exec(Arrays.asList("200"));
+			}
 		}
 		
+		path.getElements().add(this.getElement(tempIcon, movement));
 		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
 		control.start();
 	}

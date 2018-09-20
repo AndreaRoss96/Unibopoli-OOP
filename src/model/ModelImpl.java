@@ -20,7 +20,7 @@ import utilities.enumerations.TileTypes;
 
 public class ModelImpl implements Model {
 
-	private static final int JAIL = 30;
+	private static final int JAIL = 10;
 	private static final int JAIL_FEE = 125;
 
 	private final Board board;
@@ -107,10 +107,6 @@ public class ModelImpl implements Model {
 	}
 
 	private List<String> getvalues(final Obtainable tile, final int mul){
-		if(mul == 0) {
-			return Arrays.asList(tile.getOwner().get());
-		}
-		
 		return Arrays.asList(tile.getOwner().get(), String.valueOf(mul));
 	}
 
@@ -126,19 +122,19 @@ public class ModelImpl implements Model {
 		if(tile instanceof Obtainable && !((Obtainable) tile).getOwner().isPresent()) {
 			return Optional.absent();
 		}else if(tile instanceof Obtainable) {
-				final PlayerInfo player = this.turnPlayer.getPlayers().stream()
-																	  .filter(playerV -> playerV.getName().equals(((Obtainable) tile).getOwner().get()))
-																	  .findFirst().get(); 
-				
-				if(!((Obtainable) tile).getOwner().get().equals(player.getName())) {
-					if(tile.getTileType() == TileTypes.STATION) {
-						consequenceRet = new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
-					}else if(tile.getTileType() == TileTypes.BUILDABLE){
-						consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 2);
-					}else {
-						consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 4);
-					}
+			final PlayerInfo player = this.turnPlayer.getPlayers().stream()
+												     .filter(playerV -> playerV.getName().equals(((Obtainable) tile).getOwner().get()))
+												     .findFirst().get();
+										
+			if(!((Obtainable) tile).getOwner().get().equals(this.getCurrentPlayer().getName())) {
+				if(tile.getTileType() == TileTypes.STATION) {
+					consequenceRet = new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
+				}else if(tile.getTileType() == TileTypes.BUILDABLE){
+					consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 2);
+				}else {
+					consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 4);
 				}
+			} 
 		}else {
 			switch (tile.getTileType()) {
 			case GO_JAIL: 
@@ -150,9 +146,9 @@ public class ModelImpl implements Model {
 			case INCOME_TAX: 
 				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa da definire", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
 			case PROBABILITY: 
-				consequenceRet = ProbUnexSupplier.get().getNextProbability(); break;
+				consequenceRet = CardEffectSupplier.get().getNextProbability(); break;
 			case UNEXPECTED:
-				consequenceRet = ProbUnexSupplier.get().getNextUnexpected(); break;
+				consequenceRet = CardEffectSupplier.get().getNextUnexpected(); break;
 			default: 
 				consequenceRet = ConsequencesImpl.emptyConsequence();
 			}			

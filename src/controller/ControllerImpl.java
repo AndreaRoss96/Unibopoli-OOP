@@ -23,7 +23,6 @@ import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
-import view.RightInormationPane;
 import view.View;
 import view.ViewImpl;
 import view.gameDialog.AuctionDialog;
@@ -36,18 +35,13 @@ import view.gameSetup.MainMenu;
 public class ControllerImpl implements Controller {
 
 	private static final ControllerImpl SINGLETON = new ControllerImpl();
-	
-	
+
 	private Model model;
 	private View view;
 	private final SoundController sound;
 
 	private ControllerImpl() {
 		this.sound = new SoundController(ClassicType.Music.GeneralMusicMap.getMonopolyMainMusic());
-		/**
-		 *	TODO: settare la view dal main. 
-		 *		  view e controll devono comunicare. 
-		 */
 		this.view = new ViewImpl();
 		setBackgroundMusic();
 	}
@@ -68,13 +62,14 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
-			this.model = GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed().collect(Collectors.toMap(playersName::get, playersIcon::get)));
+			this.model = GameInitializer.getInstance().newGame(mode, IntStream.range(0, playersName.size()).boxed()
+					.collect(Collectors.toMap(playersName::get, playersIcon::get)));
 			this.setDialogContorller();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}		
+		}
 	}
-	
+
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
@@ -82,7 +77,7 @@ public class ControllerImpl implements Controller {
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
 		this.setDialogContorller();
 	}
-	
+
 	private void setDialogContorller() {
 		DialogController.getDialogController().setDialogController(model, sound, view);
 	}
@@ -99,21 +94,27 @@ public class ControllerImpl implements Controller {
 		} else {
 			this.model.endTurn();
 		}
-		
+
 		this.updateView(true);
 	}
 
-
-
 	@Override
 	public void showContract(Obtainable property) {
-		/* If the current player is the same owner of the selected property and he/she have all the property of that color he will be able to build */
-		if(property.getOwner().isPresent() && property.getOwner().get().equals(this.getCurrentPlayer().getName())) {
+		/*
+		 * If the current player is the same owner of the selected property and he/she
+		 * have all the property of that color he will be able to build
+		 */
+		if (property.getOwner().isPresent() && property.getOwner().get().equals(this.getCurrentPlayer().getName())) {
 			int numProperties = this.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).size();
 			CardDialog.getCardDialog().createCardDialog(property, property.getColorOf().getNumTiles() == numProperties);
-		/* If the current player is in the same position of the property without any owner he/she will be able to buy that property */
-		} else if(!property.getOwner().isPresent() && property.getPosition() == this.getCurrentPlayer().getPosition()) {
-			CardDialog.getCardDialog().createCardDialog(property,  property.getPrice() <= this.getCurrentPlayer().getMoney());
+			/*
+			 * If the current player is in the same position of the property without any
+			 * owner he/she will be able to buy that property
+			 */
+		} else if (!property.getOwner().isPresent()
+				&& property.getPosition() == this.getCurrentPlayer().getPosition()) {
+			CardDialog.getCardDialog().createCardDialog(property,
+					property.getPrice() <= this.getCurrentPlayer().getMoney());
 		} else {
 			CardDialog.getCardDialog().createCardDialog(property, false);
 		}
@@ -123,9 +124,10 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void startTrade() {
 		final Map<String, List<Obtainable>> playerObtainableMap = new HashMap<>();
-		this.model.getPlayers().stream().filter(player -> !player.getName().equals(this.getCurrentPlayer().getName())).forEach(player -> {
-			playerObtainableMap.put(player.getName(), player.getProperties());
-		});
+		this.model.getPlayers().stream().filter(player -> !player.getName().equals(this.getCurrentPlayer().getName()))
+				.forEach(player -> {
+					playerObtainableMap.put(player.getName(), player.getProperties());
+				});
 		TradeDialog.getTradeDialog().createTradeDialog(playerObtainableMap);
 	}
 
@@ -134,10 +136,7 @@ public class ControllerImpl implements Controller {
 		final boolean doJailSound = !model.getCurrentPlayer().isInJail();
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getDiceRoll());
 		final Pair<Integer> result = model.exitDice();
-		/**
-		 *	TODO: passare dalla classe view: Sarà la classe view che eseguirà questo metodo! 
-		 */
-		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
+		this.view.updateDiceLabel(result.getFirst(), result.getSecond());
 		this.exitDice(result.getFirst() + result.getSecond());
 		/*
 		 * if the two dice have same result the player have to roll dices again, even if
@@ -145,62 +144,60 @@ public class ControllerImpl implements Controller {
 		 */
 		this.view.updateButton(!(result.areSame()) && result.getFirst() != 0);
 		if (this.model.getCurrentPlayer().isInJail()) {
-			if(doJailSound) {
+			if (doJailSound) {
 				this.sound.playSound(ClassicType.Music.GeneralMusicMap.getJailDoorEffect());
 			}
-			
+
 			this.model.endTurn();
 			this.updateView(true);
 		}
 	}
-	
+
 	public void playerPayments(final PlayerInfo player, final int moneyAmount) {
 		try {
-			if(!model.playerPayment(player, moneyAmount)) {
+			if (!model.playerPayment(player, moneyAmount)) {
 				this.startMortgage(moneyAmount, player);
 			}
 		} catch (NotEnoughMoneyException e) {
 			this.model.removePlayer(player);
 			this.sound.playSound(ClassicType.Music.GeneralMusicMap.getLoseGame());
 		}
-			
+
 	}
 
 	private void execconsequence() {
-		if(!this.model.supplierConsequence().isPresent()) {
-			/**
-			 *	TODO: controllare che dopo l'esecuzione della dialog il gioco prosegui regolarmente 
-			 */
-			ControllerImpl.getController().showContract((Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition()));
-		}else {
+		if (!this.model.supplierConsequence().isPresent()) {
+			ControllerImpl.getController()
+					.showContract((Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition()));
+		} else {
 			ConsequencesImpl consequence = this.model.supplierConsequence().get();
-			
+
 			System.out.println("\n" + consequence.getTextConsequence() + "\n");
-			
+
 			Tile tile = this.model.getTileOf(this.getCurrentPlayer().getPosition());
-			
+
 			tile.setConsequence(consequence);
 			tile.doConsequence();
 		}
 		this.updateView(false);
 	}
-	
+
 	public void exitDice(final int value) {
 		this.view.movement(value);
-					
-		this.model.movement(value); 
-		
+
+		this.model.movement(value);
+
 		this.execconsequence();
 	}
-	
+
 	@Override
 	public void settingsClick() {
 		SettingsDialog.getSettingsDialog().createSettingDialog(this.sound);
 	}
-	
+
 	@Override
 	public void updateView(boolean isTurnEnded) {
-		if(isTurnEnded) {
+		if (isTurnEnded) {
 			this.view.updateButton(!isTurnEnded);
 		}
 		this.view.updateLabels();
@@ -209,28 +206,29 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void endGame() {
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getGameWin());
-		this.view.createInformationAlert("Congratulations!", this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
+		this.view.createInformationAlert("Congratulations!",
+				this.getCurrentPlayer() + " is the winner!\n\nClick OK to exit the game.");
 		System.exit(0);
 	}
-	
+
 	public void startAuciton(Obtainable property) {
 		AuctionDialog.getAuctionDialog().createAuctionDialog(property);
 	}
-	
-	public void startMortgage (int minimumExpense, PlayerInfo player) {
+
+	public void startMortgage(int minimumExpense, PlayerInfo player) {
 		this.view.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 		this.playerPayments(player, minimumExpense);
 	}
-	
+
 	public PlayerInfo getCurrentPlayer() {
 		return this.model.getCurrentPlayer();
 	}
-	
-	public List<PlayerInfo> getPlayers(){
+
+	public List<PlayerInfo> getPlayers() {
 		return this.model.getPlayers();
 	}
-	
+
 	public List<String> getGameMode() {
 		return Arrays.asList(ModeGame.values()).stream().map(t -> String.valueOf(t)).collect(Collectors.toList());
 	}

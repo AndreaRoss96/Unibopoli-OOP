@@ -14,7 +14,11 @@ import model.player.Player;
 public enum Consequences {
 
 	MOVING((player, values) -> {
-		if(player.getPosition() > Integer.parseInt(values.get(0))) {
+		/**
+		 *	Togliere = poichè nel caso in cui cada precisamente sul via si addebbiteranno 400$ al posto di 200$. 
+		 */
+		
+		if(player.getPosition() >= Integer.parseInt(values.get(0))) {
 			Consequences.valueOf(Consequences.class, "RECEIVE").exec(Arrays.asList(values.get(1)));
 		}
 

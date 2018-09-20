@@ -67,4 +67,6 @@ public interface View {
 	 *            the content of the alert
 	 */
 	void createConfirmationAlert(String title, String contentText);
+
+	void updateDiceLabel(int firstResult, int secondResult);
 }

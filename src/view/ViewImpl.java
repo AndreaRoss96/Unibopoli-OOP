@@ -26,6 +26,11 @@ public class ViewImpl implements View{
 	}
 	
 	@Override
+	public void updateDiceLabel(final int firstResult, final int secondResult) {
+		RightInormationPane.getRinghtInformationPane().updateDiceLabel(result.getFirst(), result.getSecond());
+	}
+	
+	@Override
 	public void updateLabels() {
 		RightInormationPane.getRinghtInformationPane().updateLabels();
 		RightInormationPane.getRinghtInformationPane().updateJailButton(ControllerImpl.getController().getCurrentPlayer().isInJail());

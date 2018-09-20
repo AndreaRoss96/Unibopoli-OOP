@@ -23,7 +23,7 @@ public class ComponentFactory {
 	public static final double LandSimpleWIDTH = WIDTH / 13.1;
 	private static final double LandHEIGHT = LandSimpleWIDTH * 2.015;
 	private static final double LandCornerDimension = LandHEIGHT;
-	
+
 	public static AnchorPane getAnchorPane(final boolean isCorner) {
 		AnchorPane landPane = new AnchorPane();
 
