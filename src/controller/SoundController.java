@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.IOException;
-
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -29,6 +28,7 @@ public final class SoundController {
 	 */
 	public SoundController(final String filePath) {
 		try {
+			
 			final AudioInputStream ais = AudioSystem.getAudioInputStream(SoundController.class.getResource(filePath));
 			clip = AudioSystem.getClip();
 			clip.open(ais);

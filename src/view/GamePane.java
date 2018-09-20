@@ -173,15 +173,13 @@ public class GamePane extends StackPane{
 			path.getElements().add(this.getElement(tempIcon, 0));
 			tempIcon.rotate();
 			movement = movement - (corner-position);
-			path.getElements().add(this.getElement(tempIcon, movement));
-			
+				
 			if(corner == 40) {
 				Consequences.RECEIVE.exec(Arrays.asList("200"));
 			}
-		}else {
-			path.getElements().add(this.getElement(tempIcon, movement));
 		}
 		
+		path.getElements().add(this.getElement(tempIcon, movement));
 		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
 		control.start();
 	}

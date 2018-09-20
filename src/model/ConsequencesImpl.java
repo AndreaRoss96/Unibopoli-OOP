@@ -1,5 +1,6 @@
 package model;
 
+import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
@@ -10,7 +11,7 @@ import utilities.enumerations.Consequences;
  * @author Matteo Alesiani
  */
 
-public class ConsequencesImpl {
+public class ConsequencesImpl implements Serializable{
 	private Consequences consequences;
 	private String textConsequences;
 	private List<String> values;

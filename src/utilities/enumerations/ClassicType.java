@@ -1,5 +1,7 @@
  package utilities.enumerations;
 
+import java.io.File;
+
 /**
  * @version 2.13.0
  * 
@@ -7,6 +9,18 @@
  */
  
 public class ClassicType {
+	
+	/**
+	 * This method makes source independent of platform and safe to use across Unix and Windows.
+	 * 
+	 * @param value The file's path.   
+	 * 
+	 * @return The path with the right separator.
+	 */
+	private static String replaceSeparetor(String value) {
+		return value.replace("/", File.separator);
+	}
+	
 	public enum Files{
 	    GENERALFILEMAP("res/mode/staticValuesTile/BuildableValues.txt", "res/mode/staticValuesTile/NotBuildableValues.txt",
 	    				"res/mode/staticValuesTile/NotObtainableValues.txt", "res/mode/staticValuesTile/Probability.txt",
@@ -32,14 +46,14 @@ public class ClassicType {
 	     *	@return the path for the initialization Buildable value tiles of the map. 
 	     */
 	    public String getStaticBuildableValuesInitFile() {
-	        return this.staticBuildableValuesInitFile;
+	        return ClassicType.replaceSeparetor(this.staticBuildableValuesInitFile);
 	    }
 	
 	    /**
 	     *	@return the path for the initialization NotBuildable value tiles of the map.
 	     */
 	    public String getStaticNotBuildableValuesInitFile() {
-	    	return this.staticNotBuildableValuesInitFile;
+	    	return ClassicType.replaceSeparetor(this.staticNotBuildableValuesInitFile);
 	    }
 	    
 	    /**
@@ -48,28 +62,28 @@ public class ClassicType {
 	     *	@return the path contains the Buildable tile's name in base of mode game.
 	     */
 	    public String getModeGame(String mode) {
-	    	return "res/mode/" + mode + "/ClassicMode.txt";
+	    	return ClassicType.replaceSeparetor("res/mode/" + mode + "/ClassicMode.txt");
 	    }
 	    
 	    /**
 	     *	@return the path for the initialization NotObtainable value tiles of the map.
 	     */
 	    public String getStaticNotObtainableValuesInitFile(){
-	    	return this.staticNotObtainableValuesInitFile;
+	    	return ClassicType.replaceSeparetor(this.staticNotObtainableValuesInitFile);
 	    }
 	    
 	    /**
 	     *	@return the path for the initialization probability values to use during the match. 
 	     */
 	    public String getProbabilityFile() {
-	    	return this.probabilityFile;
+	    	return ClassicType.replaceSeparetor(this.probabilityFile);
 	    }
 	    
 	    /**
 	     *	@return the path for the initialization unexpected values to use during the match.
 	     */
 	    public String getUnexpectedFile() {
-	    	return this.unexpectedFile;
+	    	return ClassicType.replaceSeparetor(this.unexpectedFile);
 	    }
 	}
 	
@@ -108,70 +122,70 @@ public class ClassicType {
 	     *	@return GO IMAGE path.
 	     */
 	    public String getGoImagePath() {
-	    	return this.goImage;
+	    	return ClassicType.replaceSeparetor(this.goImage);
 	    }
 	    
 	    /**
 	     *	@return FREE TRANSIT IMAGE path.
 	     */
 	    public String getFreeTransitPath() {
-	    	return this.transitJail;
+	    	return ClassicType.replaceSeparetor(this.transitJail);
 	    }
 	    
 	    /**
 	     *	@return GO TO JAIL IMAGE path.
 	     */
 	    public String getGoJailPath() {
-	    	return this.goJail;
+	    	return ClassicType.replaceSeparetor(this.goJail);
 	    }
 	    
 	    /**
 	     *	@return GO FREE PARKING IMAGE path.
 	     */
 	    public String getFreeParkingPath() {
-	    	return this.transitCar;
+	    	return ClassicType.replaceSeparetor(this.transitCar);
 	    }
 	    
 	    /**
 	     *	@return RING IMAGE path. 
 	     */
 	    public String getRingImagePath() {
-	    	return this.ringImage;
+	    	return ClassicType.replaceSeparetor(this.ringImage);
 	    }
 	    
 	    /**
 	     *	@return TRAIN IMAGE path. 
 	     */
 	    public String getTrainImagePath() {
-	    	return this.trainImage;
+	    	return ClassicType.replaceSeparetor(this.trainImage);
 	    }
 	    
 	    /**
 	     *	@return LIGHT COMPANY IMAGE path. 
 	     */
 	    public String getBulbImagePath() {
-	    	return this.bulbImage;
+	    	return ClassicType.replaceSeparetor(this.bulbImage);
 	    }
 	    
 	    /**
 	     *	@return WATER COMPANY IMAGE path.  
 	     */
 	    public String getWaterImagePath() {
-	    	return this.waterImage;
+	    	return ClassicType.replaceSeparetor(this.waterImage);
 	    }
 	    
 	    /**
 	     *	@return PROBABILITY IMAGE path. 
 	     */
 	    public String getProbabilityImagePath() {
-	    	return this.cofferImage;
+	    	return ClassicType.replaceSeparetor(this.cofferImage);
 	    }
 	    
 	    /**
 	     *	@return UNEXPECTED IMAGE path. 
 	     */
 	    public String getUnexpectedImage() {
-	    	return this.unexpectedImage;
+	    	return ClassicType.replaceSeparetor(this.unexpectedImage);
 	    }
 	}
 	
@@ -206,63 +220,63 @@ public class ClassicType {
 		 *	@return WINDOWS ICON IMAGE path
 		 */
 	    public String getIconWindows() {
-	    	return this.iconWindows;
+	    	return ClassicType.replaceSeparetor(this.iconWindows);
 	    }
 	    
 	    /**
 		 *	@return MUSIC IMAGE path 
 		 */
 		public String getMusicImage() {
-			return this.music;
+			return ClassicType.replaceSeparetor(this.music);
 		}
 		
 		/**
 		 *	@return SOUND IMAGE path 
 		 */
 		public String getSoundImage() {
-			return this.sound;
+			return ClassicType.replaceSeparetor(this.sound);
 		}
 		
 		/**
 		 *	@return NO MUSIC IMAGE path
 		 */
 		public String getNoMusicImage() {
-			return this.noMusic;
+			return ClassicType.replaceSeparetor(this.noMusic);
 		}
 		
 		/**
 		 *	@return NO SOUND IMAGE path
 		 */
 		public String getNoSoundImage() {
-			return this.noSound;
+			return ClassicType.replaceSeparetor(this.noSound);
 		}
 		
 		/**
 		 *	@return PLUS IMAGE path
 		 */
 		public String getPlusImage() {
-			return this.plus;
+			return ClassicType.replaceSeparetor(this.plus);
 		}
 		
 		/**
 		 *	@return DICE IMAGE path
 		 */
 		public String getDiceImage() {
-			return this.dice;
+			return ClassicType.replaceSeparetor(this.dice);
 		}
 		
 		/**
 		 *	@return GEAR IMAGE path
 		 */
 		public String getGearImage() {
-			return this.gear;
+			return ClassicType.replaceSeparetor(this.gear);
 		}
 		
 		/**
 		 *	@return SAVE IMAGE path
 		 */
 		public String getSaveImage() {
-			return this.save;
+			return ClassicType.replaceSeparetor(this.save);
 		}
 	}
 	
@@ -283,21 +297,21 @@ public class ClassicType {
 		 *	@return AUCTION IMAGE path
 		 */
 		public String getAuctionImage() {
-			return this.auction;
+			return ClassicType.replaceSeparetor(this.auction);
 		}
 		
 		/**
 		 *	@return MORTGAGE IMAGE path 
 		 */
 		public String getMortgageImage() {
-			return this.mortgage;
+			return ClassicType.replaceSeparetor(this.mortgage);
 		}
 		
 		/**
 		 *	@return TRADE IMAGE path 
 		 */
 		public String getTradeImage() {
-			return this.trade;
+			return ClassicType.replaceSeparetor(this.trade);
 		}
 	}
 	
@@ -323,57 +337,57 @@ public class ClassicType {
 			this.gameWin = gameWin;
 			this.jailDoorEffect = jailDoorEffect;
 			this.loseGame = loseGame;
-			this.plasticDropOnPlaying = plasticDropOnPlaying;
-			
+			this.plasticDropOnPlaying = plasticDropOnPlaying;	
 		}
 		
 		/**
 		 *	@return MAIN MUSIC path 
 		 */
 		public String getMonopolyMainMusic() {
-			return monopolyMainMusic;
+			return this.monopolyMainMusic;
+			//return ClassicType.replaceSeparetor(this.monopolyMainMusic);
 		}
 		
 		/**
 		 *	@return CASH REGISTER MUSIC path 
 		 */
 		public String getCashRegister() {
-			return cashRegister;
+			return this.cashRegister;
 		}
 		
 		/**
 		 *	@return DICE ROLL MUSIC path 
 		 */
 		public String getDiceRoll() {
-			return diceRoll;
+			return this.diceRoll;
 		}
 		
 		/**
 		 *	@return GAME WIN MUSIC path 
 		 */
 		public String getGameWin() {
-			return gameWin;
+			return this.gameWin;
 		}
 
 		/**
 		 *	@return CLOSING JAIL DOOR MUSIC path 
 		 */
 		public String getJailDoorEffect() {
-			return jailDoorEffect;
+			return this.jailDoorEffect;
 		}
 
 		/**
 		 *	@return GAME LOSE MUSIC path 
 		 */
 		public String getLoseGame() {
-			return loseGame;
+			return this.loseGame;
 		}
 
 		/**
 		 *	@return TODO: aggiungere documentazione corretta MUSIC path 
 		 */
 		public String getPlasticDropOnPlaying() {
-			return plasticDropOnPlaying;
+			return this.plasticDropOnPlaying;
 		}
 	}
 }

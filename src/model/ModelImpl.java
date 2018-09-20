@@ -146,9 +146,9 @@ public class ModelImpl implements Model {
 			case INCOME_TAX: 
 				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa da definire", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
 			case PROBABILITY: 
-				consequenceRet = ProbUnexSupplier.get().getNextProbability(); break;
+				consequenceRet = CardEffectSupplier.get().getNextProbability(); break;
 			case UNEXPECTED:
-				consequenceRet = ProbUnexSupplier.get().getNextUnexpected(); break;
+				consequenceRet = CardEffectSupplier.get().getNextUnexpected(); break;
 			default: 
 				consequenceRet = ConsequencesImpl.emptyConsequence();
 			}			

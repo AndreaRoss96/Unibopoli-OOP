@@ -43,7 +43,6 @@ public enum Direction {
 	},
 	
 	NE(3){
-
 		@Override
 		public LineTo moveLocation(Pawn player, int position) {
 			return new LineTo(STEP_SIZE*1.7, STEP_SIZE*0.75);
