@@ -101,10 +101,14 @@ public abstract class ObtainableImpl implements Obtainable{
 		this.consequece = consequence;
 	}
 	
+	private Integer getValueRent() {
+		return Integer.parseInt(this.consequece.getValues().get(1)) * this.getRent();
+	}
+	
 	@Override
 	public void doConsequence() {
 		if(!this.consequece.getTextConsequence().equals("")) {
-			this.consequece.getValues().set(1, String.valueOf(Integer.parseInt(this.consequece.getValues().get(1)) * this.getRent()));			
+			this.consequece.getValues().set(1, String.valueOf(this.getValueRent()));			
 		}
 		
 		this.consequece.doConsequences();

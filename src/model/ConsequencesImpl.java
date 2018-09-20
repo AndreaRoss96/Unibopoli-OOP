@@ -30,7 +30,7 @@ public class ConsequencesImpl {
 	}
 	
 	public List<String> getValues(){
-		return Collections.unmodifiableList(this.values);
+		return this.values;
 	}
 	
 	public void doConsequences(){

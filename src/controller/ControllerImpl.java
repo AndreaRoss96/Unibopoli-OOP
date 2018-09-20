@@ -185,6 +185,9 @@ public class ControllerImpl implements Controller {
 		this.model.movement(value); 
 		
 		this.execconsequence();
+		/**
+		 *	Effettuare Update grafica. 
+		 */
 	}
 	
 	@Override
