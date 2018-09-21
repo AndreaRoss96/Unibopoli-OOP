@@ -1,4 +1,4 @@
-package view.gameDialog;
+package view;
 
 import javafx.animation.Animation;
 import javafx.animation.FadeTransition;

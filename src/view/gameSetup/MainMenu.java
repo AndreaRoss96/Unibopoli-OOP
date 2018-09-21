@@ -7,13 +7,20 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import controller.SoundController;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
 import view.CommandBridge;
-import view.gameDialog.ProbabUnexAnimation;
 import view.handlers.HandleFileChooser;
 
 /**
@@ -132,9 +139,24 @@ public final class MainMenu extends Scene {
 		});
 
 		helpBtn.setOnAction(e -> {
-			root.getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
-			root.getChildren().add(ProbabUnexAnimation.getProbabilityDialog()
-					.createProbabilityDialog("Ereditate 250 € da un lontano parente."));
+//			root.getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
+//			root.getChildren().add(ProbabUnexAnimation.getProbabilityDialog()
+//					.createProbabilityDialog("Ereditate 250 € da un lontano parente."));
+            try {
+                final File tmp = File.createTempFile("gameRule", ".pdf");
+                tmp.deleteOnExit();
+                Files.copy(MainMenu.class.getResourceAsStream("/gamerule.pdf"), Paths.get(tmp.toURI()),
+                        StandardCopyOption.REPLACE_EXISTING);
+                java.awt.EventQueue.invokeLater(() -> {
+                    try {
+                        Desktop.getDesktop().open(tmp);
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 		});
 
 		root.setId("mainMenu");
