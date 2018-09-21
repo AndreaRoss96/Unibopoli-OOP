@@ -1,5 +1,7 @@
 package view;
 
+import javafx.scene.layout.Pane;
+
 public interface View {
 
 	/**
@@ -69,4 +71,6 @@ public interface View {
 	void createConfirmationAlert(String title, String contentText);
 
 	void updateDiceLabel(int firstResult, int secondResult);
+	
+	void createCardConsequencePane(final Pane pane, final String text);
 }

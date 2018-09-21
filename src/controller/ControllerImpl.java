@@ -25,8 +25,8 @@ import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
+import view.GamePane;
 import view.View;
-import view.ViewImpl;
 import view.gameDialog.AuctionDialog;
 import view.gameDialog.CardDialog;
 import view.gameDialog.MortgageDialog;
@@ -44,7 +44,6 @@ public class ControllerImpl implements Controller {
 
 	private ControllerImpl() {
 		this.sound = new SoundController(ClassicType.Music.GeneralMusicMap.getMonopolyMainMusic());
-		this.view = new ViewImpl();
 		setBackgroundMusic();
 	}
 
@@ -61,6 +60,11 @@ public class ControllerImpl implements Controller {
 		MainMenu.setBeckgroundMusic(sound);
 	}
 
+	@Override
+	public void setView(final View view) {
+		this.view = view;
+	}
+	
 	@Override
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
@@ -171,21 +175,24 @@ public class ControllerImpl implements Controller {
 
 	}
 
-	private void execconsequence() {
+	private Optional<String> execconsequence() {
 		if (!this.model.supplierConsequence().isPresent()) {
 			ControllerImpl.getController()
 					.showContract((Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition()));
 		} else {
 			ConsequencesImpl consequence = this.model.supplierConsequence().get();
 
-			System.out.println("\n" + consequence.getTextConsequence() + "\n");
-
 			Tile tile = this.model.getTileOf(this.getCurrentPlayer().getPosition());
 
 			tile.setConsequence(consequence);
 			tile.doConsequence();
+			
+			return Optional.of(consequence.getTextConsequence());
 		}
+		
 		this.updateView(false);
+		
+		return Optional.absent();
 	}
 
 	public void exitDice(final int value) {
@@ -193,7 +200,11 @@ public class ControllerImpl implements Controller {
 
 		this.model.movement(value);
 
-		this.execconsequence();
+		Optional<String> cardEffect = this.execconsequence();
+		
+		if(cardEffect.isPresent() && !cardEffect.get().equals("")) {
+			this.view.createCardConsequencePane(GamePane.get().getRoot(), cardEffect.get());
+		}
 	}
 
 	@Override
@@ -206,6 +217,7 @@ public class ControllerImpl implements Controller {
 		if (isTurnEnded) {
 			this.view.updateButton(!isTurnEnded);
 		}
+		
 		this.view.updateLabels();
 	}
 

@@ -28,7 +28,6 @@ import utilities.Pair;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.Consequences;
 import utilities.enumerations.TileTypes;
-import view.gameDialog.CardDialog;
 import view.tiles.LandAbstractFactoryImp;
 import view.Pawn;
 
@@ -46,9 +45,6 @@ public class GamePane extends StackPane{
 	private FlowPane contractPane;
 	private StackPane mainPane = new StackPane();
 	
-	/**
-	 * TODO: Ricordarsi di gestire l'eliminazione del giocatore
-	 * */
 	private Map<String, Icon> iconMap;
 	
 	private GamePane() {
@@ -159,6 +155,9 @@ public class GamePane extends StackPane{
 		return lineTo;
 	}
 	
+	/**
+	 * TODO: controllare se esce 12 e quando va in carcere.
+	 * */
 	public void movement(int movement) {
 		Pawn tempIcon = (Pawn) this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
 		int position = ControllerImpl.getController().getCurrentPlayer().getPosition();
@@ -182,6 +181,13 @@ public class GamePane extends StackPane{
 		path.getElements().add(this.getElement(tempIcon, movement));
 		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
 		control.start();
+	}
+	
+	/**
+	 * TODO: Ricordarsi di gestire l'eliminazione del giocatore
+	 * */
+	public void deletePlayer(final String player) {
+		this.iconMap.remove(player);
 	}
 	
 	private int getNextCorner(int pos) {
@@ -213,8 +219,12 @@ public class GamePane extends StackPane{
 			
 			propertyName.getStyleClass().add("contractLabel");
 			propertyName.setWrapText(true);
-			propertyName.setOnMouseClicked(e -> CardDialog.getCardDialog().createCardDialog(prop, false)); //non funziona perché background sta sotto gli altri pane
+			
 			this.contractPane.getChildren().add(propertyName);
 		});
+	}
+	
+	public Pane getRoot() {
+		return this.mainPane;
 	}
 }

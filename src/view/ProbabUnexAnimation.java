@@ -25,16 +25,15 @@ public class ProbabUnexAnimation extends AnchorPane {
 	private static final double DURATION_MS = 1000;	
 	private static final double HEIGHT = 160;
 	private static final double WIDTH = 280;
-	
-	private ProbabUnexAnimation() {
-		
-	}
+
 	
 	public static ProbabUnexAnimation getProbabilityDialog() {
 		return SINGLETON;
 	}
 	
 	public ProbabUnexAnimation createProbabilityDialog(final String message) {
+		this.getChildren().clear();
+		
 		this.setMinSize(WIDTH, HEIGHT);
 		this.setMaxSize(WIDTH, HEIGHT);
 		
@@ -55,16 +54,17 @@ public class ProbabUnexAnimation extends AnchorPane {
 				createFadeTransition(this, false),
 				createFadeTransition(rect, true));
 		parallelTransition.play();
-		
-		this.setOnMouseEntered(e -> createFadeTransition(this, false).playFrom(Duration.millis(DURATION_MS/2)));
-		
+//		
+//		//this.setOnMouseEntered(e -> createFadeTransition(this, false).playFrom(Duration.millis(DURATION_MS/2)));
+//		
 		this.setId("ProbabUnexAnimation");
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
-		return this;
+		
+		return SINGLETON;
 	}
 	
 	private Animation createFadeTransition(final Node card, final Boolean isShape) {
-		final FadeTransition ft = new FadeTransition(Duration.millis(isShape ? DURATION_MS/2 : DURATION_MS*8), card);
+		final FadeTransition ft = new FadeTransition(Duration.millis(isShape ? DURATION_MS/2 : DURATION_MS*15), card);
 		ft.setFromValue(1.0);
 		if(isShape) {
 			ft.setInterpolator(Interpolator.DISCRETE);

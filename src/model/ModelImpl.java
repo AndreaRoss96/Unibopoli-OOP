@@ -22,7 +22,8 @@ public class ModelImpl implements Model {
 
 	private static final int JAIL = 10;
 	private static final int JAIL_FEE = 125;
-
+	private static final String TEXT_CONSEQUENCE_OTHER_PLAYER = "SEI FINITO IN PROPRIETA\' ALTRUI.\nPAGATE QUANTO DOVETE.";
+	
 	private final Board board;
 	private final Turn turnPlayer;
 
@@ -104,7 +105,7 @@ public class ModelImpl implements Model {
 	}
 
 	private ConsequencesImpl factory(boolean condition, Obtainable tile, int value){
-		return condition ? new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, value)) : new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 1));
+		return condition ? new ConsequencesImpl(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(tile, value)) : new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 1));
 	}
 	
 	@Override
@@ -121,7 +122,7 @@ public class ModelImpl implements Model {
 										
 			if(!((Obtainable) tile).getOwner().get().equals(this.getCurrentPlayer().getName())) {
 				if(tile.getTileType() == TileTypes.STATION) {
-					consequenceRet = new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
+					consequenceRet = new ConsequencesImpl(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
 				}else if(tile.getTileType() == TileTypes.BUILDABLE){
 					consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 2);
 				}else {
@@ -131,13 +132,13 @@ public class ModelImpl implements Model {
 		}else {
 			switch (tile.getTileType()) {
 			case GO_JAIL: 
-				consequenceRet = new ConsequencesImpl(Consequences.MOVING, "Vai in prigione", new ArrayList<>(Arrays.asList(String.valueOf(30)))); break;
+				consequenceRet = new ConsequencesImpl(Consequences.MOVING, "ANDATE IN PRIGIONE", new ArrayList<>(Arrays.asList(String.valueOf(JAIL)))); break;
 			case GO: 
-				consequenceRet = new ConsequencesImpl(Consequences.RECEIVE, "Passi dal via", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+				consequenceRet = new ConsequencesImpl(Consequences.RECEIVE, "PASSI DAL VIA\n\tRITIRA 200$!", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
 			case LUXURY_TAX: 
-				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa di lusso", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "TASSA DI LUSSO", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
 			case INCOME_TAX: 
-				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "Tassa da definire", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
+				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "TASSA DI PROPRIETA\'", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
 			case PROBABILITY: 
 				consequenceRet = CardEffectSupplier.get().getNextProbability(); break;
 			case UNEXPECTED:

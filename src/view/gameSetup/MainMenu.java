@@ -139,9 +139,6 @@ public final class MainMenu extends Scene {
 		});
 
 		helpBtn.setOnAction(e -> {
-//			root.getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
-//			root.getChildren().add(ProbabUnexAnimation.getProbabilityDialog()
-//					.createProbabilityDialog("Ereditate 250 € da un lontano parente."));
             try {
                 final File tmp = File.createTempFile("gameRule", ".pdf");
                 tmp.deleteOnExit();

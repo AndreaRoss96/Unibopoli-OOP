@@ -7,6 +7,7 @@ import java.util.Set;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
+import view.View;
 
 public interface Controller {
 
@@ -109,4 +110,6 @@ public interface Controller {
 	 *            True if the update interest dice, false instead.
 	 */
 	void updateView(boolean isTurnEnded);
+	
+	void setView(final View view);
 }

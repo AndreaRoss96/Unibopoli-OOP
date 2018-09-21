@@ -2,13 +2,10 @@ package view;
 
 import controller.ControllerImpl;
 import javafx.application.Application;
+import javafx.scene.layout.Pane;
 import view.gameDialog.CardDialog;
 
 public class ViewImpl implements View{
-	
-	public ViewImpl() {
-		
-	}
 	
 	@Override
 	public void startView() {
@@ -35,7 +32,7 @@ public class ViewImpl implements View{
 		RightInormationPane.getRinghtInformationPane().updateLabels();
 		RightInormationPane.getRinghtInformationPane().updateJailButton(ControllerImpl.getController().getCurrentPlayer().isInJail());
 		LeftPlayersPane.getLeftPlayersPane().updatePane();
-		GamePane.get().updateContractPane();
+		this.updateGamePane();
 	}
 	
 	@Override
@@ -58,5 +55,14 @@ public class ViewImpl implements View{
 		AlertFactory.createConfirmationAlert(title, contentText);
 	}
 	
+	@Override
+	public void createCardConsequencePane(final Pane pane, final String text) {
+		this.updateGamePane();
+		pane.getChildren().add(ProbabUnexAnimation.getProbabilityDialog().createProbabilityDialog(text));
+	}
 	
+	private void updateGamePane() {
+		GamePane.get().updateContractPane();
+		GamePane.get().getRoot().getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
+	}
 }
