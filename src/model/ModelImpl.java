@@ -84,13 +84,6 @@ public class ModelImpl implements Model {
 		this.turnPlayer.remove(player);
 		if (this.turnPlayer.getPlayers().size() == 1) {
 			ControllerImpl.getController().endGame();
-		} else {
-			this.getProperties().stream().forEach(tile -> {
-				if (tile.getOwner().get().equals(player.getName())) {
-					tile.setOwner(Optional.absent());
-					ControllerImpl.getController().startAuciton(tile);
-				}
-			});
 		}
 	}
 
@@ -170,12 +163,16 @@ public class ModelImpl implements Model {
 	@Override
 	public void exitFromJail(boolean withFee) {
 		if (withFee) {
-			this.getCurrentPlayer().payments(JAIL_FEE);
+			if(this.getCurrentPlayer().getMoney() >= JAIL_FEE) {
+				this.getCurrentPlayer().payments(JAIL_FEE);
+			} else {
+				this.getCurrentPlayer().payments(this.getCurrentPlayer().getMoney());
+			}
 		}
 		this.getCurrentPlayer().exitFromJail();
 	}
 
-	/*******************************************************************************/
+	
 	@Override
 	public boolean playerPayment(final PlayerInfo player, final int moneyAmount) {
 		if (!player.canPay(moneyAmount)) {
@@ -191,7 +188,7 @@ public class ModelImpl implements Model {
 
 	@Override
 	public void buyProperty(PlayerInfo player, Obtainable property) {
-		this.playerPayment(player, property.getPrice());
+		((Player) player).payments(property.getPrice());
 		this.playerAddProperty(player, property);
 	}
 
@@ -204,14 +201,14 @@ public class ModelImpl implements Model {
 			this.playerAddProperty(firstPlayer, secondPlayer.removeProperty(prop));
 		});
 		this.playerGainMoney(firstPlayer, secondMoney);
-		this.playerPayment(firstPlayer, firstMoney);
+		firstPlayer.payments(firstMoney);
 
 		firstProperties.forEach(prop -> {
 			this.unbuild(prop, firstPlayer);
 			this.playerAddProperty(secondPlayer, firstPlayer.removeProperty(prop));
 		});
 		this.playerGainMoney(secondPlayer, firstMoney);
-		this.playerPayment(secondPlayer, secondMoney);
+		secondPlayer.payments(secondMoney);
 	}
 
 	@Override
@@ -241,17 +238,4 @@ public class ModelImpl implements Model {
 	public Tile getTileOf(int position) {
 		return this.board.getTileOf(position);
 	}
-	
-	/**
-	 * OSSERVAZIONI: - LA gestione del turno dei giocatori dove va ?? Si potrebbe
-	 * sapere il curruntPlayer tramite quella classe. Ciò non significa eliminare
-	 * l'attributo, bensì inizializzrlo continuamente tramite quella classe. -
-	 * Aggiungere un metodo che passa il turno al giocatore successivo. FATTO, ma
-	 * verificare -
-	 */
-	/**
-	 * se può essere utile alle conseguenze del movimento si può mettere
-	 * "buyProperty" nel model, in modo da rendere anche più efficente la
-	 * generazione di aste
-	 */
 }

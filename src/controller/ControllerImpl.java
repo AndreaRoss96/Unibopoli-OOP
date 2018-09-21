@@ -11,6 +11,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+import com.google.common.base.Optional;
+
 import model.ConsequencesImpl;
 import model.GameInitializer;
 import model.Model;
@@ -118,7 +120,6 @@ public class ControllerImpl implements Controller {
 		} else {
 			CardDialog.getCardDialog().createCardDialog(property, false);
 		}
-
 	}
 
 	@Override
@@ -159,8 +160,13 @@ public class ControllerImpl implements Controller {
 				this.startMortgage(moneyAmount, player);
 			}
 		} catch (NotEnoughMoneyException e) {
-			this.model.removePlayer(player);
 			this.sound.playSound(ClassicType.Music.GeneralMusicMap.getLoseGame());
+			this.view.createInformationAlert("D:", "I'm sorry " + player.getName() + " you lost everything\nyou are out of the game...\n(all your properties will be auctioned!)");
+			player.getProperties().forEach(prop -> {
+				prop.setOwner(Optional.absent());
+				this.startAuciton(prop);
+			});
+			this.model.removePlayer(player);
 		}
 
 	}
@@ -211,24 +217,25 @@ public class ControllerImpl implements Controller {
 		System.exit(0);
 	}
 
+	@Override
 	public void startAuciton(Obtainable property) {
 		AuctionDialog.getAuctionDialog().createAuctionDialog(property);
 	}
 
+	@Override
 	public void startMortgage(int minimumExpense, PlayerInfo player) {
 		this.view.createInformationAlert("Warnings!", "You have to mortgage some properties\nto afford this payment.");
 		MortgageDialog.getMortgageDialog().createMortgageDialog(minimumExpense, player);
 		this.playerPayments(player, minimumExpense);
 	}
 
-	public PlayerInfo getCurrentPlayer() {
-		return this.model.getCurrentPlayer();
-	}
-
+	@Override
 	public List<PlayerInfo> getPlayers() {
 		return this.model.getPlayers();
 	}
 
+
+	@Override
 	public List<String> getGameMode() {
 		return Arrays.asList(ModeGame.values()).stream().map(t -> String.valueOf(t)).collect(Collectors.toList());
 	}
@@ -236,5 +243,9 @@ public class ControllerImpl implements Controller {
 	@Override
 	public Set<Tile> getGameBoard() {
 		return this.model.getBoard();
+	}
+	
+	public PlayerInfo getCurrentPlayer() {
+		return this.model.getCurrentPlayer();
 	}
 }

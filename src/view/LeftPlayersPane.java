@@ -41,7 +41,7 @@ public class LeftPlayersPane {
 		root = new VBox();
 		root.setPrefSize(PaneDimensionSetting.getInstance().getLateralPaneWidth(), PREF_HEIGH); //PERCHé NON MI PRENDE LA MACRO?
 		root.setId("LeftPlayersPane");
-		root.getStylesheets().add("/style/style.css");
+		root.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		
 		updatePane();
 	}

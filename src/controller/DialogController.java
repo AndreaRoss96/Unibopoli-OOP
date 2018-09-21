@@ -24,7 +24,6 @@ import view.gameDialog.TradeDialog;
 public class DialogController implements DialogObserver {
 
 	private static final DialogController SINGLETON = new DialogController();
-	private static final int NUM_BUILD_MAX = 5; // sarebbe utile un getter di questo valore nelle buildable?
 	private static final double UNMORTGAGE_FEE = 10 / 100.0;
 
 	private final ControllerImpl controller;
@@ -39,16 +38,16 @@ public class DialogController implements DialogObserver {
 	private DialogController() {
 		this.controller = ControllerImpl.getController();
 	}
-	
+
 	@Override
 	public void setDialogController(Model model, SoundController sound, View view) {
-		if(this.model == null) {
+		if (this.model == null) {
 			this.model = model;
 		}
-		if(this.sound == null) {
+		if (this.sound == null) {
 			this.sound = sound;
 		}
-		if(this.view == null) {
+		if (this.view == null) {
 			this.view = view;
 		}
 	}
@@ -69,7 +68,7 @@ public class DialogController implements DialogObserver {
 					if (Integer.parseInt(bet) == moneyAmount) {
 						if (canPay(playerList.get(betsList.indexOf(bet)), moneyAmount)) {
 							this.model.playerAddProperty(playerList.get(betsList.indexOf(bet)), property);
-							this.model.playerPayment(playerList.get(betsList.indexOf(bet)), moneyAmount);
+							this.controller.playerPayments(playerList.get(betsList.indexOf(bet)), moneyAmount);
 						} else {
 							this.view.createInformationAlert("Ehi ", playerList.get(betsList.indexOf(bet)).getName()
 									+ ", you don't have all those money.");
@@ -87,14 +86,13 @@ public class DialogController implements DialogObserver {
 	@Override
 	public void incHouseClick() {
 		final BuildableImpl property = (BuildableImpl) CardDialog.getCardDialog().getProperty();
-		final List<Boolean> areOtherMortgaged = this.controller.getCurrentPlayer().getPopertiesByColor().get(property.getColorOf()).stream().map(Obtainable::hasMortgage).collect(Collectors.toList());
+		final List<Boolean> areOtherMortgaged = this.controller.getCurrentPlayer().getPopertiesByColor()
+				.get(property.getColorOf()).stream().map(Obtainable::hasMortgage).collect(Collectors.toList());
 		if (areOtherMortgaged.stream().filter(e -> e.booleanValue()).count() == 0) {
 			if (canPay(this.controller.getCurrentPlayer(), property.getPriceForBuilding())) {
-				if (property.getBuildingNumber() < NUM_BUILD_MAX) {
-					this.sound.playSound(ClassicType.Music.GeneralMusicMap.getPlasticDropOnPlaying());
-					property.incBuildings();
-					this.model.playerPayment(this.controller.getCurrentPlayer(), property.getPriceForBuilding());
-				}
+				this.sound.playSound(ClassicType.Music.GeneralMusicMap.getPlasticDropOnPlaying());
+				property.incBuildings();
+				this.controller.playerPayments(this.controller.getCurrentPlayer(), property.getPriceForBuilding());
 			} else {
 				this.view.createErrorAlert("Nope", "You don't have enought money\nyou have only: "
 						+ this.controller.getCurrentPlayer().getMoney() + "$");
@@ -126,7 +124,8 @@ public class DialogController implements DialogObserver {
 						this.model.playerGainMoney(this.controller.getCurrentPlayer(), property.getMortgage());
 						this.model.unbuild(property, (Player) this.controller.getCurrentPlayer());
 					} else {
-						this.model.playerPayment(this.controller.getCurrentPlayer(), (int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
+						this.controller.playerPayments(this.controller.getCurrentPlayer(),
+								(int) (property.getMortgage() + Math.ceil(property.getMortgage() * UNMORTGAGE_FEE)));
 					}
 					property.changeMortgageStatus();
 				});
@@ -153,7 +152,7 @@ public class DialogController implements DialogObserver {
 	}
 
 	@Override
-	public void buyPropertyClick() { 
+	public void buyPropertyClick() {
 		final Obtainable property = CardDialog.getCardDialog().getProperty();
 		try {
 			this.model.buyProperty(this.controller.getCurrentPlayer(), property);
@@ -166,11 +165,13 @@ public class DialogController implements DialogObserver {
 
 	@Override
 	public void accumulatedMoney() {
-		final List<Obtainable> obtainableList = MortgageDialog.getMortgageDialog().getSelected().stream().map(propertyName -> getPropertyByName(propertyName))
-				.collect(Collectors.toList());
-		MortgageDialog.getMortgageDialog().updateObtainedMoney(obtainableList.stream().mapToInt(property -> property.getMortgage()).sum() + obtainableList.stream()
-				.filter(property -> property instanceof AdapterBuildable).map(property -> (AdapterBuildable) property)
-				.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum());
+		final List<Obtainable> obtainableList = MortgageDialog.getMortgageDialog().getSelected().stream()
+				.map(propertyName -> getPropertyByName(propertyName)).collect(Collectors.toList());
+		MortgageDialog.getMortgageDialog()
+				.updateObtainedMoney(obtainableList.stream().mapToInt(property -> property.getMortgage()).sum()
+						+ obtainableList.stream().filter(property -> property instanceof AdapterBuildable)
+								.map(property -> (AdapterBuildable) property)
+								.mapToInt(value -> value.getPriceForBuilding() / 2 * value.getBuildingNumber()).sum());
 	}
 
 	@Override
@@ -197,7 +198,8 @@ public class DialogController implements DialogObserver {
 				this.view.createErrorAlert("Nope ",
 						secondPlayer.getName() + " and " + firstPlayer.getName() + " check your wallets.");
 			} else {
-				this.model.executeTrade((Player) secondPlayer, firstMoney, secondMoney, firstProperties, secondProperties);
+				this.model.executeTrade((Player) secondPlayer, firstMoney, secondMoney, firstProperties,
+						secondProperties);
 			}
 		} catch (NumberFormatException ex) {
 			this.view.createErrorAlert("Speak (type) as you eat",

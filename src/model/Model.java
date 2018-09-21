@@ -72,7 +72,8 @@ public interface Model {
 	void endTurn();
 
 	/**
-	 * Allows the current player to exit from jail.
+	 * Allows the current player to exit from jail, if the player don't have enough
+	 * money his/her money become 0.
 	 * 
 	 * @param true
 	 *            if the player have to pay a fee, false instead
@@ -113,7 +114,7 @@ public interface Model {
 	void unbuild(Obtainable property, Player player);
 
 	/**
-	 * Allows a player to do a payment.
+	 * Allows a player to do possibly dangerous payments.
 	 * 
 	 * @param player
 	 *            the player that have to pay

@@ -66,7 +66,7 @@ public class Contract extends AnchorPane {
 		this.getChildren().add(insidePane);
 		this.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 		this.setId("contract");
-		this.getStylesheets().add("/style/style.css");
+		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 	}
 
 	private void createContractForBuildable(BuildableImpl property) {

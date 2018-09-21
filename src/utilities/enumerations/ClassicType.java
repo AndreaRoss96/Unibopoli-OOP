@@ -289,16 +289,27 @@ public class ClassicType {
 
 	public enum Dialog {
 		GENERALDIALOGMAP("images/Icons/dialog/Auction.png", "images/Icons/dialog/ruined_house.png",
-				"images/Icons/dialog/shopping_cart.png");
+				"images/Icons/dialog/shopping_cart.png", "images/dialogButton/aggiungi_casa.png",
+				"images/dialogButton/rimuovi_casa.png", "images/dialogButton/icons8-contract-50.png",
+				"images/dialogButton/cash-in-hand-50.png");
 
 		private final String auction;
 		private final String mortgage;
 		private final String trade;
+		private final String addHouse;
+		private final String removeHouse;
+		private final String contract;
+		private final String cash;
 
-		private Dialog(final String auction, final String mortgage, final String trade) {
+		private Dialog(final String auction, final String mortgage, final String trade, final String addHouse,
+				final String removeHouse, final String contract, final String cash) {
 			this.auction = auction;
 			this.mortgage = mortgage;
 			this.trade = trade;
+			this.addHouse = addHouse;
+			this.removeHouse = removeHouse;
+			this.contract = contract;
+			this.cash = cash;
 		}
 
 		/**
@@ -320,6 +331,34 @@ public class ClassicType {
 		 */
 		public String getTradeImage() {
 			return ClassicType.replaceSeparetor(this.trade);
+		}
+
+		/**
+		 * @return REMOVE HOUSE IMAGE path
+		 */
+		public String getRemoveHouseImage() {
+			return this.removeHouse;
+		}
+
+		/**
+		 * @return ADD HOUSE IMAGE path
+		 */
+		public String getAddHouseImage() {
+			return this.addHouse;
+		}
+
+		/**
+		 * @return CASH IMAGE path
+		 */
+		public String getCashImage() {
+			return this.cash;
+		}
+
+		/**
+		 * @return CONTRACT IMAGE path
+		 */
+		public String getContractImage() {
+			return this.contract;
 		}
 	}
 
@@ -392,7 +431,7 @@ public class ClassicType {
 		}
 
 		/**
-		 * @return TODO: aggiungere documentazione corretta MUSIC path
+		 * @return HOUSE DROOP MUSIC path
 		 */
 		public String getPlasticDropOnPlaying() {
 			return this.plasticDropOnPlaying;

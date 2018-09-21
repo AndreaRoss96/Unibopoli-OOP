@@ -38,7 +38,7 @@ public class PlayerSetupBox extends HBox {
 		this.getChildren().addAll(nameField, icons, removePlayer);
 		this.setAlignment(Pos.CENTER);
 		this.setId("setupBox");
-		this.getStylesheets().add("/style/style.css");
+		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 	}
 
 	/**
