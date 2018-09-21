@@ -186,7 +186,7 @@ public class ControllerImpl implements Controller {
 
 			tile.setConsequence(consequence);
 			tile.doConsequence();
-			
+			this.updateView(false);
 			return Optional.of(consequence.getTextConsequence());
 		}
 		
