@@ -16,8 +16,6 @@ public class SettingsDialog extends Dialog {
 
 	private static final SettingsDialog SINGLETON = new SettingsDialog();
 
-//	private Button saveGameBtn;
-
 	private SettingsDialog() {
 
 	}

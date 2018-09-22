@@ -177,8 +177,11 @@ public class ControllerImpl implements Controller {
 
 	private Optional<String> execconsequence() {
 		if (!this.model.supplierConsequence().isPresent()) {
-			ControllerImpl.getController()
-					.showContract((Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition()));
+			Obtainable tmpPtoperty = (Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition());
+			this.showContract(tmpPtoperty);
+			if(!tmpPtoperty.getOwner().isPresent()) {
+				this.startAuciton(tmpPtoperty);
+			}
 		} else {
 			ConcrateConsequences consequence = this.model.supplierConsequence().get();
 
@@ -186,7 +189,7 @@ public class ControllerImpl implements Controller {
 
 			tile.setConsequence(consequence);
 			tile.doConsequence();
-			
+			this.updateView(false);
 			return Optional.of(consequence.getTextConsequence());
 		}
 		

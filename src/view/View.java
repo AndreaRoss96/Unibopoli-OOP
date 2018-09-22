@@ -68,8 +68,14 @@ public interface View {
 	 */
 	void createConfirmationAlert(String title, String contentText);
 
+	/**
+	 * Update the panel in the RightInformationPane to show the results of the dice.
+	 * 
+	 * @param firstResult
+	 * @param secondResult
+	 */
 	void updateDiceLabel(int firstResult, int secondResult);
-	
+
 	void createCardConsequencePane(final String text);
 	
 	void removePlayer(final String player);
