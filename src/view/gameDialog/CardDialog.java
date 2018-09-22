@@ -82,15 +82,15 @@ public class CardDialog extends Dialog {
 		root.setBackground(getBackground());
 		BorderPane.setMargin(root.getBottom(), new Insets(0, 0, getScreenH() * 0.048, getScreenW() * 0.009));
 
-		final Scene scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-
 		stage.focusedProperty().addListener((obs, wasFocused, isNowFocused) -> {
 			if (!isNowFocused) {
 				stage.close();
 			}
 		});
+		
+		final Scene scene = new Scene(root);
+		stage.setScene(scene);
+		stage.showAndWait();
 	}
 
 	/**

@@ -130,7 +130,7 @@ public class TradeDialog extends Dialog {
 
 		final Scene scene = new Scene(rootPane);
 		stage.setScene(scene);
-		stage.show();
+		stage.showAndWait();
 	}
 
 	/**

@@ -105,6 +105,9 @@ public class AuctionDialog extends Dialog {
 			this.passwordList.forEach(p -> {
 				p.clear();
 			});
+			if(property.getOwner().isPresent()) {
+				stage.close();
+			}
 		});
 
 		stage.setOnCloseRequest(e -> {
