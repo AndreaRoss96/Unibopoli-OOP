@@ -8,6 +8,8 @@ import view.tiles.ComponentFactory;
 
 public class Pawn extends Icon{
 
+	private static final double SPACE_BOARD = 50.0;
+	
 	private Direction direction;
 	private Pair<Double> coordinates;
 	
@@ -31,11 +33,11 @@ public class Pawn extends Icon{
 	
 	private Pair<Double> initCoordinates(final int position){
 		if(this.getDirection().equals(Direction.W)) {
-			return new Pair<>(PaneDimensionSetting.getInstance().getGamePaneWidth() - (ComponentFactory.LandSimpleWIDTH * (position+1.5)), PaneDimensionSetting.getInstance().getGamePaneHeight() - 50);
+			return new Pair<>(PaneDimensionSetting.getInstance().getGamePaneWidth() - (ComponentFactory.LandSimpleWIDTH * (position+1.5)), PaneDimensionSetting.getInstance().getGamePaneHeight() - SPACE_BOARD);
 		}else if(this.getDirection().equals(Direction.N)) {
 			return new Pair<>(ComponentFactory.LandSimpleWIDTH * 0.7, PaneDimensionSetting.getInstance().getGamePaneHeight() - (ComponentFactory.LandSimpleWIDTH * ((position+1.5)%10)));
 		}else if(this.getDirection().equals(Direction.E)) {
-			return new Pair<>((ComponentFactory.LandSimpleWIDTH * ((position+1.5)%20)), 50.0);			
+			return new Pair<>((ComponentFactory.LandSimpleWIDTH * ((position+1.5)%20)), SPACE_BOARD);			
 		}else {
 			return new Pair<>(PaneDimensionSetting.getInstance().getGamePaneWidth() - ComponentFactory.LandSimpleWIDTH * 0.5, ComponentFactory.LandSimpleWIDTH * ((position+1.5)%30));			
 		}

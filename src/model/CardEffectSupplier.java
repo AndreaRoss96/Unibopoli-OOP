@@ -10,13 +10,13 @@ import utilities.Parse;
 public class CardEffectSupplier {
 
 	private static CardEffectSupplier SINGLETONSUPPLIER;
-	private static CircularListImpl<ConsequencesImpl> unexpected;
-	private static CircularListImpl<ConsequencesImpl> probability;
+	private CircularListImpl<ConcrateConsequences> unexpected;
+	private CircularListImpl<ConcrateConsequences> probability;
 	private static boolean done = false;
 	
 	private CardEffectSupplier(List<String> probability, List<String> unexpected) {
-		CardEffectSupplier.unexpected = new CircularListImpl<>(unexpected.stream().map(Parse.PARSING_CONSEQUENCES::apply).collect(Collectors.toList()));
-		CardEffectSupplier.probability = new CircularListImpl<>(probability.stream().map(Parse.PARSING_CONSEQUENCES::apply).collect(Collectors.toList()));
+		this.unexpected = new CircularListImpl<>(unexpected.stream().map(Parse.PARSING_CONSEQUENCES::apply).collect(Collectors.toList()));
+		this.probability = new CircularListImpl<>(probability.stream().map(Parse.PARSING_CONSEQUENCES::apply).collect(Collectors.toList()));
 		
 		Collections.shuffle(unexpected);
 		Collections.shuffle(probability);
@@ -44,13 +44,13 @@ public class CardEffectSupplier {
 		return SINGLETONSUPPLIER;
 	}
 	
-	public ConsequencesImpl getNextProbability(){
-		probability.shift();
-		return probability.getHead();
+	public ConcrateConsequences getNextProbability(){
+		this.probability.shift();
+		return this.probability.getHead();
 	}
 	
-	public ConsequencesImpl getNextUnexpected() {
-		unexpected.shift();
-		return unexpected.getHead();
+	public ConcrateConsequences getNextUnexpected() {
+		this.unexpected.shift();
+		return this.unexpected.getHead();
 	}
 }

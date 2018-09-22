@@ -162,7 +162,7 @@ public interface Model {
 	 * 
 	 * @return
 	 */
-	Optional<ConsequencesImpl> supplierConsequence();
+	Optional<ConcrateConsequences> supplierConsequence();
 
 	/**
 	 * Get a tile in a determinate position

@@ -25,9 +25,7 @@ public final class IconLoader {
 	}
 
 	/**
-	 * Necessaria ?!?! Utilizzare Icon al posto di Image TODO: Aggiungere commente e
-	 * ricorsarsi di specificare -> (lazy creation).
-	 *
+	 * 
 	 * @return the current Singleton instance of the ImageLoader.
 	 */
 	public static IconLoader getLoader() {
@@ -45,7 +43,7 @@ public final class IconLoader {
 
 			return new ImageView(this.iconsMap.get(path).get().getImage());
 		} catch (final Exception e) {
-			System.out.println("Path not found");
+			System.err.println("Path not found");
 		}
 
 		return null;
@@ -64,7 +62,7 @@ public final class IconLoader {
 	 */
 	public Map<String, String> getAvatarMap(final String path) {
 		Objects.requireNonNull(path, "NullPointerException: path required non-null.");
-		Map<String, String> imageMap = new HashMap<>();
+		final Map<String, String> imageMap = new HashMap<>();
 		
 		try(Stream<Path> paths = Files.walk(Paths.get(path))) {
 			paths.filter(Files::isRegularFile).forEach(e -> {

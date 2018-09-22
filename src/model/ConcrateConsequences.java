@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.List;
 
+import model.tiles.StrategyConsequences;
 import utilities.enumerations.Consequences;
 
 /**
@@ -11,7 +12,7 @@ import utilities.enumerations.Consequences;
  * @author Matteo Alesiani
  */
 
-public class ConsequencesImpl implements Serializable{
+public class ConcrateConsequences implements StrategyConsequences, Serializable{
 	/**
 	 * 
 	 */
@@ -20,7 +21,7 @@ public class ConsequencesImpl implements Serializable{
 	private String textConsequences;
 	private List<String> values;
 	
-	public ConsequencesImpl(final Consequences consequences, final String textConsequences, final List<String> values) {
+	public ConcrateConsequences(final Consequences consequences, final String textConsequences, final List<String> values) {
 		this.consequences = consequences;
 		this.textConsequences = textConsequences;
 		this.values = values;
@@ -37,12 +38,13 @@ public class ConsequencesImpl implements Serializable{
 	public List<String> getValues(){
 		return this.values;
 	}
-	
-	public void doConsequences(){
+
+	@Override
+	public void doConsequence() {
 		this.consequences.exec(this.getValues());
 	}
 	
-	public static ConsequencesImpl emptyConsequence() {
-		return new ConsequencesImpl(Consequences.NO_CONSEQUENCE, "", Collections.emptyList());
+	public static ConcrateConsequences emptyConsequence() {
+		return new ConcrateConsequences(Consequences.NO_CONSEQUENCE, "", Collections.emptyList());
 	}
 }

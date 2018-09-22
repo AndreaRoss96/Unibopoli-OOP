@@ -21,7 +21,7 @@ public class NotBuildableImpl extends ObtainableImpl implements AdaprterPathImag
 	}
 	
 	@Override
-	int rentValue() {
+	protected int rentValue() {
 		return RENT;
 	}
 	

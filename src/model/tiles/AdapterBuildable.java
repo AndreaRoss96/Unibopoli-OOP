@@ -28,8 +28,13 @@ public interface AdapterBuildable{
 	 */
 	void incBuildings();
 	
-	
+	/**
+	 * The method decrement the number of buildings.
+	 */
 	void decBuildings();
 	
+	/**
+	 * The method return the rent infunction of buildingsNr.
+	 */
 	int getRent(final int buildingsNr);
 }

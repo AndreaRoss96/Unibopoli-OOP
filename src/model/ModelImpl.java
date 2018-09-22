@@ -104,14 +104,14 @@ public class ModelImpl implements Model {
 		return Arrays.asList(tile.getOwner().get(), String.valueOf(mul));
 	}
 
-	private ConsequencesImpl factory(boolean condition, Obtainable tile, int value){
-		return new ConsequencesImpl(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(tile, value)); //: new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 1));
+	private ConcrateConsequences factory(boolean condition, Obtainable tile, int value){
+		return condition ? new ConcrateConsequences(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(tile, value)) : new ConcrateConsequences(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(tile, 1));
 	}
 	
 	@Override
-	public Optional<ConsequencesImpl> supplierConsequence() {
+	public Optional<ConcrateConsequences> supplierConsequence() {
 		final Tile tile = this.board.getTileOf(this.turnPlayer.getCurrentPlayer().getPosition());
-		ConsequencesImpl consequenceRet = ConsequencesImpl.emptyConsequence();
+		ConcrateConsequences consequenceRet = ConcrateConsequences.emptyConsequence();
 		
 		if(tile instanceof Obtainable && !((Obtainable) tile).getOwner().isPresent()) {
 			return Optional.absent();
@@ -122,7 +122,7 @@ public class ModelImpl implements Model {
 										
 			if(!((Obtainable) tile).getOwner().get().equals(this.getCurrentPlayer().getName())) {
 				if(tile.getTileType() == TileTypes.STATION) {
-					consequenceRet = new ConsequencesImpl(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
+					consequenceRet = new ConcrateConsequences(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(((Obtainable) tile), player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size()));
 				}else if(tile.getTileType() == TileTypes.BUILDABLE){
 					consequenceRet = this.factory(player.getPopertiesByColor().get(((Obtainable) tile).getColorOf()).size() == ((Obtainable) tile).getColorOf().getNumTiles(), ((Obtainable) tile), 2);
 				}else {
@@ -132,19 +132,19 @@ public class ModelImpl implements Model {
 		}else {
 			switch (tile.getTileType()) {
 			case GO_JAIL: 
-				consequenceRet = new ConsequencesImpl(Consequences.MOVING, "ANDATE IN PRIGIONE", new ArrayList<>(Arrays.asList(String.valueOf(JAIL)))); break;
+				consequenceRet = new ConcrateConsequences(Consequences.MOVING, "ANDATE IN PRIGIONE", new ArrayList<>(Arrays.asList(String.valueOf(JAIL)))); break;
 			case GO: 
-				consequenceRet = new ConsequencesImpl(Consequences.RECEIVE, "PASSI DAL VIA\n\tRITIRA 200$!", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+				consequenceRet = new ConcrateConsequences(Consequences.RECEIVE, "PASSI DAL VIA\n\tRITIRA 200$!", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
 			case LUXURY_TAX: 
-				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "TASSA DI LUSSO", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+				consequenceRet = new ConcrateConsequences(Consequences.SIMPLE_PAYMENT, "TASSA DI LUSSO", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
 			case INCOME_TAX: 
-				consequenceRet = new ConsequencesImpl(Consequences.SIMPLE_PAYMENT, "TASSA DI PROPRIETA\'", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
+				consequenceRet = new ConcrateConsequences(Consequences.SIMPLE_PAYMENT, "TASSA DI PROPRIETA\'", new ArrayList<>(Arrays.asList(String.valueOf(100)))); break;
 			case PROBABILITY: 
 				consequenceRet = CardEffectSupplier.get().getNextProbability(); break;
 			case UNEXPECTED:
 				consequenceRet = CardEffectSupplier.get().getNextUnexpected(); break;
 			default: 
-				consequenceRet = ConsequencesImpl.emptyConsequence();
+				consequenceRet = ConcrateConsequences.emptyConsequence();
 			}			
 		}
 		

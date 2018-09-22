@@ -25,7 +25,6 @@ public class TurnImpl implements Turn {
 		this.turnManagement = new CircularListImpl<>(players);
 		this.jailMap = new HashMap<>();
 		this.loserPlayer = new ArrayList<>();
-		//this.nextPlayer();
 		this.clear();
 	}
 	
