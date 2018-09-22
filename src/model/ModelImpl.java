@@ -22,7 +22,7 @@ public class ModelImpl implements Model {
 
 	private static final int JAIL = 10;
 	private static final int JAIL_FEE = 125;
-	private static final String TEXT_CONSEQUENCE_OTHER_PLAYER = "SEI FINITO IN PROPRIETA\' ALTRUI.\nPAGATE QUANTO DOVETE.";
+	private static final String TEXT_CONSEQUENCE_OTHER_PLAYER = "YOU FINISHED IN PROPERTY OF OTHERS.\nYOU HAVE TO PAY THE RENT.";
 	
 	private final Board board;
 	private final Turn turnPlayer;
@@ -105,7 +105,7 @@ public class ModelImpl implements Model {
 	}
 
 	private ConsequencesImpl factory(boolean condition, Obtainable tile, int value){
-		return condition ? new ConsequencesImpl(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(tile, value)) : new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 1));
+		return new ConsequencesImpl(Consequences.PLAYER_TRADE, TEXT_CONSEQUENCE_OTHER_PLAYER, getvalues(tile, value)); //: new ConsequencesImpl(Consequences.PLAYER_TRADE, "Prova", getvalues(tile, 1));
 	}
 	
 	@Override

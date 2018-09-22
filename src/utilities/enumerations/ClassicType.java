@@ -1,7 +1,5 @@
 package utilities.enumerations;
 
-import java.io.File;
-
 /**
  * @version 2.13.0
  * 
@@ -20,7 +18,7 @@ public class ClassicType {
 	 * @return The path with the right separator.
 	 */
 	private static String replaceSeparetor(String value) {
-		return value.replace("/", File.separator);
+		return value; //.replace("/", File.separator);
 	}
 
 	public enum Files {
