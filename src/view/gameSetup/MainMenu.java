@@ -112,8 +112,8 @@ public final class MainMenu extends Scene {
 
 		creditsBtn.setOnAction(e -> {
 			AlertFactory.createInformationAlert("Credits",
-					"Alesiani Matteo: Movement and consequences, management of contracts and unexpected/probabilities, game Board graphics and game turn\n"
-							+ "Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading of the Game, main menu and initialization of the game.");
+					"Alesiani Matteo: Movement and consequences, management of contracts and unexpected/probabilities,\ngame Board graphics and game turn\n\n"
+							+ "Rossolini Andrea: Player Management, Trading & Auction, box & contracts Graphics, saving & loading\nof the Game, main menu and initialization of the game.");
 		});
 
 		musicBtn.setOnAction(e -> {
@@ -139,21 +139,21 @@ public final class MainMenu extends Scene {
 		});
 
 		helpBtn.setOnAction(e -> {
-            try {
-                final File tmp = File.createTempFile("gameRule", ".pdf");
-                tmp.deleteOnExit();
-                Files.copy(MainMenu.class.getResourceAsStream("/gamerule.pdf"), Paths.get(tmp.toURI()),
-                        StandardCopyOption.REPLACE_EXISTING);
-                java.awt.EventQueue.invokeLater(() -> {
-                    try {
-                        Desktop.getDesktop().open(tmp);
-                    } catch (IOException e1) {
-                        e1.printStackTrace();
-                    }
-                });
-            } catch (Exception ex) {
-                ex.printStackTrace();
-            }
+			try {
+				final File tmp = File.createTempFile("gameRule", ".pdf");
+				tmp.deleteOnExit();
+				Files.copy(MainMenu.class.getResourceAsStream("/gamerule.pdf"), Paths.get(tmp.toURI()),
+						StandardCopyOption.REPLACE_EXISTING);
+				java.awt.EventQueue.invokeLater(() -> {
+					try {
+						Desktop.getDesktop().open(tmp);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				});
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		});
 
 		root.setId("mainMenu");
@@ -165,7 +165,7 @@ public final class MainMenu extends Scene {
 	 * Set the background music of the game.
 	 * 
 	 * @param backgroundMusic
-	 *            the object that control the muisc and the sound
+	 *            the object that control the music and the sound
 	 */
 	public static void setBeckgroundMusic(final SoundController backgroundMusic) {
 		music = backgroundMusic;

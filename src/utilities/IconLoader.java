@@ -1,9 +1,13 @@
 package utilities;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
+import java.util.stream.Stream;
 
 import javafx.scene.image.ImageView;
 import view.Icon;
@@ -56,19 +60,20 @@ public final class IconLoader {
 	 * 
 	 * @return Map<String, String> having in the key value the name of the sprite
 	 *         and as a value its path
+	 * @throws IOException 
 	 */
 	public Map<String, String> getAvatarMap(final String path) {
 		Objects.requireNonNull(path, "NullPointerException: path required non-null.");
 		Map<String, String> imageMap = new HashMap<>();
-		final File folder = new File(path);
-		final File[] listOfFiles = folder.listFiles();
-
-		for (int i = 0; i < listOfFiles.length; i++) {
-			if (listOfFiles[i].isFile()) {
-				String fileName = listOfFiles[i].getName().replaceAll(".png", "");
-				String filePath = listOfFiles[i].getPath().replaceAll("res", "");
+		
+		try(Stream<Path> paths = Files.walk(Paths.get(path))) {
+			paths.filter(Files::isRegularFile).forEach(e -> {
+				String fileName = e.getFileName().toString().replaceAll(".png", "");
+				String filePath = e.toString().replaceAll("res", "");
 				imageMap.put(fileName, filePath);
-			}
+			});
+		} catch (IOException e1) {
+			e1.printStackTrace();
 		}
 		
 		return imageMap;
