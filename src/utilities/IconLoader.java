@@ -21,9 +21,7 @@ public final class IconLoader {
 	}
 
 	/**
-	 * Necessaria ?!?! Utilizzare Icon al posto di Image TODO: Aggiungere commente e
-	 * ricorsarsi di specificare -> (lazy creation).
-	 *
+	 * 
 	 * @return the current Singleton instance of the ImageLoader.
 	 */
 	public static IconLoader getLoader() {
@@ -41,7 +39,7 @@ public final class IconLoader {
 
 			return new ImageView(this.iconsMap.get(path).get().getImage());
 		} catch (final Exception e) {
-			System.out.println("Path not found");
+			System.err.println("Path not found");
 		}
 
 		return null;

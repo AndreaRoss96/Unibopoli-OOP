@@ -2,6 +2,7 @@ package model.tiles;
 
 import java.io.Serializable;
 
+import model.ConcrateConsequences;
 import utilities.enumerations.TileTypes;
 
 /**
@@ -38,4 +39,6 @@ public interface Tile extends Serializable, StrategyConsequences{
 	void setNameOf(final String nameTile);
 	
 	TileTypes getTileType();
+	
+	void setConsequence(final ConcrateConsequences consequence);
 }

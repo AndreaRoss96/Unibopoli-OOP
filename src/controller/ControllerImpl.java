@@ -13,7 +13,7 @@ import java.util.stream.IntStream;
 
 import com.google.common.base.Optional;
 
-import model.ConsequencesImpl;
+import model.ConcrateConsequences;
 import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
@@ -25,7 +25,6 @@ import utilities.IconLoader;
 import utilities.Pair;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
-import view.GamePane;
 import view.View;
 import view.gameDialog.AuctionDialog;
 import view.gameDialog.CardDialog;
@@ -170,9 +169,10 @@ public class ControllerImpl implements Controller {
 				prop.setOwner(Optional.absent());
 				this.startAuciton(prop);
 			});
+			
+			this.view.removePlayer(player.getName());
 			this.model.removePlayer(player);
 		}
-
 	}
 
 	private Optional<String> execconsequence() {
@@ -180,7 +180,7 @@ public class ControllerImpl implements Controller {
 			ControllerImpl.getController()
 					.showContract((Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition()));
 		} else {
-			ConsequencesImpl consequence = this.model.supplierConsequence().get();
+			ConcrateConsequences consequence = this.model.supplierConsequence().get();
 
 			Tile tile = this.model.getTileOf(this.getCurrentPlayer().getPosition());
 
@@ -203,7 +203,7 @@ public class ControllerImpl implements Controller {
 		Optional<String> cardEffect = this.execconsequence();
 		
 		if(cardEffect.isPresent() && !cardEffect.get().equals("")) {
-			this.view.createCardConsequencePane(GamePane.get().getRoot(), cardEffect.get());
+			this.view.createCardConsequencePane(cardEffect.get());
 		}
 	}
 

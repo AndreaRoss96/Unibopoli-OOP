@@ -1,6 +1,6 @@
 package model.tiles;
 
-import model.ConsequencesImpl;
+import model.ConcrateConsequences;
 import utilities.enumerations.TileTypes;
 
 public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
@@ -9,7 +9,7 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	
 	private Integer positionTile;
 	private TileTypes tileType;
-	private ConsequencesImpl consequences;
+	private ConcrateConsequences consequences;
 	
 	public NotObtainableImpl(final int positionTile, final TileTypes titeType) {
 		this.positionTile = positionTile;
@@ -42,12 +42,12 @@ public class NotObtainableImpl implements NotObtainable, AdaprterPathImage{
 	}
 
 	@Override
-	public void setConsequence(ConsequencesImpl consequence) {
+	public void setConsequence(ConcrateConsequences consequence) {
 		this.consequences = consequence;
 	}
 	
 	@Override
 	public void doConsequence() {
-		this.consequences.doConsequences();
+		this.consequences.doConsequence();
 	}
 }

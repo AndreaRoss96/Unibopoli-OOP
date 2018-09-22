@@ -54,9 +54,7 @@ public class ProbabUnexAnimation extends AnchorPane {
 				createFadeTransition(this, false),
 				createFadeTransition(rect, true));
 		parallelTransition.play();
-//		
-//		//this.setOnMouseEntered(e -> createFadeTransition(this, false).playFrom(Duration.millis(DURATION_MS/2)));
-//		
+
 		this.setId("ProbabUnexAnimation");
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 		

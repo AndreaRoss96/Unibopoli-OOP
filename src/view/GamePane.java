@@ -182,10 +182,7 @@ public class GamePane extends StackPane{
 		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
 		control.start();
 	}
-	
-	/**
-	 * TODO: Ricordarsi di gestire l'eliminazione del giocatore
-	 * */
+
 	public void deletePlayer(final String player) {
 		this.iconMap.remove(player);
 	}

@@ -2,10 +2,14 @@ package view;
 
 import controller.ControllerImpl;
 import javafx.application.Application;
-import javafx.scene.layout.Pane;
 import view.gameDialog.CardDialog;
 
 public class ViewImpl implements View{
+	private GamePane gamePane;
+	
+	public ViewImpl() {
+		this.gamePane = GamePane.get();
+	}
 	
 	@Override
 	public void startView() {
@@ -14,7 +18,7 @@ public class ViewImpl implements View{
 
 	@Override
 	public void movement(int exitDice) {
-		GamePane.get().movement(exitDice);
+		this.gamePane.movement(exitDice);
 	}
 	
 	@Override
@@ -56,13 +60,18 @@ public class ViewImpl implements View{
 	}
 	
 	@Override
-	public void createCardConsequencePane(final Pane pane, final String text) {
+	public void createCardConsequencePane(final String text) {
 		this.updateGamePane();
-		pane.getChildren().add(ProbabUnexAnimation.getProbabilityDialog().createProbabilityDialog(text));
+		this.gamePane.getRoot().getChildren().add(ProbabUnexAnimation.getProbabilityDialog().createProbabilityDialog(text));
+	}
+	
+	@Override
+	public void removePlayer(final String player) {
+		this.gamePane.deletePlayer(player);
 	}
 	
 	private void updateGamePane() {
-		GamePane.get().updateContractPane();
-		GamePane.get().getRoot().getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
+		this.gamePane.updateContractPane();
+		this.gamePane.getRoot().getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
 	}
 }

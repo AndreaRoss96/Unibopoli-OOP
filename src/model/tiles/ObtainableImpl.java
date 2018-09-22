@@ -5,7 +5,7 @@ package model.tiles;
  */
 import com.google.common.base.Optional;
 
-import model.ConsequencesImpl;
+import model.ConcrateConsequences;
 import utilities.enumerations.Color;
 import utilities.enumerations.TileTypes;
 
@@ -21,7 +21,7 @@ public abstract class ObtainableImpl implements Obtainable{
 	private StatusTile hasMortgage;
 	private Optional<String> owner;
 	private TileTypes titeType;
-	protected ConsequencesImpl consequece;
+	protected ConcrateConsequences consequece;
 	
 	public ObtainableImpl(final int positionTile, final int price, 
 					  final int mortgage, final TileTypes titeType, final Color color){
@@ -97,7 +97,7 @@ public abstract class ObtainableImpl implements Obtainable{
 	}
 	
 	@Override
-	public void setConsequence(final ConsequencesImpl consequence) {
+	public void setConsequence(final ConcrateConsequences consequence) {
 		this.consequece = consequence;
 	}
 	
@@ -111,6 +111,6 @@ public abstract class ObtainableImpl implements Obtainable{
 			this.consequece.getValues().set(1, String.valueOf(this.getValueRent()));			
 		}
 		
-		this.consequece.doConsequences();
+		this.consequece.doConsequence();
 	}
 }
