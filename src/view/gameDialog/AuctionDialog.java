@@ -14,10 +14,10 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
+import utilities.FontFactory;
 import utilities.IconLoader;
 import utilities.enumerations.ClassicType;
 import view.AlertFactory;
@@ -32,7 +32,7 @@ public class AuctionDialog extends Dialog {
 
 	private static final AuctionDialog SINGLETON = new AuctionDialog();
 
-	private static final Font COMMENT_FONT = Font.font("Arial", FontPosture.ITALIC, 11);
+	private static final Font COMMENT_FONT = FontFactory.getFontItalic("Arial", 11);
 	private static final int PASSWORD_LIMIT = 15;
 
 	private ObservableList<PasswordField> passwordList;

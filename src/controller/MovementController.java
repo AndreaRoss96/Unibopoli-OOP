@@ -12,7 +12,7 @@ import view.Icon;
  */
 public class MovementController extends Thread {
 
-	private static final Duration DURATION = Duration.seconds(1);
+	private static final Duration DURATION = Duration.seconds(2);
 	
 	private PathTransition transition;
 	private Icon icon;
@@ -28,9 +28,6 @@ public class MovementController extends Thread {
 		return this;
 	}
 	
-    /**
-     *
-     */
     @Override
     public void run() {
 		transition = new PathTransition(DURATION, this.path, this.icon.get());

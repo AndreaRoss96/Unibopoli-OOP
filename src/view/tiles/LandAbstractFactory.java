@@ -22,7 +22,7 @@ import view.gameDialog.CardDialog;
 * @author Matteo Alesiani 
 */
 
-public class LandAbstractFactoryImp{
+public class LandAbstractFactory{
 
 	public Pane createLand(final Tile tile) {
 

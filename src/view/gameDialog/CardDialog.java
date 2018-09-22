@@ -14,12 +14,11 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.tiles.AdapterBuildable;
 import model.tiles.Obtainable;
+import utilities.FontFactory;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.TileTypes;
 
@@ -35,8 +34,8 @@ public class CardDialog extends Dialog {
 
 	private static final CardDialog SINGLETON = new CardDialog();
 
-	private static final Font TITLE_FONT = Font.font("Kabel", FontWeight.BOLD, 22);
-	private static final Font VALUE_FONT = Font.font("Kabel", FontPosture.ITALIC, 18);
+	private static final Font TITLE_FONT = FontFactory.getFontBold("Kabel", 22);
+	private static final Font VALUE_FONT = FontFactory.getFontItalic("Kabel", 18);
 	private static final int NUM_BUILD_MAX = 5;	
 	private static final String BLACK = "#000000";				
 

@@ -12,8 +12,8 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Paint;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
+import utilities.FontFactory;
 import utilities.IconLoader;
 import utilities.PaneDimensionSetting;
 
@@ -53,11 +53,11 @@ public class ComponentFactory {
 	public static Label getLabelString(final String textLabel) {
 		Label label = new Label(textLabel);
 	
-		label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8));
+		label.setFont(FontFactory.getDefaultFont(8));
 		label.setAlignment(Pos.CENTER);
 		label.setTextAlignment(TextAlignment.CENTER);
-		label.setOnMouseEntered(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 10)));
-		label.setOnMouseExited(value -> label.setFont(Font.loadFont("file:res/font/kabel.ttf", 8)));
+		label.setOnMouseEntered(value -> label.setFont(FontFactory.getDefaultFont(10)));
+		label.setOnMouseExited(value -> label.setFont(FontFactory.getDefaultFont(8)));
 		label.setWrapText(true);
 		label.setRotate(180.0);
 		setAlignmentNode(label);
@@ -65,10 +65,6 @@ public class ComponentFactory {
 		return label;
 	}
 
-	/**
-	 * Migliorare la dimensione dell'immagine
-	 * 
-	 * */
 	public static Label getLabelImage(final String pathImageView) {
 		Label image = new Label();
 		ImageView imageView = IconLoader.getLoader().getImageFromPath(pathImageView);
