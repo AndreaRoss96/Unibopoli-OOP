@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
-import controller.ControllerImpl;
-import controller.MovementController;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
@@ -22,13 +19,16 @@ import javafx.scene.shape.LineTo;
 import javafx.scene.shape.MoveTo;
 import javafx.scene.shape.Path;
 import javafx.scene.text.TextAlignment;
+
+import controller.ControllerImpl;
+import controller.MovementController;
 import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import utilities.Pair;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.Consequences;
 import utilities.enumerations.TileTypes;
-import view.tiles.LandAbstractFactoryImp;
+import view.tiles.LandAbstractFactory;
 import view.Pawn;
 
 /**
@@ -111,7 +111,7 @@ public class GamePane extends StackPane{
 		
 		ControllerImpl.getController().getGameBoard().stream().sorted((o1, o2) -> o1.getPosition() - o2.getPosition())
 			 .skip(skip).limit(limit)
-			 .map(tile -> new LandAbstractFactoryImp().createLand(tile))
+			 .map(tile -> new LandAbstractFactory().createLand(tile))
 			 .forEach(land -> pane.addRow(0, land));
 		
 		pane.setRotate(rotate);

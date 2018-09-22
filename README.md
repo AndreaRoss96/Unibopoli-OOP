@@ -1,2 +1,2 @@
-# OOP18 - Alesiani Matteo, Doglioni Edoardo, Rossolini Andrea - Unibopoly
+# OOP18 - Alesiani Matteo, Rossolini Andrea - Unibopoly
 

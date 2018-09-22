@@ -14,10 +14,10 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utilities.FontFactory;
 import utilities.PaneDimensionSetting;
 
 /**
@@ -33,7 +33,7 @@ public class Dialog {
 	private static final double SCREEN_W = PaneDimensionSetting.getInstance().getCommandBridgeWidth();
 	private static final double PREF_H_SIZE = SCREEN_H * 0.75;
 	private static final double PREF_W_SIZE = SCREEN_W * 0.45;
-	private static final Font PRINCIPAL_FONT = Font.font("Kabel", FontWeight.BOLD, 18);
+	private static final Font PRINCIPAL_FONT = FontFactory.getFontBold("Kabel", 18);
 	private static final Insets BUTTON_INSETS = new Insets(SCREEN_H * 0.02);
 	private static final int BUTTON_WIDTH = 100;
 
