@@ -9,7 +9,6 @@ import utilities.enumerations.ClassicType;
 import view.gameSetup.MainMenu;
 
 /**
- * 
  *  
  * @author Matteo Alesiani 
  */
@@ -34,15 +33,13 @@ public class InitialWindows extends Application {
     												.getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getIconWindows())
     												.getImage());
         
-        /*
-         * TODO: 
-         * this.mainWindow.setOnCloseRequest(e -> {
-            e.consume();
-            if (ViewImpl.getController().isGameLoopRunning()) {
-                ViewImpl.getController().pauseGameLoop();
-            }
-            ClosureHandler.closeProgram(this.mainWindow);
-        });*/
+        this.initialWindow.setOnCloseRequest(e -> {
+        	if (AlertFactory.createConfirmationAlert("Confirm exit", "Are you sure you want to quit from Unibopoli?")) {
+        		initialWindow.close();
+			} else {
+				e.consume();
+			}
+        });
     	
         this.initialWindow.setScene(MainMenu.get(this.initialWindow));
         this.initialWindow.setResizable(false);
