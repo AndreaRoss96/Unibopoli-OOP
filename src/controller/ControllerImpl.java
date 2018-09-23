@@ -63,7 +63,7 @@ public class ControllerImpl implements Controller {
 	public void setView(final View view) {
 		this.view = view;
 	}
-	
+
 	@Override
 	public void newGameInit(final String mode, final List<String> playersName, final List<String> playersIcon) {
 		try {
@@ -78,7 +78,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
-		IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
+		IconLoader.getLoader().getAvatarMap("res/images/avatars");
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
 		this.setDialogContorller();
 	}
@@ -141,7 +141,10 @@ public class ControllerImpl implements Controller {
 		this.sound.playSound(ClassicType.Music.GeneralMusicMap.getDiceRoll());
 		final Pair<Integer> result = model.exitDice();
 		this.view.updateDiceLabel(result.getFirst(), result.getSecond());
-		this.exitDice(result.getFirst() + result.getSecond());
+		if (result.getFirst() == 0 && result.getSecond() == 0) {
+			model.endTurn();
+		} else {
+			this.exitDice(result.getFirst() + result.getSecond());
 		/*
 		 * if the two dice have same result the player have to roll dices again, even if
 		 * you are going out of jail
@@ -155,6 +158,7 @@ public class ControllerImpl implements Controller {
 			this.model.endTurn();
 			this.updateView(true);
 		}
+		}
 	}
 
 	public void playerPayments(final PlayerInfo player, final int moneyAmount) {
@@ -164,12 +168,13 @@ public class ControllerImpl implements Controller {
 			}
 		} catch (NotEnoughMoneyException e) {
 			this.sound.playSound(ClassicType.Music.GeneralMusicMap.getLoseGame());
-			this.view.createInformationAlert("D:", "I'm sorry " + player.getName() + " you lost everything\nyou are out of the game...\n(all your properties will be auctioned!)");
+			this.view.createInformationAlert("D:", "I'm sorry " + player.getName()
+					+ " you lost everything\nyou are out of the game...\n(all your properties will be auctioned!)");
 			player.getProperties().forEach(prop -> {
 				prop.setOwner(Optional.absent());
 				this.startAuciton(prop);
 			});
-			
+
 			this.view.removePlayer(player.getName());
 			this.model.removePlayer(player);
 		}
@@ -178,10 +183,10 @@ public class ControllerImpl implements Controller {
 	private Optional<String> execConsequence() {
 		if (!this.model.supplierConsequence().isPresent()) {
 			Obtainable tmpPtoperty = (Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition());
-			
+
 			this.showContract(tmpPtoperty);
-			
-			if(!tmpPtoperty.getOwner().isPresent()) {
+
+			if (!tmpPtoperty.getOwner().isPresent()) {
 				this.startAuciton(tmpPtoperty);
 			}
 		} else {
@@ -194,22 +199,22 @@ public class ControllerImpl implements Controller {
 			this.updateView(false);
 			return Optional.of(consequence.getTextConsequence());
 		}
-		
+
 		this.updateView(false);
-		
+
 		return Optional.absent();
 	}
 
 	public void exitDice(final int value) {
-		if(!this.getCurrentPlayer().isInJail() || !this.view.isInJail(this.getCurrentPlayer().getName())) {
+		if (!this.getCurrentPlayer().isInJail() || !this.view.isInJail(this.getCurrentPlayer().getName())) {
 			this.view.movement(value);
 		}
-		
+
 		this.model.movement(value);
 
 		Optional<String> cardEffect = this.execConsequence();
-		
-		if(cardEffect.isPresent() && !cardEffect.get().equals("")) {
+
+		if (cardEffect.isPresent() && !cardEffect.get().equals("")) {
 			this.view.createCardConsequencePane(cardEffect.get());
 		}
 	}
@@ -217,10 +222,10 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void goToJail() {
 		this.view.goToJail();
-	
+
 		this.model.goToJail();
 	}
-	
+
 	@Override
 	public void settingsClick() {
 		SettingsDialog.getSettingsDialog().createSettingDialog(this.sound);
@@ -231,7 +236,7 @@ public class ControllerImpl implements Controller {
 		if (isTurnEnded) {
 			this.view.updateButton(!isTurnEnded);
 		}
-		
+
 		this.view.updateLabels();
 	}
 
@@ -269,7 +274,7 @@ public class ControllerImpl implements Controller {
 	public Set<Tile> getGameBoard() {
 		return this.model.getBoard();
 	}
-	
+
 	public PlayerInfo getCurrentPlayer() {
 		return this.model.getCurrentPlayer();
 	}
