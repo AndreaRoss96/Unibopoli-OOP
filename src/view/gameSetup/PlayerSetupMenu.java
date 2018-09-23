@@ -62,7 +62,7 @@ public class PlayerSetupMenu extends Scene {
 		final HBox hBox = new HBox();
 		final Label mapLabel = new Label("Choose map:");
 		final ComboBox<String> mapBox = new ComboBox<>();
-		mapBox.getItems().addAll(ControllerImpl.getController().getGameMode()); // ci dovrebbe essere un metodo che va a leggere un ifle ocn tutte le mappe
+		mapBox.getItems().addAll(ControllerImpl.getController().getGameMode());
 		mapBox.setValue(mapBox.getItems().get(0));
 		final Button startGame = new Button("Start Game");
 		final Button cancel = new Button("Cancel");
