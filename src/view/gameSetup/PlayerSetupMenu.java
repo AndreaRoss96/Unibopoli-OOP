@@ -44,7 +44,7 @@ public class PlayerSetupMenu extends Scene {
 		
 		final BorderPane borderPane = new BorderPane();
 		
-		this.imageMap = IconLoader.getLoader().getAvatarMap("/res/images/avatars");
+		this.imageMap = IconLoader.getLoader().getAvatarMap("res/images/avatars");
 		
 		iconList = new ArrayList<>();
 		chosenList = new ArrayList<>();
@@ -188,7 +188,6 @@ public class PlayerSetupMenu extends Scene {
 
 	public static PlayerSetupMenu get(Stage stage) {
 		mainStage = stage;
-		
 		mainStage.setTitle(TITLE);
 		
 		return new PlayerSetupMenu();	

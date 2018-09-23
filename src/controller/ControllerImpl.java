@@ -217,13 +217,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void goToJail() {
 		this.view.goToJail();
-		
-		try {
-			Thread.sleep(500);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
-		
+	
 		this.model.goToJail();
 	}
 	
