@@ -82,6 +82,7 @@ public class TurnImpl implements Turn {
 		return this.rolls <= 3;
 	}
 	
+	
 	@Override
 	public void thrown (boolean areSame) {
 		this.done = !areSame;
