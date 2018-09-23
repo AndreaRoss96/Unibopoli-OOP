@@ -40,7 +40,7 @@ public class TurnImpl implements Turn {
 	
 	@Override
 	public void turnInJail() {
-		this.jailMap.merge(this.getCurrentPlayer(), 0, (oldV, newV) -> oldV++);		
+		this.jailMap.merge(this.getCurrentPlayer(), 0, (oldV, newV) -> newV = oldV++);		
 	}
 	
 	@Override
@@ -84,6 +84,7 @@ public class TurnImpl implements Turn {
 		this.rolls++;
 		return this.rolls <= 3;
 	}
+	
 	
 	@Override
 	public void thrown (boolean areSame) {
