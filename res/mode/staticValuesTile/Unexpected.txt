@@ -1,14 +1,11 @@
-Andate sino al largo colombo: se passate dal via ritirate 500 euro.-MOVING-24-500
-Andate in prigione direttamente e senza passare dal via.-MOVING-10-0
+Andate in prigione direttamente e senza passare dal via.-MOVING
 Avete tutti i vostri stabili da riparare: pagare 60 euro per ogni casa e 250 per ogni albergo.-PAYMENT-250-60
-Andate sino a Via Accademia: se passate dal via ritirate 500 euro.-MOVING-11-500
 Versate 50 euro per beneficenza.-SIMPLE_PAYMENT-50
-Andate alla stazione nord: se passate dal via ritirate 500 euro.-MOVING-25-500
 Multa di 40 euro per aver guidato senza patente.-SIMPLE_PAYMENT-40
-Andate fino al Parco della Vittoria.-MOVING-39-0
 Matrimonio in famiglia: spese impreviste 375 euro.-SIMPLE_PAYMENT-375
 Maturano le cedole delle vostre cartelle di rendita, ritirate 375 euro.-RECEIVE-375
 La banca vi paga gli interessi del vostro conto corrente, ritirate 125 euro.-RECEIVE-125
-Andate avanti sino al via.-MOVING-0-200
 Avente vinto un terno al lotto: ritirate 250 euro.-RECEIVE-250
 Dovete pagare un contributo di miglioria stradale, 100 per ogni casa, 250 euro per ogni albergo che possedete.-PAYMENT-250-100
+Avete ceduto delle azioni: ricavate 125 euro.-RECEIVE-125
+Rimborso tassa sul reddito: ritirate 50 euro dalla banca.-RECEIVE-50

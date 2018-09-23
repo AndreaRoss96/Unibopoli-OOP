@@ -14,11 +14,7 @@ import model.player.Player;
 public enum Consequences {
 
 	MOVING((player, values) -> {
-		if(player.getPosition() > Integer.parseInt(values.get(0))) {
-			Consequences.valueOf(Consequences.class, "RECEIVE").exec(player, Arrays.asList(values.get(1)));
-		}
-
-		ControllerImpl.getController().exitDice(Integer.parseInt(values.get(0)));
+		ControllerImpl.getController().goToJail();
 	}),
 	
 	SIMPLE_PAYMENT((player, values) -> {

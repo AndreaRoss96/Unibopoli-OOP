@@ -79,4 +79,6 @@ public interface View {
 	void createCardConsequencePane(final String text);
 	
 	void removePlayer(final String player);
+	
+	void goToJail();
 }

@@ -69,4 +69,9 @@ public class ViewImpl implements View{
 		GamePane.get().updateContractPane();
 		GamePane.get().getRoot().getChildren().removeIf(node -> node instanceof ProbabUnexAnimation);
 	}
+
+	@Override
+	public void goToJail() {
+		GamePane.get().goToJail();
+	}
 }

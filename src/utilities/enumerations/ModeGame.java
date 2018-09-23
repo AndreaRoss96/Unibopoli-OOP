@@ -1,5 +1,5 @@
 package utilities.enumerations;
 
 public enum ModeGame {
-	CLASSIC	
+	CLASSIC, CESENA_EDITION	
 }

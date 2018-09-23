@@ -10,20 +10,20 @@ import view.Icon;
  * 
  * @author Matteo Alesiani
  */
-public class MovementController extends Thread {
+public class Movement extends Thread {
 
-	private static final Duration DURATION = Duration.seconds(2);
+	private static final Duration DURATION = Duration.seconds(1.5);
 	
 	private PathTransition transition;
 	private Icon icon;
 	private Path path;
 	
-	public MovementController setIcon(Icon icon) {
+	public Movement setIcon(Icon icon) {
 		this.icon = icon;
 		return this;
 	}
 	
-	public MovementController setMovement(Path path) {
+	public Movement setMovement(Path path) {
 		this.path = path;
 		return this;
 	}

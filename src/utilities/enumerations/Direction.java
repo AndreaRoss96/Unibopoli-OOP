@@ -25,6 +25,9 @@ public enum Direction {
 		}
 	},
 	
+	/**
+	 *	Corner West-North.
+	 */
 	WN(1){
 		@Override
 		public LineTo moveLocation(Pawn player, int position) {
@@ -42,6 +45,9 @@ public enum Direction {
 		}
 	},
 	
+	/**
+	 *	Corner North-East.
+	 */
 	NE(3){
 		@Override
 		public LineTo moveLocation(Pawn player, int position) {
@@ -59,6 +65,9 @@ public enum Direction {
 		}
 	},
 	
+	/**
+	 *	Corner East-South.
+	 */
 	ES(5){
 
 		@Override
@@ -78,6 +87,9 @@ public enum Direction {
 		}
 	},
 	
+	/**
+	 *	Corner South-West.
+	 */
 	SW(7){
 
 		@Override
@@ -88,7 +100,7 @@ public enum Direction {
 	
 	private static final int STEP_SIZE = (int) ComponentFactory.LandSimpleWIDTH;
 	
-	//internal index
+	/**internal index*/
     private int index; 
     
 	/**

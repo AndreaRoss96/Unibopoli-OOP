@@ -2,6 +2,7 @@ package model;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -132,9 +133,9 @@ public class ModelImpl implements Model {
 		}else {
 			switch (tile.getTileType()) {
 			case GO_JAIL: 
-				consequenceRet = new ConcrateConsequences(Consequences.MOVING, "ANDATE IN PRIGIONE", new ArrayList<>(Arrays.asList(String.valueOf(JAIL)))); break;
+				consequenceRet = new ConcrateConsequences(Consequences.MOVING, "ANDATE IN PRIGIONE", Collections.emptyList()); break;
 			case GO: 
-				consequenceRet = new ConcrateConsequences(Consequences.RECEIVE, "PASSI DAL VIA\n\tRITIRA 200$!", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
+				consequenceRet = new ConcrateConsequences(Consequences.RECEIVE, "PASSI DAL VIA\nRITIRA 200$!", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
 			case LUXURY_TAX: 
 				consequenceRet = new ConcrateConsequences(Consequences.SIMPLE_PAYMENT, "TASSA DI LUSSO", new ArrayList<>(Arrays.asList(String.valueOf(200)))); break;
 			case INCOME_TAX: 

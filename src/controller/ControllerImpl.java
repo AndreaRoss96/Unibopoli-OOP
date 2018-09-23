@@ -18,6 +18,7 @@ import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
 import model.exceptions.NotEnoughMoneyException;
+import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
@@ -210,6 +211,14 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
+	public void goToJail() {
+		this.view.goToJail();
+		((Player) this.getCurrentPlayer()).goToJail();
+		/**
+		 * Posso settare dentro go to ? 
+		 * */
+	}
+	
 	@Override
 	public void settingsClick() {
 		SettingsDialog.getSettingsDialog().createSettingDialog(this.sound);

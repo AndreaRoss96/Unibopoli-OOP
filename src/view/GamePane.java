@@ -21,12 +21,13 @@ import javafx.scene.shape.Path;
 import javafx.scene.text.TextAlignment;
 
 import controller.ControllerImpl;
-import controller.MovementController;
+import controller.Movement;
 import model.tiles.BuildableImpl;
 import model.tiles.Obtainable;
 import utilities.Pair;
 import utilities.PaneDimensionSetting;
 import utilities.enumerations.Consequences;
+import utilities.enumerations.Direction;
 import utilities.enumerations.TileTypes;
 import view.tiles.LandAbstractFactory;
 import view.Pawn;
@@ -166,6 +167,7 @@ public class GamePane extends StackPane{
 		
 		path.getElements().add(new MoveTo(tempIcon.getCoordinates().getFirst(), tempIcon.getCoordinates().getSecond()));
 		
+		
 		if(position + movement >= corner) {			
 			path.getElements().add(this.getElement(tempIcon, corner-position-1));
 			tempIcon.rotate();
@@ -173,16 +175,34 @@ public class GamePane extends StackPane{
 			tempIcon.rotate();
 			movement = movement - (corner-position);
 				
-			if(corner == 40) {
+			if(corner == 40 && position + movement > 40) {
 				Consequences.RECEIVE.exec(Arrays.asList("200"));
 			}
 		}
 		
 		path.getElements().add(this.getElement(tempIcon, movement));
-		MovementController control = new MovementController().setMovement(path).setIcon(tempIcon);
+		Movement control = new Movement().setMovement(path).setIcon(tempIcon);
 		control.start();
 	}
 
+	public void goToJail() {
+		System.out.println("Fin qui ci arriva\n\n");
+		
+		Pawn tempIcon = (Pawn) this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
+		Path path = new Path();
+		path.getElements().add(new MoveTo(tempIcon.getCoordinates().getFirst(), tempIcon.getCoordinates().getSecond()));
+		
+		final LineTo lineTo = Direction.WN.moveLocation(tempIcon, 0);
+		tempIcon.setCoordinates(new Pair<Double>(lineTo.getX(), lineTo.getY()));
+		
+		
+		path.getElements().add(lineTo);
+		
+		Movement control = new Movement().setMovement(path).setIcon(tempIcon);
+		control.start();
+
+	}
+	
 	public void deletePlayer(final String player) {
 		this.iconMap.remove(player);
 	}
