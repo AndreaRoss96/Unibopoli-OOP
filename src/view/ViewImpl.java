@@ -71,6 +71,11 @@ public class ViewImpl implements View{
 	}
 
 	@Override
+	public boolean isInJail(final String player) {
+		return GamePane.get().isInJail(player);
+	}
+	
+	@Override
 	public void goToJail() {
 		GamePane.get().goToJail();
 	}

@@ -205,6 +205,12 @@ public class GamePane extends StackPane{
 		control.start();
 	}
 	
+	public boolean isInJail(final String player) {
+		final LineTo lineTo = Direction.WN.moveLocation((Pawn) this.iconMap.get(player), 0);
+		
+		return ((Pawn) this.iconMap.get(player)).getCoordinates().equals(new Pair<Double>(lineTo.getX(), lineTo.getY()));
+	}
+	
 	public void deletePlayer(final String player) {
 		this.iconMap.remove(player);
 	}

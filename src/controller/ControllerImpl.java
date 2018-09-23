@@ -201,7 +201,7 @@ public class ControllerImpl implements Controller {
 	}
 
 	public void exitDice(final int value) {
-		if(!this.getCurrentPlayer().isInJail() || (this.getCurrentPlayer().isInJail() && this.getCurrentPlayer().getPosition() != 10)) {
+		if(!this.getCurrentPlayer().isInJail() || !this.view.isInJail(this.getCurrentPlayer().getName())) {
 			this.view.movement(value);
 		}
 		
@@ -217,6 +217,13 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void goToJail() {
 		this.view.goToJail();
+		
+		try {
+			Thread.sleep(500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		this.model.goToJail();
 	}
 	

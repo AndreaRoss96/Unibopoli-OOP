@@ -44,7 +44,7 @@ public class PlayerSetupMenu extends Scene {
 		
 		final BorderPane borderPane = new BorderPane();
 		
-		this.imageMap = IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
+		this.imageMap = IconLoader.getLoader().getAvatarMap("/res/images/avatars");
 		
 		iconList = new ArrayList<>();
 		chosenList = new ArrayList<>();
