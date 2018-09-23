@@ -59,7 +59,11 @@ public class Pawn extends Icon{
 		return this.direction.moveLocation(this, position);
 	}
 	
-	public Direction getDirection() {
+	private Direction getDirection() {
 		return this.direction;
+	}
+	
+	public void goToJail() {
+		this.direction = Direction.N;
 	}
 }

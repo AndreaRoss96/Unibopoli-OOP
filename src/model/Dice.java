@@ -6,14 +6,13 @@ import utilities.Pair;
 /**
  * @version 1.6
  * 
- * Ricontrollare tramite singleton VIROLI.
  * @author Matteo Alesiani
  */
 public class Dice {
 
 	private static final int MAX_NUM_DICE = 6;
 	private static Dice DICE_SINGLETON;
-	
+
 	private Random random;
 
 	private Dice(){

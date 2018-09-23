@@ -156,9 +156,6 @@ public class GamePane extends StackPane{
 		return lineTo;
 	}
 	
-	/**
-	 * TODO: controllare se esce 12 e quando va in carcere.
-	 * */
 	public void movement(int movement) {
 		Pawn tempIcon = (Pawn) this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
 		int position = ControllerImpl.getController().getCurrentPlayer().getPosition();
@@ -167,17 +164,25 @@ public class GamePane extends StackPane{
 		
 		path.getElements().add(new MoveTo(tempIcon.getCoordinates().getFirst(), tempIcon.getCoordinates().getSecond()));
 		
+		if(movement == 12 && corner-1 == position) {
+			tempIcon.rotate();
+			path.getElements().add(this.getElement(tempIcon, 0));
+			tempIcon.rotate();
+			position++;
+			movement--;
+			corner = this.getNextCorner(position);
+		}
 		
 		if(position + movement >= corner) {			
+			if(corner == 40 && position + movement > 40) {
+				Consequences.RECEIVE.exec(Arrays.asList("200"));
+			}
+			
 			path.getElements().add(this.getElement(tempIcon, corner-position-1));
 			tempIcon.rotate();
 			path.getElements().add(this.getElement(tempIcon, 0));
 			tempIcon.rotate();
 			movement = movement - (corner-position);
-				
-			if(corner == 40 && position + movement > 40) {
-				Consequences.RECEIVE.exec(Arrays.asList("200"));
-			}
 		}
 		
 		path.getElements().add(this.getElement(tempIcon, movement));
@@ -186,8 +191,6 @@ public class GamePane extends StackPane{
 	}
 
 	public void goToJail() {
-		System.out.println("Fin qui ci arriva\n\n");
-		
 		Pawn tempIcon = (Pawn) this.iconMap.get(ControllerImpl.getController().getCurrentPlayer().getName());
 		Path path = new Path();
 		path.getElements().add(new MoveTo(tempIcon.getCoordinates().getFirst(), tempIcon.getCoordinates().getSecond()));
@@ -195,12 +198,17 @@ public class GamePane extends StackPane{
 		final LineTo lineTo = Direction.WN.moveLocation(tempIcon, 0);
 		tempIcon.setCoordinates(new Pair<Double>(lineTo.getX(), lineTo.getY()));
 		
-		
+		tempIcon.goToJail();
 		path.getElements().add(lineTo);
 		
 		Movement control = new Movement().setMovement(path).setIcon(tempIcon);
 		control.start();
-
+	}
+	
+	public boolean isInJail(final String player) {
+		final LineTo lineTo = Direction.WN.moveLocation((Pawn) this.iconMap.get(player), 0);
+		
+		return ((Pawn) this.iconMap.get(player)).getCoordinates().equals(new Pair<Double>(lineTo.getX(), lineTo.getY()));
 	}
 	
 	public void deletePlayer(final String player) {

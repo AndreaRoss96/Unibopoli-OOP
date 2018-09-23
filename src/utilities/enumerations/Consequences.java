@@ -13,13 +13,9 @@ import model.player.Player;
  */
 public enum Consequences {
 
-	MOVING((player, values) -> {
-		ControllerImpl.getController().goToJail();
-	}),
+	MOVING((player, values) -> ControllerImpl.getController().goToJail() ),
 	
-	SIMPLE_PAYMENT((player, values) -> {
-		ControllerImpl.getController().playerPayments(player, Integer.valueOf(values.get(0)));
-	}),
+	SIMPLE_PAYMENT((player, values) -> ControllerImpl.getController().playerPayments(player, Integer.valueOf(values.get(0))) ),
 	
 	PAYMENT((player, values) -> { 
 		Integer payment = player.getHotelNumber() * Integer.valueOf(values.get(0)) + 
@@ -28,9 +24,7 @@ public enum Consequences {
 		Consequences.valueOf(Consequences.class, "SIMPLE_PAYMENT").exec(player, Arrays.asList(String.valueOf(payment.intValue())));
 	}), 
 	
-	RECEIVE((player, values) -> {
-		player.gainMoney(Integer.parseInt(values.get(0)));
-	}),
+	RECEIVE((player, values) -> player.gainMoney(Integer.parseInt(values.get(0))) ),
 	
 	EACH_PLAYER((player, values) -> {
 		ControllerImpl.getController().getPlayers().stream()

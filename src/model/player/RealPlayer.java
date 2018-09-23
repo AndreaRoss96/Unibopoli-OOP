@@ -108,9 +108,6 @@ public class RealPlayer implements Player {
 		return this.money >= moneyAmount;
 	}
 
-	/**
-	 * Possiamo inserire anche la posizione corretta ?
-	 */
 	@Override
 	public void goToJail() {
 		this.status = Prison.PRISON;

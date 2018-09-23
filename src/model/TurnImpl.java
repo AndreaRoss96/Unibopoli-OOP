@@ -40,12 +40,12 @@ public class TurnImpl implements Turn {
 	
 	@Override
 	public void turnInJail() {
-		this.jailMap.merge(this.getCurrentPlayer(), 0, (oldV, newV) -> newV = oldV++);		
+		this.jailMap.merge(this.getCurrentPlayer(), 0, (oldV, newV) -> oldV.intValue() +1);		
 	}
 	
 	@Override
 	public boolean exitFromJail() {
-		if(this.jailMap.get(this.getCurrentPlayer()) == TURN_IN_JAIL) {
+		if(this.jailMap.get(this.getCurrentPlayer()).equals(TURN_IN_JAIL)) {
 			this.jailMap.remove(this.getCurrentPlayer());
 			
 			return true;
@@ -76,15 +76,11 @@ public class TurnImpl implements Turn {
 		this.done = false;
 	}
 	
-	/**
-	 * TODO: Check!
-	 * */
 	@Override
 	public boolean isThrows() {
 		this.rolls++;
 		return this.rolls <= 3;
 	}
-	
 	
 	@Override
 	public void thrown (boolean areSame) {
@@ -96,4 +92,3 @@ public class TurnImpl implements Turn {
 		return this.done;
 	}
 }
-

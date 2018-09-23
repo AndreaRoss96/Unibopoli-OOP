@@ -18,7 +18,6 @@ import model.GameInitializer;
 import model.Model;
 import model.ResourceManager;
 import model.exceptions.NotEnoughMoneyException;
-import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
@@ -176,10 +175,12 @@ public class ControllerImpl implements Controller {
 		}
 	}
 
-	private Optional<String> execconsequence() {
+	private Optional<String> execConsequence() {
 		if (!this.model.supplierConsequence().isPresent()) {
 			Obtainable tmpPtoperty = (Obtainable) this.model.getTileOf(this.getCurrentPlayer().getPosition());
+			
 			this.showContract(tmpPtoperty);
+			
 			if(!tmpPtoperty.getOwner().isPresent()) {
 				this.startAuciton(tmpPtoperty);
 			}
@@ -200,23 +201,24 @@ public class ControllerImpl implements Controller {
 	}
 
 	public void exitDice(final int value) {
-		this.view.movement(value);
-
+		if(!this.getCurrentPlayer().isInJail() || !this.view.isInJail(this.getCurrentPlayer().getName())) {
+			this.view.movement(value);
+		}
+		
 		this.model.movement(value);
 
-		Optional<String> cardEffect = this.execconsequence();
+		Optional<String> cardEffect = this.execConsequence();
 		
 		if(cardEffect.isPresent() && !cardEffect.get().equals("")) {
 			this.view.createCardConsequencePane(cardEffect.get());
 		}
 	}
 
+	@Override
 	public void goToJail() {
 		this.view.goToJail();
-		((Player) this.getCurrentPlayer()).goToJail();
-		/**
-		 * Posso settare dentro go to ? 
-		 * */
+	
+		this.model.goToJail();
 	}
 	
 	@Override
@@ -257,7 +259,6 @@ public class ControllerImpl implements Controller {
 	public List<PlayerInfo> getPlayers() {
 		return this.model.getPlayers();
 	}
-
 
 	@Override
 	public List<String> getGameMode() {

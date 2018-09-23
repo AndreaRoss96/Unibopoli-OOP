@@ -12,11 +12,7 @@ import utilities.enumerations.TileTypes;
  */
 
 public interface Tile extends Serializable, StrategyConsequences{
-	/**
-	 * TODO: Simple Factory per Tile controllare relazione risiko
-	 * 
-	 * */
-	
+
 	/**
 	 * Return the position in the game board.
 	 * 

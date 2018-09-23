@@ -37,5 +37,4 @@ public class AlertFactory{
 		alert.initStyle(StageStyle.UTILITY);
 		return alert;
 	}
-	
 }

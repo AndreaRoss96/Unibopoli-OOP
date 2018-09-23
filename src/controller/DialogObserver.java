@@ -67,5 +67,4 @@ public interface DialogObserver {
 	 *            the same View of the principal controller
 	 */
 	void setDialogController(Model model, SoundController sound, View view);
-
 }

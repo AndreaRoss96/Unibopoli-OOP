@@ -21,7 +21,6 @@ public class ReadFile {
      * @throws IOException if the specified path is  not valid.
 	 * @return <tt>Stream of String</tt> of record inside the file.
 	 */
-	
 	public static Stream<String> readFile(String pathfile) throws IOException {		
 		return Files.lines(Paths.get(pathfile), Charset.defaultCharset());
 	}

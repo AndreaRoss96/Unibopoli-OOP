@@ -13,9 +13,7 @@ import utilities.enumerations.Consequences;
  */
 
 public class ConcrateConsequences implements StrategyConsequences, Serializable{
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 7378643276372611582L;
 	private Consequences consequences;
 	private String textConsequences;

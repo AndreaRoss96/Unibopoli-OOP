@@ -16,7 +16,7 @@ public class Icon {
 		this(new Image(path));
 	}
 	
-	private Icon(final Image image) {
+	public Icon(final Image image) {
 		this.image = new ImageView(image);
 	}
 	

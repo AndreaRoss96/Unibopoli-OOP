@@ -7,10 +7,8 @@ import utilities.PaneDimensionSetting;
 
 /**
 * 
-*  
 * @author Matteo Alesiani 
 */
-
 public class CommandBridge extends Scene{
 
 	private static final String TITLE = "UNIBOPOLI - La versione Universitaria di Monopoli.";
@@ -28,13 +26,7 @@ public class CommandBridge extends Scene{
 		this.setRoot(commandBridge);
 		this.getStylesheets().add(getClass().getResource("/style/style.css").toExternalForm());
 	}
-	
-	/**
-     * 
-     * @param 
-     *            
-     * @return 
-     */
+
     public static CommandBridge get(final Stage initialWindow) {
         mainStage = initialWindow;
         mainStage.setTitle(TITLE);

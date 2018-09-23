@@ -112,4 +112,6 @@ public interface Controller {
 	void updateView(boolean isTurnEnded);
 	
 	void setView(final View view);
+	
+	void goToJail();
 }

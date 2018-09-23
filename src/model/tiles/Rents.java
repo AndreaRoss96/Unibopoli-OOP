@@ -37,12 +37,6 @@ public class Rents implements Serializable {
 	 * @return int <tt>rent</tt> of relative numHouse.
 	 */
 	public int getRent() {
-		
-		
-		/***
-		 * 
-		 * TODO: Aggiungere eccezione.
-		 */
 		return this.rentsManagement.get(this.buildingsNr);
 	}
 	
@@ -51,7 +45,9 @@ public class Rents implements Serializable {
 	}
 	
 	public void incBuildings() {
-		this.buildingsNr++;
+		if(this.buildingsNr + 1 < this.rentsManagement.size()) {
+			this.buildingsNr++;
+		}
 	}
 	
 	public void setPriceForBuilding(final Integer priceBuilding) {
@@ -63,7 +59,9 @@ public class Rents implements Serializable {
 	}
 
 	public void decBuildings() {
-		this.buildingsNr--;
+		if(this.buildingsNr != 0) {
+			this.buildingsNr--;
+		}
 	}
 	
 	public int getRent(int buildingsNr) {

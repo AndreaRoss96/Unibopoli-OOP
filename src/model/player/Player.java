@@ -64,5 +64,4 @@ public interface Player extends PlayerInfo {
 	 * @return the removed property
 	 */
 	Obtainable removeProperty(Obtainable property);
-
 }

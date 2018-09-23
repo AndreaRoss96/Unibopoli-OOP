@@ -50,19 +50,21 @@ public class ModelImpl implements Model {
 		if (this.turnPlayer.hasDone()) {
 			return new Pair<>(0, 0);
 		}
+		
 		if (this.turnPlayer.isThrows()) {
 			this.turnPlayer.thrown(temp.areSame());
 			if (this.turnPlayer.isInJail()) {
 				this.turnPlayer.turnInJail();
+				
 				if (temp.areSame() || this.turnPlayer.exitFromJail()) {
 					this.exitFromJail(true);
 				}
-			}
-			return temp;
+			}			
 		} else {
-			this.goToJail();
-			return temp;
+			ControllerImpl.getController().goToJail();
 		}
+		
+		return temp;
 	}
 
 	@Override
@@ -171,9 +173,9 @@ public class ModelImpl implements Model {
 				this.getCurrentPlayer().payments(this.getCurrentPlayer().getMoney());
 			}
 		}
+		
 		this.getCurrentPlayer().exitFromJail();
 	}
-
 	
 	@Override
 	public boolean playerPayment(final PlayerInfo player, final int moneyAmount) {

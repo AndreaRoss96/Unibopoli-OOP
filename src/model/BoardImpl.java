@@ -30,28 +30,13 @@ public class BoardImpl implements Board {
 		this.initializationSetTile();
 	}
 	
-	/**
-	 * Return the Set of all Obtainable Tile.
-	 * 
-	 * @return <tt>Set<Obtainable></tt> of all Obtainable.
-	 *
-	 * TODO: può ottimizzare gli altri.
-	 * 
-	 */
 	@Override
 	public Set<? extends Tile> getTiles(Predicate<Tile> predicate){
 		return this.gameBoard.stream()
 				   .filter(predicate::test)
 				   .collect(Collectors.toSet());
 	}
-	
-	/**
-	 * Return the Tile of the specific position.
-	 * 
-	 * @param  index  index of the position.
-     * @throws IllegalArgumentException if the specified index is over the limit.
-	 * @return <tt>Tile</tt> of the specific position.
-	 */
+
 	@Override
 	public Tile getTileOf(final int index) {
 		if(index >= MAXINDEXBOARD) { throw new IllegalArgumentException(); }
@@ -61,11 +46,6 @@ public class BoardImpl implements Board {
 				   .findFirst().get();
 	}
 	
-	/**
-	 * Return the String corresponding to the mode of game.
-	 * 
-	 * @return <tt>mode</tt> of game.
-	 */
 	@Override
 	public String getModeGame() {
 		return this.mode;
@@ -97,9 +77,7 @@ public class BoardImpl implements Board {
 								 ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));
 			
 		}catch (IOException e) {
-			System.out.println("IOExce");
 		} catch (Exception e) { 
-			e.printStackTrace();
 		}
 	}
 }

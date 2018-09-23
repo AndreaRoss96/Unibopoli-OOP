@@ -81,4 +81,6 @@ public interface View {
 	void removePlayer(final String player);
 	
 	void goToJail();
+	
+	boolean isInJail(final String player);
 }
