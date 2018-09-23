@@ -20,6 +20,7 @@ public class PaneDimensionSetting {
 		if(PaneDimensionSetting.PANEDIMENSION == null) {
 			PaneDimensionSetting.PANEDIMENSION = new PaneDimensionSetting();
 		}
+		
 		return PaneDimensionSetting.PANEDIMENSION;
 	}
 	

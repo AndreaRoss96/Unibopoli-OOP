@@ -99,6 +99,7 @@ public class BoardImpl implements Board {
 		}catch (IOException e) {
 			System.out.println("IOExce");
 		} catch (Exception e) { 
+			System.out.println("Exce");
 			e.printStackTrace();
 		}
 	}
