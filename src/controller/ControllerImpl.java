@@ -78,7 +78,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
-		IconLoader.getLoader().getAvatarMap("res/mode/classic/avatars");
+		IconLoader.getLoader().getAvatarMap("res/images/avatars");
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
 		this.setDialogContorller();
 	}
