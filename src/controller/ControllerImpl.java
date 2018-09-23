@@ -259,7 +259,6 @@ public class ControllerImpl implements Controller {
 		return this.model.getPlayers();
 	}
 
-
 	@Override
 	public List<String> getGameMode() {
 		return Arrays.asList(ModeGame.values()).stream().map(t -> String.valueOf(t)).collect(Collectors.toList());

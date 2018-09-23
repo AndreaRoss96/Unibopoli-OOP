@@ -12,8 +12,6 @@ public interface Board extends Serializable {
 	 * Return the Set of all Obtainable Tile.
 	 * 
 	 * @return <tt>Set<Obtainable></tt> of all Obtainable.
-	 *
-	 * TODO: può ottimizzare gli altri.
 	 * 
 	 */
 	Set<? extends Tile> getTiles(Predicate<Tile> predicate);
@@ -35,7 +33,7 @@ public interface Board extends Serializable {
 	String getModeGame();
 	
 	/**
-	 * TODO: aggiungere documetazione 
+	 * @return the number of tiles of the same type.
 	 */
 	int getTilesNumber();
 }

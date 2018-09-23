@@ -128,7 +128,6 @@ public enum Direction {
 	}
 
 	/**
-	 * 
 	 * @return Direction
 	 */
 	public Direction rotation() {

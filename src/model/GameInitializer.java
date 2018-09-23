@@ -92,5 +92,4 @@ public final class GameInitializer {
 		final Model model = new ModelImpl(memento.getGameBoard(), memento.getPlayers()); // imprevisti e probabilità
 		return model;
 	}
-
 }

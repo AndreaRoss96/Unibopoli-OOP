@@ -115,5 +115,4 @@ public final class SoundController {
 	public boolean isSoundMute() {
 		return this.soundsMute;
 	}
-
 }

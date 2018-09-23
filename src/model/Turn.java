@@ -90,5 +90,4 @@ public interface Turn extends Serializable {
 	 * @return true if the player has rolled dice, false instead
 	 */
 	boolean hasDone();
-
 }

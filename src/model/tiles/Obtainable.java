@@ -55,8 +55,7 @@ public interface Obtainable extends Tile{
 	 * 
 	 * @param The Optional<String> <tt>owner</tt>.
 	 */
-	void setOwner(final Optional<String> owner);
-	
+	void setOwner(final Optional<String> owner);	
 	
 	/**
 	 * Returns the type of the Color enum, that specific the family of belonging inside the board. 

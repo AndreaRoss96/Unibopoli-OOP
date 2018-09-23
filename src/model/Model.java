@@ -158,10 +158,6 @@ public interface Model {
 	 */
 	void playerAddProperty(PlayerInfo player, Obtainable property);
 
-	/**
-	 * 
-	 * @return
-	 */
 	Optional<ConcrateConsequences> supplierConsequence();
 
 	/**
@@ -172,5 +168,4 @@ public interface Model {
 	 * @return the Tile in the position
 	 */
 	Tile getTileOf(int position);
-
 }
