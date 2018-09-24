@@ -24,7 +24,7 @@ public class CardEffectSupplier {
 		Collections.shuffle(unexpected);
 		Collections.shuffle(probability);
 	}
-	
+
 	public static CardEffectSupplier get(){
 		if(SINGLETONSUPPLIER == null) {
 			try {

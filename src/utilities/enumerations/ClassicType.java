@@ -369,12 +369,12 @@ public class ClassicType {
 		
 		IRON(new Pair<>("Iron", "images/avatars/Iron.png")),
 		
-		MASHROOM(new Pair<>("Mashroom", "images/avatars/Mashroom.png")),
-		
 		BOWL(new Pair<>("Bowl", "images/avatars/Bowl.png")),
 		
 		CAR(new Pair<>("Car", "images/avatars/Car.png")),
 		
+		MASHROOM(new Pair<>("Mashroom", "images/avatars/Mashroom.png")),
+				
 		BOOT(new Pair<>("Boot", "images/avatars/Boot.png"));
 				
 		private final Pair<String> pair;
