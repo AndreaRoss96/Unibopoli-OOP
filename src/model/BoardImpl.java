@@ -73,8 +73,9 @@ public class BoardImpl implements Board {
 					.map(Parse.PARSING_NOTOBTAINABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
 			
-			CardEffectSupplier.get(ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getProbabilityFile()).collect(Collectors.toList()), 
-								 ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));			
+//			CardEffectSupplier.get(ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getProbabilityFile()).collect(Collectors.toList()), 
+//								 ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));			
+
 		}catch (IOException e) {
 			e.printStackTrace();
 		} catch (Exception e) { 

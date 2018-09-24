@@ -2,9 +2,7 @@ package model;
 
 import java.util.List;
 import java.util.Set;
-
 import com.google.common.base.Optional;
-
 import model.player.Player;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;

@@ -1,7 +1,4 @@
-Andate in prigione direttamente e senza passare dal via.-MOVING-
-Andate in prigione direttamente e senza passare dal via.-MOVING-
-Andate in prigione direttamente e senza passare dal via.-MOVING-
-Andate in prigione direttamente e senza passare dal via.-MOVING-
+Andate in prigione direttamente e senza passare dal via.-MOVING
 Avete tutti i vostri stabili da riparare: pagare 60 euro per ogni casa e 250 per ogni albergo.-PAYMENT-250-60
 Versate 50 euro per beneficenza.-SIMPLE_PAYMENT-50
 Multa di 40 euro per aver guidato senza patente.-SIMPLE_PAYMENT-40

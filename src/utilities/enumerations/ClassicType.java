@@ -1,10 +1,7 @@
 package utilities.enumerations;
 
-
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import utilities.Pair;
 
 /**
@@ -359,12 +356,12 @@ public class ClassicType {
 		
 		IRON(new Pair<>("Iron", "images/avatars/Iron.png")),
 		
-		MUSHROOM(new Pair<>("Mushroom", "images/avatars/Mashroom.png")),
+		MUSHROOM(new Pair<>("Mushroom", "images/avatars/Mushroom.png")),
 		
 		BOWL(new Pair<>("Bowl", "images/avatars/Bowl.png")),
 		
 		CAR(new Pair<>("Car", "images/avatars/Car.png")),
-		
+				
 		BOOT(new Pair<>("Boot", "images/avatars/Boot.png"));
 				
 		private final Pair<String> pair;
@@ -378,8 +375,13 @@ public class ClassicType {
 		}
 		
 		static public Map<String, String> getAvatarMap(){
-			return Arrays.asList(Avatar.values()).stream()
-						 .map(Avatar::getElement).collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
+			Map<String, String> retMap = new HashMap<>();
+			
+			for(Avatar avatar : Avatar.values()) {
+				retMap.put(avatar.getElement().getFirst(), avatar.getElement().getSecond());
+			}
+			
+			return retMap;
 		}
 	}
 	

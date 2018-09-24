@@ -13,7 +13,6 @@ import java.util.stream.IntStream;
 
 import com.google.common.base.Optional;
 
-import model.CardEffectSupplier;
 import model.ConcrateConsequences;
 import model.GameInitializer;
 import model.Model;
@@ -23,7 +22,6 @@ import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
 import utilities.Pair;
-import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
 import utilities.enumerations.ModeGame;
 import view.View;
@@ -79,13 +77,8 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
-//		IconLoader.getLoader().getAvatarMap("res/images/Icons/");
+
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
-		
-		try {
-			CardEffectSupplier.get(ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getProbabilityFile()).collect(Collectors.toList()), 
-					 			   ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));
-		} catch (IOException e) {}
 		
 		this.setDialogContorller();
 	}
