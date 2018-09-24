@@ -1,10 +1,7 @@
 package utilities.enumerations;
 
-
-import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
-
 import utilities.Pair;
 
 /**
@@ -391,8 +388,13 @@ public class ClassicType {
 		}
 		
 		static public Map<String, String> getAvatarMap(){
-			return Arrays.asList(Avatar.values()).stream()
-						 .map(Avatar::getElement).collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
+			Map<String, String> retMap = new HashMap<>();
+			
+			for(Avatar avatar : Avatar.values()) {
+				retMap.put(avatar.getElement().getFirst(), avatar.getElement().getSecond());
+			}
+			
+			return retMap;
 		}
 	}
 	

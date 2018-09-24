@@ -1,7 +1,4 @@
-Andate in prigione direttamente e senza passare dal via.-MOVING-
-Andate in prigione direttamente e senza passare dal via.-MOVING-
-Andate in prigione direttamente e senza passare dal via.-MOVING-
-Andate in prigione direttamente e senza passare dal via.-MOVING-
+Andate in prigione direttamente e senza passare dal via.-MOVING
 E' maturata la cedola delle vostre azioni: ritirate 60 euro.-RECEIVE-60
 Avete vinto il secondo premio in un concorso di bellezza: ritirate 25 euro.-RECEIVE-25
 Scade il vostro premio di assicurazione: pagate 125 euro.-SIMPLE_PAYMENT-125

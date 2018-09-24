@@ -2,7 +2,6 @@ package model;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -65,7 +64,7 @@ public final class GameInitializer {
 						final List<Obtainable> propertyList = board.getTiles(t -> t instanceof Obtainable).stream()
 																   .map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
 																   .collect(Collectors.toList());
-						Collections.shuffle(propertyList);
+						//Collections.shuffle(propertyList);
 						player.addProperty(propertyList.get(0));
 					}
 					player.payments(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
