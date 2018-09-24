@@ -66,7 +66,7 @@ public final class GameInitializer {
 																   .map(t -> (Obtainable) t).filter(prop -> !prop.getOwner().isPresent())
 																   .collect(Collectors.toList());
 						Collections.shuffle(propertyList);
-						player.addProperty(propertyList.get(0));
+						player.addProperty(propertyList.stream().findFirst().get());
 					}
 					player.payments(player.getProperties().stream().mapToInt(Obtainable::getPrice).sum());
 					this.playerList.add(player);

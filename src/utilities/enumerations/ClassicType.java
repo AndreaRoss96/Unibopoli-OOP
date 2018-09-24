@@ -15,23 +15,10 @@ import utilities.Pair;
 
 public class ClassicType {
 
-	/**
-	 * This method makes source independent of platform and safe to use across Unix
-	 * and Windows.
-	 * 
-	 * @param value
-	 *            The file's path.
-	 * 
-	 * @return The path with the right separator.
-	 */
-	private static String replaceSeparetor(String value) {
-		return value; //.replace("/", File.separator);
-	}
-
 	public enum Files {
-		GENERALFILEMAP("res/mode/staticValuesTile/BuildableValues.txt",
-				"res/mode/staticValuesTile/NotBuildableValues.txt", "res/mode/staticValuesTile/NotObtainableValues.txt",
-				"res/mode/staticValuesTile/Probability.txt", "res/mode/staticValuesTile/Unexpected.txt");
+		GENERALFILEMAP("mode/staticValuesTile/BuildableValues.txt",
+				"mode/staticValuesTile/NotBuildableValues.txt", "mode/staticValuesTile/NotObtainableValues.txt",
+				"mode/staticValuesTile/Probability.txt", "mode/staticValuesTile/Unexpected.txt");
 
 		private final String staticBuildableValuesInitFile;
 		private final String staticNotBuildableValuesInitFile;
@@ -53,14 +40,14 @@ public class ClassicType {
 		 * @return the path for the initialization Buildable value tiles of the map.
 		 */
 		public String getStaticBuildableValuesInitFile() {
-			return ClassicType.replaceSeparetor(this.staticBuildableValuesInitFile);
+			return this.staticBuildableValuesInitFile;
 		}
 
 		/**
 		 * @return the path for the initialization NotBuildable value tiles of the map.
 		 */
 		public String getStaticNotBuildableValuesInitFile() {
-			return ClassicType.replaceSeparetor(this.staticNotBuildableValuesInitFile);
+			return this.staticNotBuildableValuesInitFile;
 		}
 
 		/**
@@ -70,14 +57,14 @@ public class ClassicType {
 		 * @return the path contains the Buildable tile's name in base of mode game.
 		 */
 		public String getModeGame(String mode) {
-			return ClassicType.replaceSeparetor("res/mode/" + mode + "/ClassicMode.txt");
+			return "mode/" + mode + "/ClassicMode.txt";
 		}
 
 		/**
 		 * @return the path for the initialization NotObtainable value tiles of the map.
 		 */
 		public String getStaticNotObtainableValuesInitFile() {
-			return ClassicType.replaceSeparetor(this.staticNotObtainableValuesInitFile);
+			return this.staticNotObtainableValuesInitFile;
 		}
 
 		/**
@@ -85,7 +72,7 @@ public class ClassicType {
 		 *         match.
 		 */
 		public String getProbabilityFile() {
-			return ClassicType.replaceSeparetor(this.probabilityFile);
+			return this.probabilityFile;
 		}
 
 		/**
@@ -93,7 +80,7 @@ public class ClassicType {
 		 *         match.
 		 */
 		public String getUnexpectedFile() {
-			return ClassicType.replaceSeparetor(this.unexpectedFile);
+			return this.unexpectedFile;
 		}
 	}
 
@@ -133,70 +120,70 @@ public class ClassicType {
 		 * @return GO IMAGE path.
 		 */
 		public String getGoImagePath() {
-			return ClassicType.replaceSeparetor(this.goImage);
+			return this.goImage;
 		}
 
 		/**
 		 * @return FREE TRANSIT IMAGE path.
 		 */
 		public String getFreeTransitPath() {
-			return ClassicType.replaceSeparetor(this.transitJail);
+			return this.transitJail;
 		}
 
 		/**
 		 * @return GO TO JAIL IMAGE path.
 		 */
 		public String getGoJailPath() {
-			return ClassicType.replaceSeparetor(this.goJail);
+			return this.goJail;
 		}
 
 		/**
 		 * @return GO FREE PARKING IMAGE path.
 		 */
 		public String getFreeParkingPath() {
-			return ClassicType.replaceSeparetor(this.transitCar);
+			return this.transitCar;
 		}
 
 		/**
 		 * @return RING IMAGE path.
 		 */
 		public String getRingImagePath() {
-			return ClassicType.replaceSeparetor(this.ringImage);
+			return this.ringImage;
 		}
 
 		/**
 		 * @return TRAIN IMAGE path.
 		 */
 		public String getTrainImagePath() {
-			return ClassicType.replaceSeparetor(this.trainImage);
+			return this.trainImage;
 		}
 
 		/**
 		 * @return LIGHT COMPANY IMAGE path.
 		 */
 		public String getBulbImagePath() {
-			return ClassicType.replaceSeparetor(this.bulbImage);
+			return this.bulbImage;
 		}
 
 		/**
 		 * @return WATER COMPANY IMAGE path.
 		 */
 		public String getWaterImagePath() {
-			return ClassicType.replaceSeparetor(this.waterImage);
+			return this.waterImage;
 		}
 
 		/**
 		 * @return PROBABILITY IMAGE path.
 		 */
 		public String getProbabilityImagePath() {
-			return ClassicType.replaceSeparetor(this.cofferImage);
+			return this.cofferImage;
 		}
 
 		/**
 		 * @return UNEXPECTED IMAGE path.
 		 */
 		public String getUnexpectedImage() {
-			return ClassicType.replaceSeparetor(this.unexpectedImage);
+			return this.unexpectedImage;
 		}
 	}
 
@@ -232,63 +219,63 @@ public class ClassicType {
 		 * @return WINDOWS ICON IMAGE path
 		 */
 		public String getIconWindows() {
-			return ClassicType.replaceSeparetor(this.iconWindows);
+			return this.iconWindows;
 		}
 
 		/**
 		 * @return MUSIC IMAGE path
 		 */
 		public String getMusicImage() {
-			return ClassicType.replaceSeparetor(this.music);
+			return this.music;
 		}
 
 		/**
 		 * @return SOUND IMAGE path
 		 */
 		public String getSoundImage() {
-			return ClassicType.replaceSeparetor(this.sound);
+			return this.sound;
 		}
 
 		/**
 		 * @return NO MUSIC IMAGE path
 		 */
 		public String getNoMusicImage() {
-			return ClassicType.replaceSeparetor(this.noMusic);
+			return this.noMusic;
 		}
 
 		/**
 		 * @return NO SOUND IMAGE path
 		 */
 		public String getNoSoundImage() {
-			return ClassicType.replaceSeparetor(this.noSound);
+			return this.noSound;
 		}
 
 		/**
 		 * @return PLUS IMAGE path
 		 */
 		public String getPlusImage() {
-			return ClassicType.replaceSeparetor(this.plus);
+			return this.plus;
 		}
 
 		/**
 		 * @return DICE IMAGE path
 		 */
 		public String getDiceImage() {
-			return ClassicType.replaceSeparetor(this.dice);
+			return this.dice;
 		}
 
 		/**
 		 * @return GEAR IMAGE path
 		 */
 		public String getGearImage() {
-			return ClassicType.replaceSeparetor(this.gear);
+			return this.gear;
 		}
 
 		/**
 		 * @return SAVE IMAGE path
 		 */
 		public String getSaveImage() {
-			return ClassicType.replaceSeparetor(this.save);
+			return this.save;
 		}
 	}
 
@@ -321,21 +308,21 @@ public class ClassicType {
 		 * @return AUCTION IMAGE path
 		 */
 		public String getAuctionImage() {
-			return ClassicType.replaceSeparetor(this.auction);
+			return this.auction;
 		}
 
 		/**
 		 * @return MORTGAGE IMAGE path
 		 */
 		public String getMortgageImage() {
-			return ClassicType.replaceSeparetor(this.mortgage);
+			return this.mortgage;
 		}
 
 		/**
 		 * @return TRADE IMAGE path
 		 */
 		public String getTradeImage() {
-			return ClassicType.replaceSeparetor(this.trade);
+			return this.trade;
 		}
 
 		/**
@@ -372,7 +359,7 @@ public class ClassicType {
 		
 		IRON(new Pair<>("Iron", "images/avatars/Iron.png")),
 		
-		MASHROOM(new Pair<>("Mashroom", "images/avatars/Mashroom.png")),
+		MUSHROOM(new Pair<>("Mushroom", "images/avatars/Mashroom.png")),
 		
 		BOWL(new Pair<>("Bowl", "images/avatars/Bowl.png")),
 		
@@ -426,7 +413,6 @@ public class ClassicType {
 		 */
 		public String getMonopolyMainMusic() {
 			return this.monopolyMainMusic;
-			// return ClassicType.replaceSeparetor(this.monopolyMainMusic);
 		}
 
 		/**

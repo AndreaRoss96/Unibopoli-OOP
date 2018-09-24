@@ -57,7 +57,7 @@ public class BoardImpl implements Board {
 	}
 	
 	private void initializationSetTile() {
-		try {
+		try {			
 			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getStaticBuildableValuesInitFile())
 					.map(Parse.PARSING_BUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
@@ -65,7 +65,7 @@ public class BoardImpl implements Board {
 			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getStaticNotBuildableValuesInitFile())
 					.map(Parse.PARSING_NOTBUILDABLE_TILE_BOARD::apply)
 					.forEach(gameBoard::add);
-								
+			
 			ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getModeGame(this.getModeGame()))
 					.forEach(record -> Parse.PARSING_LOAD_MODEGAME.accept(record, this.gameBoard.stream()));
 			
@@ -74,10 +74,11 @@ public class BoardImpl implements Board {
 					.forEach(gameBoard::add);
 			
 			CardEffectSupplier.get(ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getProbabilityFile()).collect(Collectors.toList()), 
-								 ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));
-			
+								 ReadFile.readFile(ClassicType.Files.GENERALFILEMAP.getUnexpectedFile()).collect(Collectors.toList()));			
 		}catch (IOException e) {
+			e.printStackTrace();
 		} catch (Exception e) { 
+			e.printStackTrace();
 		}
 	}
 }
