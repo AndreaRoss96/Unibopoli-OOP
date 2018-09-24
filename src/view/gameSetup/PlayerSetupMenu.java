@@ -1,6 +1,5 @@
 package view.gameSetup;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -45,7 +44,10 @@ public class PlayerSetupMenu extends Scene {
 		
 		final BorderPane borderPane = new BorderPane();
 		
-		this.imageMap = IconLoader.getLoader().getAvatarMap("res" + File.separator + "images" + File.separator + "avatars");
+//<<<<<<< HEAD
+//		this.imageMap = IconLoader.getLoader().getAvatarMap("res" + File.separator + "images" + File.separator + "avatars");
+//=======
+		this.imageMap = ClassicType.Avatar.getAvatarMap();
 		
 		iconList = new ArrayList<>();
 		chosenList = new ArrayList<>();

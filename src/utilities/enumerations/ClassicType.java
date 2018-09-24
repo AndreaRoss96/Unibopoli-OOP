@@ -1,6 +1,11 @@
 package utilities.enumerations;
 
-import java.io.File;
+
+import java.util.Arrays;
+import java.util.Map;
+import java.util.stream.Collectors;
+
+import utilities.Pair;
 
 /**
  * @version 2.13.0
@@ -362,6 +367,35 @@ public class ClassicType {
 		}
 	}
 
+	public enum Avatar {
+		WINE(new Pair<>("Wine", "images/avatars/Wine.png")),
+		
+		IRON(new Pair<>("Iron", "images/avatars/Iron.png")),
+		
+		MASHROOM(new Pair<>("Mashroom", "images/avatars/Mashroom.png")),
+		
+		BOWL(new Pair<>("Bowl", "images/avatars/Bowl.png")),
+		
+		CAR(new Pair<>("Car", "images/avatars/Car.png")),
+		
+		BOOT(new Pair<>("Boot", "images/avatars/Boot.png"));
+				
+		private final Pair<String> pair;
+		
+		private Avatar(final Pair<String> pair){
+			this.pair = pair;
+		}
+		
+		private Pair<String> getElement(){
+			return this.pair;
+		}
+		
+		static public Map<String, String> getAvatarMap(){
+			return Arrays.asList(Avatar.values()).stream()
+						 .map(Avatar::getElement).collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
+		}
+	}
+	
 	public enum Music {
 		GeneralMusicMap("/music/MonopolyMainMusic.wav", "/music/CashRegister.wav", "/music/DiceRoll.wav",
 				"/music/GameWin.wav", "/music/JailDoorEffect.wav", "/music/LoseGame.wav",

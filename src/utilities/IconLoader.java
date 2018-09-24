@@ -1,15 +1,7 @@
 package utilities;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
-import java.util.stream.Stream;
-
 import javafx.scene.image.ImageView;
 import view.Icon;
 
@@ -50,32 +42,41 @@ public final class IconLoader {
 		return null;
 	}
 
-	/**
-	 *  Get all the sprite for the players, used by the <i>playerSetupMenu</i>
-	 * initialize the players.
-	 * 
-	 * @param path
-	 *            the folder where are placed the sprites
-	 * 
-	 * @return Map<String, String> having in the key value the name of the sprite
-	 *         and as a value its path
-	 * @throws IOException 
-	 */
-	public Map<String, String> getAvatarMap(final String path) {
-		Objects.requireNonNull(path, "NullPointerException: path required non-null.");
-		final Map<String, String> imageMap = new HashMap<>();
-		
-		try(Stream<Path> paths = Files.walk(Paths.get(path))) {
-			paths.filter(Files::isRegularFile).forEach(e -> {
-				String correctPath = e.toString().replaceAll("/", File.separator);
-				String fileName = e.getFileName().toString().replaceAll(".png", "");
-				String filePath = correctPath.toString().replaceAll("res", "");
-				imageMap.put(fileName, filePath);
-			});
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		
-		return imageMap;
-	}
+//	/**
+//	 *  Get all the sprite for the players, used by the <i>playerSetupMenu</i>
+//	 * initialize the players.
+//	 * 
+//	 * @param path
+//	 *            the folder where are placed the sprites
+//	 * 
+//	 * @return Map<String, String> having in the key value the name of the sprite
+//	 *         and as a value its path
+//	 * @throws IOException 
+//	 */
+//	public Map<String, String> getAvatarMap(final String path) {
+//		Objects.requireNonNull(path, "NullPointerException: path required non-null.");
+//		final Map<String, String> imageMap = new HashMap<>();
+//		
+//<<<<<<< HEAD
+//		try(Stream<Path> paths = Files.walk(Paths.get(path))) {
+//			paths.filter(Files::isRegularFile).forEach(e -> {
+//				String correctPath = e.toString().replaceAll("/", File.separator);
+//=======
+////		for(File file : new File(path).listFiles()) {
+////			imageMap.put(file.getName().replaceAll(".png", ""), file.getPath().replaceAll("res", ""));
+////		}
+//		
+//		try{
+//			Files.walk(Paths.get(path)).filter(Files::isRegularFile).forEach(e -> {
+//>>>>>>> master
+//				String fileName = e.getFileName().toString().replaceAll(".png", "");
+//				String filePath = correctPath.toString().replaceAll("res", "");
+//				imageMap.put(fileName, filePath);
+//			});
+//		} catch (IOException e1) {
+//			System.out.println("Entrato nel catch.");
+//		}
+//		
+//		return imageMap;
+//	}
 }
