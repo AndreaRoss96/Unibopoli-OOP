@@ -2,13 +2,10 @@ package utilities;
 
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Stream;
-
 import javafx.scene.image.ImageView;
 import view.Icon;
 
@@ -64,14 +61,18 @@ public final class IconLoader {
 		Objects.requireNonNull(path, "NullPointerException: path required non-null.");
 		final Map<String, String> imageMap = new HashMap<>();
 		
-		try(Stream<Path> paths = Files.walk(Paths.get(path))) {
-			paths.filter(Files::isRegularFile).forEach(e -> {
+//		for(File file : new File(path).listFiles()) {
+//			imageMap.put(file.getName().replaceAll(".png", ""), file.getPath().replaceAll("res", ""));
+//		}
+		
+		try{
+			Files.walk(Paths.get(path)).filter(Files::isRegularFile).forEach(e -> {
 				String fileName = e.getFileName().toString().replaceAll(".png", "");
 				String filePath = e.toString().replaceAll("res", "");
 				imageMap.put(fileName, filePath);
 			});
 		} catch (IOException e1) {
-			e1.printStackTrace();
+			System.out.println("Entrato nel catch.");
 		}
 		
 		return imageMap;

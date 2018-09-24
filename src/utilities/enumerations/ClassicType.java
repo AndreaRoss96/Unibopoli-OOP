@@ -1,5 +1,10 @@
 package utilities.enumerations;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import utilities.Pair;
+
 /**
  * @version 2.13.0
  * 
@@ -360,6 +365,31 @@ public class ClassicType {
 		}
 	}
 
+	public enum Avatar {
+		BOOT(new Pair<>("Boot", "images/avatars/Boot.png"));
+		
+		private final Pair<String> pair;
+		
+		private Avatar(final Pair<String> pair){
+			this.pair = pair;
+		}
+		
+		private Pair<String> getElement(){
+			return this.pair;
+		}
+		
+		static public Map<String, String> getAvatarMap(){
+			Map<String, String> retMap = new HashMap<>();
+			
+			for(Avatar avatar: Avatar.values()) {
+				retMap.put(avatar.getElement().getFirst(), avatar.getElement().getSecond());
+			}
+			
+			return retMap;
+		}
+		
+	}
+	
 	public enum Music {
 		GeneralMusicMap("/music/MonopolyMainMusic.wav", "/music/CashRegister.wav", "/music/DiceRoll.wav",
 				"/music/GameWin.wav", "/music/JailDoorEffect.wav", "/music/LoseGame.wav",

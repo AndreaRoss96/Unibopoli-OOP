@@ -22,7 +22,6 @@ import model.exceptions.NotEnoughMoneyException;
 import model.player.PlayerInfo;
 import model.tiles.Obtainable;
 import model.tiles.Tile;
-import utilities.IconLoader;
 import utilities.Pair;
 import utilities.ReadFile;
 import utilities.enumerations.ClassicType;
@@ -80,7 +79,7 @@ public class ControllerImpl implements Controller {
 	@Override
 	public void loadGameFromFile(final File file) {
 		Objects.requireNonNull(file, "NullPointerException, file required non-null.");
-		IconLoader.getLoader().getAvatarMap("res/images/avatars");
+//		IconLoader.getLoader().getAvatarMap("res/images/Icons/");
 		this.model = GameInitializer.getInstance().loadGame(ResourceManager.getInstance().loadGameFromFile(file));
 		
 		try {

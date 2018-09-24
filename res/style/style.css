@@ -1,5 +1,5 @@
 @font-face{
-	src: url("/font/Kabel.ttf");
+	src: url("../font/Kabel.ttf");
 }
 
 #backgroudBoard{
@@ -35,7 +35,7 @@
     -fx-font-family: "Kabel";
 	-fx-base: #4949cc;
 	-fx-border-color: black; 
-    -fx-background-image: url("/images/Logo/unibopoli-logo.jpg");
+    -fx-background-image: url("../images/Logo/unibopoli-logo.jpg");
     -fx-background-size: 100% 100%;
  	-fx-background-repeat: stretch;
     -fx-background-position: center center;
@@ -57,7 +57,7 @@
     -fx-font-size: 10pt;
     -fx-font-family: "Kabel";
     -fx-base: #84912F;
- 	-fx-background-image: url("/images/backgrounds/monopoli_cfu.png");
+ 	-fx-background-image: url("../images/backgrounds/monopoli_cfu.png");
     -fx-background-color: white;   
     -fx-background-repeat: stretch;
     -fx-background-position: center center;
@@ -76,7 +76,7 @@
 	-fx-border-color: black;
 	-fx-border-radius: 10;
 	-fx-border-style: solid inside;	
-	-fx-background-image: url("/images/cardBoard/white_cardstock.jpg");
+	-fx-background-image: url("../images/cardBoard/white_cardstock.jpg");
 	-fx-background-radius: 10;
 	-fx-background-color: transparent;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 1);
@@ -115,7 +115,7 @@
 	-fx-font-size: 11pt;
     -fx-font-family: "Kabel";
     -fx-base: #84912F;
-	-fx-background-image: url("/images/backgrounds/probab.png");
+	-fx-background-image: url("../images/backgrounds/probab.png");
 	-fx-background-size: 100% 100%;
  	-fx-background-repeat: stretch;
     -fx-background-position: center center;
