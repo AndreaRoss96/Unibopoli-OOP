@@ -1,6 +1,5 @@
 package view.gameSetup;
 
-import java.io.File;
 import java.util.Map;
 
 import javafx.geometry.Insets;
@@ -33,7 +32,7 @@ public class PlayerSetupBox extends HBox {
 		HBox.setMargin(this.icons, new Insets(0, INSETS_VALUE, 0, INSETS_VALUE));
 
 		removePlayer = new Button("",
-				new ImageView(new Image("images" + File.separator + "Icons" + File.separator + "trash.png")));
+				new ImageView(new Image("images/Icons/trash.png")));
 
 		this.getChildren().addAll(nameField, icons, removePlayer);
 		this.setAlignment(Pos.CENTER);
@@ -67,5 +66,4 @@ public class PlayerSetupBox extends HBox {
 	public Button getRemovePlayer() {
 		return this.removePlayer;
 	}
-
 }

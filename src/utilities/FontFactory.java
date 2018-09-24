@@ -7,7 +7,7 @@ import javafx.scene.text.FontWeight;
 public class FontFactory {
 
 	public static Font getDefaultFont(final int size) {
-		return Font.loadFont("file:res/font/kabel.ttf", size);
+		return Font.loadFont(ClassLoader.getSystemResource("font/kabel.ttf").toExternalForm(), size);
 	}
 	
 	public static Font getFontBold(final String type, final double size) {

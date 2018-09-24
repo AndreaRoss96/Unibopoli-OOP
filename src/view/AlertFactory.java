@@ -7,8 +7,8 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.paint.Color;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
-import javafx.scene.text.Font;
 import javafx.stage.StageStyle;
+import utilities.FontFactory;
 
 public class AlertFactory{
 
@@ -31,7 +31,7 @@ public class AlertFactory{
 		alert.setTitle(title);
 		alert.setHeaderText(null);
 		final Label content = new Label(contentText);
-		content.setFont(Font.loadFont("file:res/font/kabel.ttf", 13));
+		content.setFont(FontFactory.getDefaultFont(13));
 		content.setTextFill(alert.getAlertType() == AlertType.ERROR ? Color.RED : Color.CORNFLOWERBLUE);
 		alert.setGraphic(content);
 		alert.initStyle(StageStyle.UTILITY);
