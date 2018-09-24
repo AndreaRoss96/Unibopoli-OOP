@@ -1,8 +1,9 @@
 package utilities.enumerations;
 
 
-import java.util.HashMap;
+import java.util.Arrays;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import utilities.Pair;
 
@@ -367,8 +368,18 @@ public class ClassicType {
 	}
 
 	public enum Avatar {
-		BOOT(new Pair<>("Boot", "images/avatars/Boot.png"));
+		WINE(new Pair<>("Wine", "images/avatars/Wine.png")),
 		
+		IRON(new Pair<>("Iron", "images/avatars/Iron.png")),
+		
+		MASHROOM(new Pair<>("Mashroom", "images/avatars/Mashroom.png")),
+		
+		BOWL(new Pair<>("Bowl", "images/avatars/Bowl.png")),
+		
+		CAR(new Pair<>("Car", "images/avatars/Car.png")),
+		
+		BOOT(new Pair<>("Boot", "images/avatars/Boot.png"));
+				
 		private final Pair<String> pair;
 		
 		private Avatar(final Pair<String> pair){
@@ -380,15 +391,9 @@ public class ClassicType {
 		}
 		
 		static public Map<String, String> getAvatarMap(){
-			Map<String, String> retMap = new HashMap<>();
-			
-			for(Avatar avatar: Avatar.values()) {
-				retMap.put(avatar.getElement().getFirst(), avatar.getElement().getSecond());
-			}
-			
-			return retMap;
+			return Arrays.asList(Avatar.values()).stream()
+						 .map(Avatar::getElement).collect(Collectors.toMap(Pair::getFirst, Pair::getSecond));
 		}
-		
 	}
 	
 	public enum Music {
