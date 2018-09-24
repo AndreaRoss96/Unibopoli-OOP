@@ -1,7 +1,2 @@
-bin/
-doc/
-*.log
-*.pdf
-*.classpath
-*.jar
-.settings/
+/bin/
+/doc/
