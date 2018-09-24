@@ -1,5 +1,7 @@
 package utilities.enumerations;
 
+import java.io.File;
+
 /**
  * @version 2.13.0
  * 

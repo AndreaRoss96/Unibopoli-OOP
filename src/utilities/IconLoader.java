@@ -1,5 +1,6 @@
 package utilities;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -66,8 +67,9 @@ public final class IconLoader {
 		
 		try(Stream<Path> paths = Files.walk(Paths.get(path))) {
 			paths.filter(Files::isRegularFile).forEach(e -> {
+				String correctPath = e.toString().replaceAll("/", File.separator);
 				String fileName = e.getFileName().toString().replaceAll(".png", "");
-				String filePath = e.toString().replaceAll("res", "");
+				String filePath = correctPath.toString().replaceAll("res", "");
 				imageMap.put(fileName, filePath);
 			});
 		} catch (IOException e1) {
