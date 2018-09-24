@@ -1,0 +1,122 @@
+@font-face{
+	src: url("../font/Kabel.ttf");
+}
+
+#backgroudBoard{
+	-fx-border-color: black; 
+	-fx-background-color: #CDE6D0;
+}
+
+#gridPane{
+    -fx-grid-lines-visible: true;
+}
+
+.separator .line{
+	-fx-border-color: grey;
+	-fx-border-width: 1 1 1 1;
+}
+
+#RightInformationPane{
+	-fx-font-size: 15pt;
+    -fx-font-family: "Kabel";
+    -fx-base: #84912F;
+    -fx-border-color: black; 
+ 	-fx-background: #E1E4CB;
+}
+
+#LeftPlayersPane{
+	-fx-font-size: 11pt;
+    -fx-font-family: "Kabel";
+    -fx-background-color: red;
+}
+
+#mainMenu{
+    -fx-font-size: 15pt;
+    -fx-font-family: "Kabel";
+	-fx-base: #4949cc;
+	-fx-border-color: black; 
+    -fx-background-image: url("../images/Logo/unibopoli-logo.jpg");
+    -fx-background-size: 100% 100%;
+ 	-fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+.mainMenuButton{
+	-fx-border-color: #FFFFFF;
+	-fx-text-fill:#FFFFFF;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.35), 5, 0, 0, 1);
+}
+
+.mainMenuButton:hover{
+	-fx-effect: dropshadow(three-pass-box, rgba(255,255,255,1), 5, 0, 0, 1);
+	-fx-text-fill:#000000;
+	-fx-border-color:#000000;
+}
+
+#setupPlayer{
+    -fx-font-size: 10pt;
+    -fx-font-family: "Kabel";
+    -fx-base: #84912F;
+ 	-fx-background-image: url("../images/backgrounds/monopoli_cfu.png");
+    -fx-background-color: white;   
+    -fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}
+
+#setupBox {
+	-fx-padding: 10;
+	-fx-border-style: solid inside;
+	-fx-border-radius: 5;
+	-fx-border-color: blue;
+	-fx-background-color: white;
+	-fx-background-radius: 5;
+}
+
+#contract{
+	-fx-border-color: black;
+	-fx-border-radius: 10;
+	-fx-border-style: solid inside;	
+	-fx-background-image: url("../images/cardBoard/white_cardstock.jpg");
+	-fx-background-radius: 10;
+	-fx-background-color: transparent;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 10, 0, 0, 1);
+}
+
+.contractLabel{
+	-fx-font-family: Kabel;
+	-fx-border-radius: 10;
+	-fx-border-color: black;
+	-fx-background-radius: 10;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 4, 0, 0, 1);
+}
+
+.settingButton{
+	-fx-background-radius: 5em;
+	-fx-min-width: 40px;
+	-fx-min-height: 40px;
+	-fx-max-width: 40px;
+	-fx-max-height: 40px;
+}
+
+.roundButton{
+	-fx-background-color: white;
+	-fx-background-radius: 5em;
+	-fx-min-width: 52px;
+	-fx-min-height: 52px;
+	-fx-max-width: 52px;
+	-fx-max-height: 52px;
+}
+
+.roundButton:hover{
+	-fx-background-color: grey;
+}
+
+#ProbabUnexAnimation {
+	-fx-font-size: 11pt;
+    -fx-font-family: "Kabel";
+    -fx-base: #84912F;
+	-fx-background-image: url("../images/backgrounds/probab.png");
+	-fx-background-size: 100% 100%;
+ 	-fx-background-repeat: stretch;
+    -fx-background-position: center center;
+}

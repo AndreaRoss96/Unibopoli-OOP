@@ -1,24 +1,27 @@
 package utilities;
 
-public class Pair<X,Y> {
+public class Pair<E> {
 	
-	private final X x;
-	private final Y y;
+	private final E x;
+	private final E y;
 	
-	public Pair(X x, Y y) {
-		super();
+	public Pair(E x, E y) {
 		this.x = x;
 		this.y = y;
 	}
 
-	public X getX() {
+	public E getFirst() {
 		return x;
 	}
 
-	public Y getY() {
+	public E getSecond() {
 		return y;
 	}
 
+	public boolean areSame() {
+		return this.x.equals(this.y);
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -53,6 +56,6 @@ public class Pair<X,Y> {
 
 	@Override
 	public String toString() {
-		return "Pair [x=" + x + ", y=" + y + "]";
+		return "[x=" + x + ", y=" + y + "]";
 	}
 }
