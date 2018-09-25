@@ -71,7 +71,7 @@ public class RightInormationPane {
 		topAnchorPane.getChildren().add(rightDiceResult);
 
 		diceBtn = new Button("", IconLoader.getLoader().getImageFromPath(ClassicType.Other.GENERALOTHERIMAGEMAP.getDiceImage()));
-		diceBtn.setMaxSize(Region.USE_COMPUTED_SIZE, Region.USE_COMPUTED_SIZE);
+		diceBtn.setMaxSize(Region.USE_PREF_SIZE, Region.USE_PREF_SIZE);
 		AnchorPane.setRightAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setLeftAnchor(diceBtn, PANE_WIDTH * H_DISTANCE);
 		AnchorPane.setBottomAnchor(diceBtn, PANE_WIDTH * V_DISTANCE);
@@ -91,8 +91,10 @@ public class RightInormationPane {
 		root.getChildren().add(tradeBtn);
 
 		playerLabel = new Label();
+		playerLabel.setMaxWidth(PANE_WIDTH/1.5);
 		playerLabel.setWrapText(true);
 		playerLabel.setTextAlignment(TextAlignment.CENTER);
+		playerLabel.setAlignment(Pos.CENTER);
 		cashLabel = new Label();
 		cashLabel.setWrapText(true);
 		cashLabel.setTextAlignment(TextAlignment.CENTER);
