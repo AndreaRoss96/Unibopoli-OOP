@@ -3,13 +3,16 @@ package test;
 import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import org.junit.Test;
-import java.io.File;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import org.junit.jupiter.api.Test;
+
 import model.GameInitializer;
 import model.Model;
 import model.exceptions.NotEnoughMoneyException;
@@ -18,32 +21,26 @@ import model.tiles.Obtainable;
 import utilities.enumerations.InitialDistribution;
 
 public class GameInitTest {
-	
-	private static final String SEP = File.separator;
+
 	private static final String MODE = "CLASSIC";
 	private final GameInitializer gameInit = GameInitializer.getInstance();
 	private Map<String, String> players;
 	
 	private void buildPlayers() {
 		players = new HashMap<>();
-		players.put("Uncle Pennybags", "mode" + SEP + "classic" + SEP + "avatars" + SEP + "Boot");
-        players.put("Mr. Pringles", "mode" + SEP + "classic" + SEP + "avatars" + SEP + "Car");
-        players.put("Uncle Scrooge", "mode" + SEP + "classic" + SEP + "avatars" + SEP + "Wine");
-		
+		players.put("Uncle Pennybags", "/mode/classic/avatars/Boot");
+        players.put("Mr. Pringles", "/mode/classic/avatars/Car");
+        players.put("Uncle Scrooge", "/mode/classic/avatars/Wine");		
 	}
 	
     /**
      * Tests what happens if the game have already been initialized.
+     * @throws IOException 
      */
-    @Test(expected = IllegalStateException.class)
-    public void testAlreadyInitialized() {
-        try {
+    @Test
+    public void testAlreadyInitialized() throws IOException {
         	buildPlayers();
-            gameInit.newGame(MODE, this.players);
-            gameInit.newGame(MODE, this.players);
-        } catch (IOException e) {
-			e.printStackTrace();
-		}
+            assertThrows(IllegalStateException.class, () -> gameInit.newGame(MODE, this.players));
     }
     
     /**

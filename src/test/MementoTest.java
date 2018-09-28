@@ -1,16 +1,16 @@
 package test;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import controller.ControllerImpl;
 import model.Board;
@@ -54,7 +54,6 @@ public class MementoTest {
 		assertEquals(board.getTileOf(0), memento1.getGameBoard().getTileOf(0));
 		assertEquals(new ArrayList<>(), memento1.getPlayers().getPlayers().get(2).getProperties());
 		
-		//fai un altro test un pelo più complesso, ad esempio inizializzando la partita
 		List<String> nameList = Arrays.asList("Uncle Scrooge", "Donald T.", "Mr. Burns");
 		List<String> iconList = Arrays.asList("/mode/classic/avatars/Boot.png", "/mode/classic/avatars/Iron.png", "/mode/classic/avatars/Wine.png");
 		
