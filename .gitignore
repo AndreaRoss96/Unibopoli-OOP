@@ -1,3 +1,6 @@
+bin\
+doc\
+
 # Compiled class file
 *.class
 
